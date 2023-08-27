@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 from flask_mysqldb import MySQL
+import json
 
 
 app = Flask(__name__)
@@ -31,20 +32,21 @@ def handleUsers(query):
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     data = request.data
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
 
-    print(data)
-    # Extract data
-    firstname = data[0]
-    lastname = data[1]
-    email = data[2]
-    birthday = data[3]
-    sex = data[4]
-    password = data[5]
-
-    query = '''INSERT INTO register(firstname, lastname, email, birthday, sex, password) VALUES ({},{},{},{},{},{})'''.format(firstname, lastname, email, birthday, sex, password)
+    # Set values
+    firstname = json_str["Firstname"]
+    lastname = json_str["Lastname"]
+    email = json_str["Email"]
+    birthday = json_str["Birthday"]
+    password = json_str["Password"]
+    sex = json_str["Sex"]
+    
+    query = '''INSERT INTO register(firstname, lastname, email, birthday, sex, password) VALUES ('{}','{}','{}','{}','{}','{}')'''.format(firstname, lastname, email, birthday, sex, password)
     print(query)
-    # response = handleUsers(query)
-    # print (response)
+    response = handleUsers(query)
+    print (response)
 
     return "Hello World!"
 

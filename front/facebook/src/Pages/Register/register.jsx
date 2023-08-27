@@ -15,11 +15,12 @@ function Register() {
     const [lastname, setLastname] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [sex, setSex] = useState();
 
     // --- date to values
     const [dayselected, setDayselector] = useState(1);
     const [monthselected, setMonthselector] = useState(1);
-    const [yearselected, setYearselector] = useState(1);
+    const [yearselected, setYearselector] = useState(1905);
 
     const dayChange = (event) => {
         setDayselector(event.target.value);
@@ -27,14 +28,16 @@ function Register() {
 
     const monthChange = (event) => {
         setMonthselector(event.target.value);
+        if(monthselected == 'January') {
+            setMonthselector('01');
+        }
     };
 
     const yearChange = (event) => {
         setYearselector(event.target.value);
     };
-
-    const [sex, setSex] = useState();
-
+    
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -96,7 +99,8 @@ function Register() {
                                     
                                     <select defaultValue={setMonthselector} className='register-date-input' onChange={ monthChange }>
                                         {months.map((month, i) => (
-                                            <option value={month} key={i}>{month}</option>
+                                            <option value={month} key={i}>{month}, {i}</option>
+                                            
                                         ))}
                                     </select>
 
