@@ -31,6 +31,7 @@ function Register() {
         if(monthselected == 'January') {
             setMonthselector('01');
         }
+        
     };
 
     const yearChange = (event) => {
@@ -52,7 +53,7 @@ function Register() {
 
         try {
             const response = await axios.post("http://127.0.0.1:5000/register", data)
-            console.log(response);
+
         }
         catch (err) {
             console.log(err);
@@ -133,7 +134,7 @@ function Register() {
                                 </div>
                             </div>
                             
-                            <button type='submit' className='register-form-button'>הרשמה</button>
+                            <a href='/login' type='submit' className='register-form-button'>הרשמה</a> {/*meanwhile href to login*/}
                         </form>
 
                         <div className='register-button-wrapper'>

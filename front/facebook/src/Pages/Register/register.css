@@ -161,6 +161,7 @@
     color: white;
     font-weight: 700;
     font-size: 120%;
+    text-decoration: none;
 }
 .register-form-button:hover {
     background-color: #3ec623;

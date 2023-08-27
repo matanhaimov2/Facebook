@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 
 //CSS
@@ -6,7 +7,35 @@ import './login.css';
 
 function Login() {
 
+    // States
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
     
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+
+        try {
+            let data = {
+                "Email" : email,
+                "Password" : password
+            }
+
+            // Sends to back email and password to see if correct
+            const response = await axios.post("http://127.0.0.1:5000/login", data)
+            
+            if(response.data.res===true) { // If the response is true, redirect to home
+                window.location.href='/home'
+            }
+            else {
+                alert("Email or Password is incorrect");
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <div className='login-wrapper'>
           
@@ -21,14 +50,14 @@ function Login() {
                         <label className='login-content-title'>התחבר\י לפייסבוק</label>
                     </div>
 
-                    <form className='login-form'>
-                        <input className='login-input' placeholder='דוא"ל או מספר טלפון'/>
-                        <input type='password' className='login-input' placeholder='סיסמה'/>
+                    <form className='login-form' onSubmit={ handleSubmit }>
+                        <input className='login-input' onChange={(e) => setEmail(e.target.value)} placeholder='דוא"ל או מספר טלפון'/>
+                        <input type='password' className='login-input' onChange={(e) => setPassword(e.target.value)} placeholder='סיסמה'/>
                         <button type='submit' className='login-form-button'>התחברות</button>
                     </form>
 
                     <div className='login-button-wrapper'>
-                        <a href='/register' className='login-button-blue'>שכחת את החשבון?</a>
+                        <a href='' className='login-button-blue'>שכחת את החשבון?</a>
                     </div>
                 </div>
 
@@ -43,7 +72,7 @@ function Login() {
                 </div>
 
                 <div className='login-button-wrapper'>
-                    <button className='login-button-green'>צור חשבון חדש</button>
+                    <a href='/register' className='login-button-green'>צור חשבון חדש</a>
                 </div>
             </div>
         </div>

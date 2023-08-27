@@ -7,6 +7,8 @@ import './App.css';
 // Pages
 import Login from './Pages/Login/login';
 import Register from './Pages/Register/register';
+import Home from './Pages/Home/home';
+
 
 // Functions
 function login() {
@@ -17,6 +19,10 @@ function register() {
   return <Register />;
 }
 
+function home() {
+  return <Home />;
+}
+
 function App() {
   return (
     <div className="outer-wrapper">
@@ -25,6 +31,7 @@ function App() {
                 <Routes>
                     <Route path='/login' element={ login() } />
                     <Route path='/register' element={ register() } />
+                    <Route path='/home' element={ home() } />
                 </Routes>
             </Router>
         </div>

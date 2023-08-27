@@ -83,6 +83,7 @@
     background: #42b72a;
     font-weight: 700;
     font-size: 110%;
+    text-decoration: none;
 }
 .login-button-green:hover {
     background-color: #3ec623;

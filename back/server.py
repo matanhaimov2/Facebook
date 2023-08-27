@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 from flask_mysqldb import MySQL
+from flask import jsonify
 import json
 
 
@@ -48,12 +49,29 @@ def register():
     response = handleUsers(query)
     print (response)
 
-    return "Hello World!"
+    return jsonify({'res': True})
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    return "Hello World!"
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+    password = json_str["Password"]
+
+    query = '''SELECT * FROM register WHERE email = '{}' AND password = '{}' '''.format(email, password)
+    print(query)
+    response = handleUsers(query)
+    print (response)
+    if response == 1:
+        return jsonify({'res': True})
+    elif response == 0:
+        return jsonify({'res': False})
+    
+    return jsonify({'res': False})
 
 if __name__ == "__main__":
     app.run(debug = True)
