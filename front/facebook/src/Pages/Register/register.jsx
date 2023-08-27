@@ -20,7 +20,7 @@ function Register() {
     // --- date to values
     const [dayselected, setDayselector] = useState(1);
     const [monthselected, setMonthselector] = useState(1);
-    const [yearselected, setYearselector] = useState(1905);
+    const [yearselected, setYearselector] = useState(new Date().getFullYear());
 
     const dayChange = (event) => {
         setDayselector(event.target.value);
@@ -28,10 +28,6 @@ function Register() {
 
     const monthChange = (event) => {
         setMonthselector(event.target.value);
-        if(monthselected == 'January') {
-            setMonthselector('01');
-        }
-        
     };
 
     const yearChange = (event) => {
@@ -46,13 +42,21 @@ function Register() {
             "Firstname" : firstname,
             "Lastname" : lastname,
             "Email" : email,
-            "Birthday" : yearselected + '-' + monthselected + '-' + dayselected,
+            "Birthday" : yearselected + '-' + ( new Date(monthselected + ' 1, 2022').getMonth() + 1 ) + '-' + dayselected,
             "Password" : password,
             "Sex" : sex
         }
-
+        
         try {
-            const response = await axios.post("http://127.0.0.1:5000/register", data)
+            const response = await axios.post("http://127.0.0.1:5000/register", data);
+
+            console.log(response)
+            if(response.data.res===true) { // If the response is true, redirect to home
+                window.location.href = '/login';
+            }
+            else {
+                alert("Somthing went wrong");
+            }
 
         }
         catch (err) {
@@ -92,20 +96,20 @@ function Register() {
                                 <label className='register-birth-title'>תאריך לידה</label>
                                 
                                 <div className='register-birth-sub-wrapper'>
-                                    <select defaultValue={setDayselector} className='register-date-input' onChange={ dayChange }>
+                                    <select defaultValue={dayselected} className='register-date-input' onChange={ dayChange }>
                                         {days.map((day, i) => (
                                             <option value={day} key={i}>{day}</option>
                                         ))}
                                     </select>
                                     
-                                    <select defaultValue={setMonthselector} className='register-date-input' onChange={ monthChange }>
+                                    <select defaultValue={monthselected} className='register-date-input' onChange={ monthChange }>
                                         {months.map((month, i) => (
-                                            <option value={month} key={i}>{month}, {i}</option>
+                                            <option value={month} key={i + 1}>{month}</option>
                                             
                                         ))}
                                     </select>
 
-                                    <select defaultValue={setYearselector} className='register-date-input' onChange={ yearChange }> 
+                                    <select defaultValue={yearselected} className='register-date-input' onChange={ yearChange }> 
                                         {years.map((year, i) => (
                                             <option value={year} key={i}>{year}</option>
                                         ))}
@@ -134,7 +138,7 @@ function Register() {
                                 </div>
                             </div>
                             
-                            <a href='/login' type='submit' className='register-form-button'>הרשמה</a> {/*meanwhile href to login*/}
+                            <button type='submit' className='register-form-button'>הרשמה</button>
                         </form>
 
                         <div className='register-button-wrapper'>
