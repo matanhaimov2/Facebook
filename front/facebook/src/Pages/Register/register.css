@@ -1,0 +1,208 @@
+.register-page {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    background: #f0f2f5;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.register-wrapper {
+    background: #f0f2f5;
+    gap: 10px;
+    height: fit-content;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 2%;
+}
+
+.register-content-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-bottom: 1px solid #d6d8db;
+    padding: 0 0 3%;
+
+}
+
+.register-content-title {
+    font-size: 150%;
+    font-weight: 700;
+}
+
+.register-wrapper button {
+    cursor: pointer;
+}
+
+.register-content-wrapper {
+    width: 100%;
+    padding: 2% 0 1%;
+    background: white;
+    border-radius: 7.5px;
+    text-align: center;
+    margin-bottom: 15%;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+.register-title {
+    font-size: 170%;
+    font-weight: 700;
+    color: #1877f2;
+}
+
+.register-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 5%;
+}
+
+.register-form input {
+    outline: none;
+}
+
+.register-name-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 3%;
+}
+
+.register-name-input {
+    width: 50%;
+    text-align: right;
+    padding: 4%;
+    border-radius: 5px;
+    border: 1px solid #dddfe2;
+    color: black;
+}
+
+.register-input {
+    text-align: right;
+    padding: 4%;
+    border-radius: 5px;
+    border: 1px solid #dddfe2;
+    color: black;
+}
+
+.register-birth-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.register-birth-title {
+    text-align: right;
+    font-size: 80%;
+}
+
+.register-birth-sub-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 4%;
+}
+
+.register-sex-sub-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.register-date-input {
+    width: 33.33333%;
+    text-align: right;
+    padding: 4%;
+    border-radius: 5px;
+    border: 1px solid #dddfe2;
+    color: black;
+    direction: rtl;
+}
+
+.register-sex-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.register-gender {
+    display: flex;
+    flex-direction: row;
+    direction: rtl;
+    min-width: 25%;
+    border: 1px solid #dddfe2;
+    border-radius: 3px;
+    font-size: 90%;
+    align-items: center;
+    padding: 2%;
+    gap: 5%;
+    justify-content: center;
+}
+
+.register-form-button {
+    padding: 3%;
+    margin: auto;
+    width: 55%;
+    border-radius: 5px;
+    border: none;
+    background: #42b72a;
+    color: white;
+    font-weight: 700;
+    font-size: 120%;
+}
+.register-form-button:hover {
+    background-color: #3ec623;
+    transition: all 500ms ease;}
+
+.register-button-wrapper {
+    padding: 5%;
+}
+
+
+.register-border-or-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.or {
+    font-size: 90%;
+    color: #d6d8db;
+}
+
+.register-border {
+    border: 1px solid #d6d8db;
+    width: 100%;
+    height: 0px;
+}
+
+.register-button-blue {
+    color: #4c7bf2;
+    font-size: 100%;
+    text-decoration: none;
+}
+
+.register-checkbox {
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.register-gender-title {
+    width: max-content;
+    white-space: nowrap;
+}
