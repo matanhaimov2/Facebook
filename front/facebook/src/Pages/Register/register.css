@@ -96,6 +96,7 @@
     border-radius: 5px;
     border: 1px solid #dddfe2;
     color: black;
+    width: -webkit-fill-available;
 }
 
 .register-birth-wrapper {
@@ -211,4 +212,11 @@
 .register-error-wrapper {
     background: red;
     color: white;
+    position: absolute;
+    left: 102%;
+    top: 0;
+}
+
+.register-email-wrapper {
+    position: relative;
 }

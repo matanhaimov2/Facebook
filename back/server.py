@@ -45,23 +45,28 @@ def register():
     sex = json_str["Sex"]
     firstlogin = 0
 
-    query = '''INSERT INTO register(firstname, lastname, email, birthday, sex, password, firstlogin) VALUES ('{}','{}','{}','{}','{}','{}', '{}')'''.format(firstname, lastname, email, birthday, sex, password, firstlogin)
+    # Check if mail exists
+    query = '''SELECT email FROM register WHERE EXISTS (SELECT email FROM register WHERE email = '{}');'''.format(email)
+    response = handleUsers(query)
+  
+    if(response==0):
+        # If not exists create the new user
+        query = '''INSERT INTO register(firstname, lastname, email, birthday, sex, password, firstlogin) VALUES ('{}','{}','{}','{}','{}','{}', '{}')'''.format(firstname, lastname, email, birthday, sex, password, firstlogin)
     
-    print(query)
-    try:
         response = handleUsers(query)
-        if response == 1:
-            return jsonify({'res': True})
-    except:
-        print('email duplcate entry!')
-        
+    
+        return jsonify({'res': True})
+    else: 
+        # Email exists alert the user
+        return jsonify({'res': False, 'err': 'Email Exists'})
+
     return jsonify({'res': False})
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     data = request.data
-    print(data)
+   
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -77,12 +82,10 @@ def login():
     if response == 1:
         response = handleUsers(sql_query)
         print(response)
-        if response == 0:
-            return jsonify({'res' : True, 'firstlogin': True})
-        elif response == 1:
+        if response == 1:
             return jsonify({'res' : True, 'firstlogin': False})
 
-        return jsonify({'res': True})
+        return jsonify({'res' : True, 'firstlogin': True})
 
     elif response == 0:
         return jsonify({'res': False})

@@ -89,7 +89,17 @@ function Register() {
                                 <input className='register-name-input' onChange={(e) => setLastname(e.target.value)}placeholder='שם משפחה' required/>
                             </div>
 
-                            <input type='email' className='register-input' onChange={(e) => setEmail(e.target.value)} placeholder='מספר נייד או דוא"ל' required/>
+                            <div className='register-email-wrapper'>
+                                <input type='email' className='register-input' onChange={(e) => setEmail(e.target.value)} placeholder='מספר נייד או דוא"ל' required/>
+                                
+                                {showPopup && (
+                                    <div className='register-error-wrapper'>
+                                        <div>
+                                            display the div
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
 
                             <input type='password' className='register-input' onChange={(e) => setPassword(e.target.value)} placeholder='סיסמה חדשה' required/>
 
@@ -149,11 +159,6 @@ function Register() {
                 </div>
             </div>
 
-            <div className='register-error-wrapper' style= {{display: showPopup ? 'block' : 'none' }}>
-                <div>
-                    display the div
-                </div>
-            </div>
         </div>
     );
 }
