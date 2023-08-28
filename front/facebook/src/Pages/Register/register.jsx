@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
 //CSS
 import './register.css';
 
@@ -16,6 +15,8 @@ function Register() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [sex, setSex] = useState();
+    const [showPopup, setShowPopup] = useState(false);
+
 
     // --- date to values
     const [dayselected, setDayselector] = useState(1);
@@ -51,11 +52,11 @@ function Register() {
             const response = await axios.post("http://127.0.0.1:5000/register", data);
 
             console.log(response)
-            if(response.data.res===true) { // If the response is true, redirect to home
+            if(response.data.res===true) { // If the response is true, redirect to login
                 window.location.href = '/login';
             }
             else {
-                alert("Somthing went wrong");
+                setShowPopup(true);
             }
 
         }
@@ -145,6 +146,12 @@ function Register() {
                             <a href='/login' className='register-button-blue'>כבר יש לך חשבון?</a>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className='register-error-wrapper' style= {{display: showPopup ? 'block' : 'none' }}>
+                <div>
+                    display the div
                 </div>
             </div>
         </div>

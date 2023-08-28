@@ -43,13 +43,19 @@ def register():
     birthday = json_str["Birthday"]
     password = json_str["Password"]
     sex = json_str["Sex"]
-    
-    query = '''INSERT INTO register(firstname, lastname, email, birthday, sex, password) VALUES ('{}','{}','{}','{}','{}','{}')'''.format(firstname, lastname, email, birthday, sex, password)
-    print(query)
-    response = handleUsers(query)
-    print (response)
+    firstlogin = 0
 
-    return jsonify({'res': True})
+    query = '''INSERT INTO register(firstname, lastname, email, birthday, sex, password, firstlogin) VALUES ('{}','{}','{}','{}','{}','{}', '{}')'''.format(firstname, lastname, email, birthday, sex, password, firstlogin)
+    
+    print(query)
+    try:
+        response = handleUsers(query)
+        if response == 1:
+            return jsonify({'res': True})
+    except:
+        print('email duplcate entry!')
+        
+    return jsonify({'res': False})
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -65,9 +71,19 @@ def login():
     query = '''SELECT * FROM register WHERE email = '{}' AND password = '{}' '''.format(email, password)
     print(query)
     response = handleUsers(query)
-    print (response)
+    print(response)
+    sql_query = '''SELECT * FROM register WHERE firstlogin = '{}' '''.format(1)
+    
     if response == 1:
+        response = handleUsers(sql_query)
+        print(response)
+        if response == 0:
+            return jsonify({'res' : True, 'firstlogin': True})
+        elif response == 1:
+            return jsonify({'res' : True, 'firstlogin': False})
+
         return jsonify({'res': True})
+
     elif response == 0:
         return jsonify({'res': False})
     

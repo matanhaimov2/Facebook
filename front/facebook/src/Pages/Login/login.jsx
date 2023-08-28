@@ -23,9 +23,15 @@ function Login() {
 
             // Sends to back email and password to see if correct
             const response = await axios.post("http://127.0.0.1:5000/login", data)
-            
+            console.log(response);
+
             if(response.data.res===true) { // If the response is true, redirect to home
-                window.location.href='/home'
+                if(response.data.firstlogin===true) {
+                    window.location.href='/'
+                }
+                else if(response.data.firstlogin===false) {
+                    window.location.href='/home'
+                }
             }
             else {
                 alert("Email or Password is incorrect");

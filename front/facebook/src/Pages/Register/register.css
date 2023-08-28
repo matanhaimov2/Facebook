@@ -207,3 +207,8 @@
     width: max-content;
     white-space: nowrap;
 }
+
+.register-error-wrapper {
+    background: red;
+    color: white;
+}
