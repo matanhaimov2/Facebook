@@ -56,15 +56,21 @@ function Register() {
                 window.location.href = '/login';
             }
             else {
-                setShowPopup(true);
+                // setShowPopup(true) what i had before
+                setShowPopup(current => !current);
             }
 
         }
         catch (err) {
             console.log(err);
         }
+
     }
 
+    useEffect(() => {
+        // 👇️ if you need to listen for changes of isLoading boolean
+        console.log('isLoading is: ', showPopup);
+      }, [showPopup]);
     
 
     return (
