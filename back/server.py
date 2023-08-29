@@ -97,5 +97,10 @@ def login():
     
     return jsonify({'res': False})
 
+
+@app.route("/setprofile", methods=['GET', 'POST'])
+def setprofile():
+    return jsonify({'res': False})
+
 if __name__ == "__main__":
     app.run(debug = True)

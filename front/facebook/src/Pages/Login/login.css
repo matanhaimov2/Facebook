@@ -66,6 +66,7 @@
     font-weight: 700;
     font-size: 120%;
 }
+
 .login-form-button:hover {
     background-color: #368bfa;
     transition: all 500ms ease;

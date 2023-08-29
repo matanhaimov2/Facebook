@@ -8,6 +8,7 @@ import './App.css';
 import Login from './Pages/Login/login';
 import Register from './Pages/Register/register';
 import Home from './Pages/Home/home';
+import SetProfile from './Pages/SetProfile/setprofile';
 
 
 // Functions
@@ -23,6 +24,10 @@ function home() {
   return <Home />;
 }
 
+function setprofile() {
+  return <SetProfile />
+}
+
 function App() {
   return (
     <div className="outer-wrapper">
@@ -32,6 +37,7 @@ function App() {
                     <Route path='/login' element={ login() } />
                     <Route path='/register' element={ register() } />
                     <Route path='/home' element={ home() } />
+                    <Route path='/setprofile' element={ setprofile() } />
                 </Routes>
             </Router>
         </div>

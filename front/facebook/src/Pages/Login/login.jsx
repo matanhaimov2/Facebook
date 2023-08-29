@@ -29,7 +29,7 @@ function Login() {
 
             if(response.data.res===true) { // If the response is true, redirect to home
                 if(response.data.firstlogin===true) {
-                    window.location.href='/profile'
+                    window.location.href='/setprofile'
                 }
                 else if(response.data.firstlogin===false) {
                     window.location.href='/home'
