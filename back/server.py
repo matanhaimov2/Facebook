@@ -49,15 +49,15 @@ def register():
     query = '''SELECT email FROM register WHERE EXISTS (SELECT email FROM register WHERE email = '{}');'''.format(email)
     response = handleUsers(query)
   
-    if(response==0):
-        # If not exists create the new user
+    if(response == 0): # If doesn't exist create the new user
         query = '''INSERT INTO register(firstname, lastname, email, birthday, sex, password, firstlogin) VALUES ('{}','{}','{}','{}','{}','{}', '{}')'''.format(firstname, lastname, email, birthday, sex, password, firstlogin)
-    
+        print(query)
         response = handleUsers(query)
     
         return jsonify({'res': True})
-    else: 
-        # Email exists alert the user
+
+    else: # Email exists, alert the user
+        
         return jsonify({'res': False, 'err': 'Email Exists'})
 
     return jsonify({'res': False})
@@ -73,22 +73,27 @@ def login():
     email = json_str["Email"]
     password = json_str["Password"]
 
-    query = '''SELECT * FROM register WHERE email = '{}' AND password = '{}' '''.format(email, password)
+    query = '''SELECT * FROM register WHERE email = '{}' AND password = '{}' '''.format(email, password) # Checks if the db has the email and password (if the user is correct)
     print(query)
+
     response = handleUsers(query)
     print(response)
-    sql_query = '''SELECT * FROM register WHERE firstlogin = '{}' '''.format(1)
-    
+
+    sql_query = '''SELECT * FROM register WHERE firstlogin = '{}' AND email = '{}' '''.format(1, email) # Checks if this is the first login for the specific user 
+    print(sql_query)
+
     if response == 1:
         response = handleUsers(sql_query)
         print(response)
         if response == 1:
             return jsonify({'res' : True, 'firstlogin': False})
-
+        fLoginquery = '''UPDATE register SET firstlogin = 1  WHERE email = '{}' '''.format(email) # Updates that the specific user entered more then once
+        handleUsers(fLoginquery)
+        
         return jsonify({'res' : True, 'firstlogin': True})
 
     elif response == 0:
-        return jsonify({'res': False})
+        return jsonify({'res': False, 'err': 'Email or Password are Incorrect'})
     
     return jsonify({'res': False})
 

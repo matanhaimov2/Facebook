@@ -10,6 +10,8 @@ function Login() {
     // States
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [showPopup, setShowPopup] = useState(false);
+
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,7 +36,7 @@ function Login() {
                 }
             }
             else {
-                alert("Email or Password is incorrect");
+                setShowPopup(true);
             }
         }
         catch (err) {
@@ -60,6 +62,11 @@ function Login() {
                         <input className='login-input' onChange={(e) => setEmail(e.target.value)} placeholder='דוא"ל או מספר טלפון'/>
                         <input type='password' className='login-input' onChange={(e) => setPassword(e.target.value)} placeholder='סיסמה'/>
                         <button type='submit' className='login-form-button'>התחברות</button>
+                        {showPopup && (
+                            <div className='login-error-wrapper'>
+                                <label className='login-error-title'> Email or Password are Incorrect </label>
+                            </div>
+                        )}
                     </form>
 
                     <div className='login-button-wrapper'>

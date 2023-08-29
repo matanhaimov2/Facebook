@@ -50,8 +50,8 @@ function Register() {
         
         try {
             const response = await axios.post("http://127.0.0.1:5000/register", data);
-
             console.log(response)
+
             if(response.data.res===true) { // If the response is true, redirect to login
                 window.location.href = '/login';
             }
@@ -94,10 +94,9 @@ function Register() {
                                 
                                 {showPopup && (
                                     <div className='register-error-wrapper'>
-                                        <div>
-                                            display the div
-                                        </div>
+                                        <label> Email is taken. please try another one </label> {/* showPopup needs to be reset to false after excution */}
                                     </div>
+
                                 )}
                             </div>
 

@@ -42,6 +42,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    position: relative;
 }
 
 .login-form input {
@@ -115,3 +116,30 @@
     font-size: 85%;
     text-decoration: none;
 }
+
+.login-error-wrapper {
+    background: red;
+    border-radius: 5px;
+    color: white;
+    position: absolute;
+    left: 109%;
+    width: 65%;
+    height: 45%;
+    top: 0;
+    padding: 4%;
+    animation: wipe-in-out 10s cubic-bezier(.25, 1, .30, 1) forwards;
+}
+
+.login-error-title {
+    position: relative;
+    top: 30%;
+}
+
+@keyframes wipe-in-out {
+    0%, 100% {
+      clip-path: inset(0 100% 0 0);
+    }
+    50% {
+      clip-path: inset(0 0 0 0);
+    }
+  }
