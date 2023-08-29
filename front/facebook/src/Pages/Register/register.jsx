@@ -39,6 +39,8 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        setShowPopup(false);
+
         let data = {
             "Firstname" : firstname,
             "Lastname" : lastname,
@@ -56,8 +58,7 @@ function Register() {
                 window.location.href = '/login';
             }
             else {
-                // setShowPopup(true) what i had before
-                setShowPopup(current => !current);
+                setShowPopup(true);
             }
 
         }
@@ -67,11 +68,6 @@ function Register() {
 
     }
 
-    useEffect(() => {
-        // 👇️ if you need to listen for changes of isLoading boolean
-        console.log('isLoading is: ', showPopup);
-      }, [showPopup]);
-    
 
     return (
         <div className='register-page'>

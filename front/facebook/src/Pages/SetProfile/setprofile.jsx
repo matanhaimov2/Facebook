@@ -28,7 +28,7 @@ function SetProfile() {
             }
 
             // Sends to back email and password to see if correct
-            const response = await axios.post("http://127.0.0.1:5000/login", data)
+            const response = await axios.post("http://127.0.0.1:5000/setprofile", data)
             console.log(response);
 
             if(response.data.res===true) { // If the response is true, redirect to home
