@@ -44,6 +44,25 @@
     width: -webkit-fill-available;
 }
 
+.setprofile-relationship-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.setprofile-relationship-sub-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.setprofile-relationship-title {
+    text-align: right;
+    font-size: 100%;
+    color: #4c7bf2;
+    font-weight: 500;
+}
+
 .setprofile-form-button {
     padding: 4%;
     border-radius: 5px;

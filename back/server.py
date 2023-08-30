@@ -108,6 +108,7 @@ def setprofile():
     # Set values
     username = json_str['Username']
     biography = json_str['Biography']
+    relationshipstatus = json_str["RelationshipStatus"]
     occupation = json_str['Occupation']
     school = json_str['School']
     address = json_str['Address']
@@ -119,7 +120,7 @@ def setprofile():
     print(response)
 
     if (response == 0): # If doesn't exist, continue
-        query = '''UPDATE profiles SET username = '{}', biography = '{}', occupation = '{}', school = '{}', address = '{}' WHERE email = 'shlomihaimov@gmail.com' '''.format(username, biography, occupation, school, address)
+        query = '''UPDATE profiles SET username = '{}', biography = '{}', relationshipstatus = '{}', occupation = '{}', school = '{}', address = '{}' WHERE email = 'shlomihaimov@gmail.com' '''.format(username, biography, relationshipstatus ,occupation, school, address)
         print(query)
         response = handleUsers(query)
 

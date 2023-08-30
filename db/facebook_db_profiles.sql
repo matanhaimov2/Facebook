@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: localhost    Database: facebook_db
 -- ------------------------------------------------------
--- Server version	8.0.13
+-- Server version	8.0.34
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8 ;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,10 +21,10 @@
 
 DROP TABLE IF EXISTS `profiles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `profiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `register_id` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `register_id` int DEFAULT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE `profiles` (
   `address` varchar(100) DEFAULT NULL,
   `school` varchar(100) DEFAULT NULL,
   `biography` text,
-  `relationshipstatus` varchar(20) DEFAULT NULL,
+  `relationshipstatus` enum('Not in a Relationship','In a Relationship','Married') DEFAULT NULL,
   `username` varchar(20) DEFAULT NULL,
   `occupation` varchar(45) DEFAULT NULL,
   `sex` enum('M','F','Other') DEFAULT NULL,
@@ -42,8 +42,18 @@ CREATE TABLE `profiles` (
   UNIQUE KEY `username_UNIQUE` (`username`),
   KEY `register_id` (`register_id`),
   CONSTRAINT `profiles_ibfk_1` FOREIGN KEY (`register_id`) REFERENCES `register` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profiles`
+--
+
+LOCK TABLES `profiles` WRITE;
+/*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
+INSERT INTO `profiles` VALUES (14,30,'Matan','Haimov','matanhaimov2@gmail.com','2004-03-04','','','',NULL,'','','M'),(15,31,'shlomi','haimov','shlomihaimov@gmail.com','2023-01-01','hoifdads','ioalsidhi','alsjdlkj',NULL,'shlomihaimov','hnaikoslh','M'),(16,32,'noa','haimov','noahaimov@gmail.com','2023-01-01','hvkas','igugiu','',NULL,'noahaimov','kjbgkjbg','M'),(17,33,'Rita','Haimov','ritahaimov@gmail.com','2023-01-01','gikasfda','ugujasgu','asjgd',NULL,'ritahaimov','jgikasgd','M'),(18,34,'edik','haimov','edik@gmail.com','2023-01-01','asdas','sadas','asdad','In a Relationship','edikhaimov','asda','M');
+/*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -54,4 +64,4 @@ CREATE TABLE `profiles` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-29 17:06:22
+-- Dump completed on 2023-08-30 12:57:31
