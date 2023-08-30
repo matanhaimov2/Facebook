@@ -41,6 +41,7 @@
     border-radius: 5px;
     border: 1px solid #dddfe2;
     color: black;
+    width: -webkit-fill-available;
 }
 
 .setprofile-form-button {
@@ -64,3 +65,34 @@
     font-size: 150%;
     text-decoration: none;
 }
+
+.setprofile-username-wrapper {
+    position: relative;
+}
+
+.setprofile-error-wrapper {
+    background: red;
+    border-radius: 5px;
+    color: white;
+    position: absolute;
+    left: 108.5%;
+    width: max-content;
+    height: 100%;
+    top: 0;
+    padding: 0 3% 0 3%;
+    animation: wipe-in-out 10s cubic-bezier(.25, 1, .30, 1) forwards;
+}
+
+.setprofile-error-title {
+    position: relative;
+    top: 30%;
+}
+
+@keyframes wipe-in-out {
+    0%, 100% {
+      clip-path: inset(0 100% 0 0);
+    }
+    50% {
+      clip-path: inset(0 0 0 0);
+    }
+  }

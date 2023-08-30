@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+
 
 
 //CSS
@@ -16,6 +18,8 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        setShowPopup(false);
+
 
         try {
             let data = {
@@ -26,6 +30,13 @@ function Login() {
             // Sends to back email and password to see if correct
             const response = await axios.post("http://127.0.0.1:5000/login", data)
             console.log(response);
+
+            <Link>
+                to={{
+                    pathname: "/setprofile",
+                    state: {"Email" : email}
+                }}
+            </Link>
 
             if(response.data.res===true) { // If the response is true, redirect to home
                 if(response.data.firstlogin===true) {
@@ -59,14 +70,18 @@ function Login() {
                     </div>
 
                     <form className='login-form' onSubmit={ handleSubmit }>
-                        <input className='login-input' onChange={(e) => setEmail(e.target.value)} placeholder='דוא"ל או מספר טלפון'/>
+                        <div className='login-email-wrapper'>
+                            <input className='login-input' onChange={(e) => setEmail(e.target.value)} placeholder='דוא"ל או מספר טלפון'/>
+
+                            {showPopup && (
+                                <div className='login-error-wrapper'>
+                                    <label className='login-error-title'> Email or Password are Incorrect </label>
+                                </div>
+                            )}
+                        </div>
                         <input type='password' className='login-input' onChange={(e) => setPassword(e.target.value)} placeholder='סיסמה'/>
                         <button type='submit' className='login-form-button'>התחברות</button>
-                        {showPopup && (
-                            <div className='login-error-wrapper'>
-                                <label className='login-error-title'> Email or Password are Incorrect </label>
-                            </div>
-                        )}
+
                     </form>
 
                     <div className='login-button-wrapper'>

@@ -55,6 +55,7 @@
     border-radius: 5px;
     border: 1px solid #dddfe2;
     color: black;
+    width: -webkit-fill-available;
 }
 
 .login-form-button {
@@ -118,16 +119,20 @@
     text-decoration: none;
 }
 
+.login-email-wrapper {
+    position: relative;
+}
+
 .login-error-wrapper {
     background: red;
     border-radius: 5px;
     color: white;
     position: absolute;
-    left: 109%;
-    width: 65%;
-    height: 45%;
+    left: 108.5%;
+    width: max-content;
+    height: 100%;
     top: 0;
-    padding: 4%;
+    padding: 0 3% 0 3%;
     animation: wipe-in-out 10s cubic-bezier(.25, 1, .30, 1) forwards;
 }
 

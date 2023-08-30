@@ -96,7 +96,7 @@ function Register() {
                                 
                                 {showPopup && (
                                     <div className='register-error-wrapper'>
-                                        <label> Email is taken. please try another one </label> {/* showPopup needs to be reset to false after excution */}
+                                        <label  className='register-error-title'> Email is taken. please try another one </label>
                                     </div>
 
                                 )}

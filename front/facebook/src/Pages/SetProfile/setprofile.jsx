@@ -13,10 +13,12 @@ function SetProfile() {
     const [occupation, setOccupation] = useState();
     const [school, setSchool] = useState();
     const [address, setAddress] = useState();
+    const [showPopup, setShowPopup] = useState(false);
     
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        setShowPopup(false)
 
         try {
             let data = {
@@ -35,7 +37,7 @@ function SetProfile() {
                 window.location.href='/home'
             }
             else {
-                
+                setShowPopup(true)
             }
         }
         catch (err) {
@@ -50,8 +52,16 @@ function SetProfile() {
             <div className='setprofile-content-wrapper'>
             <form className='setprofile-form' onSubmit={ handleSubmit }>
                         <label className='setprofile-title-button'> פרטים נוספים</label>
-                        <input type='text' className='setprofile-input' onChange={(e) => setUsername(e.target.value)} placeholder='שם המשתמש שלך (חובה)'/>
-                        <input type='text' className='setprofile-input' onChange={(e) => setBiography(e.target.value)} placeholder='ביוגרפיה שלך (לא חובה)'/>
+                        <div className='setprofile-username-wrapper'>
+                            <input type='text' className='setprofile-input' onChange={(e) => setUsername(e.target.value)} placeholder='שם המשתמש שלך (חובה)' required/>
+
+                            {showPopup && (
+                            <div className='setprofile-error-wrapper'>
+                                <label className='setprofile-error-title'> Username is already taken </label>
+                            </div>
+                            )}
+                        </div>
+                        <input type='text' className='setprofile-input' onChange={(e) => setBiography(e.target.value)} placeholder='ביוגרפיה (לא חובה)'/>
                         <input type='text' className='setprofile-input' onChange={(e) => setOccupation(e.target.value)} placeholder='תעסוקה (לא חובה)'/>
                         <input type='text' className='setprofile-input' onChange={(e) => setSchool(e.target.value)} placeholder='בית הספר שבו למדת (לא חובה)'/>
                         <input type='text' className='setprofile-input' onChange={(e) => setAddress(e.target.value)} placeholder='כתובת (לא חובה)'/>
