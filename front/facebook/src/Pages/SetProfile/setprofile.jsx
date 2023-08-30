@@ -9,13 +9,13 @@ function SetProfile() {
 
     // States
     const [username, setUsername] = useState();
-    const [biography, setBiography] = useState();
-    const [relationStatus, setRelationStatus] = useState();
-    const [occupation, setOccupation] = useState();
-    const [school, setSchool] = useState();
-    const [address, setAddress] = useState();
+    const [biography, setBiography] = useState('');
+    const [relationStatus, setRelationStatus] = useState('');
+    const [occupation, setOccupation] = useState('');
+    const [school, setSchool] = useState('');
+    const [address, setAddress] = useState('');
     const [showPopup, setShowPopup] = useState(false);
-    
+ 
     const handleSubmit = async (e) => {
         e.preventDefault();
         

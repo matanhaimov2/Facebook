@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import {Link} from 'react-router-dom';
-
-
 
 //CSS
 import './login.css';
+
+// Services
+import { login } from '../../Services/authService';
 
 function Login() {
 
@@ -20,38 +19,26 @@ function Login() {
         
         setShowPopup(false);
 
+        let data = {
+            "Email" : email,
+            "Password" : password
+        }
 
-        try {
-            let data = {
-                "Email" : email,
-                "Password" : password
+        const response = await login(data);
+
+        if(response.res===true) { // If the response is true, redirect to home
+
+            localStorage.setItem('UserInfo', email);
+
+            if(response.firstlogin===true) {
+                window.location.href='/setprofile';
             }
-
-            // Sends to back email and password to see if correct
-            const response = await axios.post("http://127.0.0.1:5000/login", data)
-            console.log(response);
-
-            <Link>
-                to={{
-                    pathname: "/setprofile",
-                    state: {"Email" : email}
-                }}
-            </Link>
-
-            if(response.data.res===true) { // If the response is true, redirect to home
-                if(response.data.firstlogin===true) {
-                    window.location.href='/setprofile'
-                }
-                else if(response.data.firstlogin===false) {
-                    window.location.href='/home'
-                }
-            }
-            else {
-                setShowPopup(true);
+            else if(response.firstlogin===false) {
+                window.location.href='/home';
             }
         }
-        catch (err) {
-            console.log(err);
+        else {
+            setShowPopup(true);
         }
     }
 
