@@ -17,7 +17,7 @@ function Register() {
     const [lastname, setLastname] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const [sex, setSex] = useState();
+    const [sex, setSex] = useState('');
     const [showPopup, setShowPopup] = useState(false);
 
 

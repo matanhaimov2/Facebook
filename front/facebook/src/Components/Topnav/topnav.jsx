@@ -26,19 +26,19 @@ function TopNav() {
           <div className='topnav-left-side'>
             <div className='topnav-sub-left-orgenaize'>
               <div className='topnav-sub-left-wrapper'>
-                <button  className='topnav-button-circle'> חשבון </button>
+                <button  className='topnav-button-circle topnav-pointer'> חשבון </button>
               </div>
 
               <div className='topnav-sub-left-wrapper'>
-                <button className='topnav-button-circle'> התראות </button>
+                <button className='topnav-button-circle topnav-pointer'> התראות </button>
               </div>
 
               <div className='topnav-sub-left-wrapper'>
-                <button className='topnav-button-circle'> תפריט </button>
+                <button className='topnav-button-circle topnav-pointer'> תפריט </button>
               </div>
 
               <div className='topnav-sub-left-wrapper'>
-                <button className='topnav-button-circle' onClick={ handleSignout }> התנתק </button> {/*meanwhile its here untill asking shlomi if Account pop is component */}
+                <button className='topnav-button-circle topnav-pointer' onClick={ handleSignout }> התנתק </button> {/*meanwhile its here untill asking shlomi if Account pop is component */}
               </div>
             </div>
           </div>
@@ -46,23 +46,23 @@ function TopNav() {
 
           <div className='topnav-middle-side'>
             <div className='topnav-sub-middle-wrapper'>
-              <button> קבוצות </button>
+              <button className='topnav-pointer'> קבוצות </button>
             </div>
 
             <div className='topnav-sub-middle-wrapper'>
-              <button> חנות </button>
+              <button className='topnav-pointer'> חנות </button>
             </div>
               
             <div className='topnav-sub-middle-wrapper'>
-              <button> סרטונים </button>
+              <button className='topnav-pointer'> סרטונים </button>
             </div>
 
             <div className='topnav-sub-middle-wrapper'>
-              <button> חברים </button>
+              <button className='topnav-pointer'> חברים </button>
             </div>  
 
             <div className='topnav-sub-middle-wrapper'>
-              <button> דף הבית </button>
+              <button className='topnav-pointer'> דף הבית </button>
             </div>    
           </div>
 
@@ -74,7 +74,7 @@ function TopNav() {
               </div>  
 
               <div className='topnav-search-wrapper'>
-                <button> (פייסבוק) </button>
+                <button className='topnav-pointer'> (פייסבוק) </button>
               </div>
             </div>
           </div>

@@ -9,8 +9,8 @@ import { login } from '../../Services/authService';
 function Login() {
 
     // States
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [showPopup, setShowPopup] = useState(false);
 
     
