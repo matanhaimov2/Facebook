@@ -69,11 +69,11 @@ function TopNav() {
 
           <div className='topnav-right-side'>
             <div className='topnav-sub-right-wrapper'>
-              <div className=''>
-                <label> חיפוש </label>
+              <div className='topnav-search-wrapper'>
+                <input className='topnav-sub-search' placeholder="חפש..."/> 
               </div>  
 
-              <div className=''>
+              <div className='topnav-search-wrapper'>
                 <button> (פייסבוק) </button>
               </div>
             </div>

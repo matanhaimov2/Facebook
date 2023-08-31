@@ -47,7 +47,6 @@
     width: 33.3333333%;
     display: flex;
     flex-direction: row;
-    margin: auto;
     direction: rtl;
     padding-right: 1%;
 
@@ -59,7 +58,20 @@
     gap: 2%;
 
 }
+.topnav-search-wrapper {
+    border-radius: 10%;
+    width: -webkit-fill-available;
+    margin: auto;
+    text-align: center;
+    
+}
+.topnav-sub-search {
+    direction: rtl;
+    
+}
+
 .topnav-button-circle {
     border-radius: 50%;
     height: 80%;
+
 }
