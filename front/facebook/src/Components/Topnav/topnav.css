@@ -54,7 +54,6 @@
 .topnav-sub-right-wrapper {
     display: flex;
     flex-direction: row;
-    direction: ltr;
     gap: 2%;
 
 }
@@ -71,6 +70,10 @@
     direction: rtl;
     
 }
+.topnav-facebook-icon-wrapper {
+    height: auto;
+    margin: auto;
+}
 
 .topnav-button-circle {
     border-radius: 50%;
@@ -80,4 +83,15 @@
 
 .topnav-pointer {
     cursor: pointer;
+}
+
+.topnav-facebook-button {
+    background-color: #332f2f;
+    border: none;
+}
+
+.topnav-facebook-icon {
+    width: 45px;
+    height: 45px;
+    background-color: #332f2f;
 }
