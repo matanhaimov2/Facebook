@@ -2,9 +2,13 @@
 
 in the app.js file i createed a function - PrivateRoutes that checks if a user is "logged in" if not reroutes to login.
 
+
+
 2. Creation of GlobalVeriables File
 
 in assets/GlobalVeriable.js i added all the global veriable to use in all the project becuase if we would ever have to change somthing. we wont go through all the files and change it. for example the server ip 
+
+
 
 
 3. Service Creation
@@ -13,6 +17,8 @@ In stead of make the asxios request to the back from the login component for exa
 the , authtications. login, register, isExpried - important, sign out.
 
 isExpird is responsbale of checking if the user is vaild - real and if someone hacked someone else. we will uses togther sessions in order to create it.
+
+
 
 
 4. Adding Top Nav to some of the component not all of them
@@ -28,7 +34,7 @@ when logging in user. we save in the localstorage / cookies his data. the data i
 
 HomeWork:
 
-1. Create a serviec for register, and fix the register file accordingly.
+1. Create a service for register, and fix the register file accordingly.
 
 2. Create the top nav with an otpion to sign out.
 

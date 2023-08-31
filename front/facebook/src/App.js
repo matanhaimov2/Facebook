@@ -52,8 +52,8 @@ const PrivateRoutes = () => {
 
         <div className='com-with-nav-item'>
           <Routes>
-            <Route path="/home" element={home()} />
-            <Route path="/profile" element={profile()} />
+            <Route path="/home" element={ home() } />
+            <Route path="/profile" element={ profile() } />
           </Routes>
         </div>
       </div>

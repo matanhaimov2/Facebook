@@ -22,9 +22,41 @@ const login = async (data) => {
     }
 }
 
+const register = async (data) => {
+    try {
+        // Sends to back the data to insert db
+        const response = await axios.post(SERVER_URL + "/register", data)
+        console.log(response);
+
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const setprofile = async (data) => {
+    try {
+        // Sends to back additional data about the user to insert db
+        const response = await axios.post(SERVER_URL + "/setprofile", data)
+        console.log(response);
+
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const signout = async (data) => {
+    
+}
+
 
 
 export {
     login,
-
+    register,
+    setprofile,
+    signout
 }

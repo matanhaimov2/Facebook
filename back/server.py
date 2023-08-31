@@ -134,8 +134,6 @@ def setprofile():
 if __name__ == "__main__":
     app.run(debug = True)
 
-# 2 problems:
-# 1: I want all the values to go to a certain email in db so the query will know which row to fill.
-# my way is transfer email value from login page to setprofile page and from there sending it to the back with the other 5 values
 
-# 2: db can't get NULL values, so if user doesn't want to insert biography for example, he can't.
+# 1: I want all the values to go to a certain email in db so the query will know which row to fill.
+# cant find in google how to get data from localstorage to flask

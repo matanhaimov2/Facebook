@@ -5,6 +5,10 @@ import axios from 'axios';
 //CSS
 import './setprofile.css';
 
+// Services
+import { register } from '../../Services/authService';
+
+
 function SetProfile() {
 
     // States
@@ -21,31 +25,26 @@ function SetProfile() {
         
         setShowPopup(false)
 
-        try {
-            let data = {
-                "Username" : username,
-                "Biography" : biography,
-                "RelationshipStatus" : relationStatus,
-                "Occupation" : occupation,
-                "School" : school,
-                "Address" : address
-            }
-
-            // Sends to back email and password to see if correct
-            const response = await axios.post("http://127.0.0.1:5000/setprofile", data)
-            console.log(response);
-
-            if(response.data.res===true) { // If the response is true, redirect to home
-                window.location.href='/profile'
-            }
-            else {
-                setShowPopup(true)
-            }
+        let data = {
+            "Username" : username,
+            "Biography" : biography,
+            "RelationshipStatus" : relationStatus,
+            "Occupation" : occupation,
+            "School" : school,
+            "Address" : address
         }
-        catch (err) {
-            console.log(err);
+
+        const response = await register(data)
+
+        if(response.data.res===true) { // If the response is true, redirect to profile
+            window.location.href='/profile'
+        }
+        else {
+            setShowPopup(true)
         }
     }
+
+
 
 
     

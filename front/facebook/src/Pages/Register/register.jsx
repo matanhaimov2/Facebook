@@ -4,6 +4,9 @@ import axios from 'axios';
 //CSS
 import './register.css';
 
+// Services
+import { register } from '../../Services/authService';
+
 function Register() {
 
     // States
@@ -50,20 +53,13 @@ function Register() {
             "Sex" : sex
         }
         
-        try {
-            const response = await axios.post("http://127.0.0.1:5000/register", data);
-            console.log(response)
+        const response = await register(data);
 
-            if(response.data.res===true) { // If the response is true, redirect to login
-                window.location.href = '/login';
-            }
-            else {
-                setShowPopup(true);
-            }
-
+        if(response.res===true) { // If the response is true, redirect to login
+            window.location.href = '/login';
         }
-        catch (err) {
-            console.log(err);
+        else {
+            setShowPopup(true);
         }
 
     }
