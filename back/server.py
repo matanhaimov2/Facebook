@@ -120,7 +120,7 @@ def setprofile():
     print(response)
 
     if (response == 0): # If doesn't exist, continue
-        query = '''UPDATE profiles SET username = '{}', biography = '{}', relationshipstatus = '{}', occupation = '{}', school = '{}', address = '{}' WHERE email = 'shlomihaimov@gmail.com' '''.format(username, biography, relationshipstatus ,occupation, school, address)
+        query = '''UPDATE profiles SET username = '{}', biography = '{}', relationshipstatus = '{}', occupation = '{}', school = '{}', address = '{}' WHERE email = 'matanhaimov@gmail.com' '''.format(username, biography, relationshipstatus ,occupation, school, address)
         print(query)
         response = handleUsers(query)
 

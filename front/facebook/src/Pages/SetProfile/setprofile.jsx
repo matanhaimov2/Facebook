@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 
 //CSS
 import './setprofile.css';
 
 // Services
-import { register } from '../../Services/authService';
+import { setprofile } from '../../Services/authService';
 
 
 function SetProfile() {
@@ -34,9 +33,9 @@ function SetProfile() {
             "Address" : address
         }
 
-        const response = await register(data)
+        const response = await setprofile(data)
 
-        if(response.data.res===true) { // If the response is true, redirect to profile
+        if(response.res===true) { // If the response is true, redirect to profile
             window.location.href='/profile'
         }
         else {
