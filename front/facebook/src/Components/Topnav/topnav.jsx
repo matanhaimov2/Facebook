@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import logo from '../../facebook-icon.png'; 
+import logo1 from '../../home-icon.png'; 
+
 
 //CSS
 import './topnav.css';
@@ -63,7 +65,7 @@ function TopNav() {
             </div>  
 
             <div className='topnav-sub-middle-wrapper'>
-              <button className='topnav-pointer'> דף הבית </button>
+              <a href='/home' className='topnav-pointer'> <img className='topnav-home-icon' src={logo1} /></a>
             </div>    
           </div>
 
@@ -71,11 +73,11 @@ function TopNav() {
           <div className='topnav-right-side'>
             <div className='topnav-sub-right-wrapper'>
               <div className='topnav-facebook-icon-wrapper'>
-                  <button className='topnav-facebook-button topnav-pointer'> <img className='topnav-facebook-icon' src={logo} /> </button>
+                  <a href='/home' className='topnav-facebook-button topnav-pointer'> <img className='topnav-facebook-icon' src={logo} /> </a>
               </div>
 
               <div className='topnav-search-wrapper'>
-                <input className='topnav-sub-search' placeholder="חפש..."/> 
+                <input className='topnav-sub-search' placeholder="חפש בפייסבוק"/> 
               </div>  
             </div>
           </div>
