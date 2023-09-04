@@ -23,7 +23,7 @@
 }
 .topnav-sub-left-wrapper {
     width: -webkit-fill-available;
-    height: 100%;
+    height: 60%;
     margin: auto;
     text-align: center;
 }
@@ -37,7 +37,6 @@
 
 }
 .topnav-sub-middle-wrapper {
-    height: -webkit-fill-available;
     margin: auto;
     text-align: center;
     width: 12%;
@@ -78,7 +77,6 @@
     
 }
 .topnav-facebook-icon-wrapper {
-    height: -webkit-fill-available;
     width: 12%;
     margin: auto;
 }
@@ -101,6 +99,8 @@
     display:block;
     height: 100%;
     border: none;
+    /* mix-blend-mode: multiply; */
+
 }
 
 .topnav-facebook-icon {
