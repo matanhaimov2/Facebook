@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import logo from '../../facebook-icon.png'; 
 import logo1 from '../../home-icon.png'; 
+import logo2 from '../../friends-icon.png'; 
+import logo3 from '../../videos-icon.png'; 
+import logo4 from '../../shop-icon.png'; 
+import logo5 from '../../groups-icon.png'; 
+
+
+
 
 
 //CSS
@@ -48,24 +55,24 @@ function TopNav() {
 
 
           <div className='topnav-middle-side'>
-            <div className='topnav-sub-middle-wrapper'>
-              <button className='topnav-pointer'> קבוצות </button>
+            <div className='topnav-sub-middle-wrapper topnav-friends-icon'>
+            <a href='/groups' className='topnav-middle-buttons'> <img className='topnav-home-icon' src={logo5} /></a>
             </div>
 
-            <div className='topnav-sub-middle-wrapper'>
-              <button className='topnav-pointer'> חנות </button>
+            <div className='topnav-sub-middle-wrapper topnav-friends-icon'>
+              <a href='/marketplace' className='topnav-middle-buttons'> <img className='topnav-home-icon' src={logo4} /></a>
             </div>
               
-            <div className='topnav-sub-middle-wrapper'>
-              <button className='topnav-pointer'> סרטונים </button>
+            <div className='topnav-sub-middle-wrapper topnav-friends-icon'>
+              <a href='/videos' className='topnav-middle-buttons'> <img className='topnav-home-icon' src={logo3} /></a>
             </div>
 
-            <div className='topnav-sub-middle-wrapper'>
-              <button className='topnav-pointer'> חברים </button>
+            <div className='topnav-sub-middle-wrapper topnav-friends-icon'>
+              <a href='/friends' className='topnav-middle-buttons'> <img className='topnav-home-icon' src={logo2} /></a>
             </div>  
 
-            <div className='topnav-sub-middle-wrapper'>
-              <a href='/home' className='topnav-pointer'> <img className='topnav-home-icon' src={logo1} /></a>
+            <div className='topnav-sub-middle-wrapper topnav-friends-icon'>
+              <a href='/home' className='topnav-middle-buttons'> <img className='topnav-home-icon' src={logo1} /></a>
             </div>    
           </div>
 
