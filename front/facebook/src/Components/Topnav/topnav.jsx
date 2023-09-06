@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import logo from '../../facebook-icon.png'; 
-import logo1 from '../../home-icon.png'; 
-import logo2 from '../../friends-icon.png'; 
-import logo3 from '../../videos-icon.png'; 
-import logo4 from '../../shop-icon.png'; 
-import logo5 from '../../groups-icon.png'; 
+import logo from '../../Assets/facebook-icon.png'; 
+import logo1 from '../../Assets/home-icon.png'; 
+import logo2 from '../../Assets/friends-icon.png'; 
+import logo3 from '../../Assets/videos-icon.png'; 
+import logo4 from '../../Assets/shop-icon.png'; 
+import logo5 from '../../Assets/groups-icon.png'; 
 
 
 
