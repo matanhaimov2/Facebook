@@ -117,3 +117,13 @@
     border: none;
     cursor: pointer;
 }
+
+.topnav-account-wrapper {
+    border: 1px solid white;
+    border-radius: 50%;
+}
+
+.topnav-account-button {
+    text-decoration: none;
+    color: white;
+}

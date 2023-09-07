@@ -70,7 +70,7 @@ const PrivateRoutes = () => {
           {/* Routes With Navigation Bar  */}
           <Route path="/*" element={ <ComponentsWithNav /> } />
 
-          {/* Page Doesnt Exists */}
+          {/* Page Doesnt Exists   (doesnt work ask shlomi)*/}
           <Route path='/*' element={ <div>404 doesnt exists</div> } />
         </Routes>
       ) : (

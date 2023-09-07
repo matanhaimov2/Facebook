@@ -35,8 +35,8 @@ function TopNav() {
         <div className='topnav-wrapper'>
           <div className='topnav-left-side'>
             <div className='topnav-sub-left-orgenaize'>
-              <div className='topnav-sub-left-wrapper'>
-                <button  className='topnav-button-circle topnav-pointer'> חשבון </button>
+              <div className='topnav-sub-left-wrapper topnav-account-wrapper'>
+                <a href='/profile'  className='topnav-button-circle topnav-pointer topnav-account-button'> חשבון </a>
               </div>
 
               <div className='topnav-sub-left-wrapper'>
