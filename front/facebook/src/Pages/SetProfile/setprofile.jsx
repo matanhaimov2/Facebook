@@ -26,13 +26,14 @@ function SetProfile() {
 
         let data = {
             "Username" : username,
+            "Email" : localStorage.getItem('UserInfo'),
             "Biography" : biography,
             "RelationshipStatus" : relationStatus,
             "Occupation" : occupation,
             "School" : school,
             "Address" : address
         }
-
+        
         const response = await setprofile(data)
 
         if(response.res===true) { // If the response is true, redirect to profile

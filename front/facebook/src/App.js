@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate  } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate  } from 'react-router-dom';
 
 // Main CSS
 import './App.css';
@@ -14,6 +14,8 @@ import Profile from './Pages/Profile/profile';
 // Components
 import TopNav from './Components/Topnav/topnav';
 
+// Service
+import { healthCheck } from './Services/administrationService';
 
 // --- Functions
 function login() {
@@ -54,6 +56,9 @@ const PrivateRoutes = () => {
           <Routes>
             <Route path="/home" element={ home() } />
             <Route path="/profile" element={ profile() } />
+            
+            {/* Page Doesnt Exists */}
+            <Route path='/*' element={ <div>404 doesnt exists</div> } />
           </Routes>
         </div>
       </div>
@@ -70,8 +75,6 @@ const PrivateRoutes = () => {
           {/* Routes With Navigation Bar  */}
           <Route path="/*" element={ <ComponentsWithNav /> } />
 
-          {/* Page Doesnt Exists   (doesnt work ask shlomi)*/}
-          <Route path='/*' element={ <div>404 doesnt exists</div> } />
         </Routes>
       ) : (
         <Navigate to="/login" />
@@ -82,6 +85,20 @@ const PrivateRoutes = () => {
 
 
 function App() {
+
+  useEffect(() => {
+    const healthChecker = async () => {
+      let res = await healthCheck();
+      console.log(window.location.pathname )
+      if(!res && window.location.pathname !== '/sitenotfound') {
+        window.location.href = '/sitenotfound';
+      }
+    }
+
+    // Call Health Checker to see if back is alive
+    healthChecker();
+  }, [])
+
   return (
     <div className="outer-wrapper">
         <div className='wrapper'>
@@ -90,6 +107,8 @@ function App() {
                 <Routes>
                     <Route path='/login' element={ login() } />
                     <Route path='/register' element={ register() } />
+
+                    <Route path='/sitenotfound' element={<div>site is under constarction</div>}/>
 
                     {/* Private Routes */}
                     <Route path='/*' element={ <PrivateRoutes /> } />
