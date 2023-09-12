@@ -43,7 +43,6 @@
 }
 
 .topnav-home-icon {
-    width: 70%;
     height: 100%;
     background-color: #332f2f;
     mix-blend-mode: darken;
@@ -55,6 +54,7 @@
     flex-direction: row;
     direction: rtl;
     padding-right: 1%;
+    gap: 1%;
 
 }
 .topnav-sub-right-wrapper {
@@ -63,22 +63,23 @@
     gap: 2%;
 }
 .topnav-search-wrapper {
-    border-radius: 10%;
-    width: -webkit-fill-available;
+    width: 100%;
     margin: auto;
-    text-align: right;
-    
+
 }
 .topnav-sub-search {
-    height: 100%;
+    background-color: #474141;
     padding: 2%;
-    width: 75%;
-    direction: rtl;
-    border-radius: 5px;
+    width: 40%;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    color: white;
     
 }
 .topnav-facebook-icon-wrapper {
-    width: 12%;
+    width: 46px;
+    height: 43px;
     margin: auto;
 }
 
@@ -108,8 +109,8 @@
 }
 
 .topnav-friends-icon {
-    height: 60%;
-    width: 14%;
+    height: 40px;
+    width: 80px;
 }
 
 .topnav-middle-buttons {

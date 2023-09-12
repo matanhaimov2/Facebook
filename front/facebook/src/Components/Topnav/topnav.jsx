@@ -78,7 +78,6 @@ function TopNav() {
 
 
           <div className='topnav-right-side'>
-            <div className='topnav-sub-right-wrapper'>
               <div className='topnav-facebook-icon-wrapper'>
                   <a href='/home' className='topnav-facebook-button topnav-pointer'> <img className='topnav-facebook-icon' src={logo} /> </a>
               </div>
@@ -87,7 +86,6 @@ function TopNav() {
                 <input className='topnav-sub-search' placeholder="חפש בפייסבוק"/> 
               </div>  
             </div>
-          </div>
         </div>
     );
 }
