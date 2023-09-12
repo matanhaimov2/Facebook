@@ -154,9 +154,9 @@ function Register() {
                             </div>
                             
                             {!showLoading ? (
-                            <button type='submit' className='login-form-button'>הרשמה</button>
+                                <button type='submit' className='login-form-button'>הרשמה</button>
                             ) : (
-                            <Box type='submit' className='login-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
+                                <Box type='submit' className='login-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
                             )}
                         </form>
 

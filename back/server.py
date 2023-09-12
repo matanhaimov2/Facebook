@@ -108,19 +108,17 @@ def login():
     # Get full data about the email including his hashed password
     response = handleUsersLogin(query)
 
-    # Show shlomi what you've done here. without try, if incorrect its rasies up an error
-    try:
+    if(response):
         # Save the password of the searched email
         usersHasedPassword = response[6].encode()
-    except:
-        return jsonify({'res': False, 'err': 'Email or Password are Incorrect'})
 
+        # check if they are the same
+        checker = bcrypt.checkpw(password.encode(), usersHasedPassword)
 
-    # check if they are the same
-    checker = bcrypt.checkpw(password.encode(), usersHasedPassword)
-
-    sql_query = '''SELECT * FROM register WHERE firstlogin = '{}' AND email = '{}' '''.format(1, email) # Checks if this is the first login for the specific user 
-    print(sql_query)
+        sql_query = '''SELECT * FROM register WHERE firstlogin = '{}' AND email = '{}' '''.format(1, email) # Checks if this is the first login for the specific user 
+        print(sql_query)
+    else:
+        checker = False
 
     # If the hased save password in the db and the password that was inserted by the user are the same enter
     if (checker):
