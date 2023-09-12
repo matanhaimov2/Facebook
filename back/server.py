@@ -105,11 +105,16 @@ def login():
     query = '''SELECT * FROM register WHERE email = '{}' '''.format(email) 
     print(query)
 
-    # Get full data about the eamil including his hashed password
+    # Get full data about the email including his hashed password
     response = handleUsersLogin(query)
 
-    # Save the password of the searched email
-    usersHasedPassword = response[6].encode()
+    # Show shlomi what you've done here. without try, if incorrect its rasies up an error
+    try:
+        # Save the password of the searched email
+        usersHasedPassword = response[6].encode()
+    except:
+        return jsonify({'res': False, 'err': 'Email or Password are Incorrect'})
+
 
     # check if they are the same
     checker = bcrypt.checkpw(password.encode(), usersHasedPassword)

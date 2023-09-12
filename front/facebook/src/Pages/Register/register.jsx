@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 //CSS
 import './register.css';
@@ -19,6 +20,8 @@ function Register() {
     const [password, setPassword] = useState();
     const [sex, setSex] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const [showLoading, setShowLoading] = useState(false);
+
 
 
     // --- date to values
@@ -41,6 +44,9 @@ function Register() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setShowLoading(true); // Show loading animation
+
         
         setShowPopup(false);
 
@@ -59,6 +65,7 @@ function Register() {
             window.location.href = '/login';
         }
         else {
+            setShowLoading(false);
             setShowPopup(true);
         }
 
@@ -146,7 +153,11 @@ function Register() {
                                 </div>
                             </div>
                             
-                            <button type='submit' className='register-form-button'>הרשמה</button>
+                            {!showLoading ? (
+                            <button type='submit' className='login-form-button'>הרשמה</button>
+                            ) : (
+                            <Box type='submit' className='login-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
+                            )}
                         </form>
 
                         <div className='register-button-wrapper'>

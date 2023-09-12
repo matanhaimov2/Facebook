@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 //CSS
 import './login.css';
@@ -12,11 +14,15 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const [showLoading, setShowLoading] = useState(false);
+
 
     
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        setShowLoading(true); // Show loading animation
+
         setShowPopup(false);
 
         let data = {
@@ -38,6 +44,7 @@ function Login() {
             }
         }
         else {
+            setShowLoading(false);
             setShowPopup(true);
         }
     }
@@ -67,7 +74,12 @@ function Login() {
                             )}
                         </div>
                         <input type='password' className='login-input' onChange={(e) => setPassword(e.target.value)} placeholder='סיסמה'/>
-                        <button type='submit' className='login-form-button'>התחברות</button>
+
+                        {!showLoading ? (
+                            <button type='submit' className='login-form-button'>התחברות</button>
+                            ) : (
+                            <Box type='submit' className='login-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
+                        )}
 
                     </form>
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 //CSS
 import './setprofile.css';
@@ -18,9 +19,15 @@ function SetProfile() {
     const [school, setSchool] = useState('');
     const [address, setAddress] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const [showLoading, setShowLoading] = useState(false);
+
  
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setShowLoading(true); // Show loading animation
+
+
         
         setShowPopup(false)
 
@@ -40,10 +47,10 @@ function SetProfile() {
             window.location.href='/profile'
         }
         else {
+            setShowLoading(false);
             setShowPopup(true)
         }
     }
-
 
 
 
@@ -89,8 +96,12 @@ function SetProfile() {
                         <input type='text' className='setprofile-input' onChange={(e) => setSchool(e.target.value)} placeholder='בית הספר שבו למדת (לא חובה)'/>
                         <input type='text' className='setprofile-input' onChange={(e) => setAddress(e.target.value)} placeholder='כתובת (לא חובה)'/>
 
-
-                        <button type='submit' className='setprofile-form-button'>למעבר לחשבון שלך</button>
+                        {!showLoading ? (
+                            <button type='submit' className='setprofile-form-button'>למעבר לחשבון שלך</button>
+                            ) : (
+                            <Box type='submit' className='login-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
+                        )}
+                        
                     </form>
             </div>
         </div>

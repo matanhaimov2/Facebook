@@ -73,6 +73,13 @@
     transition: all 500ms ease;
 }
 
+.login-form-loading {
+    padding: 2%;
+    border-radius: 5px;
+    border: none;
+    background: #1877f2;
+}
+
 .login-button-wrapper {
     padding: 5%;
 }
