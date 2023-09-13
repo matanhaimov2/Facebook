@@ -89,7 +89,7 @@ function App() {
   useEffect(() => {
     const healthChecker = async () => {
       let res = await healthCheck();
-      console.log(window.location.pathname )
+      // console.log(window.location.pathname )
       if(!res && window.location.pathname !== '/sitenotfound') {
         window.location.href = '/sitenotfound';
       }

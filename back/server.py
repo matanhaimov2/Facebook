@@ -176,10 +176,38 @@ def healthCheck():
     return jsonify({'res': True})
 
 
+@app.route("/profile", methods=['GET', 'POST'])
+def profile():
+    data = request.data
+   
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+
+    query = '''SELECT * FROM profiles WHERE email = '{}' '''.format(email) 
+    print(query)
+
+    # Get full data about the email from db
+    response = handleUsersLogin(query)
+    
+    # Set values
+    firstname = response[2]
+    lastname = response[3]
+    birthday = response[5]
+    address = response[6]
+    school = response[7]
+    biography = response[8]
+    relationshipstatus = response[9]
+    username = response[10]
+    occupation = response[11]
+
+    return jsonify({'res': True, 'firstname': firstname, 'lastname': lastname, 'birthday': birthday, 'address': address, 'school': school, 'biography': biography, 'relationshipstatus': relationshipstatus, 'username': username, 'occupation': occupation})
+
+
 
 if __name__ == "__main__":
     app.run(debug = True)
 
 
-# 1: I want all the values to go to a certain email in db so the query will know which row to fill.
 # cant find in google how to get data from localstorage to flask
