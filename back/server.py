@@ -192,17 +192,22 @@ def profile():
     response = handleUsersLogin(query)
     
     # Set values
-    firstname = response[2]
-    lastname = response[3]
-    birthday = response[5]
-    address = response[6]
-    school = response[7]
-    biography = response[8]
-    relationshipstatus = response[9]
-    username = response[10]
-    occupation = response[11]
+    res = {
+        'res' : True,
+        'data' : {
+            'firstname': response[2], 
+            'lastname': response[3],
+            'birthday': response[5],
+            'address': response[6],
+            'school': response[7],
+            'biography': response[8],
+            'relationshipstatus': response[9],
+            'username': response[10],
+            'occupation': response[11]
+        }
+    }
 
-    return jsonify({'res': True, 'firstname': firstname, 'lastname': lastname, 'birthday': birthday, 'address': address, 'school': school, 'biography': biography, 'relationshipstatus': relationshipstatus, 'username': username, 'occupation': occupation})
+    return jsonify(res)
 
 
 

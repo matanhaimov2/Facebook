@@ -7,20 +7,12 @@ import './profile.css';
 // Services
 import { profile } from '../../Services/authService';
 
+
+
 function Profile() {
 
     // States
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [birtday, setBirthday] = useState();
-    const [address, setAddress] = useState();
-    const [school, setSchool] = useState();
-    const [biography, setBiography] = useState();
-    const [relationStatus, setRelationStatus] = useState();
-    const [username, setUsername] = useState();
-    const [occupation, setOccupation] = useState();
-
-    const [profileInfo, setProfileinfo] = useState([]);
+    const [profileInfo, setProfileinfo] = useState({});
 
     const [showLoading, setShowLoading] = useState(false);
 
@@ -39,15 +31,7 @@ function Profile() {
             const response = await profile(data)
     
             if(response.res===true) { // If the response is true, redirect to profile
-                setProfileinfo[0] = setFirstname(response.firstname);        
-                setProfileinfo[1] = setLastname(response.lastname);        
-                setProfileinfo[2] = setBirthday(response.birtday);   
-                setProfileinfo[3] = setAddress(response.address);        
-                setProfileinfo[4] = setSchool(response.school);        
-                setProfileinfo[5] = setBiography(response.biography);   
-                setProfileinfo[6] = setRelationStatus(response.relationStatus);        
-                setProfileinfo[7] = setUsername(response.username);
-                setProfileinfo[8] = setOccupation(response.occupation);  
+                setProfileinfo(response.data);        
                 
                 setShowLoading(false);
             }
@@ -94,9 +78,15 @@ function Profile() {
             <div className='profile-center-right-wrapper'>
                 <span className='profile-center-right-inshortcut'> בקצרה </span>
                 <div>
-                    {profileInfo.map((object, i) => (
-                        <span value={object} key={i}>{object}</span>
-                    ))}
+                    {profileInfo.firstname}
+                    {profileInfo.lastname}
+
+                    {profileInfo.biography.length > 0 && (
+                        <div>
+                            {profileInfo.biography}
+                        </div>
+                    )}
+
                 </div>
             </div>
 
