@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import './profile.css';
 
 // Services
-import { profile } from '../../Services/authService';
+import { profile } from '../../Services/profileService';
 
 
 
@@ -13,7 +13,7 @@ function Profile() {
 
     // States
     const [profileInfo, setProfileinfo] = useState({});
-
+    console.log(profileInfo)
     const [showLoading, setShowLoading] = useState(false);
 
 
@@ -78,12 +78,41 @@ function Profile() {
             <div className='profile-center-right-wrapper'>
                 <span className='profile-center-right-inshortcut'> בקצרה </span>
                 <div>
-                    {profileInfo.firstname}
-                    {profileInfo.lastname}
+                    {profileInfo.username}
 
                     {profileInfo.biography.length > 0 && (
                         <div>
                             {profileInfo.biography}
+                        </div>
+                    )}
+
+                    {profileInfo.occupation.length > 0 && (
+                        <div>
+                            {profileInfo.occupation}
+                        </div>
+                    )}
+
+                    {profileInfo.school.length > 0 && (
+                        <div>
+                            {profileInfo.school}
+                        </div>
+                    )}
+
+                    {profileInfo.address.length > 0 && (
+                        <div>
+                            {profileInfo.address}
+                        </div>
+                    )}
+
+                    {profileInfo.relationshipstatus.length > 0 && (
+                        <div>
+                            {profileInfo.relationshipstatus}
+                        </div>
+                    )}
+
+                    {profileInfo.birthday.length > 0 && (
+                        <div>
+                            {profileInfo.birthday}
                         </div>
                     )}
 

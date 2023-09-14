@@ -6,8 +6,7 @@ import Box from '@mui/material/Box';
 import './setprofile.css';
 
 // Services
-import { setprofile } from '../../Services/authService';
-
+import { setprofile } from '../../Services/profileService';
 
 function SetProfile() {
 

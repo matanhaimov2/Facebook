@@ -9,10 +9,11 @@ import { SERVER_URL } from "../Assets/GlobalVeriables";
 
 
 // -- Authentication
-const login = async (data) => {
+
+const setprofile = async (data) => {
     try {
-        // Sends to back email and password to see if correct
-        const response = await axios.post(SERVER_URL + "/login", data)
+        // Sends to back additional data about the user to insert db
+        const response = await axios.post(SERVER_URL + "/setprofile", data)
         console.log(response);
 
         return response.data
@@ -22,10 +23,10 @@ const login = async (data) => {
     }
 }
 
-const register = async (data) => {
+const profile = async (data) => {
     try {
-        // Sends to back the data to insert db
-        const response = await axios.post(SERVER_URL + "/register", data)
+        // Sends to back additional data about the user to insert db
+        const response = await axios.post(SERVER_URL + "/profile", data)
         console.log(response);
 
         return response.data
@@ -33,16 +34,11 @@ const register = async (data) => {
     catch (err) {
         console.log(err);
     }
-}
-
-const signout = async (data) => {
-    
 }
 
 
 
 export {
-    login,
-    register,
-    signout
+    setprofile,
+    profile
 }
