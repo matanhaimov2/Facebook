@@ -59,3 +59,20 @@
 
 
 }
+
+.profile-details-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-details-icons {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.profile-details-text {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
