@@ -63,16 +63,30 @@
 .profile-details-wrapper {
     display: flex;
     flex-direction: row;
+    direction: rtl;
 }
 
-.profile-details-icons {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-}
-
-.profile-details-text {
+.profile-inner-details-wrapper {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-details-icons {
+    width: 30px;
+    height: 32px;
+
+}
+
+.profile-details-text {
+    padding: 1%;
+}
+
+.profile-biography-wrapper {
+    text-align: center;
 }

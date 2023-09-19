@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import workIcon from '../../Assets/Images/work-mini-icon.png'; 
 import schoolIcon from '../../Assets/Images/school-mini-icon.png'; 
-import homeIcon from '../../Assets/Images/home-mini-icon.png'; 
+import birthIcon from '../../Assets/Images/birth-mini-icon.png'; 
 import locationIcon from '../../Assets/Images/location-mini-icon.png'; 
 import heartIcon from '../../Assets/Images/heart-mini-icon.png'; 
 
@@ -20,14 +20,42 @@ function Profile() {
     const [showDetails, setShowDetails] = useState(false);
     console.log(profileInfo)
     const [showLoading, setShowLoading] = useState(false);
+    const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate
+    const [formattedRelation, setFormattedRelation] = useState(''); // Define formattedRelationship
+
     
 
+    
+    const formatDate = (inputDateStr) => { // Date formatting to a normal structure (dd/mm/yyyy)
+        const inputDate = new Date(inputDateStr);
+        const day = inputDate.getDate().toString().padStart(2, '0');
+        const month = (inputDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-based
+        const year = inputDate.getFullYear();
+      
+        return `${day}/${month}/${year}`;
+    }
 
+    const formatRelationship = (inputRelationStatusEnglish) => { // Realtionship status formatting to hebrew
+        if (inputRelationStatusEnglish === 'Not in a Relationship')
+        {
+            setFormattedRelation('רווק/ה')
+        }
+        else if (inputRelationStatusEnglish === 'In a Relationship')
+        {
+            setFormattedRelation('בזוגיות')
+        }
+        else if (inputRelationStatusEnglish === 'Married')
+        {
+            setFormattedRelation('נשוי')
+        }
+      
+        return formattedRelation;
+    }
 
     useEffect(() => {
         const profilePage = async () => {
 
-            setShowLoading(true); // Show loading animation
+            setShowLoading(true); // Show loading skeleton animation
     
     
             let data = {
@@ -36,9 +64,13 @@ function Profile() {
             
             const response = await profile(data)
     
-            if(response.res===true) { // If the response is true, redirect to profile
+            if(response.res===true) { 
                 setProfileinfo(response.data);   
                 setShowDetails(true);  
+
+                setFormattedDate(formatDate(profileInfo.birthday)); // Set the formatted date
+
+                formatRelationship(profileInfo.relationshipstatus); // Set the formatted relationship
                 
                 setShowLoading(false);
             }
@@ -49,7 +81,7 @@ function Profile() {
     
         profilePage();
     
-    }, [])
+    }, [profileInfo.birthday])
 
 
 
@@ -84,73 +116,67 @@ function Profile() {
 
             <div className='profile-center-right-wrapper'>
                 <span className='profile-center-right-inshortcut'> בקצרה </span>
-                <div className='profile-details-wrapper'>
-                    <div className='profile-details-text'>
-                        
-                        {showDetails && (
+                {showDetails && (
+                    <div className='profile-biography-wrapper'>
+                        {profileInfo.biography.length > 0 && (
                             <div>
-                                {profileInfo.biography.length > 0 && (
-                                    <div>
-                                        {profileInfo.biography}
-                                    </div>
-                                )}
-
-                                {profileInfo.occupation.length > 0 && (
-                                    <div>
-                                        {profileInfo.occupation}
-                                    </div>
-                                )}
-
-                                {profileInfo.school.length > 0 && (
-                                    <div>
-                                        {profileInfo.school}
-                                    </div>
-                                )}
-
-                                {profileInfo.address.length > 0 && (
-                                    <div>
-                                        {profileInfo.address}
-                                    </div>
-                                )}
-
-                                {profileInfo.relationshipstatus.length > 0 && (
-                                    <div>
-                                        {profileInfo.relationshipstatus}
-                                    </div>
-                                )}
-
-                                {profileInfo.birthday.length > 0 && (
-                                    <div>
-                                        {profileInfo.birthday}
-                                    </div>
-                                )}
+                                {profileInfo.biography}
                             </div>
                         )}
-
                     </div>
+                )}
+                <div className='profile-details-wrapper'>
+                        
+                    {showDetails && (
+                        <div className='profile-inner-details-wrapper'>
 
-                    <div className='profile-details-icons'>
-                        <div className=''>
-                          <img className='' src={workIcon} />
+                            {profileInfo.occupation.length > 0 && (
+                                <div className='profile-details'>
+                                    <img className='profile-details-icons' src={workIcon} />
+                                    <div className='profile-details-text'>
+                                        <span>עובד/ת ב- </span> {profileInfo.occupation}
+                                    </div>
+                                </div>
+                                
+                            )}
+
+                            {profileInfo.school.length > 0 && (
+                                <div className='profile-details'>
+                                    <img className='profile-details-icons' src={schoolIcon} />
+                                    <div className='profile-details-text'>
+                                    <span>למד/ה ב-</span> {profileInfo.school}
+                                    </div>
+                                </div>
+                            )}
+
+                            {profileInfo.address.length > 0 && (
+                                <div className='profile-details'>
+                                    <img className='profile-details-icons' src={locationIcon} />
+                                    <div className='profile-details-text'>
+                                        <span>גר/ה ב- </span>{profileInfo.address}
+                                    </div>
+                                </div>
+                            )}
+
+                            {profileInfo.relationshipstatus.length > 0 && (
+                                <div className='profile-details'>
+                                    <img className='profile-details-icons' src={heartIcon} />
+                                    <div className='profile-details-text'>
+                                        {formattedRelation}      
+                                    </div>                              
+                                </div>
+                            )}
+
+                            {profileInfo.birthday.length > 0 && (
+                                <div className='profile-details'>
+                                    <img className='profile-details-icons' src={birthIcon} />
+                                    <div className='profile-details-text'>
+                                        <span>נולד/ה בתאריך </span>{formattedDate} 
+                                    </div>
+                                </div>
+                            )}
                         </div>
-
-                        <div className=''>
-                          <img className='' src={schoolIcon} />
-                        </div>
-
-                        <div className=''>
-                          <img className='' src={homeIcon} />
-                        </div>
-
-                        <div className=''>
-                          <img className='' src={locationIcon} />
-                        </div>
-
-                        <div className=''>
-                          <img className='' src={heartIcon} />
-                        </div>
-
-                    </div>
+                    )}
 
                 </div>
             </div>
