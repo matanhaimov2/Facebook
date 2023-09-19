@@ -17,8 +17,7 @@ function Profile() {
 
     // States
     const [profileInfo, setProfileinfo] = useState({});
-    const [showDetails, setShowDetails] = useState(false);
-    console.log(profileInfo)
+    
     const [showLoading, setShowLoading] = useState(false);
     const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate
     const [formattedRelation, setFormattedRelation] = useState(''); // Define formattedRelationship
@@ -32,7 +31,7 @@ function Profile() {
         const month = (inputDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-based
         const year = inputDate.getFullYear();
       
-        return `${day}/${month}/${year}`;
+        setFormattedDate(`${day}/${month}/${year}`);
     }
 
     const formatRelationship = (inputRelationStatusEnglish) => { // Realtionship status formatting to hebrew
@@ -63,12 +62,11 @@ function Profile() {
             }
             
             const response = await profile(data)
-    
+            console.log(response)
             if(response.res===true) { 
                 setProfileinfo(response.data);   
-                setShowDetails(true);  
-
-                setFormattedDate(formatDate(profileInfo.birthday)); // Set the formatted date
+                
+                formatDate(profileInfo.birthday); // Set the formatted date
 
                 formatRelationship(profileInfo.relationshipstatus); // Set the formatted relationship
                 
@@ -81,7 +79,7 @@ function Profile() {
     
         profilePage();
     
-    }, [profileInfo.birthday])
+    }, [profileInfo.birthday, profileInfo.relationshipstatus])
 
 
 
@@ -115,69 +113,73 @@ function Profile() {
             </div>
 
             <div className='profile-center-right-wrapper'>
-                <span className='profile-center-right-inshortcut'> בקצרה </span>
-                {showDetails && (
-                    <div className='profile-biography-wrapper'>
-                        {profileInfo.biography.length > 0 && (
-                            <div>
-                                {profileInfo.biography}
-                            </div>
-                        )}
-                    </div>
-                )}
-                <div className='profile-details-wrapper'>
-                        
-                    {showDetails && (
-                        <div className='profile-inner-details-wrapper'>
+                <div className='profile-center-right-sub-wrapper'>
+                    <span className='profile-center-right-inshortcut'> בקצרה </span>
 
-                            {profileInfo.occupation.length > 0 && (
-                                <div className='profile-details'>
-                                    <img className='profile-details-icons' src={workIcon} />
-                                    <div className='profile-details-text'>
-                                        <span>עובד/ת ב- </span> {profileInfo.occupation}
-                                    </div>
-                                </div>
-                                
-                            )}
-
-                            {profileInfo.school.length > 0 && (
-                                <div className='profile-details'>
-                                    <img className='profile-details-icons' src={schoolIcon} />
-                                    <div className='profile-details-text'>
-                                    <span>למד/ה ב-</span> {profileInfo.school}
-                                    </div>
-                                </div>
-                            )}
-
-                            {profileInfo.address.length > 0 && (
-                                <div className='profile-details'>
-                                    <img className='profile-details-icons' src={locationIcon} />
-                                    <div className='profile-details-text'>
-                                        <span>גר/ה ב- </span>{profileInfo.address}
-                                    </div>
-                                </div>
-                            )}
-
-                            {profileInfo.relationshipstatus.length > 0 && (
-                                <div className='profile-details'>
-                                    <img className='profile-details-icons' src={heartIcon} />
-                                    <div className='profile-details-text'>
-                                        {formattedRelation}      
-                                    </div>                              
-                                </div>
-                            )}
-
-                            {profileInfo.birthday.length > 0 && (
-                                <div className='profile-details'>
-                                    <img className='profile-details-icons' src={birthIcon} />
-                                    <div className='profile-details-text'>
-                                        <span>נולד/ה בתאריך </span>{formattedDate} 
-                                    </div>
+                    {profileInfo.biography && (
+                        <div className='profile-biography-wrapper'>
+                            {profileInfo.biography.length > 0 && (
+                                <div className='profile-biography-text'>
+                                    {profileInfo.biography}
                                 </div>
                             )}
                         </div>
                     )}
 
+                    <div className='profile-details-wrapper'>
+                            
+                        {profileInfo.occupation && (
+                            <div className='profile-inner-details-wrapper'>
+
+                                {profileInfo.occupation.length > 0 && (
+                                    <div className='profile-details'>
+                                        <img className='profile-details-icons' src={workIcon} />
+                                        <div className='profile-details-text'>
+                                            <span>עובד/ת ב- </span> {profileInfo.occupation}
+                                        </div>
+                                    </div>
+                                    
+                                )}
+
+                                {profileInfo.school.length > 0 && (
+                                    <div className='profile-details'>
+                                        <img className='profile-details-icons' src={schoolIcon} />
+                                        <div className='profile-details-text'>
+                                        <span>למד/ה ב-</span> {profileInfo.school}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {profileInfo.address.length > 0 && (
+                                    <div className='profile-details'>
+                                        <img className='profile-details-icons' src={locationIcon} />
+                                        <div className='profile-details-text'>
+                                            <span>גר/ה ב- </span>{profileInfo.address}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {profileInfo.relationshipstatus.length > 0 && (
+                                    <div className='profile-details'>
+                                        <img className='profile-details-icons' src={heartIcon} />
+                                        <div className='profile-details-text'>
+                                            {formattedRelation}      
+                                        </div>                              
+                                    </div>
+                                )}
+
+                                {profileInfo.birthday.length > 0 && (
+                                    <div className='profile-details'>
+                                        <img className='profile-details-icons' src={birthIcon} />
+                                        <div className='profile-details-text'>
+                                            <span>נולד/ה בתאריך </span>{formattedDate} 
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )} 
+
+                    </div>
                 </div>
             </div>
 
