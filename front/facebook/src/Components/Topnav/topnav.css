@@ -1,7 +1,7 @@
 .topnav-wrapper {
     width: 100%;
     height: 100%;
-    background-color: #332f2f;
+    background-color: #222223;
     color: white;
     font-family: inherit;
     display: flex;
@@ -22,8 +22,7 @@
     gap: 2%;
 }
 .topnav-sub-left-wrapper {
-    width: -webkit-fill-available;
-    height: 60%;
+    width: 50px;
     margin: auto;
     text-align: center;
 }
@@ -33,20 +32,24 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 2%;
+    gap: 15%;
 
 }
 .topnav-sub-middle-wrapper {
+    width: 25px;
     margin: auto;
-    text-align: center;
-    width: 12%;
 }
 
-.topnav-home-icon {
-    height: 100%;
-    background-color: #332f2f;
-    mix-blend-mode: darken;
+.topnav-middle-icons {
+    width: 100%;
 }
+
+.topnav-middle-buttons {
+    background-color: #222223;
+    border: none;
+    cursor: pointer;
+}
+
 
 .topnav-right-side {
     width: 33.3333333%;
@@ -65,12 +68,14 @@
 .topnav-search-wrapper {
     width: 100%;
     margin: auto;
+    /* display: flex;
+    flex-direction: row; */
 
 }
 .topnav-sub-search {
-    background-color: #474141;
+    background-color: #2e2e2e;
     padding: 2%;
-    width: 40%;
+    width: auto;
     border-radius: 20px;
     border: none;
     outline: none;
@@ -79,14 +84,14 @@
 }
 .topnav-facebook-icon-wrapper {
     width: 46px;
-    height: 43px;
     margin: auto;
 }
 
 .topnav-button-circle {
-    border-radius: 50%;
-    height: 80%;
-
+    background-color: #222223;
+    outline: none;
+    border-style: none;
+    width: 100%;
 }
 
 .topnav-pointer {
@@ -94,34 +99,10 @@
     height: -webkit-fill-available;
 }
 
-.topnav-facebook-button {
-    background-color: #332f2f;
-    display:block;
-    height: 100%;
-    border: none;
-
-}
-
 .topnav-facebook-icon {
     width: 100%;
     height: 100%;
-    background-color: #332f2f;
-}
-
-.topnav-friends-icon {
-    height: 40px;
-    width: 80px;
-}
-
-.topnav-middle-buttons {
-    background-color: #332f2f;
-    border: none;
-    cursor: pointer;
-}
-
-.topnav-account-wrapper {
-    border: 1px solid white;
-    border-radius: 50%;
+    background-color: #222223;
 }
 
 .topnav-account-button {

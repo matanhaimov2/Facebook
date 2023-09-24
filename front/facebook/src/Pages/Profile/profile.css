@@ -1,5 +1,5 @@
 .profile-wrapper {
-    background: #232020;
+    background: #181616;
     height: 100%;
     width: 100%;
     display: flex;
@@ -13,12 +13,47 @@
     height: 20%;
     margin: auto;
     margin-top: 3%;
-    background-color: #332f2f;
+    background-color: #222223;
+    direction: rtl;
+    color: white;
 }
 
 .sub-profile-basics-wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    margin-top: auto;
+    padding: 0% 0% 2% 1%;
+}
+
+.sub-profile-image-wrapper {
+    width: 35%;
+    margin: auto;
+    padding: 0% 1% 0% 0%;
+}
+
+.sub-profile-basics {
+    width: 20%;
+    margin-top: auto;
+    padding: 0% 0% 2% 1%;
+
+}
+
+.sub-profile-edit-button {
+    background-color: #2e2e2e;
+    text-decoration: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10%;
+    border-radius: 10%;
+}
+
+.profile-fullname-text {
+    display: flex;
+    flex-direction: row;
+    font-weight: 500;
+    gap: 1%;
 }
 
 .profile-center-wrapper {
@@ -36,7 +71,7 @@
     flex-direction: column;
     width: 40%;
     height: 100%;
-    background-color: #332f2f;
+    background-color: #222223;
     color: white;
     text-align: right;
     border-radius: 1%;
@@ -53,7 +88,7 @@
     flex-direction: column;
     width: 60%;
     height:100%;
-    background-color: #332f2f;
+    background-color: #222223;
     color: white;
     border-radius: 1%;
 

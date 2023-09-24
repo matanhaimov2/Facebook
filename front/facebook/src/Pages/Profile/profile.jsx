@@ -4,6 +4,7 @@ import schoolIcon from '../../Assets/Images/school-mini-icon.png';
 import birthIcon from '../../Assets/Images/birth-mini-icon.png'; 
 import locationIcon from '../../Assets/Images/location-mini-icon.png'; 
 import heartIcon from '../../Assets/Images/heart-mini-icon.png'; 
+import editIcon from '../../Assets/Images/edit-icon.png'; 
 
 //CSS
 import './profile.css';
@@ -87,22 +88,35 @@ function Profile() {
     return (
         <div className='profile-wrapper'>
           <div className='profile-wrapper-basics'>
-                <div className='sub-profile-basics'>
-
+                <div className='sub-profile-image-wrapper'>
+                    <span> profile image here</span>
                 </div>
 
                 <div className='sub-profile-basics-wrapper'>
                     <div className='sub-sub-profile-basics'>
-
+                    {profileInfo.firstname && (
+                        <div className='profile-fullname-wrapper'>
+                            {profileInfo.firstname.length > 0 && (
+                                <div className='profile-fullname-text'>
+                                    <span>
+                                        {profileInfo.firstname}
+                                    </span>
+                                    <span>
+                                        {profileInfo.lastname}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    )}
                     </div>
 
                     <div className='sub-sub-profile-basics'>
-                        
+                        <span>חברים </span>
                     </div>
                 </div>
 
                 <div className='sub-profile-basics'>
-                    
+                    <button className='sub-profile-edit-button'> עריכת פרופיל </button>
                 </div>
           </div>
 
