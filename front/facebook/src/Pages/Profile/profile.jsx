@@ -5,6 +5,9 @@ import birthIcon from '../../Assets/Images/birth-mini-icon.png';
 import locationIcon from '../../Assets/Images/location-mini-icon.png'; 
 import heartIcon from '../../Assets/Images/heart-mini-icon.png'; 
 import editIcon from '../../Assets/Images/edit-icon.png'; 
+import searchIcon from '../../Assets/Images/search-icon.png'; 
+import exitIcon from '../../Assets/Images/exit-icon.png'; 
+
 
 //CSS
 import './profile.css';
@@ -12,6 +15,8 @@ import './profile.css';
 // Services
 import { profile } from '../../Services/profileService';
 
+// Components
+import SetProfile from '../SetProfile/setprofile';
 
 
 function Profile() {
@@ -22,6 +27,7 @@ function Profile() {
     const [showLoading, setShowLoading] = useState(false);
     const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate
     const [formattedRelation, setFormattedRelation] = useState(''); // Define formattedRelationship
+    const [popupdateprofle, setPopUpdateProfile] = useState(false);
 
     
 
@@ -87,117 +93,125 @@ function Profile() {
 
     return (
         <div className='profile-wrapper'>
-          <div className='profile-wrapper-basics'>
-                <div className='sub-profile-image-wrapper'>
-                    <span> profile image here</span>
-                </div>
-
-                <div className='sub-profile-basics-wrapper'>
-                    <div className='sub-sub-profile-basics'>
-                    {profileInfo.firstname && (
-                        <div className='profile-fullname-wrapper'>
-                            {profileInfo.firstname.length > 0 && (
-                                <div className='profile-fullname-text'>
-                                    <span>
-                                        {profileInfo.firstname}
-                                    </span>
-                                    <span>
-                                        {profileInfo.lastname}
-                                    </span>
-                                </div>
-                            )}
-                        </div>
-                    )}
+            <div className='profile-wrapper-basics'>
+                    <div className='sub-profile-image-wrapper'>
+                        <span> profile image here</span>
                     </div>
 
-                    <div className='sub-sub-profile-basics'>
-                        <span>חברים </span>
-                    </div>
-                </div>
-
-                <div className='sub-profile-basics'>
-                    <button className='sub-profile-edit-button'> עריכת פרופיל </button>
-                </div>
-          </div>
-
-          <div className='profile-center-wrapper'>
-            
-            <div className='profile-center-left-wrapper'>
-
-            </div>
-
-            <div className='profile-center-right-wrapper'>
-                <div className='profile-center-right-sub-wrapper'>
-                    <span className='profile-center-right-inshortcut'> בקצרה </span>
-
-                    {profileInfo.biography && (
-                        <div className='profile-biography-wrapper'>
-                            {profileInfo.biography.length > 0 && (
-                                <div className='profile-biography-text'>
-                                    {profileInfo.biography}
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-                    <div className='profile-details-wrapper'>
-                            
-                        {profileInfo.occupation && (
-                            <div className='profile-inner-details-wrapper'>
-
-                                {profileInfo.occupation.length > 0 && (
-                                    <div className='profile-details'>
-                                        <img className='profile-details-icons' src={workIcon} />
-                                        <div className='profile-details-text'>
-                                            <span>עובד/ת ב- </span> {profileInfo.occupation}
-                                        </div>
-                                    </div>
-                                    
-                                )}
-
-                                {profileInfo.school.length > 0 && (
-                                    <div className='profile-details'>
-                                        <img className='profile-details-icons' src={schoolIcon} />
-                                        <div className='profile-details-text'>
-                                        <span>למד/ה ב-</span> {profileInfo.school}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {profileInfo.address.length > 0 && (
-                                    <div className='profile-details'>
-                                        <img className='profile-details-icons' src={locationIcon} />
-                                        <div className='profile-details-text'>
-                                            <span>גר/ה ב- </span>{profileInfo.address}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {profileInfo.relationshipstatus.length > 0 && (
-                                    <div className='profile-details'>
-                                        <img className='profile-details-icons' src={heartIcon} />
-                                        <div className='profile-details-text'>
-                                            {formattedRelation}      
-                                        </div>                              
-                                    </div>
-                                )}
-
-                                {profileInfo.birthday.length > 0 && (
-                                    <div className='profile-details'>
-                                        <img className='profile-details-icons' src={birthIcon} />
-                                        <div className='profile-details-text'>
-                                            <span>נולד/ה בתאריך </span>{formattedDate} 
-                                        </div>
+                    <div className='sub-profile-basics-wrapper'>
+                        <div className='sub-sub-profile-basics'>
+                        {profileInfo.firstname && (
+                            <div className='profile-fullname-wrapper'>
+                                {profileInfo.firstname.length > 0 && (
+                                    <div className='profile-fullname-text'>
+                                        <span>
+                                            {profileInfo.firstname}
+                                        </span>
+                                        <span>
+                                            {profileInfo.lastname}
+                                        </span>
                                     </div>
                                 )}
                             </div>
-                        )} 
+                        )}
+                        </div>
 
+                        <div className='sub-sub-profile-basics'>
+                            <span>חברים </span>
+                        </div>
                     </div>
-                </div>
+
+                    <div className='sub-profile-basics'>
+                        <button onClick={() => {setPopUpdateProfile(true)}} className='sub-profile-edit-button'> עריכת פרופיל </button>
+                    </div>
             </div>
 
-          </div>
+            <div className='profile-center-wrapper'>
+                
+                <div className='profile-center-left-wrapper'>
+
+                </div>
+
+                <div className='profile-center-right-wrapper'>
+                    <div className='profile-center-right-sub-wrapper'>
+                        <span className='profile-center-right-inshortcut'> בקצרה </span>
+
+                        {profileInfo.biography && (
+                            <div className='profile-biography-wrapper'>
+                                {profileInfo.biography.length > 0 && (
+                                    <div className='profile-biography-text'>
+                                        {profileInfo.biography}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        <div className='profile-details-wrapper'>
+                                
+                            {profileInfo.username && (
+                                <div className='profile-inner-details-wrapper'>
+
+                                    {profileInfo.occupation.length > 0 && (
+                                        <div className='profile-details'>
+                                            <img className='profile-details-icons' src={workIcon} />
+                                            <div className='profile-details-text'>
+                                                <span>עובד/ת ב- </span> {profileInfo.occupation}
+                                            </div>
+                                        </div>
+                                        
+                                    )}
+
+                                    {profileInfo.school.length > 0 && (
+                                        <div className='profile-details'>
+                                            <img className='profile-details-icons' src={schoolIcon} />
+                                            <div className='profile-details-text'>
+                                            <span>למד/ה ב-</span> {profileInfo.school}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {profileInfo.address.length > 0 && (
+                                        <div className='profile-details'>
+                                            <img className='profile-details-icons' src={locationIcon} />
+                                            <div className='profile-details-text'>
+                                                <span>גר/ה ב- </span>{profileInfo.address}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {profileInfo.relationshipstatus.length > 0 && (
+                                        <div className='profile-details'>
+                                            <img className='profile-details-icons' src={heartIcon} />
+                                            <div className='profile-details-text'>
+                                                {formattedRelation}      
+                                            </div>                              
+                                        </div>
+                                    )}
+
+                                    {profileInfo.birthday.length > 0 && (
+                                        <div className='profile-details'>
+                                            <img className='profile-details-icons' src={birthIcon} />
+                                            <div className='profile-details-text'>
+                                                <span>נולד/ה בתאריך </span>{formattedDate} 
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )} 
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {/* Update Profile Form */}
+            {popupdateprofle && (
+                <div>
+                    <button className='profile-exit-icon' onClick={() => {setPopUpdateProfile(false)}}> <img src={exitIcon} /> </button>
+                    <SetProfile isUpdateProfile={popupdateprofle} />
+                </div>
+            )}
 
         </div>
     );

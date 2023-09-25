@@ -8,10 +8,10 @@ import './setprofile.css';
 // Services
 import { setprofile } from '../../Services/profileService';
 
-function SetProfile() {
+function SetProfile({ isUpdateProfile }) {
 
     // States
-    const [username, setUsername] = useState();
+    const [username, setUsername] = useState('');
     const [biography, setBiography] = useState('');
     const [relationStatus, setRelationStatus] = useState('');
     const [occupation, setOccupation] = useState('');
@@ -20,7 +20,7 @@ function SetProfile() {
     const [showPopup, setShowPopup] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
 
- 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -55,12 +55,21 @@ function SetProfile() {
 
     
     return (
-        <div className='setprofile-wrapper'>
+        <div className={`setprofile-wrapper ${isUpdateProfile ? 'profile-update-profile-wrapper' : ''}`}>
             <div className='setprofile-content-wrapper'>
             <form className='setprofile-form' onSubmit={ handleSubmit }>
-                        <label className='setprofile-title-button'> פרטים נוספים</label>
+                        {!isUpdateProfile ? (
+                            <label className='setprofile-title-button'> פרטים נוספים</label>
+                            ) : (
+                            <label className='setprofile-title-button'>עדכון פרטים אישיים</label>
+                        )}
+                        
                         <div className='setprofile-username-wrapper'>
-                            <input type='text' className='setprofile-input' onChange={(e) => setUsername(e.target.value)} placeholder='שם המשתמש שלך (חובה)' required/>
+                            {!isUpdateProfile ? (
+                                <input type='text' className='setprofile-input' onChange={(e) => setUsername(e.target.value)} placeholder='שם המשתמש שלך (חובה)' required/>
+                            ) : (
+                                <input type='text' className='setprofile-input' onChange={(e) => setUsername(e.target.value)} placeholder='שם המשתמש שלך (לא חובה)'/>
+                            )}
 
                             {showPopup && (
                             <div className='setprofile-error-wrapper'>
@@ -96,7 +105,13 @@ function SetProfile() {
                         <input type='text' className='setprofile-input' onChange={(e) => setAddress(e.target.value)} placeholder='כתובת (לא חובה)'/>
 
                         {!showLoading ? (
-                            <button type='submit' className='setprofile-form-button'>למעבר לחשבון שלך</button>
+                            <div>
+                            {!isUpdateProfile ? (
+                                <button type='submit' className='setprofile-form-button'>למעבר לחשבון שלך</button>
+                                ) : (
+                                <button type='submit' className='setprofile-form-button'>עדכון פרטים</button>
+                            )}
+                            </div>
                             ) : (
                             <Box type='submit' className='login-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
                         )}

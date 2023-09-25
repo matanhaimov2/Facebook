@@ -36,7 +36,10 @@
     width: 20%;
     margin-top: auto;
     padding: 0% 0% 2% 1%;
+}
 
+.sub-profile-basics:hover {
+    filter: brightness(120%);
 }
 
 .sub-profile-edit-button {
@@ -137,4 +140,24 @@
 
 .profile-center-right-sub-wrapper {
     padding: 7% 3%;
+}
+
+.profile-update-profile-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #98999b5e !important;
+    z-index: 1;
+}
+
+.profile-exit-icon {
+    position: absolute;
+    top: 9%;
+    left: 64%;
+    width: fit-content;
+    cursor: pointer;
+    border: none;
+    z-index: 2;
+    background: rgba(255, 255, 255, -0.5);
 }

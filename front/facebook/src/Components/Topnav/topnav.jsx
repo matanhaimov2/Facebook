@@ -44,11 +44,11 @@ function TopNav() {
               </div>
 
               <div className='topnav-sub-left-wrapper'>
-                <button className='topnav-button-circle topnav-pointer'><img className='topnav-middle-icons' src={logo7} /></button>
+                <button className='topnav-button-circle topnav-pointer'><img className='topnav-left-icons' src={logo7} /></button>
               </div>
 
               <div className='topnav-sub-left-wrapper'>
-                <button className='topnav-button-circle topnav-pointer' ><img className='topnav-middle-icons' src={logo6} /> </button>
+                <button className='topnav-button-circle topnav-pointer' ><img className='topnav-left-icons' src={logo6} /> </button>
               </div>
 
               <div className='topnav-sub-left-wrapper'>

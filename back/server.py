@@ -154,8 +154,8 @@ def setprofile():
 
     # Checks if username exists
     query = '''SELECT username FROM profiles WHERE EXISTS (SELECT username FROM profiles WHERE username = '{}');'''.format(username)
-
     response = handleUsers(query)
+
     print(response)
 
     if (response == 0): # If doesn't exist, continue
@@ -215,4 +215,8 @@ if __name__ == "__main__":
     app.run(debug = True)
 
 
-# cant find in google how to get data from localstorage to flask
+#1 huge problem: in the edit profile, the username, if null dont do anything and keep the program work like nothing.
+
+#2 another problem: if for example in the edit profile, one will want only to change his school, the other values need to remain.
+
+#3 X icon need to be sticked to the edit profile window

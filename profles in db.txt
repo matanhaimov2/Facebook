@@ -1,0 +1,20 @@
+profles in db:
+
+profile image - cpntans route to one image
+
+post images - contains this json as an array:
+[
+	{
+		url: 'route to img',
+		description: 'text under image',
+		likesamount: 'number',
+		comments: 'list of commnets', 
+	}
+, 
+	{
+		url: 'route to img',
+		description: 'text under image',
+		likesamount: 'number',
+		comments: 'list of commnets', 
+	}
+]
