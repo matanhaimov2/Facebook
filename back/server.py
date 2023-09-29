@@ -125,11 +125,11 @@ def login():
         response = handleUsers(sql_query)
         print(response)
         if (response == 1):
-            return jsonify({'res' : True, 'firstlogin': False})
+            return jsonify({'res' : True, 'data': {'email' : email}, 'firstlogin': False})
         fLoginquery = '''UPDATE register SET firstlogin = 1  WHERE email = '{}' '''.format(email) # Updates that the specific user entered more then once
         handleUsers(fLoginquery)
         
-        return jsonify({'res' : True, 'firstlogin': True})
+        return jsonify({'res' : True, 'data': {'email' : email} , 'firstlogin': True})
     else:
         return jsonify({'res': False, 'err': 'Email or Password are Incorrect'})
     
@@ -153,14 +153,51 @@ def setprofile():
     address = json_str['Address']
 
     # Checks if username exists
-    query = '''SELECT username FROM profiles WHERE EXISTS (SELECT username FROM profiles WHERE username = '{}');'''.format(username)
-    response = handleUsers(query)
-
+    if(username):
+        query = f'''SELECT username FROM profiles WHERE EXISTS (SELECT username FROM profiles WHERE username = '{username}');'''
+        response = handleUsers(query)
+    else:
+        response = 0
+        
     print(response)
 
     if (response == 0): # If doesn't exist, continue
-        query = '''UPDATE profiles SET username = '{}', biography = '{}', relationshipstatus = '{}', occupation = '{}', school = '{}', address = '{}' WHERE email = '{}' '''.format(username, biography, relationshipstatus ,occupation, school, address, email)
+
+        if(username):
+            query = f'''UPDATE profiles SET username = '{username}', biography = '{biography}', relationshipstatus = '{relationshipstatus}', occupation = '{occupation}', school = '{school}', address = '{address}' WHERE email = '{email}' '''
+        else: # In case of editing profile
+            # Initialize an empty list to store the update assignments
+            update_assignments = []
+
+            # Append assignments to the list only if the corresponding value is not empty
+            if username:
+                update_assignments.append(f"username = '{username}'")
+            if biography:
+                update_assignments.append(f"biography = '{biography}'")
+            if relationshipstatus:
+                update_assignments.append(f"relationshipstatus = '{relationshipstatus}'")
+            if occupation:
+                update_assignments.append(f"occupation = '{occupation}'")
+            if school:
+                update_assignments.append(f"school = '{school}'")
+            if address:
+                update_assignments.append(f"address = '{address}'")
+
+            # Join the update assignments with commas to create the SET clause
+            set_clause = ', '.join(update_assignments)
+
+            # Build the SQL query
+            query = f'''
+                UPDATE profiles 
+                SET 
+                    {set_clause}
+                WHERE email = '{email}'
+            '''
+        
         print(query)
+        
+        
+        # Send the query - can be update (for exsiting user) or set (for new user)
         response = handleUsers(query)
 
         return jsonify({'res': True})
@@ -215,8 +252,4 @@ if __name__ == "__main__":
     app.run(debug = True)
 
 
-#1 huge problem: in the edit profile, the username, if null dont do anything and keep the program work like nothing.
 
-#2 another problem: if for example in the edit profile, one will want only to change his school, the other values need to remain.
-
-#3 X icon need to be sticked to the edit profile window

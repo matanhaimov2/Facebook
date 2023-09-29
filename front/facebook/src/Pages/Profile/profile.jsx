@@ -93,13 +93,16 @@ function Profile() {
 
     return (
         <div className='profile-wrapper'>
+            
             <div className='profile-wrapper-basics'>
+
                     <div className='sub-profile-image-wrapper'>
                         <span> profile image here</span>
                     </div>
 
                     <div className='sub-profile-basics-wrapper'>
                         <div className='sub-sub-profile-basics'>
+                        
                         {profileInfo.firstname && (
                             <div className='profile-fullname-wrapper'>
                                 {profileInfo.firstname.length > 0 && (
@@ -207,9 +210,8 @@ function Profile() {
 
             {/* Update Profile Form */}
             {popupdateprofle && (
-                <div>
-                    <button className='profile-exit-icon' onClick={() => {setPopUpdateProfile(false)}}> <img src={exitIcon} /> </button>
-                    <SetProfile isUpdateProfile={popupdateprofle} />
+                <div className='profile-update-profile-wrapper-wrapper'>
+                    <SetProfile isUpdateProfile={popupdateprofle} setPopUpdateProfile={setPopUpdateProfile}/>
                 </div>
             )}
 

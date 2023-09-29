@@ -34,7 +34,7 @@ function Login() {
 
         if(response.res===true) { // If the response is true, redirect to home
 
-            localStorage.setItem('UserInfo', email);
+            localStorage.setItem('UserInfo', response.data.email);
 
             if(response.firstlogin===true) {
                 window.location.href='/setprofile';
