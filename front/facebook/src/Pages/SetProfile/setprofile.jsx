@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
@@ -12,7 +12,7 @@ import { setprofile } from '../../Services/profileService';
 import exitIcon from '../../Assets/Images/exit-icon.png'; 
 
 
-function SetProfile({ isUpdateProfile, setPopUpdateProfile }) {
+function SetProfile({ isUpdateProfile, setIsEditProfile }) {
 
     // States
     const [username, setUsername] = useState('');
@@ -21,38 +21,45 @@ function SetProfile({ isUpdateProfile, setPopUpdateProfile }) {
     const [occupation, setOccupation] = useState('');
     const [school, setSchool] = useState('');
     const [address, setAddress] = useState('');
-    const [showPopup, setShowPopup] = useState(false);
+    const [showPopup, setShowPopup] = useState(false); // Raises an error when username is taken
     const [showLoading, setShowLoading] = useState(false);
-
+    // useEffect(() => {
+        
+    // }, []) its for when you want to start the forbidden setprofile route
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         setShowLoading(true); // Show loading animation
 
-
-        
         setShowPopup(false)
 
-        let data = {
-            "Username" : username,
-            "Email" : localStorage.getItem('UserInfo'),
-            "Biography" : biography,
-            "RelationshipStatus" : relationStatus,
-            "Occupation" : occupation,
-            "School" : school,
-            "Address" : address
+        if(!biography && !relationStatus && !occupation && !school && !address) {
+            setIsEditProfile(false);
         }
-        console.log(data)
-        const response = await setprofile(data)
 
-        if(response.res===true) { // If the response is true, redirect to profile
-            window.location.href='/profile'
-        }
         else {
-            setShowLoading(false);
-            setShowPopup(true)
+            let data = {
+                "Username" : username,
+                "Email" : localStorage.getItem('UserInfo'),
+                "Biography" : biography,
+                "RelationshipStatus" : relationStatus,
+                "Occupation" : occupation,
+                "School" : school,
+                "Address" : address
+            }
+            console.log(data)
+            const response = await setprofile(data)
+    
+            if(response.res===true) { // If the response is true, navigate to profile
+                window.location.href='/profile'
+            }
+            else {
+                setShowLoading(false);
+                setShowPopup(true)
+            }
         }
+        
     }
 
 
@@ -62,8 +69,9 @@ function SetProfile({ isUpdateProfile, setPopUpdateProfile }) {
         <div className={`setprofile-wrapper ${isUpdateProfile ? 'profile-update-profile-wrapper' : ''}`}>
    
             <div className='setprofile-content-wrapper'>
-                {isUpdateProfile && (
-                    <button className='profile-exit-icon' onClick={() => {setPopUpdateProfile(false)}}> <img src={exitIcon} /> </button>
+
+                {isUpdateProfile && ( // If true, add an exit icon
+                    <button className='profile-exit-icon' onClick={() => {setIsEditProfile(false)}}> <img src={exitIcon} /> </button>
                 )}
              
                 <form className='setprofile-form' onSubmit={ handleSubmit }>
@@ -78,7 +86,7 @@ function SetProfile({ isUpdateProfile, setPopUpdateProfile }) {
                                 <input type='text' className='setprofile-input' onChange={(e) => setUsername(e.target.value)} placeholder='שם המשתמש שלך (חובה)' required/>
                             )}
 
-                            {showPopup && (
+                            {showPopup && ( // If true, raise an error
                                 <div className='setprofile-error-wrapper'>
                                     <label className='setprofile-error-title'> Username is already taken </label>
                                 </div>
@@ -116,7 +124,7 @@ function SetProfile({ isUpdateProfile, setPopUpdateProfile }) {
                             {!isUpdateProfile ? (
                                 <button type='submit' className='setprofile-form-button'>למעבר לחשבון שלך</button>
                                 ) : (
-                                <button type='submit' className='setprofile-form-button'>עדכון פרטים</button>
+                                <button id='update' type='submit' className='setprofile-form-button'>עדכון פרטים</button>
                             )}
                             </div>
                             ) : (

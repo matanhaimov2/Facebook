@@ -69,7 +69,7 @@ const PrivateRoutes = () => {
     <div className='private-routes'>
       {user && user.length > 0 ? (
         <Routes>
-          
+
           <Route path="/setprofile" element={ setprofile() } />
           
           {/* Routes With Navigation Bar  */}

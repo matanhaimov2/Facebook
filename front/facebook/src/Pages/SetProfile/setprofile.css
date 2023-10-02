@@ -108,6 +108,11 @@
     top: 30%;
 }
 
+.setprofile-edit-error-wrapper {
+    height: 10% !important;
+    left: 100.5% !important;
+}
+
 @keyframes wipe-in-out {
     0%, 100% {
       clip-path: inset(0 100% 0 0);

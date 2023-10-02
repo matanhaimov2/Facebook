@@ -7,28 +7,28 @@ import heartIcon from '../../Assets/Images/heart-mini-icon.png';
 import editIcon from '../../Assets/Images/edit-icon.png'; 
 import searchIcon from '../../Assets/Images/search-icon.png'; 
 import exitIcon from '../../Assets/Images/exit-icon.png'; 
-
+import plusIcon from '../../Assets/Images/plus-icon.png'; 
 
 //CSS
 import './profile.css';
 
 // Services
-import { profile } from '../../Services/profileService';
+import { profile, profileImage, uploadImage, receiveImage} from '../../Services/profileService';
 
 // Components
 import SetProfile from '../SetProfile/setprofile';
-
 
 function Profile() {
 
     // States
     const [profileInfo, setProfileinfo] = useState({});
     
-    const [showLoading, setShowLoading] = useState(false);
+    const [showSkeleton, setShowSkeleton] = useState(false);
     const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate
     const [formattedRelation, setFormattedRelation] = useState(''); // Define formattedRelationship
-    const [popupdateprofle, setPopUpdateProfile] = useState(false);
-
+    const [isEditProfile, setIsEditProfile] = useState(false); // Raises edit profile option
+    const [imgProfile, setImgProfile] = useState(null); // Raises edit profile option
+    const [imgProfileTrigger, setImgProfileTrigger] = useState(false); // Trigger to pull image profile
     
 
     
@@ -61,7 +61,7 @@ function Profile() {
     useEffect(() => {
         const profilePage = async () => {
 
-            setShowLoading(true); // Show loading skeleton animation
+            setShowSkeleton(true); // Show skeleton animation
     
     
             let data = {
@@ -77,7 +77,8 @@ function Profile() {
 
                 formatRelationship(profileInfo.relationshipstatus); // Set the formatted relationship
                 
-                setShowLoading(false);
+                setShowSkeleton(false);
+                
             }
             else {
                 console.log('Somthing went wrong')
@@ -89,6 +90,58 @@ function Profile() {
     }, [profileInfo.birthday, profileInfo.relationshipstatus])
 
 
+    useEffect(() => {
+        
+        const imgReceiver = async () => {
+
+            let data = {
+                "Email" : localStorage.getItem('UserInfo')
+            }
+
+            const response = await receiveImage(data)
+
+            if(response.res===true) { // If the response is true, update user image
+                setImgProfile(response.data.userimage)
+            }
+
+        }
+
+        imgReceiver();
+    }, [imgProfileTrigger])
+
+
+    const activateUploadImage = () => {
+        const imageUploader = document.getElementById('imgUpload');
+
+        if(imageUploader) {
+            imageUploader.click()
+        }
+    }
+
+
+    const imgUploader = async () => {
+
+        // Get the selected image file
+        const imageFile = document.getElementById('imgUpload')['files'][0];
+
+
+        let form = new FormData();
+        form.append('image', imageFile)
+        
+        const response = await profileImage(form);
+        console.log(response);
+
+        let data = {
+            "Email" : localStorage.getItem('UserInfo'), 
+            "UploadedImage" : response.data.display_url
+        }
+
+       await uploadImage(data);
+
+        // Set trigger
+        setImgProfileTrigger(true)
+
+    }
 
 
     return (
@@ -97,7 +150,21 @@ function Profile() {
             <div className='profile-wrapper-basics'>
 
                     <div className='sub-profile-image-wrapper'>
-                        <span> profile image here</span>
+                        {imgProfile ? (
+                            <img src={imgProfile} className='profile-user-image'></img>
+                        ) :(
+                            <div>
+                                no image
+                            </div>
+                        )}
+
+                        {!imgProfile && (
+                            <div className='profile-img-wrapper'>
+                                <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
+                                <button className='profile-upload-img-wrapper' onClick={activateUploadImage}> <img src={plusIcon} className="profile-upload-img" /> </button>
+                            </div>
+                        )}
+
                     </div>
 
                     <div className='sub-profile-basics-wrapper'>
@@ -125,7 +192,7 @@ function Profile() {
                     </div>
 
                     <div className='sub-profile-basics'>
-                        <button onClick={() => {setPopUpdateProfile(true)}} className='sub-profile-edit-button'> עריכת פרופיל </button>
+                        <button onClick={() => {setIsEditProfile(true)}} className='sub-profile-edit-button'> עריכת פרופיל </button>
                     </div>
             </div>
 
@@ -209,9 +276,9 @@ function Profile() {
             </div>
 
             {/* Update Profile Form */}
-            {popupdateprofle && (
+            {isEditProfile && (
                 <div className='profile-update-profile-wrapper-wrapper'>
-                    <SetProfile isUpdateProfile={popupdateprofle} setPopUpdateProfile={setPopUpdateProfile}/>
+                    <SetProfile isUpdateProfile={isEditProfile} setIsEditProfile={setIsEditProfile}/>
                 </div>
             )}
 
