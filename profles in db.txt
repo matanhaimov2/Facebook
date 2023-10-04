@@ -1,6 +1,6 @@
 profles in db:
 
-profile image - cpntans route to one image
+profile image - contains route to one image
 
 post images - contains this json as an array:
 [

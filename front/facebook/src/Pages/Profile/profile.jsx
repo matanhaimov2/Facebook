@@ -17,6 +17,7 @@ import { profile, profileImage, uploadImage, receiveImage} from '../../Services/
 
 // Components
 import SetProfile from '../SetProfile/setprofile';
+import PostUpload from '../../Components/Postupload/postupload';
 
 function Profile() {
 
@@ -27,7 +28,7 @@ function Profile() {
     const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate
     const [formattedRelation, setFormattedRelation] = useState(''); // Define formattedRelationship
     const [isEditProfile, setIsEditProfile] = useState(false); // Raises edit profile option
-    const [imgProfile, setImgProfile] = useState(null); // Raises edit profile option
+    const [imgProfile, setImgProfile] = useState(null); // 
     const [imgProfileTrigger, setImgProfileTrigger] = useState(false); // Trigger to pull image profile
     
 
@@ -199,7 +200,7 @@ function Profile() {
             <div className='profile-center-wrapper'>
                 
                 <div className='profile-center-left-wrapper'>
-
+                        <PostUpload />
                 </div>
 
                 <div className='profile-center-right-wrapper'>

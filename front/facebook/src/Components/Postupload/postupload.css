@@ -1,0 +1,97 @@
+.postupload-wrapper {
+    width: 90%;
+    height: 90%;
+    background-color: #181616;
+    margin: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+}
+
+.postupload-input-wrapper {
+    height: 5vh;
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.postupload-input {
+    background-color: #181616;
+    padding: 2%;
+    width: 80%;
+    border: none;
+    outline: none;
+    color: white;
+    text-align: right;
+}
+
+.postupload-image-wrapper {
+    height: 22vh;
+}
+
+.postupload-image-sub-wrapper {
+    width: 75%;
+    height: 100%;
+    background-color: #29292b;
+    margin: auto;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.postupload-img-plusicon {
+    width: 50px !important;
+}
+
+.postupload-privacy-wrapper {
+    height: 10%;
+    margin: auto;
+    color: white;
+    margin-top: 2%;
+}
+
+.postupload-privacy-button:hover{
+    background-color: rgb(65, 65, 65);
+    border-radius: 15px;
+    transition: all 500ms ease;
+}
+
+.postupload-post-button {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    margin-top: 4%;
+    width: 60% !important;
+    cursor: pointer;
+}
+
+.postupload-upload-button-wrapper {
+    padding: 3%;
+    text-align: right;
+}
+
+.postupload-upload-button {
+    width: 100%;
+    background-color: #2e2e2e;
+    text-decoration: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 3%;
+    border-radius: 5px;
+}
+
+.postupload-upload-button:hover {
+    filter: brightness(120%);
+}
+
+.postupload-arrow-button-wrapper {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 150%;
+    cursor: pointer;
+}

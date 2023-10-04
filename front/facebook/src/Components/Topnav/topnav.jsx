@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../Assets/Images/facebook-icon.png'; 
 import logo1 from '../../Assets/Images/home-icon.png'; 
 import logo2 from '../../Assets/Images/friends-icon.png'; 
@@ -19,13 +19,33 @@ import './topnav.css';
 
 // Services
 import { signout } from '../../Services/authService';
+import { receiveImage } from '../../Services/profileService';
+
 
 
 function TopNav() {
 
     // States
+    const [imgProfile, setImgProfile] = useState(null); // Raises edit profile option
 
+    useEffect(() => {
+        
+      const imgReceiver = async () => {
 
+          let data = {
+              "Email" : localStorage.getItem('UserInfo')
+          }
+
+          const response = await receiveImage(data)
+
+          if(response.res===true) { // If the response is true, update user image
+              setImgProfile(response.data.userimage)
+          }
+
+      }
+
+      imgReceiver();
+  }, [])
 
     const handleSignout = async (e) => {      
 
@@ -39,9 +59,15 @@ function TopNav() {
         <div className='topnav-wrapper'>
           <div className='topnav-left-side'>
             <div className='topnav-sub-left-orgenaize'>
-              <div className='topnav-sub-left-wrapper'>
-                <a href='/profile'  className='topnav-button-circle topnav-pointer topnav-account-button'> חשבון </a>
-              </div>
+              {imgProfile ? (
+                  <a href='/profile' > 
+                    <img src={imgProfile} className='topnav-user-image'></img>
+                  </a>
+              ) :(
+                <div className='topnav-user-image-wrapper'>
+                  <a href='/profile' className='topnav-pointer topnav-account-button'> חשבון </a>
+                </div>
+              )}
 
               <div className='topnav-sub-left-wrapper'>
                 <button className='topnav-button-circle topnav-pointer'><img className='topnav-left-icons' src={logo7} /></button>

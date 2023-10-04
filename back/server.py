@@ -105,7 +105,7 @@ def login():
     query = '''SELECT * FROM register WHERE email = '{}' '''.format(email) 
     print(query)
 
-    # Get full data about the email including his hashed password
+    # Get full data about the email including his hashed password (fetch)
     response = handleUsersLogin(query)
 
     if(response):
@@ -187,12 +187,7 @@ def setprofile():
             set_clause = ', '.join(update_assignments)
 
             # Build the SQL query
-            query = f'''
-                UPDATE profiles 
-                SET 
-                    {set_clause}
-                WHERE email = '{email}'
-            '''
+            query = f'''UPDATE profiles SET {set_clause} WHERE email = '{email}' '''
         
         print(query)
         
@@ -207,6 +202,58 @@ def setprofile():
 
     return jsonify({'res': False})
 
+@app.route("/uploadimage", methods=['GET', 'POST'])
+def uploadimage():
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str['Email']
+    uploadedimage = json_str['UploadedImage']
+    print(uploadedimage)
+
+    query = f'''UPDATE profiles SET userimages = '{uploadedimage}' WHERE email = '{email}' '''
+    print(query)
+
+    response = handleUsers(query)
+
+
+    return jsonify({'res': True})
+
+@app.route("/getProfileImage", methods=['GET', 'POST'])
+def getProfileImage():
+    data = request.data
+   
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+
+    query = '''SELECT userimages FROM profiles WHERE email = '{}' '''.format(email) 
+    print(query)
+    
+    # Get userimage where email from db
+    response = handleUsersLogin(query)
+    
+    if(len(response[0]) > 0):
+        # Set values
+        res = {
+            'res' : True,
+            'data' : {
+                'userimage': response[0]
+            }
+        }
+    else:
+        # Set values
+        res = {
+            'res' : False,
+        }
+
+    print(res)
+
+    return jsonify(res)
 
 @app.route("/healthCheck", methods=['GET', 'POST'])
 def healthCheck():
