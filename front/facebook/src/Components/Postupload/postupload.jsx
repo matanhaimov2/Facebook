@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import plusIcon from '../../Assets/Images/plus-icon.png'; 
+import editIcon from '../../Assets/Images/edit-icon.png'; 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 
 import { BsBoxArrowInUp } from 'react-icons/bs'
 
@@ -12,16 +12,19 @@ import { BsBoxArrowInUp } from 'react-icons/bs'
 import './postupload.css';
 
 // Services
-import { profile, profileImage, uploadImage, receiveImage} from '../../Services/profileService';
+import { profileImgbb, uploadPost, getProfilePost} from '../../Services/profileService';
 
 
 
 function PostUpload() {
 
     // States
-    const [imgProfile, setImgProfile] = useState(null); // 
-    const [imgProfileTrigger, setImgProfileTrigger] = useState(false); // Trigger to pull image profile
+    const [profilePost, setProfilePost] = useState(null); // 
+    const [profilePostTrigger, setProfilePostTrigger] = useState(false); // Trigger to pull image profile
     const [extendUploadPost, setExtendUploadPost] = useState(false);
+    const [uploadImg, setUploadImg] = useState(false);
+
+  
 
     const activateUploadImage = () => {
         const imageUploader = document.getElementById('imgUpload');
@@ -31,34 +34,34 @@ function PostUpload() {
         }
     }
 
-
     const imgUploader = async () => {
 
         // Get the selected image file
         const imageFile = document.getElementById('imgUpload')['files'][0];
 
+        // Save img to display it to the user
+        setUploadImg(URL.createObjectURL(imageFile))
 
+        // Create from image url
         let form = new FormData();
         form.append('image', imageFile)
         
-        const response = await profileImage(form);
-        console.log(response);
+        const response = await profileImgbb(form);
 
         let data = {
             "Email" : localStorage.getItem('UserInfo'), 
-            "UploadedImage" : response.data.display_url
+            "UploadedPost" : response.data.display_url
         }
 
-       await uploadImage(data);
-
         // Set trigger
-        setImgProfileTrigger(true)
+        setProfilePostTrigger(true)
 
     }
 
     const extendUploader = () => {
         setExtendUploadPost(!extendUploadPost)
     }
+
 
     return (
         <div>
@@ -71,8 +74,17 @@ function PostUpload() {
 
                     <div className='postupload-image-wrapper'>
                             <div className='postupload-image-sub-wrapper'>
-                            <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
-                            <button className='profile-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
+                                <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
+                                
+                                {!uploadImg ? (
+                                    <button className='profile-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
+                                ) : (
+                                    <button className='profile-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
+                                )}
+
+                                {uploadImg  && (
+                                    <img src={uploadImg} className='postupload-ed-image'></img>
+                                )}
                             </div>
                     </div>
 

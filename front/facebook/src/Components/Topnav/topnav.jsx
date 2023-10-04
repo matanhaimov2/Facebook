@@ -19,7 +19,7 @@ import './topnav.css';
 
 // Services
 import { signout } from '../../Services/authService';
-import { receiveImage } from '../../Services/profileService';
+import { getProfileImage } from '../../Services/profileService';
 
 
 
@@ -36,7 +36,7 @@ function TopNav() {
               "Email" : localStorage.getItem('UserInfo')
           }
 
-          const response = await receiveImage(data)
+          const response = await getProfileImage(data)
 
           if(response.res===true) { // If the response is true, update user image
               setImgProfile(response.data.userimage)

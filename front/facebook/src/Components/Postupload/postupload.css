@@ -39,10 +39,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
+.postupload-image-sub-wrapper:hover {
+    filter: brightness(120%);
+}
 .postupload-img-plusicon {
     width: 50px !important;
+}
+
+.postupload-ed-image {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
 }
 
 .postupload-privacy-wrapper {

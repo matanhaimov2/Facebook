@@ -33,9 +33,9 @@ const profile = async (data) => {
     }
 }
 
-const profileImage = async (data) => {
+const profileImgbb = async (data) => {
     try {
-        // Sends to image bb a profile image
+        // Sends to img bb a profile image
         const response = await axios.post(`https://api.imgbb.com/1/upload?key=${IMAGE_BB_key}`, data)
 
         console.log(response.data);
@@ -50,7 +50,7 @@ const profileImage = async (data) => {
 
 const uploadImage = async (data) => {
     try {
-        // Sends to back additional data about the user to insert db
+        // Sends to back profile image to insert db
         const response = await axios.post(SERVER_URL + "/uploadimage", data)
         console.log(response);
 
@@ -61,9 +61,9 @@ const uploadImage = async (data) => {
     }
 }
 
-const receiveImage = async (data) => {
+const getProfileImage = async (data) => {
     try {
-        // Sends to back additional data about the user to insert db
+        // Get profile image from back from db 
         const response = await axios.post(SERVER_URL + "/getProfileImage", data)
         console.log(response);
 
@@ -74,11 +74,40 @@ const receiveImage = async (data) => {
     }
 }
 
+const uploadPost = async (data) => {
+    try {
+        // Sends to back post to insert db
+        const response = await axios.post(SERVER_URL + "/uploadpost", data)
+        console.log(response);
+
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const getProfilePost = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/getProfilePost", data)
+        console.log(response);
+
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+
 
 export {
     setprofile,
     profile,
-    profileImage,
+    profileImgbb,
     uploadImage,
-    receiveImage
+    getProfileImage,
+    uploadPost,
+    getProfilePost
 }

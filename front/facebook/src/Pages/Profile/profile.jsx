@@ -13,7 +13,7 @@ import plusIcon from '../../Assets/Images/plus-icon.png';
 import './profile.css';
 
 // Services
-import { profile, profileImage, uploadImage, receiveImage} from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage} from '../../Services/profileService';
 
 // Components
 import SetProfile from '../SetProfile/setprofile';
@@ -30,7 +30,7 @@ function Profile() {
     const [isEditProfile, setIsEditProfile] = useState(false); // Raises edit profile option
     const [imgProfile, setImgProfile] = useState(null); // 
     const [imgProfileTrigger, setImgProfileTrigger] = useState(false); // Trigger to pull image profile
-    
+   
 
     
     const formatDate = (inputDateStr) => { // Date formatting to a normal structure (dd/mm/yyyy)
@@ -99,7 +99,7 @@ function Profile() {
                 "Email" : localStorage.getItem('UserInfo')
             }
 
-            const response = await receiveImage(data)
+            const response = await getProfileImage(data)
 
             if(response.res===true) { // If the response is true, update user image
                 setImgProfile(response.data.userimage)
@@ -129,7 +129,7 @@ function Profile() {
         let form = new FormData();
         form.append('image', imageFile)
         
-        const response = await profileImage(form);
+        const response = await profileImgbb(form); // sends image to img bb
         console.log(response);
 
         let data = {

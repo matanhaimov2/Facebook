@@ -18,7 +18,7 @@ app.config['MYSQL_DB'] = 'facebook_db'
 # Generates random secret key
 secretPassCode = bcrypt.gensalt(rounds=15)
 
-
+# SQL handle
 def handleUsers(query): 
     # Create Cursor
     cursor = mysql.connection.cursor()
@@ -53,6 +53,7 @@ def handleUsersLogin(query):
     return data  # Return the data fetched from the query
 
 
+# Authentication
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     data = request.data
@@ -90,7 +91,6 @@ def register():
         return jsonify({'res': False, 'err': 'Email Exists'})
 
     return jsonify({'res': False})
-
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -136,6 +136,7 @@ def login():
     return jsonify({'res': False})
 
 
+# Profile
 @app.route("/setprofile", methods=['GET', 'POST'])
 def setprofile():
     data = request.data
@@ -202,64 +203,6 @@ def setprofile():
 
     return jsonify({'res': False})
 
-@app.route("/uploadimage", methods=['GET', 'POST'])
-def uploadimage():
-    data = request.data
-    print(data)
-    str_data = data.decode('utf-8') # From binary to string
-    json_str = json.loads(str_data) # From string to json
-
-    # Set values
-    email = json_str['Email']
-    uploadedimage = json_str['UploadedImage']
-    print(uploadedimage)
-
-    query = f'''UPDATE profiles SET userimages = '{uploadedimage}' WHERE email = '{email}' '''
-    print(query)
-
-    response = handleUsers(query)
-
-
-    return jsonify({'res': True})
-
-@app.route("/getProfileImage", methods=['GET', 'POST'])
-def getProfileImage():
-    data = request.data
-   
-    str_data = data.decode('utf-8') # From binary to string
-    json_str = json.loads(str_data) # From string to json
-
-    email = json_str["Email"]
-
-    query = '''SELECT userimages FROM profiles WHERE email = '{}' '''.format(email) 
-    print(query)
-    
-    # Get userimage where email from db
-    response = handleUsersLogin(query)
-    
-    if(len(response[0]) > 0):
-        # Set values
-        res = {
-            'res' : True,
-            'data' : {
-                'userimage': response[0]
-            }
-        }
-    else:
-        # Set values
-        res = {
-            'res' : False,
-        }
-
-    print(res)
-
-    return jsonify(res)
-
-@app.route("/healthCheck", methods=['GET', 'POST'])
-def healthCheck():
-    return jsonify({'res': True})
-
-
 @app.route("/profile", methods=['GET', 'POST'])
 def profile():
     data = request.data
@@ -292,6 +235,119 @@ def profile():
     }
 
     return jsonify(res)
+
+@app.route("/uploadimage", methods=['GET', 'POST'])
+def uploadimage(): # Sends uploaded profile image to db
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str['Email']
+    uploadedimage = json_str['UploadedImage']
+    print(uploadedimage)
+
+    query = f'''UPDATE profiles SET userimages = '{uploadedimage}' WHERE email = '{email}' '''
+    print(query)
+
+    response = handleUsers(query)
+
+
+    return jsonify({'res': True})
+
+@app.route("/getProfileImage", methods=['GET', 'POST'])
+def getProfileImage(): # Gets from db an uploaded profile image
+    data = request.data
+   
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+
+    query = '''SELECT userimages FROM profiles WHERE email = '{}' '''.format(email) 
+    print(query)
+    
+    # Get userimage where email from db
+    response = handleUsersLogin(query)
+    
+    if(len(response[0]) > 0):
+        # Set values
+        res = {
+            'res' : True,
+            'data' : {
+                'userimage': response[0]
+            }
+        }
+    else:
+        # Set values
+        res = {
+            'res' : False,
+        }
+
+    print(res)
+
+    return jsonify(res)
+
+@app.route("/uploadPost", methods=['GET', 'POST'])
+def uploadPost():
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str['Email']
+    uploadedpost = json_str['UploadedPost']
+    print(uploadedpost)
+
+    query = f'''UPDATE profiles SET userposts = '{uploadedpost}' WHERE email = '{email}' '''
+    print(query)
+
+    response = handleUsers(query)
+
+
+    return jsonify({'res': True})
+
+@app.route("/getProfilePost", methods=['GET', 'POST'])
+def getProfilePost():
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+
+    query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
+    print(query)
+    
+    # Get userimage where email from db
+    response = handleUsersLogin(query)
+    
+    if(len(response[0]) > 0):
+        # Set values
+        res = {
+            'res' : True,
+            'data' : {
+                'userimage': response[0]
+            }
+        }
+    else:
+        # Set values
+        res = {
+            'res' : False,
+        }
+
+    print(res)
+
+    return jsonify(res)
+
+
+
+# HealthCheck
+@app.route("/healthCheck", methods=['GET', 'POST'])
+def healthCheck():
+    return jsonify({'res': True})
 
 
 
