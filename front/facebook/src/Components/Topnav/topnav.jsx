@@ -8,10 +8,7 @@ import logo5 from '../../Assets/Images/groups-icon.png';
 import logo6 from '../../Assets/Images/menu-icon.png';
 import logo7 from '../../Assets/Images/notification-icon.png'; 
 import logo8 from '../../Assets/Images/search-icon.png'; 
-
-
-
-
+import { LiaUserCircleSolid } from 'react-icons/lia'
 
 
 //CSS
@@ -60,12 +57,12 @@ function TopNav() {
           <div className='topnav-left-side'>
             <div className='topnav-sub-left-orgenaize'>
               {imgProfile ? (
-                  <a href='/profile' > 
+                  <a href='/profile' className='topnav-user-image-wrapper' > 
                     <img src={imgProfile} className='topnav-user-image'></img>
                   </a>
               ) :(
                 <div className='topnav-user-image-wrapper'>
-                  <a href='/profile' className='topnav-pointer topnav-account-button'> חשבון </a>
+                  <a href='/profile' className='topnav-pointer topnav-account-button'> <LiaUserCircleSolid className='topnav-account-icon'/> </a>
                 </div>
               )}
 

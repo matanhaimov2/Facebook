@@ -23,11 +23,15 @@ function PostUpload() {
     const [profilePostTrigger, setProfilePostTrigger] = useState(false); // Trigger to pull image profile
     const [extendUploadPost, setExtendUploadPost] = useState(false);
     const [uploadImg, setUploadImg] = useState(false);
+    const [uploadText, setUploadText] = useState('');
+    const [uploadPrivacy, setUploadPrivacy] = useState('');
+
+
 
   
 
     const activateUploadImage = () => {
-        const imageUploader = document.getElementById('imgUpload');
+        const imageUploader = document.getElementById('imgPostUpload');
 
         if(imageUploader) {
             imageUploader.click()
@@ -37,25 +41,37 @@ function PostUpload() {
     const imgUploader = async () => {
 
         // Get the selected image file
-        const imageFile = document.getElementById('imgUpload')['files'][0];
+        const imageFile = document.getElementById('imgPostUpload')['files'][0];
 
-        // Save img to display it to the user
-        setUploadImg(URL.createObjectURL(imageFile))
+        if(imageFile) {
+            // Save img to display it to the user
+            setUploadImg(imageFile)
+        }
+    }
 
-        // Create from image url
-        let form = new FormData();
-        form.append('image', imageFile)
-        
-        const response = await profileImgbb(form);
+    const uploadPostToFacebook = async () => {
+       // Get the selected image file
+       const imageFile = document.getElementById('imgPostUpload')['files'][0];
+
+
+       let form = new FormData();
+       form.append('image', imageFile)
+       
+       const responseUrlImgBB = await profileImgbb(form);
 
         let data = {
             "Email" : localStorage.getItem('UserInfo'), 
-            "UploadedPost" : response.data.display_url
+            "UploadedText" : uploadText,
+            "UploadedImg" : responseUrlImgBB.data.display_url,
+            "UploadedPrivacy" : uploadPrivacy
+
         }
+
+        const response = await uploadPost(data)
+        console.log(response)
 
         // Set trigger
         setProfilePostTrigger(true)
-
     }
 
     const extendUploader = () => {
@@ -69,21 +85,21 @@ function PostUpload() {
             {extendUploadPost ? (
                 <div className='postupload-wrapper'>
                     <div className='postupload-input-wrapper'>
-                            <input className='postupload-input' placeholder=' ?מה באלך לשתף'></input>
+                            <input className='postupload-input' onChange={(e) => setUploadText(e.target.value)} placeholder=' ?מה באלך לשתף'></input>
                     </div>
 
                     <div className='postupload-image-wrapper'>
                             <div className='postupload-image-sub-wrapper'>
-                                <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
+                                <input type="file" id="imgPostUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
                                 
                                 {!uploadImg ? (
-                                    <button className='profile-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
+                                    <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
                                 ) : (
-                                    <button className='profile-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
+                                    <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
                                 )}
 
                                 {uploadImg  && (
-                                    <img src={uploadImg} className='postupload-ed-image'></img>
+                                    <img src={URL.createObjectURL(uploadImg)} className='postupload-ed-image'></img>
                                 )}
                             </div>
                     </div>
@@ -91,15 +107,15 @@ function PostUpload() {
                     <div className='postupload-privacy-wrapper'>
                             <FormControl>
                                 <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" defaultValue="ציבורי" name="radio-buttons-group">
-                                    <FormControlLabel className='postupload-privacy-button' value="public" control={<Radio />} label="ציבורי" />
-                                    <FormControlLabel className='postupload-privacy-button' value="friends" control={<Radio />} label="חברים" />
-                                    <FormControlLabel className='postupload-privacy-button' value="only me" control={<Radio />} label="רק אני" />
+                                    <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="public" control={<Radio />} label="ציבורי" />
+                                    <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="friends" control={<Radio />} label="חברים" />
+                                    <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="only me" control={<Radio />} label="רק אני" />
                                 </RadioGroup>
                             </FormControl>
                     </div>
 
                     <div className='postupload-post-wrapper'>
-                            <button type='submit' className='login-form-button postupload-post-button'>פרסם</button>
+                            <button type='submit' onClick={uploadPostToFacebook} className='login-form-button postupload-post-button'>פרסם</button>
                             <button className='postupload-arrow-button-wrapper' onClick={extendUploader}> <BsBoxArrowInUp />  </button>
                     </div>
                 </div>

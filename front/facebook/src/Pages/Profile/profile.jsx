@@ -8,12 +8,18 @@ import editIcon from '../../Assets/Images/edit-icon.png';
 import searchIcon from '../../Assets/Images/search-icon.png'; 
 import exitIcon from '../../Assets/Images/exit-icon.png'; 
 import plusIcon from '../../Assets/Images/plus-icon.png'; 
+import { LiaUserCircleSolid } from 'react-icons/lia'
+import { MdOutlineModeEditOutline } from 'react-icons/md'
+import { MdDeleteForever } from 'react-icons/md'
+
+
+
 
 //CSS
 import './profile.css';
 
 // Services
-import { profile, profileImgbb, uploadImage, getProfileImage} from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage} from '../../Services/profileService';
 
 // Components
 import SetProfile from '../SetProfile/setprofile';
@@ -100,9 +106,12 @@ function Profile() {
             }
 
             const response = await getProfileImage(data)
-
+          
             if(response.res===true) { // If the response is true, update user image
                 setImgProfile(response.data.userimage)
+            }
+            else {
+                console.log(imgProfile)
             }
 
         }
@@ -119,6 +128,18 @@ function Profile() {
         }
     }
 
+    const activateDeleteImage = async () => {
+
+        let data = {
+            "Email" : localStorage.getItem('UserInfo'), 
+        }
+
+        const response = await deleteProfileImage(data); // sends to back request to delete profile image from db
+        if (response.res === true) {
+            setImgProfile(null)
+        }
+
+    }
 
     const imgUploader = async () => {
 
@@ -152,17 +173,21 @@ function Profile() {
 
                     <div className='sub-profile-image-wrapper'>
                         {imgProfile ? (
-                            <img src={imgProfile} className='profile-user-image'></img>
+                            <div className='profile-sub-sub-image-wrapper'>
+                                <img src={imgProfile} className='profile-user-image'></img>
+                                <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
+                                <button className='profile-user-edit-image' onClick={activateUploadImage}> <MdOutlineModeEditOutline /> </button>
+                                <button className='profile-user-delete-image' onClick={activateDeleteImage}> <MdDeleteForever /> </button>
+                                
+                            </div>
+
                         ) :(
                             <div>
-                                no image
-                            </div>
-                        )}
-
-                        {!imgProfile && (
-                            <div className='profile-img-wrapper'>
-                                <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
-                                <button className='profile-upload-img-wrapper' onClick={activateUploadImage}> <img src={plusIcon} className="profile-upload-img" /> </button>
+                                <div className='profile-img-wrapper'>
+                                    <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
+                                    <button className='profile-upload-img-wrapper' onClick={activateUploadImage}> <img src={plusIcon} className="profile-upload-img" /> </button>
+                                    <LiaUserCircleSolid className='profile-user-no-image'/>
+                                </div>
                             </div>
                         )}
 

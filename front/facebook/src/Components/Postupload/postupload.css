@@ -100,6 +100,13 @@
     filter: brightness(120%);
 }
 
+.postupload-upload-img-wrapper {
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+}
+
 .postupload-arrow-button-wrapper {
     border: none;
     background: none;

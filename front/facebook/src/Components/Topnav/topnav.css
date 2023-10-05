@@ -35,6 +35,13 @@
     filter: brightness(120%);
 }
 
+.topnav-account-icon {
+    font-size: 280%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
 .topnav-middle-side {
     width: 33.3333333%;
     display: flex;
@@ -122,13 +129,19 @@
     color: white;
 }
 
-.topnav-user-image {
-    width: 50px;
-    border-radius: 50%;
+.topnav-user-image-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 5%;
+}
+
+.topnav-user-image {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.topnav-user-image:hover {
+    filter: brightness(120%);
 }
 
 .topnav-user-image-wrapper {

@@ -30,7 +30,10 @@
 .sub-profile-image-wrapper {
     width: 20%;
     margin: auto;
-    padding: 0% 1% 0% 0%;
+    padding: 0% 1% 0% 2%;
+    position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .sub-profile-basics {
@@ -177,17 +180,24 @@
 
 .profile-img-wrapper {
     width: fit-content;
+    position: relative;
 }
 
 .profile-upload-img-wrapper {
+    position: absolute;
+    bottom: -3px;
+    left: -10px;
     background: none;
     border: none;
     cursor: pointer;
-    z-index: 1;
 }
 
 .profile-upload-img {
     width: 20px;
+}
+
+.profile-sub-sub-image-wrapper {
+    position: relative;
 }
 
 .profile-user-image {
@@ -195,5 +205,33 @@
     border-radius: 50%;
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.profile-user-edit-image {
+    position: absolute;
+    bottom: -4px;
+    right: 78px;
+    border: none;
+    background: none;
+    color: white;
+    cursor: pointer;
+}
+
+.profile-user-delete-image {
+    position: absolute;
+    top: -8px;
+    right: -16px;
+    border: none;
+    background: none;
+    color: white;
+    cursor: pointer;
+}
+
+
+.profile-user-no-image {
+    font-size: 650%;
+    display: flex;
+    text-align: center;
     justify-content: center;
 }

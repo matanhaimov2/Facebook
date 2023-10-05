@@ -74,10 +74,22 @@ const getProfileImage = async (data) => {
     }
 }
 
+const deleteProfileImage = async (data) => {
+    try {
+        // Sends to back request to delete profile image from db
+        const response = await axios.post(SERVER_URL + "/deleteProfileImage", data)
+        console.log(response);
+
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
 const uploadPost = async (data) => {
     try {
         // Sends to back post to insert db
-        const response = await axios.post(SERVER_URL + "/uploadpost", data)
+        const response = await axios.post(SERVER_URL + "/uploadPost", data)
         console.log(response);
 
         return response.data
@@ -108,6 +120,7 @@ export {
     profileImgbb,
     uploadImage,
     getProfileImage,
+    deleteProfileImage,
     uploadPost,
     getProfilePost
 }

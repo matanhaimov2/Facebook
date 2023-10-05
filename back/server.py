@@ -270,8 +270,8 @@ def getProfileImage(): # Gets from db an uploaded profile image
     
     # Get userimage where email from db
     response = handleUsersLogin(query)
-    
-    if(len(response[0]) > 0):
+
+    if(response):
         # Set values
         res = {
             'res' : True,
@@ -289,8 +289,8 @@ def getProfileImage(): # Gets from db an uploaded profile image
 
     return jsonify(res)
 
-@app.route("/uploadPost", methods=['GET', 'POST'])
-def uploadPost():
+@app.route("/deleteProfileImage", methods=['GET', 'POST'])
+def deleteProfileImage(): # Delete from db a profile image
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -298,16 +298,79 @@ def uploadPost():
 
     # Set values
     email = json_str['Email']
-    uploadedpost = json_str['UploadedPost']
-    print(uploadedpost)
 
-    query = f'''UPDATE profiles SET userposts = '{uploadedpost}' WHERE email = '{email}' '''
+    query = f'''UPDATE profiles SET userimages = NULL WHERE email = '{email}' '''
+
     print(query)
 
     response = handleUsers(query)
 
 
     return jsonify({'res': True})
+
+@app.route("/uploadPost", methods=['GET', 'POST'])
+def uploadPost():
+    data = request.data
+
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str['Email']
+    uploadedtext = json_str['UploadedText']
+    uploadedimg = json_str['UploadedImg']
+    uploadedprivacy = json_str['UploadedPrivacy']
+    
+    post = {
+        'Text': uploadedtext,
+        'Image': uploadedimg,
+        'Privacy': uploadedprivacy,
+        'date': '12/1/1111'
+    }
+
+    query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
+ 
+    # Get userposts where email from db
+    posts = handleUsersLogin(query)
+
+    posts = posts[0]
+
+
+    if (posts == None): # If userposts has no image in it
+
+        query = f'''UPDATE profiles
+            SET userposts = JSON_ARRAY(
+                '{json.dumps(post)}'
+            )
+            WHERE email = '{email}';
+        '''
+
+        handleUsers(query)      
+    else: # If userposts contains posts
+
+        posts = json.loads(posts)
+
+        # Convert posts to array
+        allposts = posts
+       
+        # Push new post
+        allposts.append(json.dumps(post))
+
+        # Convert the array back to fit the sql query
+        allposts_str = ',\n'.join(f"'{postFromAllPosts}'" for postFromAllPosts in allposts)
+        
+        query = f'''UPDATE profiles
+            SET userposts = JSON_ARRAY(
+                {allposts_str}
+            )
+            WHERE email = '{email}';
+        '''
+
+        handleUsers(query)
+      
+
+    return jsonify({'res': True})
+
 
 @app.route("/getProfilePost", methods=['GET', 'POST'])
 def getProfilePost():
