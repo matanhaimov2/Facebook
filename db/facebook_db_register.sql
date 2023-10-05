@@ -16,34 +16,44 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `profiles`
+-- Table structure for table `register`
 --
 
-DROP TABLE IF EXISTS `profiles`;
+DROP TABLE IF EXISTS `register`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `profiles` (
+CREATE TABLE `register` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `register_id` int(11) DEFAULT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `birthday` date NOT NULL,
-  `address` varchar(100) DEFAULT NULL,
-  `school` varchar(100) DEFAULT NULL,
-  `biography` text,
-  `relationshipstatus` enum('Not in a Relationship','In a Relationship','Married') DEFAULT NULL,
-  `username` varchar(20) DEFAULT NULL,
-  `occupation` varchar(45) DEFAULT NULL,
+  `email` varchar(100) NOT NULL,
+  `birthday` date DEFAULT NULL,
   `sex` enum('M','F','Other') DEFAULT NULL,
+  `password` varchar(100) NOT NULL,
+  `firstlogin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`email`),
-  UNIQUE KEY `username_2` (`email`),
-  UNIQUE KEY `username_UNIQUE` (`username`),
-  KEY `register_id` (`register_id`),
-  CONSTRAINT `profiles_ibfk_1` FOREIGN KEY (`register_id`) REFERENCES `register` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `username_2` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `register_user_trigger` AFTER INSERT ON `register` FOR EACH ROW BEGIN
+INSERT INTO `profiles` (register_id, firstname, lastname, email, birthday, sex)
+VALUES (NEW.id, NEW.firstname, NEW.lastname, NEW.email, NEW.birthday, NEW.sex);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -54,4 +64,4 @@ CREATE TABLE `profiles` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-31 22:32:24
+-- Dump completed on 2023-10-05 22:47:57
