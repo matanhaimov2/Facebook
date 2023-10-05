@@ -309,7 +309,7 @@ def deleteProfileImage(): # Delete from db a profile image
     return jsonify({'res': True})
 
 @app.route("/uploadPost", methods=['GET', 'POST'])
-def uploadPost():
+def uploadPost(): # Upload post/s to db
     data = request.data
 
     str_data = data.decode('utf-8') # From binary to string
@@ -373,7 +373,7 @@ def uploadPost():
 
 
 @app.route("/getProfilePost", methods=['GET', 'POST'])
-def getProfilePost():
+def getProfilePost(): # Get post/s from db
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
