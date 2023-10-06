@@ -5,15 +5,17 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-
 import { BsBoxArrowInUp } from 'react-icons/bs'
 
-//CSS
+
+// CSS
 import './postupload.css';
 
 // Services
-import { profileImgbb, uploadPost, getProfilePost} from '../../Services/profileService';
+import { profileImgbb, uploadPost } from '../../Services/profileService';
 
+// Components
+import DisplayPosts from '../DisplayPosts/displayposts';
 
 
 function PostUpload() {
@@ -27,8 +29,6 @@ function PostUpload() {
     const [uploadPrivacy, setUploadPrivacy] = useState('');
 
 
-
-  
 
     const activateUploadImage = () => {
         const imageUploader = document.getElementById('imgPostUpload');
@@ -64,7 +64,6 @@ function PostUpload() {
             "UploadedText" : uploadText,
             "UploadedImg" : responseUrlImgBB.data.display_url,
             "UploadedPrivacy" : uploadPrivacy
-
         }
 
         const response = await uploadPost(data)
@@ -72,7 +71,11 @@ function PostUpload() {
 
         // Set trigger
         setProfilePostTrigger(true)
+
+        setExtendUploadPost(!extendUploadPost)
+
     }
+
 
     const extendUploader = () => {
         setExtendUploadPost(!extendUploadPost)
@@ -122,6 +125,7 @@ function PostUpload() {
             ) : (
                 <div className='postupload-upload-button-wrapper'>
                     <button onClick={extendUploader} className='postupload-upload-button'>העלה פוסט</button>
+                    <DisplayPosts />
                 </div>
             )}
         </div>

@@ -2,6 +2,8 @@ from flask import Flask, request
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 from flask import jsonify
+from datetime import datetime
+
 import json
 import bcrypt
 
@@ -325,7 +327,7 @@ def uploadPost(): # Upload post/s to db
         'Text': uploadedtext,
         'Image': uploadedimg,
         'Privacy': uploadedprivacy,
-        'date': '12/1/1111'
+        'date': str(datetime.now())
     }
 
     query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
@@ -335,8 +337,9 @@ def uploadPost(): # Upload post/s to db
 
     posts = posts[0]
 
-
     if (posts == None): # If userposts has no image in it
+
+        # post['id'] = 1 # check if work later!
 
         query = f'''UPDATE profiles
             SET userposts = JSON_ARRAY(
@@ -352,7 +355,7 @@ def uploadPost(): # Upload post/s to db
 
         # Convert posts to array
         allposts = posts
-       
+
         # Push new post
         allposts.append(json.dumps(post))
 
@@ -371,7 +374,6 @@ def uploadPost(): # Upload post/s to db
 
     return jsonify({'res': True})
 
-
 @app.route("/getProfilePost", methods=['GET', 'POST'])
 def getProfilePost(): # Get post/s from db
     data = request.data
@@ -386,24 +388,26 @@ def getProfilePost(): # Get post/s from db
     
     # Get userimage where email from db
     response = handleUsersLogin(query)
+    response = response[0]
+
+    posts = json.loads(response)
+
+    allposts = []
+
+    for post in posts:
+        allposts.append(json.loads(post))
+
+    if(response != None):
+
+        res = {
+            'data' : allposts,
+            'res': True
+        }    
+
+        return jsonify(res)
     
-    if(len(response[0]) > 0):
-        # Set values
-        res = {
-            'res' : True,
-            'data' : {
-                'userimage': response[0]
-            }
-        }
-    else:
-        # Set values
-        res = {
-            'res' : False,
-        }
+    return jsonify({'res': False, 'data' : []})
 
-    print(res)
-
-    return jsonify(res)
 
 
 

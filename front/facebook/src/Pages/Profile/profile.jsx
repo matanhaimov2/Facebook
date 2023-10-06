@@ -76,7 +76,7 @@ function Profile() {
             }
             
             const response = await profile(data)
-            console.log(response)
+
             if(response.res===true) { 
                 setProfileinfo(response.data);   
                 
@@ -151,7 +151,6 @@ function Profile() {
         form.append('image', imageFile)
         
         const response = await profileImgbb(form); // sends image to img bb
-        console.log(response);
 
         let data = {
             "Email" : localStorage.getItem('UserInfo'), 
