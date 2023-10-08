@@ -13,13 +13,12 @@ import { MdOutlineModeEditOutline } from 'react-icons/md'
 import { MdDeleteForever } from 'react-icons/md'
 
 
-
-
 //CSS
 import './profile.css';
 
 // Services
 import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage} from '../../Services/profileService';
+import { getAuthenticatedUser } from '../../Services/authService'
 
 // Components
 import SetProfile from '../SetProfile/setprofile';
@@ -72,24 +71,27 @@ function Profile() {
     
     
             let data = {
-                "Email" : localStorage.getItem('UserInfo')
+                "Email" : getAuthenticatedUser()
             }
-            
-            const response = await profile(data)
+            if(getAuthenticatedUser()) {
+                
+                const response = await profile(data)
 
-            if(response.res===true) { 
-                setProfileinfo(response.data);   
-                
-                formatDate(profileInfo.birthday); // Set the formatted date
+                if(response && response.res===true) { 
+                    setProfileinfo(response.data);   
+                    
+                    formatDate(profileInfo.birthday); // Set the formatted date
 
-                formatRelationship(profileInfo.relationshipstatus); // Set the formatted relationship
-                
-                setShowSkeleton(false);
-                
+                    formatRelationship(profileInfo.relationshipstatus); // Set the formatted relationship
+                    
+                    setShowSkeleton(false);
+                    
+                }
+                else {
+                    console.log('Somthing went wrong')
+                }
             }
-            else {
-                console.log('Somthing went wrong')
-            }
+
         }
     
         profilePage();
@@ -102,12 +104,12 @@ function Profile() {
         const imgReceiver = async () => {
 
             let data = {
-                "Email" : localStorage.getItem('UserInfo')
+                "Email" : getAuthenticatedUser()
             }
 
             const response = await getProfileImage(data)
           
-            if(response.res===true) { // If the response is true, update user image
+            if(response && response.res===true) { // If the response is true, update user image
                 setImgProfile(response.data.userimage)
             }
             else {
@@ -116,7 +118,9 @@ function Profile() {
 
         }
 
-        imgReceiver();
+        if(localStorage.getItem('UserInfo')) {
+            imgReceiver();
+        }
     }, [imgProfileTrigger])
 
 
@@ -131,7 +135,7 @@ function Profile() {
     const activateDeleteImage = async () => {
 
         let data = {
-            "Email" : localStorage.getItem('UserInfo'), 
+            "Email" : getAuthenticatedUser(), 
         }
 
         const response = await deleteProfileImage(data); // sends to back request to delete profile image from db
@@ -153,7 +157,7 @@ function Profile() {
         const response = await profileImgbb(form); // sends image to img bb
 
         let data = {
-            "Email" : localStorage.getItem('UserInfo'), 
+            "Email" : getAuthenticatedUser(), 
             "UploadedImage" : response.data.display_url
         }
 

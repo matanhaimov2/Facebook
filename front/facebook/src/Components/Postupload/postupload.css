@@ -1,29 +1,29 @@
 /* width */
-::-webkit-scrollbar {
+.profile-center-left-wrapper ::-webkit-scrollbar {
     width: 3px;
-  }
+}
   
   /* Track */
-  ::-webkit-scrollbar-track {
+.profile-center-left-wrapper ::-webkit-scrollbar-track {
     background: #d0cdcd;
-  }
+}
   
   /* Handle */
-  ::-webkit-scrollbar-thumb {
+.profile-center-left-wrapper ::-webkit-scrollbar-thumb {
     background: #3f3f3f;
-  }
+}
   
   /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+.profile-center-left-wrapper ::-webkit-scrollbar-thumb:hover {
     background: #555;
-  }
+}
 
 
 
 
 .postupload-wrapper {
     width: 90%;
-    height: 90%;
+    height: 50vh;
     background-color: #181616;
     margin: auto;
     border-radius: 10px;
@@ -138,4 +138,14 @@
     color: white;
     font-size: 150%;
     cursor: pointer;
+}
+
+.postupload-form-loading {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    padding: 2%;
+    border-radius: 5px;
+    border: none;
+    background: #1877f2;
 }

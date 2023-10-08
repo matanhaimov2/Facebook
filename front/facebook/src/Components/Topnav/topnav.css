@@ -1,6 +1,6 @@
 .topnav-wrapper {
-    width: 100%;
-    height: 100%;
+    padding: 1vh;
+    height: fit-content;
     background-color: #222223;
     color: white;
     font-family: inherit;
@@ -19,7 +19,7 @@
 .topnav-sub-left-orgenaize {
     display: flex;
     flex-direction: row;
-    gap: 2%;
+    gap: 5%;
 }
 .topnav-sub-left-wrapper {
     width: 50px;
@@ -40,6 +40,26 @@
     display: flex;
     text-align: center;
     justify-content: center;
+}
+
+.topnav-menu-icon {
+    font-size: 200%;
+    color: white;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.topnav-round-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: auto;
+    background: #3a3b3c;
+}
+
+.topnav-round-wrapper:hover {
+    filter: brightness(120%);
 }
 
 .topnav-middle-side {
@@ -107,10 +127,10 @@
 }
 
 .topnav-button-circle {
-    background-color: #222223;
+    width: 40px;
+    background: none;
     outline: none;
     border-style: none;
-    width: 100%;
 }
 
 .topnav-pointer {
@@ -122,6 +142,10 @@
     width: 100%;
     height: 100%;
     background-color: #222223;
+}
+
+.topnav-facebook-icon:hover {
+    filter: brightness(120%);
 }
 
 .topnav-account-button {

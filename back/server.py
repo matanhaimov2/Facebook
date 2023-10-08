@@ -6,6 +6,8 @@ from datetime import datetime
 
 import json
 import bcrypt
+import random
+import string
 
 app = Flask(__name__)
 mysql = MySQL(app)
@@ -125,17 +127,75 @@ def login():
     # If the hased save password in the db and the password that was inserted by the user are the same enter
     if (checker):
         response = handleUsers(sql_query)
-        print(response)
-        if (response == 1):
-            return jsonify({'res' : True, 'data': {'email' : email}, 'firstlogin': False})
-        fLoginquery = '''UPDATE register SET firstlogin = 1  WHERE email = '{}' '''.format(email) # Updates that the specific user entered more then once
-        handleUsers(fLoginquery)
         
-        return jsonify({'res' : True, 'data': {'email' : email} , 'firstlogin': True})
+        print(response)
+
+        sessionID = genereteSessionID(16)
+
+        addSessionQuery = f'''INSERT INTO session(sessionID, email, username) VALUES ('{sessionID}','{email}','{email}')'''
+        
+        handleUsers(addSessionQuery)
+
+        # First login
+        if (response == 1):
+           
+            
+            getUserNameQuery = f''' SELECT username FROM profiles WHERE email = '{email}'; '''
+            username = handleUsersLogin(getUserNameQuery)[0]
+
+            res = {
+                'res' : True,
+                'data' : {
+                    'sessionID' :  sessionID,
+                    'email' : email,
+                    'username' : username
+                },
+                'firstlogin': False
+            }
+
+            return jsonify(res)
+        else:
+            # Second login...
+            fLoginquery = f'''UPDATE register SET firstlogin = 1  WHERE email = '{email}' ''' # Updates that the specific user entered more then once
+            handleUsers(fLoginquery)
+
+            res = {
+                    'res' : True,
+                    'data' : {
+                        'sessionID' :  sessionID,
+                        'email' : email,
+                    },
+                    'firstlogin': True
+                }
+
+            return jsonify(res)
     else:
         return jsonify({'res': False, 'err': 'Email or Password are Incorrect'})
     
     return jsonify({'res': False})
+
+@app.route("/isAuthenticated", methods=['GET', 'POST'])
+def isAuthenticated():
+    data = request.data
+   
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["email"]
+    password = json_str["sessionID"]
+
+        
+    getEmailBySession = f''' SELECT email FROM session WHERE email = '{email}'; '''
+    emailfromDB = handleUsersLogin(getEmailBySession)
+
+    if(emailfromDB):
+        if(email==emailfromDB[0]):
+            return jsonify({'res': True})
+        else:
+            return jsonify({'res': False})
+    else:
+        return jsonify({'res': False})
+
 
 
 # Profile
@@ -416,6 +476,15 @@ def getProfilePost(): # Get post/s from db
 def healthCheck():
     return jsonify({'res': True})
 
+
+
+# Sub Functions
+def genereteSessionID(length):
+
+    # choose from all lowercase letter
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    return result_str
 
 
 if __name__ == "__main__":

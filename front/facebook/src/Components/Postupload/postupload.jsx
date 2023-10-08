@@ -6,6 +6,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { BsBoxArrowInUp } from 'react-icons/bs'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 
 // CSS
@@ -13,6 +15,7 @@ import './postupload.css';
 
 // Services
 import { profileImgbb, uploadPost } from '../../Services/profileService';
+import { getAuthenticatedUser } from '../../Services/authService';
 
 // Components
 import DisplayPosts from '../DisplayPosts/displayposts';
@@ -21,12 +24,13 @@ import DisplayPosts from '../DisplayPosts/displayposts';
 function PostUpload() {
 
     // States
-    const [profilePost, setProfilePost] = useState(null); // 
     const [profilePostTrigger, setProfilePostTrigger] = useState(false); // Trigger to pull image profile
     const [extendUploadPost, setExtendUploadPost] = useState(false);
     const [uploadImg, setUploadImg] = useState(false);
     const [uploadText, setUploadText] = useState('');
     const [uploadPrivacy, setUploadPrivacy] = useState('');
+    const [showLoading, setShowLoading] = useState(false);
+
 
 
 
@@ -50,29 +54,39 @@ function PostUpload() {
     }
 
     const uploadPostToFacebook = async () => {
+
+        setShowLoading(true); // Show loading animation
+
        // Get the selected image file
-       const imageFile = document.getElementById('imgPostUpload')['files'][0];
+        const imageFile = document.getElementById('imgPostUpload')['files'][0];
 
 
-       let form = new FormData();
-       form.append('image', imageFile)
-       
-       const responseUrlImgBB = await profileImgbb(form);
+        let form = new FormData();
+        form.append('image', imageFile)
+        
+        const responseUrlImgBB = await profileImgbb(form);
 
         let data = {
-            "Email" : localStorage.getItem('UserInfo'), 
+            "Email" : getAuthenticatedUser(), 
             "UploadedText" : uploadText,
             "UploadedImg" : responseUrlImgBB.data.display_url,
             "UploadedPrivacy" : uploadPrivacy
         }
 
-        const response = await uploadPost(data)
-        console.log(response)
+        if(getAuthenticatedUser()) {
 
-        // Set trigger
-        setProfilePostTrigger(true)
+            const response = await uploadPost(data)
+            console.log(response)
 
-        setExtendUploadPost(!extendUploadPost)
+            // Set trigger
+            setProfilePostTrigger(true)
+
+            setUploadImg(false); // Deletes the image from input
+
+            setExtendUploadPost(!extendUploadPost) // Postupload extend off
+
+            setShowLoading(false); // Hide loading animation
+        }
 
     }
 
@@ -108,18 +122,23 @@ function PostUpload() {
                     </div>
 
                     <div className='postupload-privacy-wrapper'>
-                            <FormControl>
-                                <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" defaultValue="ציבורי" name="radio-buttons-group">
-                                    <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="public" control={<Radio />} label="ציבורי" />
-                                    <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="friends" control={<Radio />} label="חברים" />
-                                    <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="only me" control={<Radio />} label="רק אני" />
-                                </RadioGroup>
-                            </FormControl>
+                        <FormControl>
+                            <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" defaultValue="ציבורי" name="radio-buttons-group">
+                                <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="public" control={<Radio />} label="ציבורי" />
+                                <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="friends" control={<Radio />} label="חברים" />
+                                <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="only me" control={<Radio />} label="רק אני" />
+                            </RadioGroup>
+                        </FormControl>
                     </div>
 
                     <div className='postupload-post-wrapper'>
+                        {!showLoading ? (
                             <button type='submit' onClick={uploadPostToFacebook} className='login-form-button postupload-post-button'>פרסם</button>
-                            <button className='postupload-arrow-button-wrapper' onClick={extendUploader}> <BsBoxArrowInUp />  </button>
+                        ) : (
+                            <Box type='submit' className='postupload-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
+                        )}
+
+                        <button className='postupload-arrow-button-wrapper' onClick={extendUploader}> <BsBoxArrowInUp />  </button>
                     </div>
                 </div>
             ) : (

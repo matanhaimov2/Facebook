@@ -35,6 +35,41 @@ const register = async (data) => {
     }
 }
 
+const isAuthenticated = async () => {
+    try {
+        const data = localStorage.getItem('UserInfo') ? JSON.parse(localStorage.getItem('UserInfo')) : null;
+        
+        if(data) {
+            const UserData = {
+                'email' : data.email,
+                'sessionID' : data.sessionID
+            }
+
+            // Sends to back the data to insert db
+            const response = await axios.post(SERVER_URL + "/isAuthenticated", UserData)
+
+            if(response && response.data) {
+                return response.data.res
+            }
+        }
+        else {
+            return false
+        }
+       
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const getAuthenticatedUser = () => {
+    const user = localStorage.getItem('UserInfo') ? JSON.parse(localStorage.getItem('UserInfo')) : null;
+
+    if(user && user.email) {
+        return user.email
+    }
+}
+
 const signout = async (data) => {
     
 }
@@ -44,5 +79,7 @@ const signout = async (data) => {
 export {
     login,
     register,
-    signout
+    signout,
+    isAuthenticated,
+    getAuthenticatedUser
 }

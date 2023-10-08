@@ -95,7 +95,6 @@
     flex-direction: column;
     width: 60%;
     height:100%;
-    background-color: #222223;
     color: white;
     border-radius: 1%;
     overflow-y: auto;
@@ -210,8 +209,8 @@
 
 .profile-user-edit-image {
     position: absolute;
-    bottom: -4px;
-    right: 78px;
+    bottom: -6px;
+    right: 66px;
     border: none;
     background: none;
     color: white;
@@ -220,8 +219,8 @@
 
 .profile-user-delete-image {
     position: absolute;
-    top: -8px;
-    right: -16px;
+    top: -2px;
+    left: 69px;
     border: none;
     background: none;
     color: white;

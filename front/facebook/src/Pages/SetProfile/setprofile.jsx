@@ -7,6 +7,7 @@ import './setprofile.css';
 
 // Services
 import { setprofile } from '../../Services/profileService';
+import { getAuthenticatedUser } from '../../Services/authService';
 
 // Images
 import exitIcon from '../../Assets/Images/exit-icon.png'; 
@@ -41,7 +42,7 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
         else {
             let data = {
                 "Username" : username,
-                "Email" : localStorage.getItem('UserInfo'),
+                "Email" : getAuthenticatedUser(),
                 "Biography" : biography,
                 "RelationshipStatus" : relationStatus,
                 "Occupation" : occupation,
@@ -49,14 +50,18 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
                 "Address" : address
             }
             console.log(data)
-            const response = await setprofile(data)
-    
-            if(response.res===true) { // If the response is true, navigate to profile
-                window.location.href='/profile'
-            }
-            else {
-                setShowLoading(false);
-                setShowPopup(true)
+
+            if(getAuthenticatedUser()) {
+
+                const response = await setprofile(data)
+        
+                if(response.res===true) { // If the response is true, navigate to profile
+                    window.location.href='/profile'
+                }
+                else {
+                    setShowLoading(false);
+                    setShowPopup(true)
+                }
             }
         }
         

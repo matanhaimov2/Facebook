@@ -6,31 +6,31 @@ import './displayposts.css';
 
 // Services
 import { getProfilePost } from '../../Services/profileService';
-
+import { getAuthenticatedUser } from '../../Services/authService';
 
 
 function DisplayPosts() {
 
     // States
     const [profilePosts, setProfilePosts] = useState([]); // 
-    const [profilePostTrigger, setProfilePostTrigger] = useState(false); // Trigger to pull image profile
-    const [extendUploadPost, setExtendUploadPost] = useState(false);
 
 
     useEffect(() => {
         
         const getPostToFacebook = async () => {
             let data = {
-                "Email" : localStorage.getItem('UserInfo')
+                "Email" : getAuthenticatedUser()
     
             }
-    
-            const response = await getProfilePost(data)
-    
-            if(response && response.res===true) { // If the response is true, enter
-                console.log(response.data)
-                
-                setProfilePosts(response.data)
+            
+            if(getAuthenticatedUser()) {
+                const response = await getProfilePost(data)
+        
+                if(response && response.res===true) { // If the response is true, enter
+                    console.log(response.data)
+                    
+                    setProfilePosts(response.data)
+                }
             }
 
         }

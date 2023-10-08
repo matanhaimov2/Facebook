@@ -31,10 +31,10 @@ function Login() {
         }
 
         const response = await login(data);
-
+        console.log(response)
         if(response.res===true) { // If the response is true, redirect to home
-
-            localStorage.setItem('UserInfo', response.data.email);
+            console.log(response.data)
+            localStorage.setItem('UserInfo', JSON.stringify(response.data));
 
             if(response.firstlogin===true) {
                 window.location.href='/setprofile';

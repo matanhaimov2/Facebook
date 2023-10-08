@@ -9,13 +9,17 @@ import logo6 from '../../Assets/Images/menu-icon.png';
 import logo7 from '../../Assets/Images/notification-icon.png'; 
 import logo8 from '../../Assets/Images/search-icon.png'; 
 import { LiaUserCircleSolid } from 'react-icons/lia'
+import { CgMenuGridO } from 'react-icons/cg'
+import { IoNotificationsOutline } from 'react-icons/io5'
+
+
 
 
 //CSS
 import './topnav.css';
 
 // Services
-import { signout } from '../../Services/authService';
+import { signout, getAuthenticatedUser } from '../../Services/authService';
 import { getProfileImage } from '../../Services/profileService';
 
 
@@ -28,16 +32,19 @@ function TopNav() {
     useEffect(() => {
         
       const imgReceiver = async () => {
+         
+        let data = {
+            "Email" : getAuthenticatedUser()
+        }
 
-          let data = {
-              "Email" : localStorage.getItem('UserInfo')
-          }
+        if(getAuthenticatedUser()) {
 
           const response = await getProfileImage(data)
 
-          if(response.res===true) { // If the response is true, update user image
+          if(response && response.res===true) { // If the response is true, update user image
               setImgProfile(response.data.userimage)
           }
+        }
 
       }
 
@@ -66,12 +73,12 @@ function TopNav() {
                 </div>
               )}
 
-              <div className='topnav-sub-left-wrapper'>
-                <button className='topnav-button-circle topnav-pointer'><img className='topnav-left-icons' src={logo7} /></button>
+              <div className='topnav-sub-left-wrapper topnav-round-wrapper'>
+                <button className='topnav-button-circle topnav-pointer'> <IoNotificationsOutline className='topnav-menu-icon' /> </button>
               </div>
 
-              <div className='topnav-sub-left-wrapper'>
-                <button className='topnav-button-circle topnav-pointer' ><img className='topnav-left-icons' src={logo6} /> </button>
+              <div className='topnav-sub-left-wrapper topnav-round-wrapper'>
+                <button className='topnav-button-circle topnav-pointer' > <CgMenuGridO className='topnav-menu-icon' /> </button>
               </div>
 
               <div className='topnav-sub-left-wrapper'>

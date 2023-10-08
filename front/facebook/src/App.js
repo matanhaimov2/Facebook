@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate  } from 'react-router-dom';
 
 // Main CSS
@@ -16,6 +16,7 @@ import TopNav from './Components/Topnav/topnav';
 
 // Service
 import { healthCheck } from './Services/administrationService';
+import { isAuthenticated } from './Services/authService';
 
 // --- Functions
 function login() {
@@ -41,7 +42,6 @@ function profile() {
 // For Pages that are private
 const PrivateRoutes = () => {
 
-  const user = localStorage.getItem('UserInfo');
 
   // For Components that are also private and with nav
   const ComponentsWithNav = () => {
@@ -65,9 +65,19 @@ const PrivateRoutes = () => {
     );
   }
 
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  useEffect(() =>{
+    const checkAuthentication = async () => {
+      setIsLoggedIn(await isAuthenticated())
+    }
+    
+    checkAuthentication()
+  })
+
   return (
     <div className='private-routes'>
-      {user && user.length > 0 ? (
+      {isLoggedIn ? (
         <Routes>
 
           <Route path="/setprofile" element={ setprofile() } />
@@ -89,7 +99,7 @@ function App() {
   useEffect(() => {
     const healthChecker = async () => {
       let res = await healthCheck();
-      // console.log(window.location.pathname )
+     
       if(!res && window.location.pathname !== '/sitenotfound') {
         window.location.href = '/sitenotfound';
       }
