@@ -24,11 +24,12 @@ DROP TABLE IF EXISTS `session`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `session` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `session id` varchar(45) DEFAULT NULL,
+  `sessionID` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
+  `username` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `session id_UNIQUE` (`session id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `session id_UNIQUE` (`sessionID`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -40,4 +41,4 @@ CREATE TABLE `session` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-05 22:47:57
+-- Dump completed on 2023-10-09 19:23:58

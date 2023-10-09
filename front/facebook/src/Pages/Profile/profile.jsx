@@ -79,7 +79,7 @@ function Profile() {
 
                 if(response && response.res===true) { 
                     setProfileinfo(response.data);   
-                    
+                    console.log(response,'loog here')
                     formatDate(profileInfo.birthday); // Set the formatted date
 
                     formatRelationship(profileInfo.relationshipstatus); // Set the formatted relationship
@@ -250,7 +250,7 @@ function Profile() {
                             {profileInfo.username && (
                                 <div className='profile-inner-details-wrapper'>
 
-                                    {profileInfo.occupation.length > 0 && (
+                                    {profileInfo.occupation && profileInfo.occupation.length > 0 && (
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={workIcon} />
                                             <div className='profile-details-text'>
@@ -260,7 +260,7 @@ function Profile() {
                                         
                                     )}
 
-                                    {profileInfo.school.length > 0 && (
+                                    {profileInfo.school && profileInfo.school.length > 0 && (
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={schoolIcon} />
                                             <div className='profile-details-text'>
@@ -269,7 +269,7 @@ function Profile() {
                                         </div>
                                     )}
 
-                                    {profileInfo.address.length > 0 && (
+                                    {profileInfo.address && profileInfo.address.length > 0 && (
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={locationIcon} />
                                             <div className='profile-details-text'>
@@ -278,7 +278,7 @@ function Profile() {
                                         </div>
                                     )}
 
-                                    {profileInfo.relationshipstatus.length > 0 && (
+                                    {profileInfo.relationshipstatus && profileInfo.relationshipstatus.length > 0 && (
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={heartIcon} />
                                             <div className='profile-details-text'>
@@ -287,7 +287,7 @@ function Profile() {
                                         </div>
                                     )}
 
-                                    {profileInfo.birthday.length > 0 && (
+                                    {profileInfo.birthday && profileInfo.birthday.length > 0 && (
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={birthIcon} />
                                             <div className='profile-details-text'>

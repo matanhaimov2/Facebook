@@ -103,15 +103,15 @@ def login():
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
+    # Set values
     email = json_str["Email"]
     password = json_str["Password"]
 
-    query = '''SELECT * FROM register WHERE email = '{}' '''.format(email) 
-    print(query)
-
     # Get full data about the email including his hashed password (fetch)
+    query = '''SELECT * FROM register WHERE email = '{}' '''.format(email) 
     response = handleUsersLogin(query)
 
+    # If account exists
     if(response):
         # Save the password of the searched email
         usersHasedPassword = response[6].encode()
@@ -119,29 +119,27 @@ def login():
         # check if they are the same
         checker = bcrypt.checkpw(password.encode(), usersHasedPassword)
 
-        sql_query = '''SELECT * FROM register WHERE firstlogin = '{}' AND email = '{}' '''.format(1, email) # Checks if this is the first login for the specific user 
-        print(sql_query)
     else:
         checker = False
 
-    # If the hased save password in the db and the password that was inserted by the user are the same enter
+    # If hased password equals entered password
     if (checker):
+
+        # Checks if this is the first login for the specific user 
+        sql_query = '''SELECT * FROM register WHERE firstlogin = '{}' AND email = '{}' '''.format(1, email)
         response = handleUsers(sql_query)
         
-        print(response)
-
         sessionID = genereteSessionID(16)
 
-        addSessionQuery = f'''INSERT INTO session(sessionID, email, username) VALUES ('{sessionID}','{email}','{email}')'''
-        
-        handleUsers(addSessionQuery)
 
-        # First login
+        # Second login
         if (response == 1):
            
-            
             getUserNameQuery = f''' SELECT username FROM profiles WHERE email = '{email}'; '''
             username = handleUsersLogin(getUserNameQuery)[0]
+
+            addSessionQuery = f'''INSERT INTO session(sessionID, email, username) VALUES ('{sessionID}','{email}','{username}')'''
+            handleUsers(addSessionQuery)
 
             res = {
                 'res' : True,
@@ -155,7 +153,11 @@ def login():
 
             return jsonify(res)
         else:
-            # Second login...
+        
+            addSessionQuery = f'''INSERT INTO session(sessionID, email, username) VALUES ('{sessionID}','{email}','')'''
+            handleUsers(addSessionQuery)
+            
+            # First login
             fLoginquery = f'''UPDATE register SET firstlogin = 1  WHERE email = '{email}' ''' # Updates that the specific user entered more then once
             handleUsers(fLoginquery)
 
@@ -171,21 +173,19 @@ def login():
             return jsonify(res)
     else:
         return jsonify({'res': False, 'err': 'Email or Password are Incorrect'})
-    
-    return jsonify({'res': False})
 
 @app.route("/isAuthenticated", methods=['GET', 'POST'])
 def isAuthenticated():
     data = request.data
-   
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
     email = json_str["email"]
-    password = json_str["sessionID"]
+    sessionID = json_str["sessionID"]
 
         
-    getEmailBySession = f''' SELECT email FROM session WHERE email = '{email}'; '''
+    getEmailBySession = f''' SELECT email FROM session WHERE sessionID = '{sessionID}'; '''
     emailfromDB = handleUsersLogin(getEmailBySession)
 
     if(emailfromDB):
@@ -226,35 +226,29 @@ def setprofile():
 
     if (response == 0): # If doesn't exist, continue
 
-        if(username):
-            query = f'''UPDATE profiles SET username = '{username}', biography = '{biography}', relationshipstatus = '{relationshipstatus}', occupation = '{occupation}', school = '{school}', address = '{address}' WHERE email = '{email}' '''
-        else: # In case of editing profile
-            # Initialize an empty list to store the update assignments
-            update_assignments = []
+        # Initialize an empty list to store the update assignments
+        update_assignments = []
 
-            # Append assignments to the list only if the corresponding value is not empty
-            if username:
-                update_assignments.append(f"username = '{username}'")
-            if biography:
-                update_assignments.append(f"biography = '{biography}'")
-            if relationshipstatus:
-                update_assignments.append(f"relationshipstatus = '{relationshipstatus}'")
-            if occupation:
-                update_assignments.append(f"occupation = '{occupation}'")
-            if school:
-                update_assignments.append(f"school = '{school}'")
-            if address:
-                update_assignments.append(f"address = '{address}'")
+        # Append assignments to the list only if the corresponding value is not empty
+        if username:
+            update_assignments.append(f"username = '{username}'")
+        if biography:
+            update_assignments.append(f"biography = '{biography}'")
+        if relationshipstatus:
+            update_assignments.append(f"relationshipstatus = '{relationshipstatus}'")
+        if occupation:
+            update_assignments.append(f"occupation = '{occupation}'")
+        if school:
+            update_assignments.append(f"school = '{school}'")
+        if address:
+            update_assignments.append(f"address = '{address}'")
 
-            # Join the update assignments with commas to create the SET clause
-            set_clause = ', '.join(update_assignments)
+        # Join the update assignments with commas to create the SET clause
+        set_clause = ', '.join(update_assignments)
 
-            # Build the SQL query
-            query = f'''UPDATE profiles SET {set_clause} WHERE email = '{email}' '''
-        
-        print(query)
-        
-        
+        # Build the SQL query
+        query = f'''UPDATE profiles SET {set_clause} WHERE email = '{email}' '''
+                
         # Send the query - can be update (for exsiting user) or set (for new user)
         response = handleUsers(query)
 
@@ -263,7 +257,7 @@ def setprofile():
     else: # Username exists, alert the user    
         return jsonify({'res': False, 'err' : 'Username Exists'})
 
-    return jsonify({'res': False})
+
 
 @app.route("/profile", methods=['GET', 'POST'])
 def profile():
@@ -450,12 +444,14 @@ def getProfilePost(): # Get post/s from db
     response = handleUsersLogin(query)
     response = response[0]
 
-    posts = json.loads(response)
+    if (response):
+        posts = json.loads(response)
+        print(posts)
 
-    allposts = []
+        allposts = []
 
-    for post in posts:
-        allposts.append(json.loads(post))
+        for post in posts:
+            allposts.append(json.loads(post))
 
     if(response != None):
 

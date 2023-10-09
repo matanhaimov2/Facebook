@@ -66,7 +66,10 @@ const getAuthenticatedUser = () => {
     const user = localStorage.getItem('UserInfo') ? JSON.parse(localStorage.getItem('UserInfo')) : null;
 
     if(user && user.email) {
-        return user.email
+        return user.email;
+    }
+    else {
+        return null;
     }
 }
 
