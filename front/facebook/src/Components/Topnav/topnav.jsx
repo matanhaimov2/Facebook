@@ -19,7 +19,7 @@ import { IoNotificationsOutline } from 'react-icons/io5'
 import './topnav.css';
 
 // Services
-import { signout, getAuthenticatedUser } from '../../Services/authService';
+import { handleSignOut, getAuthenticatedUser } from '../../Services/authService';
 import { getProfileImage } from '../../Services/profileService';
 
 
@@ -53,9 +53,7 @@ function TopNav() {
 
     const handleSignout = async (e) => {      
 
-      localStorage.removeItem("UserInfo");
-
-      window.location.href='/login';
+    await handleSignOut(); // Call sign out service
 
   }
 

@@ -35,6 +35,31 @@ const register = async (data) => {
     }
 }
 
+const handleSignOut = async (data) => {
+    try {
+        let userInfo = JSON.parse(localStorage.getItem("UserInfo"));
+        let sessionID = userInfo['sessionID'];
+
+        let data = {
+            "sessionID": sessionID
+        }
+
+        localStorage.removeItem("UserInfo");
+
+        // Sends to back sessionID to delete from db
+        const response = await axios.post(SERVER_URL + "/handleSignOut", data)
+        console.log(response);
+
+        window.location.href='/login';
+
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+
 const isAuthenticated = async () => {
     try {
         const data = localStorage.getItem('UserInfo') ? JSON.parse(localStorage.getItem('UserInfo')) : null;
@@ -73,16 +98,12 @@ const getAuthenticatedUser = () => {
     }
 }
 
-const signout = async (data) => {
-    
-}
-
 
 
 export {
     login,
     register,
-    signout,
+    handleSignOut,
     isAuthenticated,
     getAuthenticatedUser
 }

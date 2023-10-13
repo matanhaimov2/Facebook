@@ -49,15 +49,31 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
                 "School" : school,
                 "Address" : address
             }
-            console.log(data)
 
             if(getAuthenticatedUser()) {
 
                 const response = await setprofile(data)
-        
+                console.log(response)
+
                 if(response.res===true) { // If the response is true, navigate to profile
+
+                    // Get the existing data
+                    let userInfo = localStorage.getItem('UserInfo');
+
+                    // If no existing data, create an array
+                    // Otherwise, convert the localStorage string to an array
+                    userInfo = userInfo ? JSON.parse(userInfo) : {};
+
+                    // Add new data to localStorage Array
+                    userInfo['username'] = response.data.username;
+
+                    // Save back to localStorage
+                    localStorage.setItem('UserInfo', JSON.stringify(userInfo));
+
                     window.location.href='/profile'
+
                 }
+
                 else {
                     setShowLoading(false);
                     setShowPopup(true)

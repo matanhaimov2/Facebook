@@ -154,7 +154,7 @@ def login():
             return jsonify(res)
         else:
         
-            addSessionQuery = f'''INSERT INTO session(sessionID, email, username) VALUES ('{sessionID}','{email}','')'''
+            addSessionQuery = f'''INSERT INTO session(sessionID, email) VALUES ('{sessionID}','{email}')'''
             handleUsers(addSessionQuery)
             
             # First login
@@ -196,6 +196,23 @@ def isAuthenticated():
     else:
         return jsonify({'res': False})
 
+@app.route("/handleSignOut", methods=['GET', 'POST'])
+def handleSignOut():
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    sessionID = json_str['sessionID']
+    print(sessionID, 'YES!')
+
+    deletequery = f''' DELETE FROM session WHERE sessionID = '{sessionID}'; '''
+    handleUsers(deletequery)
+
+    return jsonify({'res': True})
+
+
 
 
 # Profile
@@ -214,7 +231,7 @@ def setprofile():
     occupation = json_str['Occupation']
     school = json_str['School']
     address = json_str['Address']
-
+    
     # Checks if username exists
     if(username):
         query = f'''SELECT username FROM profiles WHERE EXISTS (SELECT username FROM profiles WHERE username = '{username}');'''
@@ -252,7 +269,17 @@ def setprofile():
         # Send the query - can be update (for exsiting user) or set (for new user)
         response = handleUsers(query)
 
-        return jsonify({'res': True})
+        addSessionQuery = f'''UPDATE session SET username = '{username}' WHERE email = '{email}' '''
+        handleUsers(addSessionQuery)
+
+        res = {
+            'res' : True,
+            'data' : {
+                'username' : username
+            }
+        }
+
+        return jsonify(res)
 
     else: # Username exists, alert the user    
         return jsonify({'res': False, 'err' : 'Username Exists'})
@@ -376,7 +403,7 @@ def uploadPost(): # Upload post/s to db
     uploadedtext = json_str['UploadedText']
     uploadedimg = json_str['UploadedImg']
     uploadedprivacy = json_str['UploadedPrivacy']
-    
+
     post = {
         'Text': uploadedtext,
         'Image': uploadedimg,
@@ -463,6 +490,29 @@ def getProfilePost(): # Get post/s from db
         return jsonify(res)
     
     return jsonify({'res': False, 'data' : []})
+
+
+# Search
+@app.route("/search", methods=['GET', 'POST'])
+def search():
+    data = request.data
+
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    searchPhrase = json_str['searchPhrase']
+
+    search_query = f''' SELECT * 
+                    FROM profiles 
+                    WHERE username LIKE '%{searchPhrase}%';
+                '''
+  
+    res = handleUsersLogin(search_query)
+
+    print(res)
+
+    return jsonify({'res': True})
 
 
 
