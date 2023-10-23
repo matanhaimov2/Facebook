@@ -116,10 +116,30 @@
     gap: 4%;
 }
 
-.register-sex-sub-wrapper {
+.register-sex-wrapper {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.register-sex-sub-wrapper {
+    width: auto;
+    direction: rtl;
+}
+
+.register-sex-button {
+    margin: 0 !important;
+
+}
+
+.css-qfz70r-MuiFormGroup-root {
+    width: 100%;
+    display: flex;
     justify-content: space-between;
+}
+
+.css-1nrlq1o-MuiFormControl-root {
+    width: 100%;
 }
 
 .register-date-input {
@@ -130,12 +150,6 @@
     border: 1px solid #dddfe2;
     color: black;
     direction: rtl;
-}
-
-.register-sex-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
 }
 
 .register-gender {

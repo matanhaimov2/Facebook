@@ -59,7 +59,6 @@ const handleSignOut = async (data) => {
     }
 }
 
-
 const isAuthenticated = async () => {
     try {
         const data = localStorage.getItem('UserInfo') ? JSON.parse(localStorage.getItem('UserInfo')) : null;

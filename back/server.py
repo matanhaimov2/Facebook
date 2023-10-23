@@ -38,7 +38,7 @@ def handleUsers(query):
 
     return response
 
-def handleUsersLogin(query): 
+def handleUsersLogin(query):
     # Create Cursor
     cursor = mysql.connection.cursor()
 
@@ -85,7 +85,7 @@ def register():
   
     if(response == 0): # If doesn't exist create the new user
         query = '''INSERT INTO register(firstname, lastname, email, birthday, sex, password, firstlogin) VALUES ('{}','{}','{}','{}','{}','{}', '{}')'''.format(firstname, lastname, email, birthday, sex, hashed_password.decode('utf-'), firstlogin)
-        print(query)
+        
         response = handleUsers(query)
     
         return jsonify({'res': True})
@@ -93,8 +93,6 @@ def register():
     else: # Email exists, alert the user
         
         return jsonify({'res': False, 'err': 'Email Exists'})
-
-    return jsonify({'res': False})
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -213,8 +211,6 @@ def handleSignOut():
     return jsonify({'res': True})
 
 
-
-
 # Profile
 @app.route("/setprofile", methods=['GET', 'POST'])
 def setprofile():
@@ -283,8 +279,6 @@ def setprofile():
 
     else: # Username exists, alert the user    
         return jsonify({'res': False, 'err' : 'Username Exists'})
-
-
 
 @app.route("/profile", methods=['GET', 'POST'])
 def profile():
@@ -538,3 +532,11 @@ if __name__ == "__main__":
 
 
 
+# Complex Tasks:
+# 1. Make a search that will search for users
+# 2. Marketplace
+# 3. 
+
+# Easy Tasks:
+# 1. Replace in post so privacy will appear as icon
+# 2. 

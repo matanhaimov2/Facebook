@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
 
 //CSS
 import './register.css';
@@ -18,7 +22,7 @@ function Register() {
     const [lastname, setLastname] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const [sex, setSex] = useState('');
+    const [sex, setSex] = useState('M');
     const [showPopup, setShowPopup] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
 
@@ -136,23 +140,16 @@ function Register() {
                                 <label className='register-birth-title'>מין</label>
                                 
                                 <div className='register-sex-sub-wrapper'>
-                                    <div className='register-gender'>
-                                        <label className='register-gender-title'>נקבה</label>
-                                        <input type='checkbox' className='register-checkbox' onClick={(e) => setSex('F')}/>
-                                    </div>
-
-                                    <div className='register-gender'>
-                                        <label className='register-gender-title'>זכר</label>
-                                        <input type='checkbox' className='register-checkbox' onClick={(e) => setSex('M')}/>
-                                    </div>
-                                    
-                                    <div className='register-gender'>
-                                        <label className='register-gender-title'>התאמה אישית</label>
-                                        <input type='checkbox' className='register-checkbox' onClick={(e) => setSex(e.target.value)}/>
-                                    </div>
+                                    <FormControl>
+                                        <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" defaultValue={'male'} name="radio-buttons-group">
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setSex('M')} value="male" control={<Radio />} label="זכר" />
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setSex('F')} value="female" control={<Radio />} label="נקבה" />
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setSex(e.target.value)} value="other" control={<Radio />} label="התאמה אישית" />
+                                        </RadioGroup>
+                                    </FormControl>
                                 </div>
                             </div>
-                            
+
                             {!showLoading ? (
                                 <button type='submit' className='login-form-button'>הרשמה</button>
                             ) : (

@@ -31,9 +31,9 @@ function Login() {
         }
 
         const response = await login(data);
-        console.log(response)
+
         if(response.res===true) { 
-            console.log(response.data)
+            
             localStorage.setItem('UserInfo', JSON.stringify(response.data));
 
             if(response.firstlogin===true) {

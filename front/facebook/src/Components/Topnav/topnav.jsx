@@ -4,15 +4,10 @@ import logo1 from '../../Assets/Images/home-icon.png';
 import logo2 from '../../Assets/Images/friends-icon.png'; 
 import logo3 from '../../Assets/Images/videos-icon.png'; 
 import logo4 from '../../Assets/Images/shop-icon.png'; 
-import logo5 from '../../Assets/Images/groups-icon.png'; 
-import logo6 from '../../Assets/Images/menu-icon.png';
-import logo7 from '../../Assets/Images/notification-icon.png'; 
-import logo8 from '../../Assets/Images/search-icon.png'; 
+import logo5 from '../../Assets/Images/groups-icon.png';  
 import { LiaUserCircleSolid } from 'react-icons/lia'
 import { CgMenuGridO } from 'react-icons/cg'
 import { IoNotificationsOutline } from 'react-icons/io5'
-
-
 
 
 //CSS

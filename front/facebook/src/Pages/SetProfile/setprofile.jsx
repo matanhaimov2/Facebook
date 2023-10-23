@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
 
 //CSS
 import './setprofile.css';
@@ -18,7 +22,7 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
     // States
     const [username, setUsername] = useState('');
     const [biography, setBiography] = useState('');
-    const [relationStatus, setRelationStatus] = useState('');
+    const [relationStatus, setRelationStatus] = useState('Not in a Relationship');
     const [occupation, setOccupation] = useState('');
     const [school, setSchool] = useState('');
     const [address, setAddress] = useState('');
@@ -53,7 +57,6 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
             if(getAuthenticatedUser()) {
 
                 const response = await setprofile(data)
-                console.log(response)
 
                 if(response.res===true) { // If the response is true, navigate to profile
 
@@ -73,7 +76,7 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
                     window.location.href='/profile'
 
                 }
-
+                
                 else {
                     setShowLoading(false);
                     setShowPopup(true)
@@ -119,21 +122,15 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
                                 <label className='setprofile-relationship-title'>מצב יחסים</label>
                                 
                                 <div className='setprofile-relationship-sub-wrapper'>
-                                    <div className='register-gender'>
-                                        <label className='register-gender-title'>רווק/ה</label>
-                                        <input type='checkbox' className='register-checkbox' onClick={(e) => setRelationStatus('Not in a Relationship')}/>
-                                    </div>
-
-                                    <div className='register-gender'>
-                                        <label className='register-gender-title'>בזוגיות</label>
-                                        <input type='checkbox' className='register-checkbox' onClick={(e) => setRelationStatus('In a Relationship')}/>
-                                    </div>
-                                    
-                                    <div className='register-gender'>
-                                        <label className='register-gender-title'>נשוי</label>
-                                        <input type='checkbox' className='register-checkbox' onClick={(e) => setRelationStatus('Married')}/>
-                                    </div>
+                                    <FormControl>
+                                        <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" defaultValue={'not-in-a-Relationship'} name="radio-buttons-group">
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setRelationStatus('Married')} value="married" control={<Radio />} label="נשוי" />
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setRelationStatus('In a Relationship')} value="in-a-relationship" control={<Radio />} label="בזוגיות" />
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setRelationStatus('Not in a Relationship')} value="not-in-a-Relationship" control={<Radio />} label="רווק/ה" />
+                                        </RadioGroup>
+                                    </FormControl>
                                 </div>
+
                             </div>
 
                         <input type='text' className='setprofile-input' onChange={(e) => setOccupation(e.target.value)} placeholder='תעסוקה (לא חובה)'/>
