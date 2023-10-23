@@ -78,8 +78,8 @@ function Profile() {
                 const response = await profile(data)
 
                 if(response && response.res===true) { 
-                    setProfileinfo(response.data);   
-                    console.log(response,'loog here')
+                    setProfileinfo(response.data);
+                       
                     formatDate(profileInfo.birthday); // Set the formatted date
 
                     formatRelationship(profileInfo.relationshipstatus); // Set the formatted relationship

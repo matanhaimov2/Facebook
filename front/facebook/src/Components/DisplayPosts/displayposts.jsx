@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { BiSolidLock } from 'react-icons/bi'
+import { FaUserFriends } from 'react-icons/fa'
+import { MdPublic } from 'react-icons/md'
+
+
 
 
 //CSS
@@ -30,6 +35,7 @@ function DisplayPosts() {
                     console.log(response.data)
                     
                     setProfilePosts(response.data)
+                
                 }
             }
 
@@ -39,11 +45,23 @@ function DisplayPosts() {
     }, [])
 
 
+
     return (
         <div className='postupload-wrapper'>
             {profilePosts && profilePosts.map((post, i) => (
                 <div key={i} className='displayposts-wrapper'>
-                    <span className='displayposts-privacy-wrapper'>{ post.Privacy } </span>
+                    
+                    {post.Privacy==='only me' && (
+                        <BiSolidLock className='privacy-icon'/>
+                    )}
+
+                    {post.Privacy==='friends' && (
+                        <FaUserFriends className='privacy-icon'/>
+                    )}
+
+                    {post.Privacy==='public' && (
+                        <MdPublic className='privacy-icon'/>
+                    )}
 
                     <span className='displayposts-date-wrapper'> { post.date }</span>
 

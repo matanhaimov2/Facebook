@@ -537,6 +537,8 @@ if __name__ == "__main__":
 # 2. Marketplace
 # 3. 
 
+# Can't Tell Tasks:
+# 1. Every new post uploaded by user will appear up so thats the first post in the column
+
 # Easy Tasks:
-# 1. Replace in post so privacy will appear as icon
-# 2. 
+# 1. 
