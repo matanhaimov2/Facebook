@@ -56,6 +56,7 @@ const PrivateRoutes = () => {
           <Routes>
             <Route path="/home" element={ home() } />
             <Route path="/profile" element={ profile() } />
+            <Route path="/profile/:profileEmail" element={ profile() } />
             
             {/* Page Doesnt Exists */}
             <Route path='/*' element={ <div>404 doesnt exists</div> } />

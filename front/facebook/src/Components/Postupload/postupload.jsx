@@ -21,7 +21,7 @@ import { getAuthenticatedUser } from '../../Services/authService';
 import DisplayPosts from '../DisplayPosts/displayposts';
 
 
-function PostUpload() {
+function PostUpload({ profileEmail }) {
 
     // States
     const [profilePostTrigger, setProfilePostTrigger] = useState(false); // Trigger to pull image profile
@@ -102,7 +102,7 @@ function PostUpload() {
             {extendUploadPost ? (
                 <div className='postupload-wrapper'>
                     <div className='postupload-input-wrapper'>
-                            <input className='postupload-input' onChange={(e) => setUploadText(e.target.value)} placeholder=' ?מה באלך לשתף'></input>
+                        <input className='postupload-input' onChange={(e) => setUploadText(e.target.value)} placeholder=' ?מה באלך לשתף'></input>
                     </div>
 
                     <div className='postupload-image-wrapper'>
@@ -143,8 +143,11 @@ function PostUpload() {
                 </div>
             ) : (
                 <div className='postupload-upload-button-wrapper'>
-                    <button onClick={extendUploader} className='postupload-upload-button'>העלה פוסט</button>
-                    <DisplayPosts />
+                    {!profileEmail && (
+                        <button onClick={extendUploader} className='postupload-upload-button'>העלה פוסט</button>
+                    )}
+                    
+                    <DisplayPosts profileEmail={profileEmail} />
                 </div>
             )}
         </div>

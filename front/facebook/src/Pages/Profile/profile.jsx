@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useParams  } from 'react-router-dom';
+
+// Images & Icoms
 import workIcon from '../../Assets/Images/work-mini-icon.png'; 
 import schoolIcon from '../../Assets/Images/school-mini-icon.png'; 
 import birthIcon from '../../Assets/Images/birth-mini-icon.png'; 
@@ -8,10 +11,11 @@ import editIcon from '../../Assets/Images/edit-icon.png';
 import searchIcon from '../../Assets/Images/search-icon.png'; 
 import exitIcon from '../../Assets/Images/exit-icon.png'; 
 import plusIcon from '../../Assets/Images/plus-icon.png'; 
+
+// React Icons
 import { LiaUserCircleSolid } from 'react-icons/lia'
 import { MdOutlineModeEditOutline } from 'react-icons/md'
 import { MdDeleteForever } from 'react-icons/md'
-
 
 //CSS
 import './profile.css';
@@ -26,6 +30,8 @@ import PostUpload from '../../Components/Postupload/postupload';
 
 function Profile() {
 
+    const { profileEmail } = useParams();
+    
     // States
     const [profileInfo, setProfileinfo] = useState({});
     
@@ -70,9 +76,19 @@ function Profile() {
             setShowSkeleton(true); // Show skeleton animation
     
     
-            let data = {
-                "Email" : getAuthenticatedUser()
+            let data;
+
+            if(profileEmail) {
+                data = {
+                    "Email" : profileEmail
+                }
             }
+            else {
+                data = {
+                    "Email" : getAuthenticatedUser()
+                }
+            }
+
             if(getAuthenticatedUser()) {
                 
                 const response = await profile(data)
@@ -103,9 +119,19 @@ function Profile() {
         
         const imgReceiver = async () => {
 
-            let data = {
-                "Email" : getAuthenticatedUser()
+            let data;
+
+            if(profileEmail) {
+                data = {
+                    "Email" : profileEmail
+                }
             }
+            else {
+                data = {
+                    "Email" : getAuthenticatedUser()
+                }
+            }
+            
 
             const response = await getProfileImage(data)
           
@@ -179,16 +205,25 @@ function Profile() {
                             <div className='profile-sub-sub-image-wrapper'>
                                 <img src={imgProfile} className='profile-user-image'></img>
                                 <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
-                                <button className='profile-user-edit-image' onClick={activateUploadImage}> <MdOutlineModeEditOutline /> </button>
-                                <button className='profile-user-delete-image' onClick={activateDeleteImage}> <MdDeleteForever /> </button>
                                 
+                                {!profileEmail && (
+                                    <button className='profile-user-edit-image' onClick={activateUploadImage}> <MdOutlineModeEditOutline /> </button>
+                                )}
+
+                                {!profileEmail && (
+                                    <button className='profile-user-delete-image' onClick={activateDeleteImage}> <MdDeleteForever /> </button>
+                                )}
                             </div>
 
                         ) :(
                             <div>
                                 <div className='profile-img-wrapper'>
                                     <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
-                                    <button className='profile-upload-img-wrapper' onClick={activateUploadImage}> <img src={plusIcon} className="profile-upload-img" /> </button>
+                                    
+                                    {!profileEmail && (
+                                        <button className='profile-upload-img-wrapper' onClick={activateUploadImage}> <img src={plusIcon} className="profile-upload-img" /> </button>
+                                    )}
+
                                     <LiaUserCircleSolid className='profile-user-no-image'/>
                                 </div>
                             </div>
@@ -219,16 +254,18 @@ function Profile() {
                             <span>חברים </span>
                         </div>
                     </div>
-
-                    <div className='sub-profile-basics'>
-                        <button onClick={() => {setIsEditProfile(true)}} className='sub-profile-edit-button'> עריכת פרופיל </button>
-                    </div>
+                    
+                    {!profileEmail && (
+                        <div className='sub-profile-basics'>
+                            <button onClick={() => {setIsEditProfile(true)}} className='sub-profile-edit-button'> עריכת פרופיל </button>
+                        </div>
+                    )}
             </div>
 
             <div className='profile-center-wrapper'>
                 
                 <div className='profile-center-left-wrapper'>
-                        <PostUpload />
+                    <PostUpload profileEmail={profileEmail} />
                 </div>
 
                 <div className='profile-center-right-wrapper'>

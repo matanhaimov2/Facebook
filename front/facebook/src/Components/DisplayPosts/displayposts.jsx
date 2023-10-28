@@ -14,7 +14,7 @@ import { getProfilePost } from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 
-function DisplayPosts() {
+function DisplayPosts({ profileEmail }) {
 
     // States
     const [profilePosts, setProfilePosts] = useState([]); // 
@@ -23,9 +23,17 @@ function DisplayPosts() {
     useEffect(() => {
         
         const getPostToFacebook = async () => {
-            let data = {
-                "Email" : getAuthenticatedUser()
-    
+            let data;
+         
+            if(profileEmail) {
+                data = {
+                    "Email" : profileEmail
+                }
+            }
+            else {
+                data = {
+                    "Email" : getAuthenticatedUser()
+                }
             }
             
             if(getAuthenticatedUser()) {

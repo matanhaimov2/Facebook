@@ -571,4 +571,7 @@ if __name__ == "__main__":
 # 1. Every new post uploaded by user will appear up so thats the first post in the column
 
 # Easy Tasks:
-# 1. 
+# 1. for search - move between option using buttons 
+# 2. for search when clicking outside of the search close it
+# 3. style for search the scroll bar
+# 4. for post when there are no show a messege
