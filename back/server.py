@@ -38,7 +38,7 @@ def handleUsers(query):
 
     return response
 
-def handleUsersLogin(query):
+def handleOneResult(query):
     # Create Cursor
     cursor = mysql.connection.cursor()
 
@@ -56,6 +56,23 @@ def handleUsersLogin(query):
 
     return data  # Return the data fetched from the query
 
+def handleMultipleResults(query):
+    # Create Cursor
+    cursor = mysql.connection.cursor()
+
+    # Execute
+    cursor.execute(query)
+    
+    # Fetch data if the query returns any results
+    data = cursor.fetchall()  # Use fetchall() for multiple rows
+
+    # Commit to DB
+    mysql.connection.commit()
+
+    # Close connection
+    cursor.close()
+
+    return data  # Return the data fetched from the query
 
 # Authentication
 @app.route("/register", methods=['GET', 'POST'])
@@ -107,7 +124,7 @@ def login():
 
     # Get full data about the email including his hashed password (fetch)
     query = '''SELECT * FROM register WHERE email = '{}' '''.format(email) 
-    response = handleUsersLogin(query)
+    response = handleOneResult(query)
 
     # If account exists
     if(response):
@@ -134,7 +151,7 @@ def login():
         if (response == 1):
            
             getUserNameQuery = f''' SELECT username FROM profiles WHERE email = '{email}'; '''
-            username = handleUsersLogin(getUserNameQuery)[0]
+            username = handleOneResult(getUserNameQuery)[0]
 
             addSessionQuery = f'''INSERT INTO session(sessionID, email, username) VALUES ('{sessionID}','{email}','{username}')'''
             handleUsers(addSessionQuery)
@@ -184,7 +201,7 @@ def isAuthenticated():
 
         
     getEmailBySession = f''' SELECT email FROM session WHERE sessionID = '{sessionID}'; '''
-    emailfromDB = handleUsersLogin(getEmailBySession)
+    emailfromDB = handleOneResult(getEmailBySession)
 
     if(emailfromDB):
         if(email==emailfromDB[0]):
@@ -293,7 +310,7 @@ def profile():
     print(query)
 
     # Get full data about the email from db
-    response = handleUsersLogin(query)
+    response = handleOneResult(query)
     
     # Set values
     res = {
@@ -346,7 +363,7 @@ def getProfileImage(): # Gets from db an uploaded profile image
     print(query)
     
     # Get userimage where email from db
-    response = handleUsersLogin(query)
+    response = handleOneResult(query)
 
     if(response):
         # Set values
@@ -408,7 +425,7 @@ def uploadPost(): # Upload post/s to db
     query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
  
     # Get userposts where email from db
-    posts = handleUsersLogin(query)
+    posts = handleOneResult(query)
 
     posts = posts[0]
 
@@ -462,7 +479,7 @@ def getProfilePost(): # Get post/s from db
     print(query)
     
     # Get userimage where email from db
-    response = handleUsersLogin(query)
+    response = handleOneResult(query)
     response = response[0]
 
     if (response):
@@ -497,16 +514,29 @@ def search():
     # Set values
     searchPhrase = json_str['searchPhrase']
 
-    search_query = f''' SELECT * 
-                    FROM profiles 
-                    WHERE username LIKE '%{searchPhrase}%';
-                '''
-  
-    res = handleUsersLogin(search_query)
+    search_query =  f'''SELECT email, username, userimages FROM profiles WHERE username LIKE '%{searchPhrase}%' '''
+    
+    data = handleMultipleResults(search_query)
+    print(data)
 
-    print(res)
+    # Set values
+    jsonedData = []
 
-    return jsonify({'res': True})
+    for row in data:
+        jsonedRow = {
+            'email' : row[0],
+            'username' : row[1],
+            'userimages' : row[2]
+        }
+
+        jsonedData.append(jsonedRow)
+
+    res = {
+            'data' : jsonedData,
+            'res': True
+        }    
+
+    return jsonify(res)
 
 
 

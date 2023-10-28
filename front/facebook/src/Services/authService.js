@@ -97,6 +97,19 @@ const getAuthenticatedUser = () => {
     }
 }
 
+const search = async (data) => {
+    try {
+        //
+        const response = await axios.post(SERVER_URL + "/search", data)
+        console.log(response);
+
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 
 
 export {
@@ -104,5 +117,6 @@ export {
     register,
     handleSignOut,
     isAuthenticated,
-    getAuthenticatedUser
+    getAuthenticatedUser,
+    search
 }
