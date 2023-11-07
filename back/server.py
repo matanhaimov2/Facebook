@@ -574,4 +574,4 @@ if __name__ == "__main__":
 # 1. for search - move between option using buttons 
 # 2. for search when clicking outside of the search close it
 # 3. style for search the scroll bar
-# 4. for post when there are no show a messege
+# 4. for post when there are no posts show a messege (how to do it, problem with jsx if else. (shlomi))

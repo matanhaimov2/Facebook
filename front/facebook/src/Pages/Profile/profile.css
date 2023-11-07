@@ -234,3 +234,20 @@
     text-align: center;
     justify-content: center;
 }
+
+
+.profile-center-left-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.profile-center-left-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(13deg, #7c7c80 14%, #7d7b7e 64%);
+    border-radius: 10px;
+
+}
+
+.profile-center-left-wrapper::-webkit-scrollbar-track {
+    background: #3b3939;
+    border-radius: 10px;
+    box-shadow: inset 7px 10px 12px #f0f0f0;
+}
