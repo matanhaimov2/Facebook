@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate  } from 'react-router-dom';
+import { InfoBox } from '../InfoBoxFunctional';
+
 
 // Icons
 import logo from '../../Assets/Images/facebook-icon.png'; 
@@ -29,8 +30,6 @@ const TopNav = () => {
   const [isSearchBox, setIsSearchBox] = useState(false); 
   const [searchedProfiles, setSearchedProfiles] = useState([]); 
 
-  // Navigator
-  const navigate = useNavigate();
 
   useEffect(() => {
       
@@ -53,7 +52,6 @@ const TopNav = () => {
 
     imgReceiver();
   }, [])
-
 
   const searchGet = async (searchPhrase) => {
 
@@ -161,8 +159,10 @@ const TopNav = () => {
               {isSearchBox && (
                 <div className='topnav-search-box-wrapper'>
                   {searchedProfiles && searchedProfiles.map((profileLink, i) => (
-                    <div key={i} className='topnav-search-box' onClick={(e) => {navigateToProfile(e, profileLink.email)}}>
-                      
+                    <div key={i} className='topnav-search-box' onClick={(e) => {navigateToProfile(e, profileLink.email)}} >
+
+                      <InfoBox show={isSearchBox} onClickOutside={() => {setIsSearchBox(false)}}/> {/*closes component if clicking outside*/}
+
                       <span className='topnav-search-box-title'> { profileLink.username }</span>
                       
                       <div className='topnav-search-box-img-wrapper'>
@@ -179,6 +179,8 @@ const TopNav = () => {
 
                   {searchedProfiles.length===0 && (
                     <div className='topnav-search-no-result-wrapper'>
+                      <InfoBox show={isSearchBox} onClickOutside={() => {setIsSearchBox(false)}}/> {/*closes component if clicking outside*/}
+
                       <span className='topnav-search-no-result-title'>אין תוצאות חיפוש</span>
                     </div>
                   )}

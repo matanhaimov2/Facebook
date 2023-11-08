@@ -563,15 +563,17 @@ if __name__ == "__main__":
 
 
 # Complex Tasks:
-# 1. Make a search that will search for users
-# 2. Marketplace
-# 3. 
+# 1. Marketplace
+# 2. 
 
 # Can't Tell Tasks:
 # 1. Every new post uploaded by user will appear up so thats the first post in the column
+# 2. make a skeleton while loading profile data
 
 # Easy Tasks:
 # 1. for search - move between option using buttons 
-# 2. for search when clicking outside of the search close it
-# 3. style for search the scroll bar
-# 4. for post when there are no posts show a messege (how to do it, problem with jsx if else. (shlomi))
+# 2. for post when there are no posts show a messege (how to do it, problem with jsx if else. (shlomi))
+
+# Video tasks:
+# 1. learn react classes in udemy.
+# 2.  
