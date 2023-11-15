@@ -30,3 +30,6 @@ export function InfoBox(props) {
 // i mean i can see that there is export function InfoBox but theres no export default in the end.
 
 // 3. just so i understand the command 'export function' it means that i can use this function with every page in the project?
+
+
+// !!!problem!!! :  search component thinks that every click is outside

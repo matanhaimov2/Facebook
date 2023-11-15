@@ -10,6 +10,7 @@ import Register from './Pages/Register/register';
 import Home from './Pages/Home/home';
 import SetProfile from './Pages/SetProfile/setprofile';
 import Profile from './Pages/Profile/profile';
+import Marketplace from './Pages/Marketplace/marketplace';
 
 // Components
 import TopNav from './Components/Topnav/topnav';
@@ -39,6 +40,10 @@ function profile() {
   return <Profile />
 }
 
+function marketplace() {
+  return <Marketplace />
+}
+
 // For Pages that are private
 const PrivateRoutes = () => {
 
@@ -57,6 +62,10 @@ const PrivateRoutes = () => {
             <Route path="/home" element={ home() } />
             <Route path="/profile" element={ profile() } />
             <Route path="/profile/:profileEmail" element={ profile() } />
+            <Route path="/marketplace" element={ marketplace() } /> {/* ask shlomi whats an element */}
+            <Route path="/marketplace/:categoryTitle" element={ marketplace() } /> 
+
+
             
             {/* Page Doesnt Exists */}
             <Route path='/*' element={ <div>404 doesnt exists</div> } />
