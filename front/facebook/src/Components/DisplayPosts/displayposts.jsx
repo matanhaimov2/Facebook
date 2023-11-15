@@ -17,7 +17,7 @@ import { getAuthenticatedUser } from '../../Services/authService';
 function DisplayPosts({ profileEmail }) {
 
     // States
-    const [profilePosts, setProfilePosts] = useState([]); // 
+    const [profilePosts, setProfilePosts] = useState(null); // 
 
 
     useEffect(() => {
@@ -38,12 +38,14 @@ function DisplayPosts({ profileEmail }) {
             
             if(getAuthenticatedUser()) {
                 const response = await getProfilePost(data)
-        
+
                 if(response && response.res===true) { // If the response is true, enter
                     console.log(response.data)
                     
                     setProfilePosts(response.data)
-                
+                }
+                else {
+                    setProfilePosts([])
                 }
             }
 
@@ -84,7 +86,19 @@ function DisplayPosts({ profileEmail }) {
                     </div>
 
                 </div>                         
-            ))}                      
+            ))}      
+
+            {profilePosts && profilePosts.length===0 && (
+                <div>
+                    no post yamnakik
+                </div>
+            )}       
+
+            {!profilePosts && (
+                <div>
+                    loading
+                </div>
+            )}         
         </div>
     );
 }

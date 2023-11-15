@@ -13,12 +13,12 @@
     width: 19.5%;
     height: 100%;
     display: flex;
-    justify-content: center;
 }
 
 .marketplace-right-sub-wrapper {
     height: 100%;
-    width: 90%;
+    margin: 0 auto;
+    width: 85%;
 }
 
 .marketplace-title {

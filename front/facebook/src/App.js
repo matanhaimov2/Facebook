@@ -62,7 +62,7 @@ const PrivateRoutes = () => {
             <Route path="/home" element={ home() } />
             <Route path="/profile" element={ profile() } />
             <Route path="/profile/:profileEmail" element={ profile() } />
-            <Route path="/marketplace" element={ marketplace() } /> {/* ask shlomi whats an element */}
+            <Route path="/marketplace" element={ marketplace() } /> 
             <Route path="/marketplace/:categoryTitle" element={ marketplace() } /> 
 
 

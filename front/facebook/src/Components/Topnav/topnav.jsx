@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { InfoBox } from '../InfoBoxFunctional';
-
+import React, { useState, useEffect, useRef } from 'react';
 
 // Icons
 import logo from '../../Assets/Images/facebook-icon.png'; 
@@ -29,6 +27,23 @@ const TopNav = () => {
   const [imgProfile, setImgProfile] = useState(null); // Raises edit profile option
   const [isSearchBox, setIsSearchBox] = useState(false); 
   const [searchedProfiles, setSearchedProfiles] = useState([]); 
+
+  // Refs
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchBox(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside, true);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, []);
 
 
   useEffect(() => {
@@ -154,14 +169,13 @@ const TopNav = () => {
             <div className='topnav-search-sub-wrapper'>
               
               <input id='search-profiles-input' className='topnav-sub-search' onChange={(e) => searchGet(e.target.value)} placeholder="חפש בפייסבוק"/>
-              
+                   
               {/* Displayed Options */}
               {isSearchBox && (
-                <div className='topnav-search-box-wrapper'>
+                <div className='topnav-search-box-wrapper' ref={searchRef} >
+             
                   {searchedProfiles && searchedProfiles.map((profileLink, i) => (
                     <div key={i} className='topnav-search-box' onClick={(e) => {navigateToProfile(e, profileLink.email)}} >
-
-                      <InfoBox show={isSearchBox} onClickOutside={() => {setIsSearchBox(false)}}/> {/*closes component if clicking outside*/}
 
                       <span className='topnav-search-box-title'> { profileLink.username }</span>
                       
@@ -179,13 +193,10 @@ const TopNav = () => {
 
                   {searchedProfiles.length===0 && (
                     <div className='topnav-search-no-result-wrapper'>
-                      <InfoBox show={isSearchBox} onClickOutside={() => {setIsSearchBox(false)}}/> {/*closes component if clicking outside*/}
-
                       <span className='topnav-search-no-result-title'>אין תוצאות חיפוש</span>
                     </div>
                   )}
-                  
-
+                
                 </div>
               )} 
             </div>
