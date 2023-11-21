@@ -1,0 +1,55 @@
+.productupload-wrapper {
+    width: 25%;
+    margin: auto;
+    background: white !important;
+    border-radius: 10px;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.productupload-sub-wrapper {
+    padding: 4%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.productupload-input-text {
+    outline: none;
+    /* border: none; */
+    width: 97%;
+    height: 30px;
+}
+
+.productupload-input-price {
+    /* border: none; */
+    width: 12%;
+}
+
+.productupload-input-city {
+    /* border: none; */
+    width: 35%;
+}
+
+.productupload-image-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 14rem;
+    gap: 3%;
+    color: grey;
+}
+
+.productupload-image-sub-wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: #29292b;
+    margin: auto;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}

@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: localhost    Database: facebook_db
 -- ------------------------------------------------------
--- Server version	8.0.13
+-- Server version	8.0.34
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8 ;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,9 +21,9 @@
 
 DROP TABLE IF EXISTS `register`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `register` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -34,8 +34,18 @@ CREATE TABLE `register` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`email`),
   UNIQUE KEY `username_2` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `register`
+--
+
+LOCK TABLES `register` WRITE;
+/*!40000 ALTER TABLE `register` DISABLE KEYS */;
+INSERT INTO `register` VALUES (75,'מתן','חיימוב','matanhaimov2@gmail.com','2004-03-04','M','$2b$15$joqAfbKSQ4EzajziNS1f1O4/TGzzgpmwEu4m0K8O.m5pJiGEfzpze',1),(76,'מתן','חיימוב','matanhaimov@gmail.com','2023-01-01','M','$2b$15$mid0ROD9DU7Rx8G0nyhzM.hxZ6Or850cCPiAa0gvgf5Xq4kmu4Z16',1),(77,'matan','haimov','matanhaimov20@gmail.com','2023-01-01','M','$2b$15$mid0ROD9DU7Rx8G0nyhzM.hxZ6Or850cCPiAa0gvgf5Xq4kmu4Z16',1),(78,'matan','haimov','matanhaimov2000@gmail.com','2023-01-01','M','$2b$15$mid0ROD9DU7Rx8G0nyhzM.hxZ6Or850cCPiAa0gvgf5Xq4kmu4Z16',1),(79,'matan','haimov','matanhaimov200@gmail.com','2023-01-01','M','$2b$15$mid0ROD9DU7Rx8G0nyhzM.hxZ6Or850cCPiAa0gvgf5Xq4kmu4Z16',1),(80,'גלי','עבאדה','gali@gmail.com','2023-01-01','F','$2b$15$hqoEHOcm7pScquSc2PLlI.jGHV815DSm6/aGAF207a2T1c4jqRw6K',1),(82,'shlomi','haimov','shlomihaimov@gmail.com','2023-01-01','M','$2b$15$8cLGNh7MQ8oAvD6qE3Ov0uyOq1iD7tT5yiift/DSaAbN.ftO.5Nmm',1),(83,'noa','haimov','noahaimov@gmail.com','2023-01-01','F','$2b$15$BK/LNgs.p7NX3uvnvfvC/.Eo4b9NKmzd8k5j5dsWA2l/SpTK1MEf2',1);
+/*!40000 ALTER TABLE `register` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -48,6 +58,10 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `register_user_trigger` AFTER INSERT ON `register` FOR EACH ROW BEGIN
 INSERT INTO `profiles` (register_id, firstname, lastname, email, birthday, sex)
 VALUES (NEW.id, NEW.firstname, NEW.lastname, NEW.email, NEW.birthday, NEW.sex);
+
+INSERT INTO `marketplace` (user_email)
+VALUES (NEW.email);
+
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -64,4 +78,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-23 19:32:34
+-- Dump completed on 2023-11-21 11:11:21

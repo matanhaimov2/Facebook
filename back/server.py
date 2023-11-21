@@ -503,6 +503,83 @@ def getProfilePost(): # Get post/s from db
     return jsonify({'res': False, 'data' : []})
 
 
+# Marketplace
+@app.route("/uploadProduct", methods=['GET', 'POST'])
+def uploadProduct(): # Upload product/s to db
+    data = request.data
+
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str['Email']
+    uploadedcategory = json_str['UploadedCategory']
+    uploadedtext = json_str['UploadedText']
+    uploadedimg = json_str['UploadedImg']
+    uploadedprice = json_str['UploadedPrice']
+    uploadedcity = json_str['UploadedCity']
+
+
+    product = {
+        'Category': uploadedcategory,
+        'Text': uploadedtext,
+        'Image': uploadedimg,
+        'Price': uploadedprice,
+        'City': uploadedcity,
+        'date': str(datetime.now())
+    }
+
+    print(product)
+
+    query = '''SELECT products FROM marketplace WHERE user_email = '{}' '''.format(email) 
+ 
+    # Get products where email from db
+    products = handleOneResult(query)
+
+    products = products[0]
+
+    print(products)
+
+    if (products == None): # If db-products has no image in it
+
+        # post['id'] = 1 # check if work later!
+
+        query = f'''UPDATE marketplace
+            SET products = JSON_ARRAY(
+                '{json.dumps(product)}'
+            )
+            WHERE user_email = '{email}';
+        '''
+
+        handleUsers(query)      
+    else: # If db-products contains products
+
+        products = json.loads(products)
+
+        # Convert products to array
+        allproducts = products
+
+        # Push new product
+        allproducts.append(json.dumps(product))
+
+        # Convert the array back to fit the sql query
+        allproducts_str = ',\n'.join(f"'{productFromAllproducts}'" for productFromAllproducts in allproducts)
+        
+        query = f'''UPDATE marketplace
+            SET products = JSON_ARRAY(
+                {allproducts_str}
+            )
+            WHERE user_email = '{email}';
+        '''
+
+        handleUsers(query)
+      
+
+    return jsonify({'res': True})
+
+
+
+
 # Search
 @app.route("/search", methods=['GET', 'POST'])
 def search():

@@ -104,7 +104,17 @@ const getProfilePost = async (data) => {
     }
 }
 
+const uploadProduct = async (data) => {
+    try {
+        // Sends to back product to insert db
+        const response = await axios.post(SERVER_URL + "/uploadProduct", data)
 
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
 
 export {
     setprofile,
@@ -114,5 +124,6 @@ export {
     getProfileImage,
     deleteProfileImage,
     uploadPost,
-    getProfilePost
+    getProfilePost,
+    uploadProduct
 }

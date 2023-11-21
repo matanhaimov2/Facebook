@@ -12,18 +12,29 @@ import { SlGameController } from "react-icons/sl";
 
 
 
-//CSS
+// CSS
 import './marketplace.css';
 
+// Services
+import { profileImgbb, uploadProduct } from '../../Services/profileService';
+import { getAuthenticatedUser } from '../../Services/authService';
+
+
+
 // Components
+import ProductUpload from '../../Components/ProductUpload/productUpload';
 
 const Marketplace = () => {
 
     // States
-    const [categtoryTitle, setCategtoryTitle] = useState(''); 
+    const [marketProducts, setMarketProducts] = useState(null);
+    const [extendUploadProduct, setExtendUploadPoduct] = useState(false);
 
+    const extendUploader = () => {
+        setExtendUploadPoduct(!extendUploadProduct)
+    }
 
-
+    
 
     const navigateToCategory = (e, title) => {
         e.preventDefault(); 
@@ -39,9 +50,6 @@ const Marketplace = () => {
 
     return (
         <div className='marketplace-wrapper'>
-            <div className='marketplace-left-wrapper'>
-
-            </div>
 
             <div className='marketplace-right-wrapper'>
                 <div className='marketplace-right-sub-wrapper'>
@@ -52,7 +60,7 @@ const Marketplace = () => {
                     </div>
 
                     <div className='marketplace-create-button-wrapper'>
-                        <button className='marketplace-create-button'>+ יצירת מודעה חדשה </button>
+                        <button className='marketplace-create-button' onClick={extendUploader}>+ יצירת מודעה חדשה </button>
                     </div>
 
                     <div className='marketplace-border-wrapper'>
@@ -116,6 +124,17 @@ const Marketplace = () => {
                 </div>
             </div>
 
+            <div className='marketplace-left-wrapper'>
+                <div>
+                    
+                </div>
+                
+                {extendUploadProduct && (
+                    <div className='marketplace-left-productupload-wrapper'>
+                        <ProductUpload setExtendUploadPoduct={setExtendUploadPoduct}/>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
