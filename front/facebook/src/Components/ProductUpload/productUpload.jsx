@@ -40,7 +40,7 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
 
 
     const activateUploadImage = () => {
-        const imageUploader = document.getElementById('imgPostUpload');
+        const imageUploader = document.getElementById('imgProductUpload');
 
         if(imageUploader) {
             imageUploader.click()
@@ -50,7 +50,7 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
     const imgUploader = async () => {
 
         // Get the selected image file
-        const imageFile = document.getElementById('imgPostUpload')['files'][0];
+        const imageFile = document.getElementById('imgProductUpload')['files'][0];
 
         if(imageFile) {
             // Save img to display it to the user
@@ -58,12 +58,13 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
         }
     }
 
-    const uploadProductToFacebook = async () => {
+    const uploadProductToFacebook = async (e) => {
+        e.preventDefault();
 
         setShowLoading(true); // Show loading animation
 
        // Get the selected image file
-        const imageFile = document.getElementById('imgPostUpload')['files'][0];
+        const imageFile = document.getElementById('imgProductUpload')['files'][0];
 
 
         let form = new FormData();
@@ -88,6 +89,8 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
             setUploadImg(false); // Deletes the image from input
 
             setShowLoading(false); // Hide loading animation
+
+            setExtendUploadPoduct(false);
         }
 
     }
@@ -98,7 +101,7 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
 
             <button className='productupload-exit-icon' onClick={() => {setExtendUploadPoduct(false)}}> <img src={exitIcon} /> </button>
 
-            <div className='productupload-sub-wrapper'>
+            <form className='productupload-sub-wrapper' onSubmit={ uploadProductToFacebook }>
                 <div>
                     <Select
                         color="primary"
@@ -115,14 +118,14 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
                 </div>
 
                 <div>
-                    <input type='text'className='productupload-input-text' onChange={(e) => setUploadText(e.target.value)} placeholder='כמה מילים על המוצר...' required></input>
+                    <input type='text'className='productupload-input-text' onChange={(e) => setUploadText(e.target.value)} placeholder='כמה מילים על המוצר...' required/>
                 </div>
 
                 <div className='productupload-image-wrapper'>
                     <span>הוסף תמונה להמחשה:</span>
 
                     <div className='productupload-image-sub-wrapper'>
-                        <input type="file" id="imgPostUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
+                        <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
                         
                         {!uploadImg ? (
                             <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
@@ -137,23 +140,23 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
                 </div>
 
                 <div>
-                    <input type='text' className='productupload-input-price' onChange={(e) => setUploadPrice(e.target.value)} placeholder='מחיר:'></input>
+                    <input type='text' className='productupload-input-price' onChange={(e) => setUploadPrice(e.target.value)} placeholder='מחיר:' required/>
                     <span> ש"ח </span>
                 </div>
                 
                 <div>
-                    <input type='text' className='productupload-input-city' onChange={(e) => setuUploadCity(e.target.value)}  placeholder='עיר איסוף:'></input>
+                    <input type='text' className='productupload-input-city' onChange={(e) => setuUploadCity(e.target.value)}  placeholder='עיר איסוף:' required/>
                     {/* advenced : try to use an api of cities in israel */}
                 </div>
 
                 <div className='postupload-post-wrapper'>
                     {!showLoading ? (
-                        <button type='submit' onClick={uploadProductToFacebook} className='login-form-button postupload-post-button'>פרסם</button>
+                        <button type='submit' className='login-form-button postupload-post-button'>פרסם</button>
                     ) : (
                         <Box type='submit' className='postupload-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
                     )}
                 </div>
-            </div>
+            </form>
         </div>
     );
 }

@@ -577,6 +577,43 @@ def uploadProduct(): # Upload product/s to db
 
     return jsonify({'res': True})
 
+@app.route("/getProduct", methods=['GET', 'POST'])
+def getProduct(): # Get product/s from db
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+
+    query = '''SELECT products FROM marketplace WHERE user_email = '{}' '''.format(email) 
+    print(query)
+    
+    # Get product where email from db
+    response = handleOneResult(query)
+    response = response[0]
+
+    if (response):
+        products = json.loads(response)
+        print(products)
+
+        allproducts = []
+
+        for product in products:
+            allproducts.append(json.loads(product))
+
+    if(response != None):
+
+        res = {
+            'data' : allproducts,
+            'res': True
+        }    
+
+        return jsonify(res)
+    
+    return jsonify({'res': False, 'data' : []})
+
+
 
 
 
@@ -654,3 +691,6 @@ if __name__ == "__main__":
 # Video tasks:
 # 1. learn react classes in udemy.
 # 2.  
+
+# Problems
+# 1. in productUpload, enter key opens file

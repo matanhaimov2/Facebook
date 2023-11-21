@@ -107,7 +107,7 @@ function PostUpload({ profileEmail }) {
 
                     <div className='postupload-image-wrapper'>
                             <div className='postupload-image-sub-wrapper'>
-                                <input type="file" id="imgPostUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
+                                <input type="file" id="imgPostUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
                                 
                                 {!uploadImg ? (
                                     <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
