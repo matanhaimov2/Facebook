@@ -12,11 +12,12 @@ import { SlGameController } from "react-icons/sl";
 
 
 
+
 // CSS
 import './marketplace.css';
 
 // Services
-import { profileImgbb, uploadProduct } from '../../Services/profileService';
+import { getProduct, getProductSpecific } from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 
@@ -29,12 +30,56 @@ const Marketplace = () => {
     // States
     const [marketProducts, setMarketProducts] = useState(null);
     const [extendUploadProduct, setExtendUploadPoduct] = useState(false);
+    const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate, problem!
+
+
+    const formatDate = (inputDateStr) => { // Date formatting to a normal structure (dd/mm/yyyy)
+        const inputDate = new Date(inputDateStr);
+        const day = inputDate.getDate().toString().padStart(2, '0');
+        const month = (inputDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-based
+        const year = inputDate.getFullYear();
+      
+        setFormattedDate(`${day}/${month}/${year}`);
+    }
+
+    useEffect(() => {
+
+        const MarketProducts = async () => {    
+    
+            let data;
+
+            data = {
+                "Email" : getAuthenticatedUser()
+            }
+
+
+            if(getAuthenticatedUser()) {
+                
+                const response = await getProductSpecific(data)
+
+                if(response && response.res===true) { 
+
+                    setMarketProducts(response.data);
+
+                    //formatDate(response.data.Date);
+
+                                           
+                }
+                else {
+                    setMarketProducts([]);
+                }
+            }
+
+        }
+    
+        MarketProducts();
+    
+    }, [])
+
 
     const extendUploader = () => {
         setExtendUploadPoduct(!extendUploadProduct)
     }
-
-    
 
     const navigateToCategory = (e, title) => {
         e.preventDefault(); 
@@ -125,7 +170,33 @@ const Marketplace = () => {
             </div>
 
             <div className='marketplace-left-wrapper'>
-                <div>
+                <div className='marketplace-left-products-wrapper-wrapper'>
+
+                    {marketProducts && marketProducts.map((marketProducts, i) => (
+                        <div key={i} className='marketplace-left-products-wrapper'>
+                        
+                            <div className='marketplace-left-img-product-wrapper'>
+                                {marketProducts.Image ? (
+                                <img className='marketplace-left-img-product' src={ marketProducts.Image }></img>
+
+                                ) : (
+                                    <span>nothing</span>
+                                )}
+                            </div>
+
+                            <span className='marketplace-left-price-product'> { marketProducts.Price }</span>
+
+                            <span className='marketplace-left-text-product'> { marketProducts.Text }</span>
+                            
+                            <div className='marketplace-left-pricedate-product-wrapper'>
+                                <span className='marketplace-left-city-product'> { marketProducts.City }</span>
+
+                                <span className='marketplace-left-date-product'> { marketProducts.date }</span>
+                            </div>
+
+                        </div>
+                    ))}
+
                     
                 </div>
                 

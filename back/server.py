@@ -577,8 +577,8 @@ def uploadProduct(): # Upload product/s to db
 
     return jsonify({'res': True})
 
-@app.route("/getProduct", methods=['GET', 'POST'])
-def getProduct(): # Get product/s from db
+@app.route("/getProductSpecific", methods=['GET', 'POST'])
+def getProductSpecific(): # Get product/s from db to a specific user
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -591,6 +591,44 @@ def getProduct(): # Get product/s from db
     
     # Get product where email from db
     response = handleOneResult(query)
+    print(response,'heree')
+    response = response[0]
+
+    if (response):
+        products = json.loads(response)
+        print(products)
+
+        allproducts = []
+
+        for product in products:
+            allproducts.append(json.loads(product))
+
+    if(response != None):
+
+        res = {
+            'data' : allproducts,
+            'res': True
+        }    
+
+        return jsonify(res)
+    
+    return jsonify({'res': False, 'data' : []})
+
+@app.route("/getProduct", methods=['GET', 'POST'])
+def getProduct(): # Get product/s from db for everyone
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+
+    query = '''SELECT products FROM marketplace'''
+    print(query)
+    response = handleMultipleResults(query)
+
+    # Get product where email from db
+    print(response,'heree')
     response = response[0]
 
     if (response):
@@ -694,3 +732,9 @@ if __name__ == "__main__":
 
 # Problems
 # 1. in productUpload, enter key opens file
+
+
+# Related task:
+# 1. figure out a way to chunk 6 products in one chunk => make a map
+# 2. format date problem
+# 3. figure out a way to import every product to a single page

@@ -203,3 +203,42 @@
     z-index: 2;
     background: rgba(255, 255, 255, -0.5);
 }
+
+.marketplace-left-products-wrapper-wrapper {
+    display: flex;
+    flex-direction: row;
+    color: white;
+}
+
+.marketplace-left-products-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    padding: 1%;
+    width: 15%;
+}
+
+.marketplace-left-products-wrapper:hover {
+    background-color: #3d3d3f;
+    transition: all 500ms ease;
+}
+
+.marketplace-left-pricedate-product-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.marketplace-left-img-product-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.marketplace-left-img-product {
+    width: 60%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+

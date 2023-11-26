@@ -43,6 +43,7 @@ function DisplayPosts({ profileEmail }) {
                     console.log(response.data)
                     
                     setProfilePosts(response.data)
+
                 }
                 else {
                     setProfilePosts([])

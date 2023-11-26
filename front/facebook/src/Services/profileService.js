@@ -116,6 +116,30 @@ const uploadProduct = async (data) => {
     }
 }
 
+const getProductSpecific = async (data) => {
+    try {
+        // Sends to back product to insert db
+        const response = await axios.post(SERVER_URL + "/getProductSpecific", data)
+
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const getProduct = async (data) => {
+    try {
+        // Sends to back product to insert db
+        const response = await axios.post(SERVER_URL + "/getProduct", data)
+
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     setprofile,
     profile,
@@ -125,5 +149,7 @@ export {
     deleteProfileImage,
     uploadPost,
     getProfilePost,
-    uploadProduct
+    uploadProduct,
+    getProductSpecific,
+    getProduct
 }
