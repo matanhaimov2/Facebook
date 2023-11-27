@@ -732,9 +732,11 @@ if __name__ == "__main__":
 
 # Problems
 # 1. in productUpload, enter key opens file
+# 2. db json columns cant get hebrew words
 
 
-# Related task:
-# 1. figure out a way to chunk 6 products in one chunk => make a map
+# Marketplace Related Tasks:
+# 1. figure out a way to chunk 6 products in one chunk => make a map ----- VVV
 # 2. format date problem
 # 3. figure out a way to import every product to a single page
+# 4. cities api

@@ -61,9 +61,21 @@ const Marketplace = () => {
 
                     setMarketProducts(response.data);
 
-                    //formatDate(response.data.Date);
+                    console.log(marketProducts);
 
-                                           
+                    // Date Format Issue:
+
+                    // one way to solve date problem: (takes all the dates, now figure out a way to enable the function on them)
+                    // const dates = response.data.map(item => (item.date));
+                    // const uniqueDates = [...new Set(dates)];
+                    // console.log(uniqueDates,'here')
+
+                    // second way to solve date problem:
+                    //formatDate(response.data.date); // i think that dosent work because he doesnt know how to enter a date out of 6 dates
+
+                    // third way to solve date problem:
+                    //formatDate(marketProducts.date) // its undefind                    
+                     
                 }
                 else {
                     setMarketProducts([]);
