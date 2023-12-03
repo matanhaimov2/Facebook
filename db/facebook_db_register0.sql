@@ -34,7 +34,7 @@ CREATE TABLE `register` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`email`),
   UNIQUE KEY `username_2` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `register` (
 
 LOCK TABLES `register` WRITE;
 /*!40000 ALTER TABLE `register` DISABLE KEYS */;
-INSERT INTO `register` VALUES (75,'מתן','חיימוב','matanhaimov2@gmail.com','2004-03-04','M','$2b$15$joqAfbKSQ4EzajziNS1f1O4/TGzzgpmwEu4m0K8O.m5pJiGEfzpze',1),(76,'מתן','חיימוב','matanhaimov@gmail.com','2023-01-01','M','$2b$15$mid0ROD9DU7Rx8G0nyhzM.hxZ6Or850cCPiAa0gvgf5Xq4kmu4Z16',1),(77,'matan','haimov','matanhaimov20@gmail.com','2023-01-01','M','$2b$15$mid0ROD9DU7Rx8G0nyhzM.hxZ6Or850cCPiAa0gvgf5Xq4kmu4Z16',1),(78,'matan','haimov','matanhaimov2000@gmail.com','2023-01-01','M','$2b$15$mid0ROD9DU7Rx8G0nyhzM.hxZ6Or850cCPiAa0gvgf5Xq4kmu4Z16',1),(79,'matan','haimov','matanhaimov200@gmail.com','2023-01-01','M','$2b$15$mid0ROD9DU7Rx8G0nyhzM.hxZ6Or850cCPiAa0gvgf5Xq4kmu4Z16',1),(80,'גלי','עבאדה','gali@gmail.com','2023-01-01','F','$2b$15$hqoEHOcm7pScquSc2PLlI.jGHV815DSm6/aGAF207a2T1c4jqRw6K',1),(82,'shlomi','haimov','shlomihaimov@gmail.com','2023-01-01','M','$2b$15$8cLGNh7MQ8oAvD6qE3Ov0uyOq1iD7tT5yiift/DSaAbN.ftO.5Nmm',1),(83,'noa','haimov','noahaimov@gmail.com','2023-01-01','F','$2b$15$BK/LNgs.p7NX3uvnvfvC/.Eo4b9NKmzd8k5j5dsWA2l/SpTK1MEf2',1);
+INSERT INTO `register` VALUES (85,'מתן','חיימוב','matanhaimov@gmail.com','2004-03-04','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(86,'שלומי','חיימוב','shlomihaimov@gmail.com','2000-10-04','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(87,'יאזן','חמוד','yazenhamoud@gmail.com','2004-06-23','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(88,'אתגר','ברבי','etgarb1237@gmail.com','2004-01-25','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1);
 /*!40000 ALTER TABLE `register` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -78,4 +78,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-21 11:11:21
+-- Dump completed on 2023-12-03 13:56:46

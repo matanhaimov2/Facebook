@@ -627,26 +627,20 @@ def getAllProduct(): # Get product/s from db for everyone
     print(query)
     response = handleMultipleResults(query)
 
-    # Get product where email from db
-    # print(response,'heree')
-    
-    print(response,'!!!!!!!!!!!!!')
+    print(response)
+    allproducts = []
 
-
-
-    if (response):
-
-        ALL_PRODUCTS = []
-
-        for productsUser in response:
-            ALL_PRODUCTS.extend(productsUser)
-    
-        print(ALL_PRODUCTS, 'damnnnn')
-
-        allproducts = []
-
-        for product in ALL_PRODUCTS:
-            allproducts.append(json.loads(product))
+    if response:
+        for product_tuple in response:
+            if product_tuple and product_tuple[0] and product_tuple[0] != 'None':
+                product_json_str = product_tuple[0]
+                try:
+                    # Attempt to load as a JSON object
+                    product_dict = json.loads(product_json_str)
+                    allproducts.append(product_dict)
+                except json.JSONDecodeError:
+                    # If it's not a JSON object, assume it's a list and extend allproducts
+                    allproducts.extend(json.loads(product_json_str))
 
     if(response != None):
 
@@ -746,5 +740,5 @@ if __name__ == "__main__":
 # Marketplace Related Tasks:
 # 1. figure out a way to chunk 6 products in one chunk => make a map ----- VVV
 # 2. format date problem
-# 3. figure out a way to import every product to a single page
+# 3. figure out a way to import every product to a single page ----------- VVV
 # 4. cities api

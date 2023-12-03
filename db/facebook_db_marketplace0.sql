@@ -27,7 +27,7 @@ CREATE TABLE `marketplace` (
   `user_email` varchar(100) DEFAULT NULL,
   `products` json DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `marketplace` (
 
 LOCK TABLES `marketplace` WRITE;
 /*!40000 ALTER TABLE `marketplace` DISABLE KEYS */;
-INSERT INTO `marketplace` VALUES (1,'shlomihaimov@gmail.com',NULL),(2,'noahaimov@gmail.com','[\"{\\\"Category\\\": \\\"electronics\\\", \\\"Text\\\": \\\"galaxy s21\\\", \\\"Image\\\": \\\"https://i.ibb.co/b6hr81g/facebook-icon.png\\\", \\\"Price\\\": \\\"110\\\", \\\"City\\\": \\\"ramle\\\", \\\"date\\\": \\\"2023-11-21 11:08:12.889424\\\"}\"]');
+INSERT INTO `marketplace` VALUES (4,'matanhaimov@gmail.com',NULL),(5,'shlomihaimov@gmail.com',NULL),(6,'yazenhamoud@gmail.com',NULL),(7,'etgarb1237@gmail.com','[\"{\\\"Category\\\": \\\"electronics\\\", \\\"Text\\\": \\\"ps5 new condition\\\", \\\"Image\\\": \\\"https://i.ibb.co/cxKGnHm/ps5.webp\\\", \\\"Price\\\": \\\"2099\\\", \\\"City\\\": \\\"Ramle\\\", \\\"date\\\": \\\"2023-12-03 13:29:04.664433\\\"}\"]');
 /*!40000 ALTER TABLE `marketplace` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-21 11:11:20
+-- Dump completed on 2023-12-03 13:56:45
