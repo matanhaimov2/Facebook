@@ -577,8 +577,8 @@ def uploadProduct(): # Upload product/s to db
 
     return jsonify({'res': True})
 
-@app.route("/getProductSpecific", methods=['GET', 'POST'])
-def getProductSpecific(): # Get product/s from db to a specific user
+@app.route("/getSpecificProduct", methods=['GET', 'POST'])
+def getSpecificProduct(): # Get product/s from db to a specific user
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -614,8 +614,8 @@ def getProductSpecific(): # Get product/s from db to a specific user
     
     return jsonify({'res': False, 'data' : []})
 
-@app.route("/getProduct", methods=['GET', 'POST'])
-def getProduct(): # Get product/s from db for everyone
+@app.route("/getAllProduct", methods=['GET', 'POST'])
+def getAllProduct(): # Get product/s from db for everyone
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -628,16 +628,24 @@ def getProduct(): # Get product/s from db for everyone
     response = handleMultipleResults(query)
 
     # Get product where email from db
-    print(response,'heree')
-    response = response[0]
+    # print(response,'heree')
+    
+    print(response,'!!!!!!!!!!!!!')
+
+
 
     if (response):
-        products = json.loads(response)
-        print(products)
+
+        ALL_PRODUCTS = []
+
+        for productsUser in response:
+            ALL_PRODUCTS.extend(productsUser)
+    
+        print(ALL_PRODUCTS, 'damnnnn')
 
         allproducts = []
 
-        for product in products:
+        for product in ALL_PRODUCTS:
             allproducts.append(json.loads(product))
 
     if(response != None):

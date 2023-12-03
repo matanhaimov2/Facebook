@@ -191,6 +191,10 @@
 .marketplace-left-wrapper {
     position: relative;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    color: white;
 }
 
 .productupload-exit-icon {
@@ -204,16 +208,10 @@
     background: rgba(255, 255, 255, -0.5);
 }
 
-.marketplace-left-products-wrapper-wrapper {
-    display: flex;
-    flex-direction: row;
-    color: white;
-    flex-wrap: wrap;
-}
-
 .marketplace-left-products-wrapper {
     display: flex;
     flex-direction: column;
+    height: fit-content;
     gap: 10px;
     cursor: pointer;
     padding: 1%;

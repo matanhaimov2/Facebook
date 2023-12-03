@@ -17,7 +17,7 @@ import { SlGameController } from "react-icons/sl";
 import './marketplace.css';
 
 // Services
-import { getProduct, getProductSpecific } from '../../Services/profileService';
+import { getAllProduct, getSpecificProduct } from '../../Services/marketplaceService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 
@@ -28,9 +28,33 @@ import ProductUpload from '../../Components/ProductUpload/productUpload';
 const Marketplace = () => {
 
     // States
-    const [marketProducts, setMarketProducts] = useState(null);
+    const [marketSpecificProduct, setMarketSpecificProduct] = useState([]); // State for specific user products
+    const [marketProducts, setMarketProducts] = useState([]); // State for Allproducts
     const [extendUploadProduct, setExtendUploadPoduct] = useState(false);
     const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate, problem!
+
+    // Pathnames handle
+    const currentPathname = window.location.pathname;
+    const isMarketplacePage = currentPathname.endsWith('/marketplace');
+    const isVehiclesPage = currentPathname.endsWith('/marketplace/vehicles');
+    const isElectronicsPage = currentPathname.endsWith('/marketplace/electronics');
+    const isInstrumentsPage = currentPathname.endsWith('/marketplace/instruments');
+    const isGamesPage = currentPathname.endsWith('/marketplace/games');
+    const isMyproductsPage = currentPathname.endsWith('/marketplace/myproducts');
+
+
+
+    const navigateToCategory = (e, title) => {
+        e.preventDefault(); 
+        
+        window.location.href = '/marketplace/' + title;
+    }
+
+    const navigateToEveryCategory = (e) => {
+        e.preventDefault(); 
+        
+        window.location.href = '/marketplace';
+    }
 
 
     const formatDate = (inputDateStr) => { // Date formatting to a normal structure (dd/mm/yyyy)
@@ -55,7 +79,16 @@ const Marketplace = () => {
 
             if(getAuthenticatedUser()) {
                 
-                const response = await getProductSpecific(data)
+                const my_response = await getSpecificProduct(data)
+                if(my_response && my_response.res===true) {
+                    setMarketSpecificProduct(my_response.data);
+                    console.log(marketSpecificProduct);
+                    console.log(my_response.data);
+
+                }
+
+                const response = await getAllProduct(data)
+                console.log(response.data)
 
                 if(response && response.res===true) { 
 
@@ -78,6 +111,7 @@ const Marketplace = () => {
                      
                 }
                 else {
+                    setMarketSpecificProduct([]);
                     setMarketProducts([]);
                 }
             }
@@ -88,21 +122,8 @@ const Marketplace = () => {
     
     }, [])
 
-
     const extendUploader = () => {
         setExtendUploadPoduct(!extendUploadProduct)
-    }
-
-    const navigateToCategory = (e, title) => {
-        e.preventDefault(); 
-        
-        window.location.href = '/marketplace/' + title;
-    }
-
-    const navigateToEveryCategory = (e) => {
-        e.preventDefault(); 
-        
-        window.location.href = '/marketplace';
     }
 
     return (
@@ -148,7 +169,7 @@ const Marketplace = () => {
                                 <span className='marketplace-sub-category-title'> הכל</span>
                             </div>
 
-                            <div className='marketplace-category' onClick={(e) => {navigateToCategory(e, 'vehichles')}}>
+                            <div className='marketplace-category' onClick={(e) => {navigateToCategory(e, 'vehicles')}}>
                                 <div className='marketplace-category-round-wrapper'>
                                     <button className='marketplace-button-circle'> <FaCar className='topnav-menu-icon' /> </button>
                                 </div>
@@ -175,42 +196,229 @@ const Marketplace = () => {
                                 </div>
                                 <span className='marketplace-sub-category-title'> צעצועים ומשחקים</span>
                             </div>
+
+                            <div className='marketplace-create-button-wrapper'>
+                                <button className='marketplace-create-button' onClick={(e) => {navigateToCategory(e, 'myproducts')}}>המודעות שלי</button>
+                            </div>
                         </div>
                     </div>
 
                 </div>
             </div>
 
-            <div className='marketplace-left-wrapper'>
-                <div className='marketplace-left-products-wrapper-wrapper'>
 
-                    {marketProducts && marketProducts.map((marketProducts, i) => (
-                        <div key={i} className='marketplace-left-products-wrapper'>
+            <div className='marketplace-left-wrapper'>
+
+                {/* marketplace page => contains all the products */}
+                {isMarketplacePage && marketProducts && marketProducts.flat().map((productString, index) => { // flatten the array of arrays into a single array
+                    const product = JSON.parse(productString); //  convert the JSON string into a JavaScript object
+                    return (
+                        <div key={index} className='marketplace-left-products-wrapper'>
                         
                             <div className='marketplace-left-img-product-wrapper'>
-                                {marketProducts.Image ? (
-                                <img className='marketplace-left-img-product' src={ marketProducts.Image }></img>
+                                {product.Image ? (
+                                <img className='marketplace-left-img-product' src={ product.Image }></img>
 
                                 ) : (
-                                    <span>nothing</span>
+                                    <span>No Image</span>
                                 )}
                             </div>
+                        
+                            <span className='marketplace-left-price-product'> { product.Price }</span>
 
-                            <span className='marketplace-left-price-product'> { marketProducts.Price }</span>
-
-                            <span className='marketplace-left-text-product'> { marketProducts.Text }</span>
+                            <span className='marketplace-left-text-product'> { product.Text }</span>
                             
                             <div className='marketplace-left-pricedate-product-wrapper'>
-                                <span className='marketplace-left-city-product'> { marketProducts.City }</span>
+                                <span className='marketplace-left-city-product'> { product.City }</span>
 
-                                <span className='marketplace-left-date-product'> { marketProducts.date }</span>
+                                <span className='marketplace-left-date-product'> { product.date }</span>
                             </div>
 
                         </div>
-                    ))}
+                    );
+                })}
 
+
+                {/* vehicles page => contains all products in vehicles category*/}
+                {isVehiclesPage && marketProducts && marketProducts.flat()
+                .filter((item) => {
+                    const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
+                    return product.Category === 'vehicles';
+                })
+                .map((productString, index) => { // flatten the array of arrays into a single array
+                    const product = JSON.parse(productString); //  convert the JSON string into a JavaScript object
+                    return (
+                        <div key={index} className='marketplace-left-products-wrapper'>
+
+                            {product.Category==='vehicles' && (
+                                <>
+                                    <div className='marketplace-left-img-product-wrapper'>
+                                        {product.Image ? (
+                                        <img className='marketplace-left-img-product' src={ product.Image }></img>
+
+                                        ) : (
+                                            <span>No Image</span>
+                                        )}
+                                    </div>
+                                
+                                    <span className='marketplace-left-price-product'> { product.Price }</span>
+
+                                    <span className='marketplace-left-text-product'> { product.Text }</span>
+                                    
+                                    <div className='marketplace-left-pricedate-product-wrapper'>
+                                        <span className='marketplace-left-city-product'> { product.City }</span>
+
+                                        <span className='marketplace-left-date-product'> { product.date }</span>
+                                    </div>
+                                </>
+                            )}
+
+                        </div>
+                        
+                    );
+                })}
+
+                {/* electronics page => contains all products in electronics category*/}
+                {isElectronicsPage && marketProducts && marketProducts.flat()
+                .filter((item) => {
+                    const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
+                    return product.Category === 'electronics';
+                })
+                .map((productString, index) => { // flatten the array of arrays into a single array
+                    const product = JSON.parse(productString); //  convert the JSON string into a JavaScript object
+                    return (
+                        <div key={index} className='marketplace-left-products-wrapper'>
+
+                            {product.Category==='electronics' && (
+                                <>
+                                    <div className='marketplace-left-img-product-wrapper'>
+                                        {product.Image ? (
+                                        <img className='marketplace-left-img-product' src={ product.Image }></img>
+
+                                        ) : (
+                                            <span>No Image</span>
+                                        )}
+                                    </div>
+                                
+                                    <span className='marketplace-left-price-product'> { product.Price }</span>
+
+                                    <span className='marketplace-left-text-product'> { product.Text }</span>
+                                    
+                                    <div className='marketplace-left-pricedate-product-wrapper'>
+                                        <span className='marketplace-left-city-product'> { product.City }</span>
+
+                                        <span className='marketplace-left-date-product'> { product.date }</span>
+                                    </div>
+                                </>
+                            )}
+
+                        </div>
+                        
+                    );
+                })}
+
+                {/* instruments page => contains all products in instruments category*/}
+                {isInstrumentsPage && marketProducts && marketProducts.flat()
+                .filter((item) => {
+                    const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
+                    return product.Category === 'instruments';
+                })
+                .map((productString, index) => { // flatten the array of arrays into a single array
+                    const product = JSON.parse(productString); //  convert the JSON string into a JavaScript object
+                    return (
+                        <div key={index} className='marketplace-left-products-wrapper'>
+
+                            {product.Category==='instruments' && (
+                                <>
+                                    <div className='marketplace-left-img-product-wrapper'>
+                                        {product.Image ? (
+                                        <img className='marketplace-left-img-product' src={ product.Image }></img>
+
+                                        ) : (
+                                            <span>No Image</span>
+                                        )}
+                                    </div>
+                                
+                                    <span className='marketplace-left-price-product'> { product.Price }</span>
+
+                                    <span className='marketplace-left-text-product'> { product.Text }</span>
+                                    
+                                    <div className='marketplace-left-pricedate-product-wrapper'>
+                                        <span className='marketplace-left-city-product'> { product.City }</span>
+
+                                        <span className='marketplace-left-date-product'> { product.date }</span>
+                                    </div>
+                                </>
+                            )}
+
+                        </div>
+                        
+                    );
+                })}
+
+                {/* games page => contains all products in games category*/}
+                {isGamesPage && marketProducts && marketProducts.flat()
+                .filter((item) => {
+                    const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
+                    return product.Category === 'games';
+                })
+                .map((productString, index) => { // flatten the array of arrays into a single array
+                    const product = JSON.parse(productString); //  convert the JSON string into a JavaScript object
+                    return (
+                        <div key={index} className='marketplace-left-products-wrapper'>
+
+                            {product.Category==='games' && (
+                                <>
+                                    <div className='marketplace-left-img-product-wrapper'>
+                                        {product.Image ? (
+                                        <img className='marketplace-left-img-product' src={ product.Image }></img>
+
+                                        ) : (
+                                            <span>No Image</span>
+                                        )}
+                                    </div>
+                                
+                                    <span className='marketplace-left-price-product'> { product.Price }</span>
+
+                                    <span className='marketplace-left-text-product'> { product.Text }</span>
+                                    
+                                    <div className='marketplace-left-pricedate-product-wrapper'>
+                                        <span className='marketplace-left-city-product'> { product.City }</span>
+
+                                        <span className='marketplace-left-date-product'> { product.date }</span>
+                                    </div>
+                                </>
+                            )}
+
+                        </div>
+                        
+                    );
+                })}
+
+                {/* myproducts page => contains all products the connected user uploaded*/}
+                {isMyproductsPage && marketSpecificProduct && marketSpecificProduct.map((product, index) => (
+                    <div key={index} className='marketplace-left-products-wrapper'>       
+                        <div className='marketplace-left-img-product-wrapper'>
+                            {product.Image ? (
+                            <img className='marketplace-left-img-product' src={ product.Image }></img>
+
+                            ) : (
+                                <span>No Image</span>
+                            )}
+                        </div>
                     
-                </div>
+                        <span className='marketplace-left-price-product'> { product.Price }</span>
+
+                        <span className='marketplace-left-text-product'> { product.Text }</span>
+                        
+                        <div className='marketplace-left-pricedate-product-wrapper'>
+                            <span className='marketplace-left-city-product'> { product.City }</span>
+
+                            <span className='marketplace-left-date-product'> { product.date }</span>
+                        </div>
+                    </div>
+                ))}
+                
                 
                 {extendUploadProduct && (
                     <div className='marketplace-left-productupload-wrapper'>
@@ -218,8 +426,11 @@ const Marketplace = () => {
                     </div>
                 )}
             </div>
+
+
         </div>
     );
 }
 
 export default Marketplace;
+
