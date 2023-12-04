@@ -34,7 +34,7 @@ CREATE TABLE `register` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`email`),
   UNIQUE KEY `username_2` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `register` (
 
 LOCK TABLES `register` WRITE;
 /*!40000 ALTER TABLE `register` DISABLE KEYS */;
-INSERT INTO `register` VALUES (85,'מתן','חיימוב','matanhaimov@gmail.com','2004-03-04','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(86,'שלומי','חיימוב','shlomihaimov@gmail.com','2000-10-04','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(87,'יאזן','חמוד','yazenhamoud@gmail.com','2004-06-23','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(88,'אתגר','ברבי','etgarb1237@gmail.com','2004-01-25','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1);
+INSERT INTO `register` VALUES (85,'מתן','חיימוב','matanhaimov@gmail.com','2004-03-04','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(86,'שלומי','חיימוב','shlomihaimov@gmail.com','2000-10-04','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(87,'יאזן','חמוד','yazenhamoud@gmail.com','2004-06-23','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(88,'אתגר','ברבי','etgarb1237@gmail.com','2004-01-25','M','$2b$15$if0c8tL.WztD3TP2bW.m3emuoIhaqdjuxIMwiWFFkAuGmzQAzevG6',1),(89,'רותי','חיימוב','ritahaimov@gmail.com','1976-05-24','F','$2b$15$dC7sboqnr9Yz0fUYcpiSsul9SZ1tfOzCNXdjPw1K73y9CXiO87M.S',1);
 /*!40000 ALTER TABLE `register` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -78,4 +78,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-03 14:37:56
+-- Dump completed on 2023-12-04 13:42:35
