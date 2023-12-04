@@ -36,6 +36,11 @@
     justify-content: space-between;
 }
 
+.displaypost-noposts {
+    display: flex;
+    justify-content: center;
+}
+
 .displayposts-like {
     
 

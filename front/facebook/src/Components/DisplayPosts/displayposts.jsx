@@ -90,14 +90,14 @@ function DisplayPosts({ profileEmail }) {
             ))}      
 
             {profilePosts && profilePosts.length===0 && (
-                <div>
-                    no post yamnakik
+                <div className='displaypost-noposts'>
+                    No Posts To Display
                 </div>
             )}       
 
             {!profilePosts && (
                 <div>
-                    loading
+                    Loading
                 </div>
             )}         
         </div>

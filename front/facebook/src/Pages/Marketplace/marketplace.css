@@ -213,6 +213,7 @@
 }
 
 .marketplace-left-products-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     height: fit-content;
@@ -248,11 +249,36 @@
     border-radius: 5px;
 }
 
-.matan-wrapper {
-    display: flex;
-    flex-direction: column;
+.marketplace-left-options-wrapper {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    direction: ltr;
+}
+
+.marketplace-left-options-button {
+    background: none;
+    outline: none;
+    border-style: none;
+    cursor: pointer;
+    color: white;
+}
+
+.marketplace-left-options-buttons {
+    width: fit-content;
+    background: white;
+    outline: none;
+    border-style: none;
+    cursor: pointer;
+    position: absolute;
+    top: -7px;
+}
+
+.css-edsu1d-MuiButtonGroup-root .MuiButtonGroup-firstButton, .css-edsu1d-MuiButtonGroup-root .MuiButtonGroup-middleButton {
+    width: 10px;
+    padding: 0;
 }
 
 .matan {
-    align-items: end;
+    padding-bottom: 15px;
 }

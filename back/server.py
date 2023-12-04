@@ -726,7 +726,6 @@ if __name__ == "__main__":
 
 # Easy Tasks:
 # 1. for search - move between option using buttons 
-# 2. for post when there are no posts show a messege (how to do it, problem with jsx if else. (shlomi))
 
 # Video tasks:
 # 1. learn react classes in udemy.
@@ -735,10 +734,11 @@ if __name__ == "__main__":
 # Problems
 # 1. in productUpload, enter key opens file
 # 2. db json columns cant get hebrew words
+# 3. edit in marketplace opens everybodys edit
 
 
 # Marketplace Related Tasks:
 # 1. figure out a way to chunk 6 products in one chunk => make a map ----- VVV
-# 2. format date problem
+# 2. format date problem -------------------------------------------------
 # 3. figure out a way to import every product to a single page ----------- VVV
-# 4. cities api
+# 4. cities api ----------------------------------------------------------

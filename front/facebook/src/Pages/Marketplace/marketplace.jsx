@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import { RxExit } from "react-icons/rx";
 
 // Icons
 
@@ -9,6 +15,10 @@ import { FaCar } from "react-icons/fa";
 import { MdOutlinePhoneAndroid } from "react-icons/md";
 import { LiaGuitarSolid } from "react-icons/lia";
 import { SlGameController } from "react-icons/sl";
+import { SlOptionsVertical } from "react-icons/sl";
+import { AiOutlineEdit } from "react-icons/ai";
+
+
 
 
 
@@ -32,6 +42,9 @@ const Marketplace = () => {
     const [marketProducts, setMarketProducts] = useState([]); // State for Allproducts
     const [extendUploadProduct, setExtendUploadPoduct] = useState(false);
     const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate, problem!
+    const [isOption, setIsOption] = useState(false); // state for options on a product
+    const [isOptionExit, setIsOptionExit] = useState(false); // state for options on a product
+
 
     // Pathnames handle
     const currentPathname = window.location.pathname;
@@ -125,6 +138,13 @@ const Marketplace = () => {
     const extendUploader = () => {
         setExtendUploadPoduct(!extendUploadProduct)
     }
+
+    const openOptions = () => {
+        setIsOption(!isOption)
+        setIsOptionExit(!isOptionExit)
+
+    }
+
 
     return (
         <div className='marketplace-wrapper'>
@@ -397,7 +417,36 @@ const Marketplace = () => {
 
                 {/* myproducts page => contains all products the connected user uploaded*/}
                 {isMyproductsPage && marketSpecificProduct && marketSpecificProduct.map((product, index) => (
-                    <div key={index} className='marketplace-left-products-wrapper'>       
+                    <div key={index} className='marketplace-left-products-wrapper'> 
+
+                        <div className='marketplace-left-options-wrapper'>
+                            {!isOptionExit ? (
+                                <button className='marketplace-left-options-button' onClick={openOptions}> <SlOptionsVertical /> </button>
+
+                            ) : (
+                                <div>
+                                    <button className='marketplace-left-options-button' onClick={openOptions}> <RxExit className='matan' /></button>
+
+                                    {isOption && (
+                                        <ButtonGroup className='marketplace-left-options-buttons' aria-label="outlined primary button group">
+                                            <Button>
+                                            <Tooltip title="Delete">
+                                                <IconButton>
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                            </Button>
+                                            <Button>
+                                            <Tooltip title="Edit">
+                                                <Button><AiOutlineEdit /></Button>
+                                            </Tooltip>
+                                            </Button>
+                                        </ButtonGroup>
+                                    )}
+                                </div>
+                            )}
+                        </div>      
+
                         <div className='marketplace-left-img-product-wrapper'>
                             {product.Image ? (
                             <img className='marketplace-left-img-product' src={ product.Image }></img>
