@@ -19,17 +19,12 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { AiOutlineEdit } from "react-icons/ai";
 
 
-
-
-
-
 // CSS
 import './marketplace.css';
 
 // Services
 import { getAllProduct, getSpecificProduct } from '../../Services/marketplaceService';
 import { getAuthenticatedUser } from '../../Services/authService';
-
 
 
 // Components
@@ -41,7 +36,6 @@ const Marketplace = () => {
     const [marketSpecificProduct, setMarketSpecificProduct] = useState([]); // State for specific user products
     const [marketProducts, setMarketProducts] = useState([]); // State for Allproducts
     const [extendUploadProduct, setExtendUploadPoduct] = useState(false);
-    const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate, problem!
     const [isOption, setIsOption] = useState(false); // state for options on a product
     const [isOptionExit, setIsOptionExit] = useState(false); // state for options on a product
 
@@ -56,28 +50,20 @@ const Marketplace = () => {
     const isMyproductsPage = currentPathname.endsWith('/marketplace/myproducts');
 
 
-
+    // Navigate to different categories (vehicles, instruments, games, etc...)
     const navigateToCategory = (e, title) => {
         e.preventDefault(); 
         
         window.location.href = '/marketplace/' + title;
     }
 
-    const navigateToEveryCategory = (e) => {
+    // Navigate to allproducts from all users category. http://SERVER_URL/marketplace
+    const navigateToEverythingCategory = (e) => {
         e.preventDefault(); 
         
         window.location.href = '/marketplace';
     }
 
-
-    const formatDate = (inputDateStr) => { // Date formatting to a normal structure (dd/mm/yyyy)
-        const inputDate = new Date(inputDateStr);
-        const day = inputDate.getDate().toString().padStart(2, '0');
-        const month = (inputDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-based
-        const year = inputDate.getFullYear();
-      
-        setFormattedDate(`${day}/${month}/${year}`);
-    }
 
     useEffect(() => {
 
@@ -92,35 +78,16 @@ const Marketplace = () => {
 
             if(getAuthenticatedUser()) {
                 
-                const my_response = await getSpecificProduct(data)
+                const my_response = await getSpecificProduct(data) // Gets all products from the specific user signed in
                 if(my_response && my_response.res===true) {
                     setMarketSpecificProduct(my_response.data);
-                    console.log(marketSpecificProduct);
-                    console.log(my_response.data);
-
+                    console.log(marketSpecificProduct); 
                 }
 
-                const response = await getAllProduct(data)
-                console.log(response.data)
-
+                const response = await getAllProduct(data) // Gets all products from all users
                 if(response && response.res===true) { 
-
                     setMarketProducts(response.data);
-
-                    console.log(marketProducts);
-
-                    // Date Format Issue:
-
-                    // one way to solve date problem: (takes all the dates, now figure out a way to enable the function on them)
-                    // const dates = response.data.map(item => (item.date));
-                    // const uniqueDates = [...new Set(dates)];
-                    // console.log(uniqueDates,'here')
-
-                    // second way to solve date problem:
-                    //formatDate(response.data.date); // i think that dosent work because he doesnt know how to enter a date out of 6 dates
-
-                    // third way to solve date problem:
-                    //formatDate(marketProducts.date) // its undefind                    
+                    console.log(marketProducts);        
                      
                 }
                 else {
@@ -142,9 +109,10 @@ const Marketplace = () => {
     const openOptions = () => {
         setIsOption(!isOption)
         setIsOptionExit(!isOptionExit)
-
     }
 
+    // Formats date from month/day/year to day/month/year
+    const ILdate = { day: 'numeric', month: 'numeric', year: 'numeric' };
 
     return (
         <div className='marketplace-wrapper'>
@@ -182,7 +150,7 @@ const Marketplace = () => {
                         <span className='marketplace-category-title'> <b> קטגוריות </b> </span>
 
                         <div className='marketplace-category-sub-wrapper'>
-                            <div className='marketplace-category' onClick={(e) => {navigateToEveryCategory(e)}}>
+                            <div className='marketplace-category' onClick={(e) => {navigateToEverythingCategory(e)}}>
                                 <div className='marketplace-category-round-wrapper'>
                                     <button className='marketplace-button-circle'> <AiOutlineShop className='topnav-menu-icon' /> </button>
                                 </div>
@@ -243,15 +211,17 @@ const Marketplace = () => {
                                     <span>No Image</span>
                                 )}
                             </div>
-                        
-                            <span className='marketplace-left-price-product'> { product.Price }</span>
-
-                            <span className='marketplace-left-text-product'> { product.Text }</span>
                             
-                            <div className='marketplace-left-pricedate-product-wrapper'>
-                                <span className='marketplace-left-city-product'> { product.City }</span>
+                            <div className='marketplace-left-contents'>
+                                <span className='marketplace-left-price-product'> { product.Price } ILS</span>
 
-                                <span className='marketplace-left-date-product'> { product.date }</span>
+                                <span className='marketplace-left-text-product'> { product.Text }</span>
+                                
+                                <div className='marketplace-left-pricedate-product-wrapper'>
+                                    <span className='marketplace-left-city-product'> { product.City }</span>
+
+                                    <span className='marketplace-left-date-product'> { (new Date(product.date)).toLocaleDateString('en-IL', ILdate) }</span>
+                                </div>
                             </div>
 
                         </div>
@@ -280,15 +250,17 @@ const Marketplace = () => {
                                             <span>No Image</span>
                                         )}
                                     </div>
-                                
-                                    <span className='marketplace-left-price-product'> { product.Price }</span>
-
-                                    <span className='marketplace-left-text-product'> { product.Text }</span>
                                     
-                                    <div className='marketplace-left-pricedate-product-wrapper'>
-                                        <span className='marketplace-left-city-product'> { product.City }</span>
+                                    <div className='marketplace-left-contents'>
+                                        <span className='marketplace-left-price-product'> { product.Price } ILS</span>
 
-                                        <span className='marketplace-left-date-product'> { product.date }</span>
+                                        <span className='marketplace-left-text-product'> { product.Text }</span>
+                                        
+                                        <div className='marketplace-left-pricedate-product-wrapper'>
+                                            <span className='marketplace-left-city-product'> { product.City }</span>
+
+                                            <span className='marketplace-left-date-product'> { (new Date(product.date)).toLocaleDateString('en-IL', ILdate) }</span>
+                                        </div>
                                     </div>
                                 </>
                             )}
@@ -319,15 +291,17 @@ const Marketplace = () => {
                                             <span>No Image</span>
                                         )}
                                     </div>
-                                
-                                    <span className='marketplace-left-price-product'> { product.Price }</span>
-
-                                    <span className='marketplace-left-text-product'> { product.Text }</span>
                                     
-                                    <div className='marketplace-left-pricedate-product-wrapper'>
-                                        <span className='marketplace-left-city-product'> { product.City }</span>
+                                    <div className='marketplace-left-contents'>
+                                        <span className='marketplace-left-price-product'> { product.Price } ILS</span>
 
-                                        <span className='marketplace-left-date-product'> { product.date }</span>
+                                        <span className='marketplace-left-text-product'> { product.Text }</span>
+                                        
+                                        <div className='marketplace-left-pricedate-product-wrapper'>
+                                            <span className='marketplace-left-city-product'> { product.City }</span>
+
+                                            <span className='marketplace-left-date-product'> { (new Date(product.date)).toLocaleDateString('en-IL', ILdate) }</span>
+                                        </div>
                                     </div>
                                 </>
                             )}
@@ -358,15 +332,17 @@ const Marketplace = () => {
                                             <span>No Image</span>
                                         )}
                                     </div>
-                                
-                                    <span className='marketplace-left-price-product'> { product.Price }</span>
-
-                                    <span className='marketplace-left-text-product'> { product.Text }</span>
                                     
-                                    <div className='marketplace-left-pricedate-product-wrapper'>
-                                        <span className='marketplace-left-city-product'> { product.City }</span>
+                                    <div className='marketplace-left-contents'>
+                                        <span className='marketplace-left-price-product'> { product.Price } ILS</span>
 
-                                        <span className='marketplace-left-date-product'> { product.date }</span>
+                                        <span className='marketplace-left-text-product'> { product.Text }</span>
+                                        
+                                        <div className='marketplace-left-pricedate-product-wrapper'>
+                                            <span className='marketplace-left-city-product'> { product.City }</span>
+
+                                            <span className='marketplace-left-date-product'> { (new Date(product.date)).toLocaleDateString('en-IL', ILdate) }</span>
+                                        </div>
                                     </div>
                                 </>
                             )}
@@ -397,15 +373,16 @@ const Marketplace = () => {
                                             <span>No Image</span>
                                         )}
                                     </div>
-                                
-                                    <span className='marketplace-left-price-product'> { product.Price }</span>
+                                    <div className='marketplace-left-contents'>
+                                        <span className='marketplace-left-price-product'> { product.Price } ILS</span>
 
-                                    <span className='marketplace-left-text-product'> { product.Text }</span>
-                                    
-                                    <div className='marketplace-left-pricedate-product-wrapper'>
-                                        <span className='marketplace-left-city-product'> { product.City }</span>
+                                        <span className='marketplace-left-text-product'> { product.Text }</span>
+                                        
+                                        <div className='marketplace-left-pricedate-product-wrapper'>
+                                            <span className='marketplace-left-city-product'> { product.City }</span>
 
-                                        <span className='marketplace-left-date-product'> { product.date }</span>
+                                            <span className='marketplace-left-date-product'> { (new Date(product.date)).toLocaleDateString('en-IL', ILdate) }</span>
+                                        </div>
                                     </div>
                                 </>
                             )}
@@ -425,7 +402,7 @@ const Marketplace = () => {
 
                             ) : (
                                 <div>
-                                    <button className='marketplace-left-options-button' onClick={openOptions}> <RxExit className='matan' /></button>
+                                    <button className='marketplace-left-options-button' onClick={openOptions}> <RxExit className='marketplace-left-options-button-exit' /></button>
 
                                     {isOption && (
                                         <ButtonGroup className='marketplace-left-options-buttons' aria-label="outlined primary button group">
@@ -456,14 +433,16 @@ const Marketplace = () => {
                             )}
                         </div>
                     
-                        <span className='marketplace-left-price-product'> { product.Price }</span>
+                        <div className='marketplace-left-contents'>
+                            <span className='marketplace-left-price-product'> { product.Price } ILS</span>
 
-                        <span className='marketplace-left-text-product'> { product.Text }</span>
-                        
-                        <div className='marketplace-left-pricedate-product-wrapper'>
-                            <span className='marketplace-left-city-product'> { product.City }</span>
+                            <span className='marketplace-left-text-product'> { product.Text }</span>
+                            
+                            <div className='marketplace-left-pricedate-product-wrapper'>
+                                <span className='marketplace-left-city-product'> { product.City }</span>
 
-                            <span className='marketplace-left-date-product'> { product.date }</span>
+                                <span className='marketplace-left-date-product'> { (new Date(product.date)).toLocaleDateString('en-IL', ILdate) }</span>
+                            </div>
                         </div>
                     </div>
                 ))}

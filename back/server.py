@@ -591,7 +591,6 @@ def getSpecificProduct(): # Get product/s from db to a specific user
     
     # Get product where email from db
     response = handleOneResult(query)
-    print(response,'heree')
     response = response[0]
 
     if (response):
@@ -627,7 +626,6 @@ def getAllProduct(): # Get product/s from db for everyone
     print(query)
     response = handleMultipleResults(query)
 
-    print(response)
     allproducts = []
 
     if response:
@@ -717,7 +715,7 @@ if __name__ == "__main__":
 
 
 # Complex Tasks:
-# 1. Marketplace
+# 1. Marketplace ------------------------------------------------------ On Progress...
 # 2. 
 
 # Can't Tell Tasks:
@@ -732,13 +730,13 @@ if __name__ == "__main__":
 # 2.  
 
 # Problems
-# 1. in productUpload, enter key opens file
-# 2. db json columns cant get hebrew words
-# 3. edit in marketplace opens everybodys edit
+# 1. in productUpload, enter key opens file    !!!
+# 2. db json columns cant get hebrew words     !!!
+# 3. edit in marketplace opens everybodys edit !!!
 
 
 # Marketplace Related Tasks:
 # 1. figure out a way to chunk 6 products in one chunk => make a map ----- VVV
-# 2. format date problem -------------------------------------------------
+# 2. format date problem ------------------------------------------------- VVV
 # 3. figure out a way to import every product to a single page ----------- VVV
 # 4. cities api ----------------------------------------------------------

@@ -4,6 +4,12 @@ import { FaUserFriends } from 'react-icons/fa'
 import { MdPublic } from 'react-icons/md'
 
 
+// React Icons
+import { SlLike } from "react-icons/sl";
+import { FaRegComment } from "react-icons/fa";
+import { PiShareFatLight } from "react-icons/pi";
+
+
 
 
 //CSS
@@ -55,35 +61,63 @@ function DisplayPosts({ profileEmail }) {
         getPostToFacebook();
     }, [])
 
+    const likeButton = () => {
+        
+    }
 
+    const commentButton = () => {
+        
+    }
+
+    const shareButton = () => {
+        
+    }
 
     return (
         <div className='postupload-wrapper'>
             {profilePosts && profilePosts.map((post, i) => (
                 <div key={i} className='displayposts-wrapper'>
-                    
-                    {post.Privacy==='only me' && (
-                        <BiSolidLock className='privacy-icon'/>
-                    )}
+                
 
-                    {post.Privacy==='friends' && (
-                        <FaUserFriends className='privacy-icon'/>
-                    )}
+                    <div className='displayposts-datetext-wrapper'>
+                        <div className='displayposts-privacydate-wrapper'> 
+                            {post.Privacy==='only me' && (
+                                <BiSolidLock className='privacy-icon'/>
+                            )}
 
-                    {post.Privacy==='public' && (
-                        <MdPublic className='privacy-icon'/>
-                    )}
+                            {post.Privacy==='friends' && (
+                                <FaUserFriends className='privacy-icon'/>
+                            )}
 
-                    <span className='displayposts-date-wrapper'> { post.date }</span>
+                            {post.Privacy==='public' && (
+                                <MdPublic className='privacy-icon'/>
+                            )}
+
+                            <span className='displayposts-date-wrapper'> { post.date }</span>
+
+                        </div>
+
+                        <span className='displayposts-text-wrapper'>{ post.Text }</span>
+                        
+                    </div>
 
                     <img className='displayposts-image-wrapper' src={ post.Image }></img>
 
-                    <span className='displayposts-text-wrapper'>{ post.Text }</span>
-
                     <div className='displayposts-like-board-wrapper'>
-                        <button className='displayposts-share'>Share</button>
-                        <button className='displayposts-comment'>Comment</button>
-                        <button className='displayposts-like'>Like</button>
+                        <div className='displayposts-like-board-trio-wrapper' onClick={shareButton}>
+                            <span className='displayposts-like'> <PiShareFatLight /> </span>
+                            <span>Share</span>
+                        </div>
+
+                        <div className='displayposts-like-board-trio-wrapper' onClick={commentButton}>
+                            <span className='displayposts-like'> <FaRegComment /> </span>
+                            <span>Comment</span>
+                        </div>
+
+                        <div className='displayposts-like-board-trio-wrapper' onClick={likeButton}>
+                            <span className='displayposts-like'> <SlLike /> </span>
+                            <span>Like</span>
+                        </div>
                     </div>
 
                 </div>                         

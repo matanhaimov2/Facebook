@@ -1,3 +1,52 @@
+/* Scroll Bar Style */
+
+/* width */
+::-webkit-scrollbar {
+    width: 16px;
+}
+  
+  /* Track */
+::-webkit-scrollbar-track {
+    background: #413f3f;
+}
+  
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: #636060;
+}
+  
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #686767;
+}
+
+/* Buttons */
+::-webkit-scrollbar-button:single-button {
+    background-color: #413f3f;
+    display: block;
+    border-style: solid;
+    height: 13px;
+    width: 16px;
+  }
+  /* Up */
+  ::-webkit-scrollbar-button:single-button:vertical:decrement {
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent #636060 transparent;
+  }
+  
+  ::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+    border-color: transparent transparent #777777 transparent;
+  }
+  /* Down */
+  ::-webkit-scrollbar-button:single-button:vertical:increment {
+    border-width: 8px 8px 0 8px;
+    border-color: #636060 transparent transparent transparent;
+  }
+  
+  ::-webkit-scrollbar-button:vertical:single-button:increment:hover {
+    border-color: #777777 transparent transparent transparent;
+  }
+
 .marketplace-wrapper {
     background: #181616;
     width: 100%;
@@ -12,7 +61,7 @@
 
 .marketplace-right-wrapper {
     position: fixed;
-    z-index: 100;
+    z-index: 1;
     background-color: #222223;
     width: 15%;
     height: 100%;
@@ -223,10 +272,12 @@
     padding-top: 3%;
     width: 14%;
     flex-basis: 230px;
+    height: 358px;
+    justify-content: space-between;
 }
 
 .marketplace-left-products-wrapper:hover {
-    background-color: #3d3d3f;
+    background-color: #6d6a6a;
     transition: all 500ms ease;
 }
 
@@ -242,12 +293,26 @@
 }
 
 .marketplace-left-img-product {
-    width: 100%;
+    width: 240.67px;
+    height: 240.67px;
     text-align: center;
     display: flex;
     justify-content: center;
     border-radius: 5px;
 }
+
+.marketplace-left-price-product {
+    font-weight: 600;
+}
+
+.marketplace-left-city-product {
+    font-size: 80%;
+}
+
+.marketplace-left-date-product {
+    font-size: 80%;
+}
+
 
 .marketplace-left-options-wrapper {
     position: absolute;
@@ -280,6 +345,12 @@
     padding: 0;
 }
 
-.matan {
+.marketplace-left-options-button-exit {
     padding-bottom: 15px;
+}
+
+.marketplace-left-contents {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
