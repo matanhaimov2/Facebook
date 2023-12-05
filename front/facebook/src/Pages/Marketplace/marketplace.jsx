@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
+// MUI
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { RxExit } from "react-icons/rx";
+
+
 
 // Icons
 
@@ -32,21 +37,23 @@ import ProductUpload from '../../Components/ProductUpload/productUpload';
 
 const Marketplace = () => {
 
+    // Params
+    const { categoryTitle } = useParams();
+ 
     // States
     const [marketSpecificProduct, setMarketSpecificProduct] = useState([]); // State for specific user products
     const [marketProducts, setMarketProducts] = useState([]); // State for Allproducts
     const [extendUploadProduct, setExtendUploadPoduct] = useState(false);
     const [isOption, setIsOption] = useState(false); // state for options on a product
     const [isOptionExit, setIsOptionExit] = useState(false); // state for options on a product
+    const [currentOption, setCurrentOption] = useState();
 
+    // Navigateor
+    const navigate = useNavigate();
 
     // Pathnames handle
     const currentPathname = window.location.pathname;
     const isMarketplacePage = currentPathname.endsWith('/marketplace');
-    const isVehiclesPage = currentPathname.endsWith('/marketplace/vehicles');
-    const isElectronicsPage = currentPathname.endsWith('/marketplace/electronics');
-    const isInstrumentsPage = currentPathname.endsWith('/marketplace/instruments');
-    const isGamesPage = currentPathname.endsWith('/marketplace/games');
     const isMyproductsPage = currentPathname.endsWith('/marketplace/myproducts');
 
 
@@ -54,7 +61,7 @@ const Marketplace = () => {
     const navigateToCategory = (e, title) => {
         e.preventDefault(); 
         
-        window.location.href = '/marketplace/' + title;
+        navigate('/marketplace/' + title);
     }
 
     // Navigate to allproducts from all users category. http://SERVER_URL/marketplace
@@ -106,9 +113,10 @@ const Marketplace = () => {
         setExtendUploadPoduct(!extendUploadProduct)
     }
 
-    const openOptions = () => {
-        setIsOption(!isOption)
-        setIsOptionExit(!isOptionExit)
+    const openOptions = (index) => {
+        setIsOption(!isOption);
+        setIsOptionExit(!isOptionExit);
+        setCurrentOption(index);
     }
 
     // Formats date from month/day/year to day/month/year
@@ -229,18 +237,19 @@ const Marketplace = () => {
                 })}
 
 
-                {/* vehicles page => contains all products in vehicles category*/}
-                {isVehiclesPage && marketProducts && marketProducts.flat()
+                {/* all pages => contains all products in categoryTitle veriable category, categoryTitle could be games, viechles,.....*/}
+                {marketProducts && marketProducts.flat()
                 .filter((item) => {
                     const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
-                    return product.Category === 'vehicles';
+                    console.log(product)
+                    return product.Category === categoryTitle;
                 })
                 .map((productString, index) => { // flatten the array of arrays into a single array
                     const product = JSON.parse(productString); //  convert the JSON string into a JavaScript object
                     return (
                         <div key={index} className='marketplace-left-products-wrapper'>
 
-                            {product.Category==='vehicles' && (
+                            {product.Category===categoryTitle && (
                                 <>
                                     <div className='marketplace-left-img-product-wrapper'>
                                         {product.Image ? (
@@ -270,155 +279,36 @@ const Marketplace = () => {
                     );
                 })}
 
-                {/* electronics page => contains all products in electronics category*/}
-                {isElectronicsPage && marketProducts && marketProducts.flat()
-                .filter((item) => {
-                    const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
-                    return product.Category === 'electronics';
-                })
-                .map((productString, index) => { // flatten the array of arrays into a single array
-                    const product = JSON.parse(productString); //  convert the JSON string into a JavaScript object
-                    return (
-                        <div key={index} className='marketplace-left-products-wrapper'>
-
-                            {product.Category==='electronics' && (
-                                <>
-                                    <div className='marketplace-left-img-product-wrapper'>
-                                        {product.Image ? (
-                                        <img className='marketplace-left-img-product' src={ product.Image }></img>
-
-                                        ) : (
-                                            <span>No Image</span>
-                                        )}
-                                    </div>
-                                    
-                                    <div className='marketplace-left-contents'>
-                                        <span className='marketplace-left-price-product'> { product.Price } ILS</span>
-
-                                        <span className='marketplace-left-text-product'> { product.Text }</span>
-                                        
-                                        <div className='marketplace-left-pricedate-product-wrapper'>
-                                            <span className='marketplace-left-city-product'> { product.City }</span>
-
-                                            <span className='marketplace-left-date-product'> { (new Date(product.date)).toLocaleDateString('en-IL', ILdate) }</span>
-                                        </div>
-                                    </div>
-                                </>
-                            )}
-
-                        </div>
-                        
-                    );
-                })}
-
-                {/* instruments page => contains all products in instruments category*/}
-                {isInstrumentsPage && marketProducts && marketProducts.flat()
-                .filter((item) => {
-                    const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
-                    return product.Category === 'instruments';
-                })
-                .map((productString, index) => { // flatten the array of arrays into a single array
-                    const product = JSON.parse(productString); //  convert the JSON string into a JavaScript object
-                    return (
-                        <div key={index} className='marketplace-left-products-wrapper'>
-
-                            {product.Category==='instruments' && (
-                                <>
-                                    <div className='marketplace-left-img-product-wrapper'>
-                                        {product.Image ? (
-                                        <img className='marketplace-left-img-product' src={ product.Image }></img>
-
-                                        ) : (
-                                            <span>No Image</span>
-                                        )}
-                                    </div>
-                                    
-                                    <div className='marketplace-left-contents'>
-                                        <span className='marketplace-left-price-product'> { product.Price } ILS</span>
-
-                                        <span className='marketplace-left-text-product'> { product.Text }</span>
-                                        
-                                        <div className='marketplace-left-pricedate-product-wrapper'>
-                                            <span className='marketplace-left-city-product'> { product.City }</span>
-
-                                            <span className='marketplace-left-date-product'> { (new Date(product.date)).toLocaleDateString('en-IL', ILdate) }</span>
-                                        </div>
-                                    </div>
-                                </>
-                            )}
-
-                        </div>
-                        
-                    );
-                })}
-
-                {/* games page => contains all products in games category*/}
-                {isGamesPage && marketProducts && marketProducts.flat()
-                .filter((item) => {
-                    const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
-                    return product.Category === 'games';
-                })
-                .map((productString, index) => { // flatten the array of arrays into a single array
-                    const product = JSON.parse(productString); //  convert the JSON string into a JavaScript object
-                    return (
-                        <div key={index} className='marketplace-left-products-wrapper'>
-
-                            {product.Category==='games' && (
-                                <>
-                                    <div className='marketplace-left-img-product-wrapper'>
-                                        {product.Image ? (
-                                        <img className='marketplace-left-img-product' src={ product.Image }></img>
-
-                                        ) : (
-                                            <span>No Image</span>
-                                        )}
-                                    </div>
-                                    <div className='marketplace-left-contents'>
-                                        <span className='marketplace-left-price-product'> { product.Price } ILS</span>
-
-                                        <span className='marketplace-left-text-product'> { product.Text }</span>
-                                        
-                                        <div className='marketplace-left-pricedate-product-wrapper'>
-                                            <span className='marketplace-left-city-product'> { product.City }</span>
-
-                                            <span className='marketplace-left-date-product'> { (new Date(product.date)).toLocaleDateString('en-IL', ILdate) }</span>
-                                        </div>
-                                    </div>
-                                </>
-                            )}
-
-                        </div>
-                        
-                    );
-                })}
-
+               
                 {/* myproducts page => contains all products the connected user uploaded*/}
                 {isMyproductsPage && marketSpecificProduct && marketSpecificProduct.map((product, index) => (
                     <div key={index} className='marketplace-left-products-wrapper'> 
 
                         <div className='marketplace-left-options-wrapper'>
-                            {!isOptionExit ? (
-                                <button className='marketplace-left-options-button' onClick={openOptions}> <SlOptionsVertical /> </button>
-
+                            {!isOptionExit && currentOption!==index ? (
+                                <button className='marketplace-left-options-button' onClick={() => {openOptions(index)}}> <SlOptionsVertical /> </button>
                             ) : (
                                 <div>
-                                    <button className='marketplace-left-options-button' onClick={openOptions}> <RxExit className='marketplace-left-options-button-exit' /></button>
-
-                                    {isOption && (
-                                        <ButtonGroup className='marketplace-left-options-buttons' aria-label="outlined primary button group">
-                                            <Button>
-                                            <Tooltip title="Delete">
-                                                <IconButton>
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                            </Button>
-                                            <Button>
-                                            <Tooltip title="Edit">
-                                                <Button><AiOutlineEdit /></Button>
-                                            </Tooltip>
-                                            </Button>
-                                        </ButtonGroup>
+                                    
+                                    {isOption && currentOption===index && (
+                                        <>
+                                            <button className='marketplace-left-options-button' onClick={openOptions}> <RxExit className='marketplace-left-options-button-exit' /></button>
+                                
+                                            <ButtonGroup className='marketplace-left-options-buttons' aria-label="outlined primary button group">
+                                                <Button>
+                                                <Tooltip title="Delete">
+                                                    <IconButton>
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </Tooltip>
+                                                </Button>
+                                                <Button>
+                                                <Tooltip title="Edit">
+                                                    <Button><AiOutlineEdit /></Button>
+                                                </Tooltip>
+                                                </Button>
+                                            </ButtonGroup>
+                                        </>
                                     )}
                                 </div>
                             )}
