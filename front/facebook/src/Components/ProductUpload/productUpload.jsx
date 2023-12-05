@@ -27,8 +27,6 @@ import { getAuthenticatedUser } from '../../Services/authService';
 const ProductUpload = ({ setExtendUploadPoduct }) => {
 
     // States
-    const [marketProducts, setMarketProducts] = useState(null);
-
     const [uploadCategory, SetUploadCategory] = useState('');
     const [uploadText, setUploadText] = useState('');
     const [uploadImg, setUploadImg] = useState(false);

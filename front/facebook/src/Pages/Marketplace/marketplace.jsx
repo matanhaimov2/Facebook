@@ -78,9 +78,9 @@ const Marketplace = () => {
 
             if(getAuthenticatedUser()) {
                 
-                const my_response = await getSpecificProduct(data) // Gets all products from the specific user signed in
-                if(my_response && my_response.res===true) {
-                    setMarketSpecificProduct(my_response.data);
+                const all_response = await getSpecificProduct(data) // Gets all products from the specific user signed in
+                if(all_response && all_response.res===true) {
+                    setMarketSpecificProduct(all_response.data);
                     console.log(marketSpecificProduct); 
                 }
 
@@ -454,7 +454,6 @@ const Marketplace = () => {
                     </div>
                 )}
             </div>
-
 
         </div>
     );
