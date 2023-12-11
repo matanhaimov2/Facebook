@@ -1,0 +1,58 @@
+.deletecheck-wrapper {
+    width: 25%;
+    margin: auto;
+    background: white !important;
+    border-radius: 10px;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 15%;
+    color: black;
+    direction: ltr;
+}
+
+.deletecheck-sub-wrapper {
+    padding: 2%;
+    width: 100%;
+    text-align: center;
+    font-size: 200%;
+}
+
+.deletecheck-sub-wrapperr {
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    margin: auto;
+    gap: 5px;
+}
+
+.deletecheck-yes-button {
+    width: 50%;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 4%;
+    border-radius: 10px;
+    background: #1877f2;
+    color: white;
+    font-weight: 700;
+    font-size: 120%;
+}
+.deletecheck-yes-button:hover {
+    background-color: #368bfa;
+    transition: all 500ms ease;
+}
+
+.deletecheck-no-button {
+    width: 50%;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    background: none;
+}
+.deletecheck-no-button:hover {
+    background-color: #c6cfd3;
+    transition: all 500ms ease;
+}

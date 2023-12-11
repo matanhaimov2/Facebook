@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import useKey from 'react-use/esm/useKey'
 
 // Icons
 import logo from '../../Assets/Images/facebook-icon.png'; 
@@ -106,6 +107,7 @@ const TopNav = () => {
 
   }
 
+  
   return (
     <div className='topnav-wrapper'>
       <div className='topnav-left-side'>
@@ -172,7 +174,7 @@ const TopNav = () => {
                    
               {/* Displayed Options */}
               {isSearchBox && (
-                <div className='topnav-search-box-wrapper' ref={searchRef} >
+                <div tabIndex={0} className='topnav-search-box-wrapper' ref={searchRef} >
              
                   {searchedProfiles && searchedProfiles.map((profileLink, i) => (
                     <div key={i} className='topnav-search-box' onClick={(e) => {navigateToProfile(e, profileLink.email)}} >

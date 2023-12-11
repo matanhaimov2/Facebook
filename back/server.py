@@ -577,6 +577,50 @@ def uploadProduct(): # Upload product/s to db
 
     return jsonify({'res': True})
 
+@app.route("/editProduct", methods=['GET', 'POST'])
+def editProduct():
+    data = request.data
+
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str['Email']
+    index = json_str['Index']
+    uploadedcategory = json_str['UploadedCategory']
+    uploadedtext = json_str['UploadedText']
+    uploadedimg = json_str['UploadedImg']
+    uploadedprice = json_str['UploadedPrice']
+    uploadedcity = json_str['UploadedCity']
+
+
+    product = {
+        'Category': uploadedcategory,
+        'Text': uploadedtext,
+        'Image': uploadedimg,
+        'Price': uploadedprice,
+        'City': uploadedcity,
+        'date': str(datetime.now())
+    }
+
+
+    edit_query = f"""
+        UPDATE marketplace
+        SET products = JSON_REPLACE(
+            products,
+            CONCAT('$[{index}]'),
+            CAST('{str(product)}' AS CHAR CHARACTER SET utf8mb4)
+        )
+        WHERE user_email = '{email}'
+    """
+
+    response =handleUsers(edit_query)
+
+    print(edit_query,'here1111111111111111')
+    print(response, 'here22222222222222222')
+
+    return jsonify({'res': True})
+
 @app.route("/getSpecificProduct", methods=['GET', 'POST'])
 def getSpecificProduct(): # Get product/s from db to a specific user
     data = request.data
@@ -651,6 +695,23 @@ def getAllProduct(): # Get product/s from db for everyone
     
     return jsonify({'res': False, 'data' : []})
 
+@app.route("/deleteProductRequest", methods=['GET', 'POST'])
+def deleteProductRequest():
+    data = request.data
+
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str['Email']
+    index = json_str['Index']
+
+    deleteQuery = f"UPDATE marketplace SET products = JSON_REMOVE(products, '$[{index}]') WHERE user_email = '{email}'"
+
+    response = handleUsers(deleteQuery)
+
+
+    return jsonify({'res': True})
 
 
 
@@ -732,7 +793,7 @@ if __name__ == "__main__":
 # Problems
 # 1. in productUpload, enter key opens file    !!!
 # 2. db json columns cant get hebrew words     !!!
-# 3. edit in marketplace opens everybodys edit !!!
+# 
 
 
 # Marketplace Related Tasks:
@@ -740,3 +801,31 @@ if __name__ == "__main__":
 # 2. format date problem ------------------------------------------------- VVV
 # 3. figure out a way to import every product to a single page ----------- VVV
 # 4. cities api ----------------------------------------------------------
+
+
+
+
+# EDIT PROBLEM : 
+
+    # should work:
+
+    # update_query = f"""
+    #     UPDATE marketplace
+    #     SET products = JSON_REPLACE(
+    #         products,
+    #         CONCAT('$[{index}]'),
+    #         CAST('{str(product)}' AS CHAR CHARACTER SET utf8mb4)
+    #     )
+    #     WHERE user_email = '{email}'
+    # """
+
+
+    # works on the workbench :
+
+    # UPDATE marketplace
+    # SET products = JSON_REPLACE(
+    #     products,
+    #     '$[2]',
+    #     CAST('{"Category": "Updated Category", "Text": "Updated Text", "Image": "Updated Image URL", "Price": "Updated Price", "City": "Updated City"}' AS CHAR CHARACTER SET utf8mb4)
+    # )
+    # WHERE user_email = 'yazenhamoud@gmail.com';

@@ -17,14 +17,15 @@ import exitIcon from '../../Assets/Images/exit-icon.png';
 import './productUpload.css';
 
 // Services
-import { profileImgbb, uploadProduct } from '../../Services/profileService';
+import { uploadProduct, editProduct } from '../../Services/marketplaceService';
+import { profileImgbb } from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 
 
 // Components
 
-const ProductUpload = ({ setExtendUploadPoduct }) => {
+const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduct }) => {
 
     // States
     const [uploadCategory, SetUploadCategory] = useState('');
@@ -72,6 +73,7 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
 
         let data = {
             "Email" : getAuthenticatedUser(), 
+            "Index" : localStorage.getItem('productIndex'), //try
             "UploadedCategory" : uploadCategory,
             "UploadedText" : uploadText,
             "UploadedImg" : responseUrlImgBB.data.display_url,
@@ -81,30 +83,54 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
 
         if(getAuthenticatedUser()) {
 
-            const response = await uploadProduct(data)
-            console.log(response)
+            if(isUpdateProduct) {
+                const edit_response = await editProduct(data)
+                console.log(edit_response, edit_response.res)
+                
+                if(edit_response && edit_response.res===true) {
+                    
+                    window.location.href = '/marketplace/myproducts';
+                    localStorage.removeItem('productIndex')
+
+                    // isUpdateProduct===false;
+                }
+            }
+            else {
+                const response = await uploadProduct(data)
+                console.log(response)
+
+                setExtendUploadPoduct(false);
+            }
+
 
             setUploadImg(false); // Deletes the image from input
 
             setShowLoading(false); // Hide loading animation
 
-            setExtendUploadPoduct(false);
         }
 
     }
 
+    const closeEdit = () => {
+        localStorage.removeItem('productIndex')
+        setIsEditProduct(false)
+    }
 
     return (
         <div className='productupload-wrapper'>
-
-            <button className='productupload-exit-icon' onClick={() => {setExtendUploadPoduct(false)}}> <img src={exitIcon} /> </button>
+            
+            {isUpdateProduct ? (
+                <button className='productupload-exit-icon' onClick={closeEdit}> <img src={exitIcon} /> </button>
+            ) : (
+                <button className='productupload-exit-icon' onClick={() => {setExtendUploadPoduct(false)}}> <img src={exitIcon} /> </button>
+            )}
 
             <form className='productupload-sub-wrapper' onSubmit={ uploadProductToFacebook }>
                 <div>
                     <Select
                         color="primary"
                         disabled={false}
-                        placeholder="תבחר קטגורייה מתאימה"
+                        placeholder="בחר קטגורייה מתאימה"
                         variant="outlined"
                     >
                         <Option value="vehicles" onClick={(e) => SetUploadCategory('vehicles')}>כלי רכב</Option>
@@ -118,23 +144,46 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
                 <div>
                     <input type='text'className='productupload-input-text' onChange={(e) => setUploadText(e.target.value)} placeholder='כמה מילים על המוצר...' required/>
                 </div>
-
+                
                 <div className='productupload-image-wrapper'>
-                    <span>הוסף תמונה להמחשה:</span>
-
-                    <div className='productupload-image-sub-wrapper'>
-                        <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
+                    {isUpdateProduct ? (
+                        <>
+                            <span>שנה תמונה :</span>
                         
-                        {!uploadImg ? (
-                            <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
-                        ) : (
-                            <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
-                        )}
+                            <div className='productupload-image-sub-wrapper'>
+                            <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
+                            
 
-                        {uploadImg  && (
-                            <img src={URL.createObjectURL(uploadImg)} className='postupload-ed-image'></img>
-                        )}
-                    </div>
+                            <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
+
+
+                            {uploadImg  && (
+                                <img src={URL.createObjectURL(uploadImg)} className='postupload-ed-image'></img>
+                            )}
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <span>הוסף תמונה להמחשה:</span>
+
+                            <div className='productupload-image-sub-wrapper'>
+                                <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
+                                
+                                {!uploadImg ? (
+                                    <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
+                                ) : (
+                                    <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
+                                )}
+        
+                                {uploadImg  && (
+                                    <img src={URL.createObjectURL(uploadImg)} className='postupload-ed-image'></img>
+                                )}
+                            </div>
+                        </>
+                    )}
+
+
+
                 </div>
 
                 <div>
@@ -149,7 +198,14 @@ const ProductUpload = ({ setExtendUploadPoduct }) => {
 
                 <div className='postupload-post-wrapper'>
                     {!showLoading ? (
-                        <button type='submit' className='login-form-button postupload-post-button'>פרסם</button>
+                        <>
+                            {isUpdateProduct ? (
+                                <button type='submit' className='login-form-button postupload-post-button'>שמור שינויים</button>
+
+                            ) : (
+                                <button type='submit' className='login-form-button postupload-post-button'>פרסם</button>
+                            )}
+                        </>
                     ) : (
                         <Box type='submit' className='postupload-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
                     )}

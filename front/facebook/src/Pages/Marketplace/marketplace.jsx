@@ -34,6 +34,7 @@ import { getAuthenticatedUser } from '../../Services/authService';
 
 // Components
 import ProductUpload from '../../Components/ProductUpload/productUpload';
+import DeleteCheck from '../../Components/DeleteCheck/deletecheck'
 
 const Marketplace = () => {
 
@@ -44,9 +45,13 @@ const Marketplace = () => {
     const [marketSpecificProduct, setMarketSpecificProduct] = useState([]); // State for specific user products
     const [marketProducts, setMarketProducts] = useState([]); // State for Allproducts
     const [extendUploadProduct, setExtendUploadPoduct] = useState(false);
+    const [extendDeleteCheck, setExtendDeleteCheck] = useState(false);
     const [isOption, setIsOption] = useState(false); // state for options on a product
     const [isOptionExit, setIsOptionExit] = useState(false); // state for options on a product
     const [currentOption, setCurrentOption] = useState();
+    const [isEditProduct, setIsEditProduct] = useState(false); // Raises edit profile option
+
+
 
     // Navigateor
     const navigate = useNavigate();
@@ -68,7 +73,7 @@ const Marketplace = () => {
     const navigateToEverythingCategory = (e) => {
         e.preventDefault(); 
         
-        window.location.href = '/marketplace';
+        navigate('/marketplace');
     }
 
 
@@ -117,6 +122,16 @@ const Marketplace = () => {
         setIsOption(!isOption);
         setIsOptionExit(!isOptionExit);
         setCurrentOption(index);
+    }
+
+    const extendDeleteChecker = (e, index) => {
+        localStorage.setItem('productIndex', index);
+        setExtendDeleteCheck(!extendDeleteCheck)
+    }
+
+    const toProductUpload = (index) => {
+        localStorage.setItem('productIndex', index);
+        setIsEditProduct(true)
     }
 
     // Formats date from month/day/year to day/month/year
@@ -241,7 +256,6 @@ const Marketplace = () => {
                 {marketProducts && marketProducts.flat()
                 .filter((item) => {
                     const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
-                    console.log(product)
                     return product.Category === categoryTitle;
                 })
                 .map((productString, index) => { // flatten the array of arrays into a single array
@@ -298,13 +312,13 @@ const Marketplace = () => {
                                                 <Button>
                                                 <Tooltip title="Delete">
                                                     <IconButton>
-                                                        <DeleteIcon />
+                                                        <DeleteIcon  onClick={(e) => {extendDeleteChecker(e, index)}} />
                                                     </IconButton>
                                                 </Tooltip>
                                                 </Button>
                                                 <Button>
                                                 <Tooltip title="Edit">
-                                                    <Button><AiOutlineEdit /></Button>
+                                                    <Button><AiOutlineEdit onClick={() => {toProductUpload(index)}} /></Button>
                                                 </Tooltip>
                                                 </Button>
                                             </ButtonGroup>
@@ -340,7 +354,20 @@ const Marketplace = () => {
                 
                 {extendUploadProduct && (
                     <div className='marketplace-left-productupload-wrapper'>
-                        <ProductUpload setExtendUploadPoduct={setExtendUploadPoduct}/>
+                        <ProductUpload setExtendUploadPoduct={setExtendUploadPoduct} />
+                    </div>
+                )}
+
+                {isEditProduct && (
+                    <div className='marketplace-left-productupload-wrapper'>
+                        <ProductUpload isUpdateProduct={isEditProduct} setIsEditProduct={setIsEditProduct} />
+                    </div>
+                )}
+
+
+                {extendDeleteCheck && (
+                    <div className='marketplace-left-productupload-wrapper'>
+                        <DeleteCheck setExtendDeleteCheck={setExtendDeleteCheck} />
                     </div>
                 )}
             </div>
