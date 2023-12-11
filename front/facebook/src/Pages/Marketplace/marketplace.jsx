@@ -50,7 +50,7 @@ const Marketplace = () => {
     const [isOptionExit, setIsOptionExit] = useState(false); // state for options on a product
     const [currentOption, setCurrentOption] = useState();
     const [isEditProduct, setIsEditProduct] = useState(false); // Raises edit profile option
-
+    const [reGetData, setReGetData] = useState(false);
 
 
     // Navigateor
@@ -112,7 +112,7 @@ const Marketplace = () => {
     
         MarketProducts();
     
-    }, [])
+    }, [reGetData])
 
     const extendUploader = () => {
         setExtendUploadPoduct(!extendUploadProduct)
@@ -124,13 +124,11 @@ const Marketplace = () => {
         setCurrentOption(index);
     }
 
-    const extendDeleteChecker = (e, index) => {
-        localStorage.setItem('productIndex', index);
+    const extendDeleteChecker = () => {
         setExtendDeleteCheck(!extendDeleteCheck)
     }
 
-    const toProductUpload = (index) => {
-        localStorage.setItem('productIndex', index);
+    const toProductUpload = () => {
         setIsEditProduct(true)
     }
 
@@ -360,14 +358,13 @@ const Marketplace = () => {
 
                 {isEditProduct && (
                     <div className='marketplace-left-productupload-wrapper'>
-                        <ProductUpload isUpdateProduct={isEditProduct} setIsEditProduct={setIsEditProduct} />
+                        <ProductUpload isUpdateProduct={isEditProduct} setIsEditProduct={setIsEditProduct} updatePage={setReGetData} updatePageCurrentState={reGetData} selectedOption={currentOption}/>
                     </div>
                 )}
 
-
                 {extendDeleteCheck && (
                     <div className='marketplace-left-productupload-wrapper'>
-                        <DeleteCheck setExtendDeleteCheck={setExtendDeleteCheck} />
+                        <DeleteCheck setExtendDeleteCheck={setExtendDeleteCheck} selectedOption={currentOption}/>
                     </div>
                 )}
             </div>

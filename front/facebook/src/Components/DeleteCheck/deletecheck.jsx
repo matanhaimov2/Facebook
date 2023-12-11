@@ -13,28 +13,25 @@ import { deleteProductRequest } from '../../Services/marketplaceService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 
-const DeleteCheck = ({ setExtendDeleteCheck }) => {
+const DeleteCheck = ({ setExtendDeleteCheck, selectedOption }) => {
 
     const deleteProduct = async () => {
         let data;
     
         data = {
             "Email" : getAuthenticatedUser(),
-            "Index" : localStorage.getItem('productIndex')
+            "Index" : selectedOption 
         }
     
-        console.log(data)
-    
-        const delete_response = await deleteProductRequest(data) 
+        const delete_response = await deleteProductRequest(data);
+         
         if(delete_response && delete_response.res===true) {
     
             window.location.href = '/marketplace/myproducts';
-            localStorage.removeItem('productIndex')
         }
     }
 
     const dontDeleteProduct = () => {
-        localStorage.removeItem('productIndex')
         setExtendDeleteCheck(false)
     
     }

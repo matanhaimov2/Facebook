@@ -25,7 +25,7 @@ import { getAuthenticatedUser } from '../../Services/authService';
 
 // Components
 
-const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduct }) => {
+const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduct, updatePage, updatePageCurrentState, selectedOption }) => {
 
     // States
     const [uploadCategory, SetUploadCategory] = useState('');
@@ -73,7 +73,7 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
 
         let data = {
             "Email" : getAuthenticatedUser(), 
-            "Index" : localStorage.getItem('productIndex'), //try
+            "Index" : selectedOption,
             "UploadedCategory" : uploadCategory,
             "UploadedText" : uploadText,
             "UploadedImg" : responseUrlImgBB.data.display_url,
@@ -85,20 +85,20 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
 
             if(isUpdateProduct) {
                 const edit_response = await editProduct(data)
-                console.log(edit_response, edit_response.res)
                 
                 if(edit_response && edit_response.res===true) {
-                    
-                    window.location.href = '/marketplace/myproducts';
-                    localStorage.removeItem('productIndex')
 
-                    // isUpdateProduct===false;
+                    // Turn off the form
+                    setIsEditProduct(false);
+                    
+                    // Update data
+                    updatePage(!updatePageCurrentState);
+                    
                 }
             }
             else {
                 const response = await uploadProduct(data)
-                console.log(response)
-
+       
                 setExtendUploadPoduct(false);
             }
 
@@ -112,7 +112,6 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
     }
 
     const closeEdit = () => {
-        localStorage.removeItem('productIndex')
         setIsEditProduct(false)
     }
 
@@ -154,7 +153,7 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                             <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
                             
 
-                            <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
+                            <button type='button' className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
 
 
                             {uploadImg  && (
@@ -170,9 +169,9 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                                 <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
                                 
                                 {!uploadImg ? (
-                                    <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
+                                    <button type='button' className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
                                 ) : (
-                                    <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
+                                    <button type='button' className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
                                 )}
         
                                 {uploadImg  && (

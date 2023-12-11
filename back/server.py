@@ -603,21 +603,23 @@ def editProduct():
         'date': str(datetime.now())
     }
 
+    # Convert Python dictionary to a JSON string
+    product_json = json.dumps(product)
 
+    # Adjusted SQL query with variables directly in the string
     edit_query = f"""
         UPDATE marketplace
         SET products = JSON_REPLACE(
             products,
             CONCAT('$[{index}]'),
-            CAST('{str(product)}' AS CHAR CHARACTER SET utf8mb4)
+            CAST('{product_json}' AS CHAR CHARACTER SET utf8mb4)
         )
         WHERE user_email = '{email}'
     """
+    print(edit_query)
+    
+    response = handleUsers(edit_query)
 
-    response =handleUsers(edit_query)
-
-    print(edit_query,'here1111111111111111')
-    print(response, 'here22222222222222222')
 
     return jsonify({'res': True})
 

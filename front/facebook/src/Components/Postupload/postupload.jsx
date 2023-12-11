@@ -100,7 +100,7 @@ function PostUpload({ profileEmail }) {
         <div>
 
             {extendUploadPost ? (
-                <div className='postupload-wrapper'>
+                <form className='postupload-wrapper'>
                     <div className='postupload-input-wrapper'>
                         <input className='postupload-input' onChange={(e) => setUploadText(e.target.value)} placeholder=' ?מה באלך לשתף'></input>
                     </div>
@@ -110,9 +110,9 @@ function PostUpload({ profileEmail }) {
                                 <input type="file" id="imgPostUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
                                 
                                 {!uploadImg ? (
-                                    <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
+                                    <button type='button' className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
                                 ) : (
-                                    <button className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
+                                    <button type='button' className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
                                 )}
 
                                 {uploadImg  && (
@@ -138,13 +138,13 @@ function PostUpload({ profileEmail }) {
                             <Box type='submit' className='postupload-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
                         )}
 
-                        <button className='postupload-arrow-button-wrapper' onClick={extendUploader}> <BsBoxArrowInUp />  </button>
+                        <button type='button' className='postupload-arrow-button-wrapper' onClick={extendUploader}> <BsBoxArrowInUp />  </button>
                     </div>
-                </div>
+                </form>
             ) : (
                 <div className='postupload-upload-button-wrapper'>
                     {!profileEmail && (
-                        <button onClick={extendUploader} className='postupload-upload-button'>העלה פוסט</button>
+                        <button type='button' onClick={extendUploader} className='postupload-upload-button'>העלה פוסט</button>
                     )}
                     
                     <DisplayPosts profileEmail={profileEmail} />

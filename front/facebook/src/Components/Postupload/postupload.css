@@ -28,7 +28,7 @@
     margin: auto;
     border-radius: 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     margin-top: 5%;
     gap: 15px;
 }
