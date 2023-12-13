@@ -314,9 +314,9 @@ const Marketplace = () => {
                                                     </IconButton>
                                                 </Tooltip>
                                                 </Button>
-                                                <Button>
+                                                <Button onClick={() => {toProductUpload(index)}}>
                                                 <Tooltip title="Edit">
-                                                    <Button><AiOutlineEdit onClick={() => {toProductUpload(index)}} /></Button>
+                                                    <Button><AiOutlineEdit /></Button>
                                                 </Tooltip>
                                                 </Button>
                                             </ButtonGroup>

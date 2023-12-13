@@ -7,9 +7,10 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 15%;
+    height: fit-content;
     color: black;
     direction: ltr;
+    padding: 1%;
 }
 
 .deletecheck-sub-wrapper {
@@ -25,6 +26,7 @@
     width: 95%;
     margin: auto;
     gap: 5px;
+    padding: 7% 0%;
 }
 
 .deletecheck-yes-button {

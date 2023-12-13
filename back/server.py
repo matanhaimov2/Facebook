@@ -803,31 +803,3 @@ if __name__ == "__main__":
 # 2. format date problem ------------------------------------------------- VVV
 # 3. figure out a way to import every product to a single page ----------- VVV
 # 4. cities api ----------------------------------------------------------
-
-
-
-
-# EDIT PROBLEM : 
-
-    # should work:
-
-    # update_query = f"""
-    #     UPDATE marketplace
-    #     SET products = JSON_REPLACE(
-    #         products,
-    #         CONCAT('$[{index}]'),
-    #         CAST('{str(product)}' AS CHAR CHARACTER SET utf8mb4)
-    #     )
-    #     WHERE user_email = '{email}'
-    # """
-
-
-    # works on the workbench :
-
-    # UPDATE marketplace
-    # SET products = JSON_REPLACE(
-    #     products,
-    #     '$[2]',
-    #     CAST('{"Category": "Updated Category", "Text": "Updated Text", "Image": "Updated Image URL", "Price": "Updated Price", "City": "Updated City"}' AS CHAR CHARACTER SET utf8mb4)
-    # )
-    # WHERE user_email = 'yazenhamoud@gmail.com';
