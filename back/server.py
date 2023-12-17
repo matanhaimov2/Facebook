@@ -502,6 +502,131 @@ def getProfilePost(): # Get post/s from db
     
     return jsonify({'res': False, 'data' : []})
 
+@app.route("/addFriend", methods=['GET','POST'])
+def addFriend():
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str["Email"]
+    friend_email = json_str["FriendEmail"]
+
+
+    query = '''SELECT friends FROM handlefriends WHERE user_email = '{}' '''.format(email) 
+ 
+    # Get friends where email from db
+    friends = handleOneResult(query)
+
+    friends = friends[0]
+
+    if (friends == None): # If db-friends has nothing
+
+        query = f'''UPDATE handlefriends
+            SET friends = JSON_ARRAY(
+                '{json.dumps(friend_email)}'
+            )
+            WHERE user_email = '{email}';
+        '''
+
+        handleUsers(query)      
+
+    else: # If db-friends contains friends
+
+        friends = json.loads(friends)
+
+        # Convert friends to array
+        allfriends = friends
+
+        # Push new friend
+        allfriends.append(json.dumps(friend_email))
+
+        # Convert the array back to fit the sql query
+        allfriends_str = ',\n'.join(f"'{friendsFromAllfriends}'" for friendsFromAllfriends in allfriends)
+        
+        query = f'''UPDATE handlefriends
+            SET friends = JSON_ARRAY(
+                {allfriends_str}
+            )
+            WHERE user_email = '{email}';
+        '''
+
+        handleUsers(query)
+    
+    
+    return jsonify({'res': True})
+
+@app.route("/checkFriend", methods=['GET','POST'])
+def checkFriend():
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str["UserEmail"]
+    friend_email_to_check  = json_str["Email"]
+
+    query = '''SELECT friends FROM handlefriends WHERE user_email = '{}' '''.format(email) 
+    friends = handleOneResult(query)
+
+    friends = friends[0]
+
+    if friends:
+        friends_list = json.loads(friends)
+
+        # Check if the friend_email_to_check is in the list with quotes
+        if f'"{friend_email_to_check}"' in friends_list:
+            print('Success! Friend found')
+
+        else:
+            print('Friend not found in the list.')
+            return jsonify({'res': False, 'Note': 'Users Arent Friends'})
+
+    else:
+        friends_length = 0
+        return jsonify({'res': False, 'Note': 'No Friends For The User'})
+
+
+    return jsonify({'res': True})
+
+@app.route("/hasFriendsAtAll", methods=['GET','POST'])
+def hasFriendsAtAll():
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # get the all friends of the user and send to front
+
+    # Set values
+    email = json_str.get("Email")
+    friend_email_to_check = json_str.get("FriendsEmail")
+
+    if friend_email_to_check is not None:
+        query = '''SELECT friends FROM handlefriends WHERE user_email = '{}' '''.format(friend_email_to_check)
+    else:
+        query = '''SELECT friends FROM handlefriends WHERE user_email = '{}' '''.format(email)
+
+    friends = handleOneResult(query)
+
+    friends = friends[0]
+
+    friends_length = 0 
+
+    if friends:
+        friends_list = json.loads(friends)
+        friends_length = len(friends_list)
+        return jsonify({'res': True, 'friendsLengthNumber': friends_length})
+
+    else:
+        friends_length = 0
+        return jsonify({'res': True, 'friendsLengthNumber': friends_length, 'Note': 'No Friends For The User'})
+
+
+    return jsonify({'res': True})
+
 
 # Marketplace
 @app.route("/uploadProduct", methods=['GET', 'POST'])
@@ -529,16 +654,12 @@ def uploadProduct(): # Upload product/s to db
         'date': str(datetime.now())
     }
 
-    print(product)
-
     query = '''SELECT products FROM marketplace WHERE user_email = '{}' '''.format(email) 
  
     # Get products where email from db
     products = handleOneResult(query)
 
     products = products[0]
-
-    print(products)
 
     if (products == None): # If db-products has no image in it
 
@@ -778,8 +899,8 @@ if __name__ == "__main__":
 
 
 # Complex Tasks:
-# 1. Marketplace ------------------------------------------------------ On Progress...
-# 2. 
+# 1. Marketplace ------------------------------------------------------ In Progress...
+# 2. Friends ---------------------------------------------------------- In Progress...
 
 # Can't Tell Tasks:
 # 1. Every new post uploaded by user will appear up so thats the first post in the column
@@ -803,3 +924,11 @@ if __name__ == "__main__":
 # 2. format date problem ------------------------------------------------- VVV
 # 3. figure out a way to import every product to a single page ----------- VVV
 # 4. cities api ----------------------------------------------------------
+
+
+
+# Friends Related Tasks:
+# 1. Display number of friends ----------------------------------------------------- VVV
+# 2. When clicking on number of friends, list of all friends will appear -----------
+# 3. Option to delete a friend -----------------------------------------------------
+# 4. When add friend, user will get notification i wants to accept or no ----------- 

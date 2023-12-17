@@ -104,6 +104,42 @@ const getProfilePost = async (data) => {
     }
 }
 
+const addFriend = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/addFriend", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const checkFriend = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/checkFriend", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const hasFriendsAtAll = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/hasFriendsAtAll", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 
 export {
     setprofile,
@@ -113,5 +149,8 @@ export {
     getProfileImage,
     deleteProfileImage,
     uploadPost,
-    getProfilePost
+    getProfilePost,
+    addFriend,
+    checkFriend,
+    hasFriendsAtAll
 }

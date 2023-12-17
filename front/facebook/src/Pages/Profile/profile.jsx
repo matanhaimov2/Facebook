@@ -17,11 +17,11 @@ import { LiaUserCircleSolid } from 'react-icons/lia'
 import { MdOutlineModeEditOutline } from 'react-icons/md'
 import { MdDeleteForever } from 'react-icons/md'
 
-//CSS
+// CSS
 import './profile.css';
 
 // Services
-import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage} from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, addFriend, checkFriend, hasFriendsAtAll} from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService'
 
 // Components
@@ -34,6 +34,8 @@ function Profile() {
     
     // States
     const [profileInfo, setProfileinfo] = useState({});
+    const [friendsNumber, setIsFriendsNumber] = useState();
+
     
     const [showSkeleton, setShowSkeleton] = useState(false);
     const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate
@@ -41,6 +43,8 @@ function Profile() {
     const [isEditProfile, setIsEditProfile] = useState(false); // Raises edit profile option
     const [imgProfile, setImgProfile] = useState(null); // 
     const [imgProfileTrigger, setImgProfileTrigger] = useState(false); // Trigger to pull image profile
+    const [isFriends, setIsFriends] = useState(false);
+
    
 
     
@@ -80,8 +84,22 @@ function Profile() {
 
             if(profileEmail) {
                 data = {
-                    "Email" : profileEmail
+                    "Email" : profileEmail,
+                    "UserEmail": getAuthenticatedUser()
                 }
+
+                const isFriendCheck = await checkFriend(data);
+                console.log(isFriendCheck)
+                if (isFriendCheck && isFriendCheck.res) {
+                    setIsFriends(true)
+                    // ask shlomi why use effect isFriends doesnt work. i need it for the page to refresh
+                    
+                }
+                else {
+                    setIsFriends(false)
+                    // users arent friends
+                }
+                
             }
             else {
                 data = {
@@ -89,7 +107,23 @@ function Profile() {
                 }
             }
 
+
+
             if(getAuthenticatedUser()) {
+
+                // gets the number of friends a user have
+                let friendsData = {
+                    "Email" : getAuthenticatedUser(),
+                    "FriendsEmail" : profileEmail
+                }
+                const numberOfFriendsResponse = await hasFriendsAtAll(friendsData)
+                if (numberOfFriendsResponse && numberOfFriendsResponse.res===true) {
+                    setIsFriendsNumber(numberOfFriendsResponse.friendsLengthNumber)
+                }
+                else {
+                    setIsFriendsNumber(numberOfFriendsResponse.friendsLengthNumber)
+                }
+
                 
                 const response = await profile(data)
 
@@ -112,7 +146,7 @@ function Profile() {
     
         profilePage();
     
-    }, [profileInfo.birthday, profileInfo.relationshipstatus])
+    }, [profileInfo.birthday, profileInfo.relationshipstatus, isFriends])
 
 
     useEffect(() => {
@@ -194,6 +228,20 @@ function Profile() {
 
     }
 
+    const friendRequest = async () => {
+        let data = {
+            "Email" : getAuthenticatedUser(), 
+            "FriendEmail": profileEmail
+        }
+
+        const friendsResponse = await addFriend(data);
+        if (friendsResponse && friendsResponse.res===true) {
+            console.log('niceeeee')
+        }
+
+    }
+
+
 
     return (
         <div className='profile-wrapper'>
@@ -251,14 +299,28 @@ function Profile() {
                         </div>
 
                         <div className='sub-sub-profile-basics'>
-                            <span>חברים </span>
+                            <span>חברים </span>  {/* number of friends */}
+                            <button className='profile-friendsnumber-button'> {friendsNumber} </button>
                         </div>
                     </div>
                     
-                    {!profileEmail && (
+                    {!profileEmail ? (
                         <div className='sub-profile-basics'>
                             <button onClick={() => {setIsEditProfile(true)}} className='sub-profile-edit-button'> עריכת פרופיל </button>
                         </div>
+                    ) : (
+                        <>
+                        { !isFriends ? (
+                            <div className='sub-profile-basics'>
+                                <button onClick={friendRequest} className='sub-profile-friends-button'> הוספת חבר</button>
+                            </div> 
+                        ) : (
+                            <div className='sub-profile-basics'>
+                                <button className='sub-profile-already-friends-button'>חברים</button> {/* onclick needs to open option to unfriend */}
+                            </div>
+                        )}
+
+                        </>
                     )}
             </div>
 

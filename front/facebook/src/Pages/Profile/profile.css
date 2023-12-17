@@ -56,6 +56,36 @@
     border-radius: 10%;
 }
 
+.sub-profile-friends-button {
+    padding: 6% 12% 6% 12%;
+    border-radius: 5px;
+    border: none;
+    background: #1877f2;
+    color: white;
+    font-weight: 700;
+    font-size: 100%;
+    cursor: pointer;
+}
+
+.sub-profile-already-friends-button {
+    background-color: #2e2e2e;
+    text-decoration: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 6% 12% 6% 12%;
+    border-radius: 10%;
+}
+
+.profile-friendsnumber-button {
+    text-decoration: underline;
+    border: none;
+    cursor: pointer;
+    background: none;
+    color: #069;
+    font-size: 110%;
+}
+
 .profile-fullname-text {
     display: flex;
     flex-direction: row;
