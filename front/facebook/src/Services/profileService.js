@@ -104,10 +104,24 @@ const getProfilePost = async (data) => {
     }
 }
 
-const addFriend = async (data) => {
+
+
+const acceptFriend = async (data) => {
     try {
         // Get post from back from db
-        const response = await axios.post(SERVER_URL + "/addFriend", data)
+        const response = await axios.post(SERVER_URL + "/acceptFriend", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const isThereNotification = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/isThereNotification", data)
         
         return response.data
     }
@@ -127,6 +141,33 @@ const checkFriend = async (data) => {
         console.log(err);
     }
 }
+
+const startFriendRequest = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/startFriendRequest", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const newNotifications = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/newNotifications", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+
+
 
 const hasFriendsAtAll = async (data) => {
     try {
@@ -150,7 +191,10 @@ export {
     deleteProfileImage,
     uploadPost,
     getProfilePost,
-    addFriend,
+    acceptFriend,
     checkFriend,
-    hasFriendsAtAll
+    hasFriendsAtAll, 
+    startFriendRequest,
+    isThereNotification,
+    newNotifications
 }

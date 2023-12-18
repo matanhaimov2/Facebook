@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: row;
     padding-left: 1%;
+    position: relative;
 
 }
 .topnav-sub-left-orgenaize {
@@ -48,9 +49,101 @@
     display: flex;
     text-align: center;
     justify-content: center;
+
+}
+
+.topnav-menu-alert {
+    position: absolute;
+    bottom: -4px;
+    left: 28px;
+    color: red;
+}
+
+.topnav-notification-menu {
+    width: 60%;
+    position: absolute;
+    height: fit-content;
+    background-color: #222223;
+    top: 123%;
+    right: 18%;
+    display: flex;
+    flex-direction: column;
+    padding: 4%;
+    z-index: 2;
+    border-radius: 10px;
+    gap: 5px;
+    box-shadow: -1px 3px 6px #ffffff33;
+    overflow-y: auto;
+    max-height: 16rem;
+}
+
+.topnav-sub-notification-menu {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 1%;
+    direction: rtl;
+}
+
+.topnav-sub-notification-box-title {
+    font-size: 80%;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+.topnav-sub-notification-menu-orgnize {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    gap: 7px;
+}
+
+.topnav-notification-sub-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    margin: auto;
+    gap: 5px;
+}
+
+.topnav-notification-yes-button {
+    width: 50%;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-radius: 10px;
+    background: #1877f2;
+    color: white;
+    font-size: 110%;
+}
+.topnav-notification-yes-button:hover {
+    background-color: #368bfa;
+    transition: all 500ms ease;
+}
+
+.topnav-notification-no-button {
+    width: 50%;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    background: none;
+    color: white;
+    border: 1px solid black;
+}
+.topnav-notification-no-button:hover {
+    background-color: #4a4e50;
+    transition: all 500ms ease;
 }
 
 .topnav-round-wrapper {
+    position: relative;
     width: 40px;
     height: 40px;
     border-radius: 50%;

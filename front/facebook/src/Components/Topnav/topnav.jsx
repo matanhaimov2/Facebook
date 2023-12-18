@@ -13,13 +13,15 @@ import logo5 from '../../Assets/Images/groups-icon.png';
 import { LiaUserCircleSolid } from 'react-icons/lia'
 import { CgMenuGridO } from 'react-icons/cg'
 import { IoNotificationsOutline } from 'react-icons/io5'
+import { FaRegCircle } from "react-icons/fa";
+
 
 //CSS
 import './topnav.css';
 
 // Services
 import { handleSignOut, getAuthenticatedUser, search } from '../../Services/authService';
-import { getProfileImage } from '../../Services/profileService';
+import { getProfileImage, isThereNotification, newNotifications, acceptFriend } from '../../Services/profileService';
 
 
 const TopNav = () => {
@@ -28,6 +30,11 @@ const TopNav = () => {
   const [imgProfile, setImgProfile] = useState(null); // Raises edit profile option
   const [isSearchBox, setIsSearchBox] = useState(false); 
   const [searchedProfiles, setSearchedProfiles] = useState([]); 
+  const [notficationAlert, setNotificationAlert] = useState(false); 
+  const [openNotifications, setOpenNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]); 
+
+
 
   // Refs
   const searchRef = useRef(null);
@@ -107,6 +114,54 @@ const TopNav = () => {
 
   }
 
+  useEffect(() => {   
+    const handleNotification = async () => {
+
+      let data = {
+        'Email' : getAuthenticatedUser()
+      }
+
+      // is there any notification for the user?
+      const response_notification = await isThereNotification(data);
+      
+      // get all notifications of the user
+      if (response_notification && response_notification.res===true) {
+        setNotificationAlert(true)
+        
+        const data_notifications = await newNotifications(data)
+        if (data_notifications && data_notifications.res===true) {
+          setNotifications(data_notifications.data);
+          console.log(notifications)
+
+        }
+
+        // theres a notification
+        console.log('theres a notification')
+
+      }
+      else {
+        // no notifications for the user
+        console.log('no notifications for the user')
+      }
+    }
+
+    handleNotification();
+  }, [])
+
+  const acceptFriendship = async (e, friendEmail, index) => { // when accepting friend requsest
+    let data = {
+        "Email" : getAuthenticatedUser(), 
+        "FriendEmail": friendEmail,
+        "Index": index
+    }
+
+    const friendsResponse = await acceptFriend(data);
+    if (friendsResponse && friendsResponse.res===true) {
+        setNotificationAlert(false)
+        console.log('niceeeee')
+    }
+
+  }
   
   return (
     <div className='topnav-wrapper'>
@@ -123,7 +178,11 @@ const TopNav = () => {
           )}
 
           <div className='topnav-sub-left-wrapper topnav-round-wrapper'>
-            <button className='topnav-button-circle topnav-pointer'> <IoNotificationsOutline className='topnav-menu-icon' /> </button>
+            {!notficationAlert ? (
+              <button className='topnav-button-circle topnav-pointer'> <IoNotificationsOutline className='topnav-menu-icon' /> </button>
+            ) : (
+              <button className='topnav-button-circle topnav-pointer' onClick={() => {setOpenNotifications(!openNotifications)}}> <IoNotificationsOutline className='topnav-menu-icon' /> <FaRegCircle className='topnav-menu-alert'/> </button>
+            )}
           </div>
 
           <div className='topnav-sub-left-wrapper topnav-round-wrapper'>
@@ -133,6 +192,38 @@ const TopNav = () => {
           <div className='topnav-sub-left-wrapper'>
             <button className='topnav-button-circle topnav-pointer topnav-account-button' onClick={ handleSignout }> התנתק </button> {/*meanwhile its here untill asking shlomi if Account pop is component */}
           </div>
+
+          {openNotifications && (
+            <div className='topnav-notification-menu'>
+                {notifications && notifications.map((notifications, index) => (
+                  <div key={index} className='topnav-sub-notification-menu' >
+
+                    <div className='topnav-search-box-img-wrapper'>
+
+                      {notifications.UserImage ? (
+                        <img className='topnav-search-box-img' src={ notifications.UserImage }></img>
+
+                      ) : (
+                        <LiaUserCircleSolid className='topnav-search-box-none-img'/>
+                      )}
+                    </div>
+                    <div className='topnav-sub-notification-menu-orgnize'>
+                      <span className='topnav-sub-notification-box-title'> { notifications.Username }</span>
+
+                      <span> רוצה להוסיף אותך לחברים</span>
+
+                    </div>
+
+                    <div className='topnav-notification-sub-wrapper'>
+                        <button className='topnav-notification-yes-button' onClick={(e) => {acceptFriendship(e, notifications.Email, index)}}> כן </button>
+
+                          <button className='topnav-notification-no-button' > לא </button>
+                      </div>
+                  </div>
+
+                ))}
+            </div>
+          )}
         </div>
       </div>
 

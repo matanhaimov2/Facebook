@@ -310,7 +310,7 @@ const Marketplace = () => {
                                                 <Button>
                                                 <Tooltip title="Delete">
                                                     <IconButton>
-                                                        <DeleteIcon  onClick={(e) => {extendDeleteChecker(e, index)}} />
+                                                        <DeleteIcon onClick={(e) => {extendDeleteChecker(e, index)}} />
                                                     </IconButton>
                                                 </Tooltip>
                                                 </Button>

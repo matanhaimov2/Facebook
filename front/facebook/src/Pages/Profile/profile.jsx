@@ -21,7 +21,7 @@ import { MdDeleteForever } from 'react-icons/md'
 import './profile.css';
 
 // Services
-import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, addFriend, checkFriend, hasFriendsAtAll} from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, checkFriend, hasFriendsAtAll, startFriendRequest} from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService'
 
 // Components
@@ -44,6 +44,8 @@ function Profile() {
     const [imgProfile, setImgProfile] = useState(null); // 
     const [imgProfileTrigger, setImgProfileTrigger] = useState(false); // Trigger to pull image profile
     const [isFriends, setIsFriends] = useState(false);
+    const [friendPending, setFriendPending] = useState(false);
+
 
    
 
@@ -234,14 +236,13 @@ function Profile() {
             "FriendEmail": profileEmail
         }
 
-        const friendsResponse = await addFriend(data);
-        if (friendsResponse && friendsResponse.res===true) {
-            console.log('niceeeee')
+        const response = await startFriendRequest(data);
+        if (response && response.res===true) {
+            // setFriendPending(true)
+            // Sends a friend request
         }
 
     }
-
-
 
     return (
         <div className='profile-wrapper'>
@@ -313,6 +314,9 @@ function Profile() {
                         { !isFriends ? (
                             <div className='sub-profile-basics'>
                                 <button onClick={friendRequest} className='sub-profile-friends-button'> הוספת חבר</button>
+                                {/* {friendPending && (
+                                    <button className='sub-profile-friends-button'>מחכה לאישור</button>
+                                )} */}
                             </div> 
                         ) : (
                             <div className='sub-profile-basics'>

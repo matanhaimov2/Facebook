@@ -502,8 +502,9 @@ def getProfilePost(): # Get post/s from db
     
     return jsonify({'res': False, 'data' : []})
 
-@app.route("/addFriend", methods=['GET','POST'])
-def addFriend():
+
+@app.route("/acceptFriend", methods=['GET','POST'])
+def acceptFriend(): # Friend acception => both added in db to each other
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -512,8 +513,10 @@ def addFriend():
     # Set values
     email = json_str["Email"]
     friend_email = json_str["FriendEmail"]
+    index = json_str['Index'] # for delete notification
 
 
+    ######### user who requested friend gets friend #########
     query = '''SELECT friends FROM handlefriends WHERE user_email = '{}' '''.format(email) 
  
     # Get friends where email from db
@@ -521,7 +524,7 @@ def addFriend():
 
     friends = friends[0]
 
-    if (friends == None): # If db-friends has nothing
+    if (friends == None): # If email-db-friends has nothing
 
         query = f'''UPDATE handlefriends
             SET friends = JSON_ARRAY(
@@ -532,7 +535,7 @@ def addFriend():
 
         handleUsers(query)      
 
-    else: # If db-friends contains friends
+    else: # If email-db-friends contains friends
 
         friends = json.loads(friends)
 
@@ -553,12 +556,187 @@ def addFriend():
         '''
 
         handleUsers(query)
-    
-    
+
+    ######### user who sent friend request gets friend #########
+    query = '''SELECT friends FROM handlefriends WHERE user_email = '{}' '''.format(friend_email) 
+ 
+    # Get friends where email from db
+    friendsTwos = handleOneResult(query)
+
+    friendsTwos = friendsTwos[0]
+
+    if (friendsTwos == None): # If email-db-friends has nothing
+
+        query = f'''UPDATE handlefriends
+            SET friends = JSON_ARRAY(
+                '{json.dumps(email)}'
+            )
+            WHERE user_email = '{friend_email}';
+        '''
+
+        handleUsers(query)      
+
+    else: # If email-db-friends contains friends
+
+        friendsTwos = json.loads(friendsTwos)
+
+        # Convert friends to array
+        allfriendsTwos = friendsTwos
+
+        # Push new friend
+        allfriendsTwos.append(json.dumps(email))
+
+        # Convert the array back to fit the sql query
+        allfriendsTwos_str = ',\n'.join(f"'{friendsTwosFromAllfriendsTwos}'" for friendsTwosFromAllfriendsTwos in allfriendsTwos)
+        
+        query = f'''UPDATE handlefriends
+            SET friends = JSON_ARRAY(
+                {allfriendsTwos_str}
+            )
+            WHERE user_email = '{friend_email}';
+        '''
+
+        handleUsers(query)
+
+    delete_notification_query = f"""
+        UPDATE profiles
+        SET notifications = CASE
+            WHEN JSON_LENGTH(notifications) > 1 THEN JSON_REMOVE(notifications, '$[{index}]')
+            ELSE NULL
+        END
+        WHERE email = '{email}';
+    """
+
+    response = handleUsers(delete_notification_query)
+
+
     return jsonify({'res': True})
 
+@app.route("/startFriendRequest", methods=['GET','POST'])
+def startFriendRequest(): # Starts friend request => info to column notifcations
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str["Email"]
+    friend_email = json_str["FriendEmail"]
+
+
+    query = f'''SELECT username, userimages FROM profiles WHERE email = '{email}' '''
+    response = handleMultipleResults(query)
+
+    username = response[0][0]
+    user_image = response[0][1]
+
+    notification = {
+        'Email': email,
+        'Username': username,
+        'UserImage': user_image,
+    }
+
+    check_query = f'''SELECT notifications FROM profiles WHERE email = '{friend_email}' '''
+ 
+    # Get notifications where email from db
+    notifications = handleOneResult(check_query)
+
+    notifications = notifications[0]
+
+    if (notifications == None): # If db-notifications has no notification in it
+
+        insert_to_notification_query = f'''UPDATE profiles
+            SET notifications = JSON_ARRAY(
+                '{json.dumps(notification)}'
+            )
+            WHERE email = '{friend_email}';
+        '''
+
+        handleUsers(insert_to_notification_query)      
+    else: # If db-notifications contains notifications
+
+        notifications = json.loads(notifications)
+
+        # Convert notifications to array
+        allnotifications = notifications
+
+        # Push new notification
+        allnotifications.append(json.dumps(notification))
+
+        # Convert the array back to fit the sql query
+        allnotifications_str = ',\n'.join(f"'{notificationFromAllnotifications}'" for notificationFromAllnotifications in allnotifications)
+        
+        insert_query = f'''UPDATE profiles
+            SET notifications = JSON_ARRAY(
+                {allnotifications_str}
+            )
+            WHERE email = '{friend_email}';
+        '''
+
+        handleUsers(insert_query)
+
+    return jsonify({'res': True})
+
+@app.route("/isThereNotification", methods=['GET','POST'])
+def isThereNotification(): # Checks if user got any notifications
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str["Email"]
+
+    query = f'''SELECT notifications FROM profiles WHERE email = '{email}' '''
+    response = handleOneResult(query)
+
+    response = response[0]
+
+    if (response):
+        return jsonify({'res': True, 'Note': 'there are notifications'})
+    else:
+        return jsonify({'res': False, 'Note': 'no notifications'})
+
+@app.route("/newNotifications", methods=['GET','POST'])
+def newNotifications(): # Gets the data of a notification
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str["Email"]
+
+    query = f'''SELECT notifications FROM profiles WHERE email = '{email}' '''
+ 
+    # Get notifications where email from db
+    response = handleOneResult(query)
+    response = response[0]
+
+    if (response):
+        notifications = json.loads(response)
+
+        allnotifications = []
+
+        for notification in notifications:
+            allnotifications.append(json.loads(notification))
+
+    if(response != None):
+
+        res = {
+            'data' : allnotifications,
+            'res': True
+        }    
+
+        return jsonify(res)
+    
+    return jsonify({'res': False, 'data' : []})
+
+
+
+
 @app.route("/checkFriend", methods=['GET','POST'])
-def checkFriend():
+def checkFriend(): # Checks if user got any friends
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -592,7 +770,7 @@ def checkFriend():
     return jsonify({'res': True})
 
 @app.route("/hasFriendsAtAll", methods=['GET','POST'])
-def hasFriendsAtAll():
+def hasFriendsAtAll(): # Displays the number of friends user have
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -931,4 +1109,5 @@ if __name__ == "__main__":
 # 1. Display number of friends ----------------------------------------------------- VVV
 # 2. When clicking on number of friends, list of all friends will appear -----------
 # 3. Option to delete a friend -----------------------------------------------------
-# 4. When add friend, user will get notification i wants to accept or no ----------- 
+# 4. When add friend, user will get notification i wants to accept or no ----------- VVV
+# (red alert of notification => problem, when accepting friend it disapperes and when refersgin it gets back)
