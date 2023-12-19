@@ -33,8 +33,6 @@ const TopNav = () => {
   const [openNotifications, setOpenNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]); 
 
-
-
   // Refs
   const searchRef = useRef(null);
 
@@ -124,6 +122,7 @@ const TopNav = () => {
       // gets all notifications of the user       
       const data_notifications = await newNotifications(data)
       // is there any notification for the user?   
+      console.log(data_notifications,'knsaoioaoon');
       if (data_notifications && data_notifications.res===true) {
         setNotificationAlert(true)
         setNotifications(data_notifications.data);
@@ -141,7 +140,9 @@ const TopNav = () => {
     handleNotification();
   }, [])
 
-  const acceptFriendship = async (e, friendEmail, index) => { // when accepting friend requsest
+  const acceptFriendship = async (e, friendNotification, index) => { // when accepting friend requsest
+    const friendEmail = friendNotification.Email;
+
     let data = {
       "Email" : getAuthenticatedUser(), 
       "FriendEmail": friendEmail,
@@ -149,24 +150,60 @@ const TopNav = () => {
     }
 
     const friendsResponse = await acceptFriend(data);
+
     if (friendsResponse && friendsResponse.res===true) {
       
-      // page needs to refresh in order to update stuff correctly ===========> ask shlomi
+      // Delete him logicly
+      const acceptedEmail = friendNotification.Email;
+
+      // Edit the email and add accepted flag
+      const updatedNotification = notifications.filter((notif) => {
+        if(notif.Email!==acceptedEmail) {
+          return notif;
+        }
+        else {
+          notif.accepted = true;
+          return notif;
+        }
+      })
+
+      // Update the notifcations
+      setNotifications(updatedNotification);
+
+      // Turn off the alert if there are no notifications
+      if(updatedNotification.length===0) {
+        setNotificationAlert(false);
+      }
     }
 
   }
 
-  const ignoreFriendship = async (e, index) => { // when accepting friend requsest
+  const ignoreFriendship = async (e, index, friendNotification) => { // when accepting friend requsest
     let data = {
       "Email" : getAuthenticatedUser(),
       "Index": index
     }
 
     const ignoreFriendResponse = await ignoreFriend(data);
+
     if (ignoreFriendResponse && ignoreFriendResponse.res===true) {
       console.log('notification deleted successfully')
+  
+      // Delete him logicly
+      const deletedEmail = friendNotification.Email;
 
-      // page needs to refresh in order to update stuff correctly ===========> ask shlomi
+      // Filter out the deleted email
+      const updatedNotification = notifications.filter((notif) => {
+        if(notif.Email!==deletedEmail) {
+          return notif;
+        }
+      })
+
+      setNotifications(updatedNotification);
+
+      if(updatedNotification.length===0) {
+        setNotificationAlert(false);
+      }
     }
 
   }
@@ -204,30 +241,53 @@ const TopNav = () => {
           {openNotifications && (
             <div className='topnav-notification-menu'>
                 {notifications && notifications.map((notifications, index) => (
-                  <div key={index} className='topnav-sub-notification-menu' >
+                  <>
+                    {notifications.accepted ? (
+                      <div key={index} id={`notif-${index}`} className='topnav-sub-notification-menu' >
 
-                    <div className='topnav-search-box-img-wrapper'>
+                      <div className='topnav-search-box-img-wrapper'>
 
-                      {notifications.UserImage ? (
-                        <img className='topnav-search-box-img' src={ notifications.UserImage }></img>
+                        {notifications.UserImage ? (
+                          <img className='topnav-search-box-img' src={ notifications.UserImage }></img>
 
-                      ) : (
-                        <LiaUserCircleSolid className='topnav-search-box-none-img'/>
-                      )}
+                        ) : (
+                          <LiaUserCircleSolid className='topnav-search-box-none-img'/>
+                        )}
+                      </div>
+                      <div className='topnav-sub-notification-menu-orgnize'>
+                        <span className='topnav-sub-notification-box-title'> { notifications.Username }</span>
+
+                        <span> אישר את בקשת החברות</span>
+
+                      </div>
                     </div>
-                    <div className='topnav-sub-notification-menu-orgnize'>
-                      <span className='topnav-sub-notification-box-title'> { notifications.Username }</span>
+                    ) : (
+                      <div key={index} id={`notif-${index}`} className='topnav-sub-notification-menu' >
 
-                      <span> רוצה להוסיף אותך לחברים</span>
+                        <div className='topnav-search-box-img-wrapper'>
 
-                    </div>
+                          {notifications.UserImage ? (
+                            <img className='topnav-search-box-img' src={ notifications.UserImage }></img>
 
-                    <div className='topnav-notification-sub-wrapper'>
-                      <button className='topnav-notification-yes-button' onClick={(e) => {acceptFriendship(e, notifications.Email, index)}}> כן </button>
+                          ) : (
+                            <LiaUserCircleSolid className='topnav-search-box-none-img'/>
+                          )}
+                        </div>
+                        <div className='topnav-sub-notification-menu-orgnize'>
+                          <span className='topnav-sub-notification-box-title'> { notifications.Username }</span>
 
-                      <button className='topnav-notification-no-button' onClick={(e) => {ignoreFriendship(e, index)}}> לא </button>
-                    </div>
-                  </div>
+                          <span> רוצה להוסיף אותך לחברים</span>
+
+                        </div>
+
+                        <div className='topnav-notification-sub-wrapper'>
+                          <button className='topnav-notification-yes-button' onClick={(e)  => {acceptFriendship(e, notifications, index)}}> כן </button>
+
+                          <button className='topnav-notification-no-button' onClick={(e) => {ignoreFriendship(e, index, notifications)}}> לא </button>
+                        </div>
+                      </div>
+                    )}
+                </>   
                 ))}
 
                 {notifications.length===0 && (

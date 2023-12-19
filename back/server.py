@@ -811,8 +811,7 @@ def hasFriendsAtAll(): # Displays the number of friends user have
 
     # Displaying for profile(displayfriends) friends data
     else:
-        fetch_data_query = f"SELECT username, userimages FROM profiles WHERE email = '{email}' " # here instead of email value => emailAddress value
-
+        
         friends = handleOneResult(query)
         friends = friends[0]
 
@@ -821,6 +820,7 @@ def hasFriendsAtAll(): # Displays the number of friends user have
         if friends:
             friends_list = json.loads(friends)
             for emailAddress in friends_list:
+                fetch_data_query = f"SELECT username, userimages FROM profiles WHERE email = '{emailAddress}' " # here instead of email value => emailAddress value
                 fetched_users = handleMultipleResults(fetch_data_query)
                 print(emailAddress, fetched_users, 'please work')
         
@@ -857,6 +857,36 @@ def deleteFriendRequest(): # Deletes friendship of each other
 
     return jsonify({'res': True})
 
+
+@app.route("/isFriendPending", methods=['GET', 'POST'])
+def isFriendPending():
+    data = request.data
+
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str['Email']
+    friendEmail = json_str['friendEmail']
+    
+
+    friendsNotifications = f"SELECT notifications FROM profiles WHERE email = '{friendEmail}';"
+    response = handleOneResult(friendsNotifications)
+  
+    friends = response[0]
+    friends = json.loads(friends)
+    boole = False 
+
+    for friend in friends:
+        friend = json.loads(friend)
+        if friend['Email']==email:
+            boole = True
+
+    if boole:
+        return jsonify({'res': True, 'pending' : True})
+    else:
+        return jsonify({'res': True, 'pending' : False})
+    
 
 
 
@@ -1068,7 +1098,6 @@ def deleteProductRequest():
 
 
     return jsonify({'res': True})
-
 
 
 

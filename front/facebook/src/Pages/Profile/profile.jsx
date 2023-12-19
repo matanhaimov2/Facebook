@@ -21,7 +21,7 @@ import { MdDeleteForever } from 'react-icons/md'
 import './profile.css';
 
 // Services
-import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, checkFriend, hasFriendsAtAll, startFriendRequest, deleteFriendRequest} from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, checkFriend, hasFriendsAtAll, startFriendRequest, deleteFriendRequest, getPendingFriend} from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService'
 
 // Components
@@ -186,6 +186,28 @@ function Profile() {
         }
     }, [imgProfileTrigger])
 
+
+    useEffect(() => {
+        
+        const getIsPendingFriend = async () => {
+
+            const data = {
+                "Email" : getAuthenticatedUser(),
+                "friendEmail" : profileEmail
+            }
+        
+            const response = await getPendingFriend(data);
+          
+            if(response && response.res===true && response.pending===true) { // If the response is true, update user image
+                setFriendPending(true)
+            }
+        
+        }
+
+        if(localStorage.getItem('UserInfo') && profileEmail) {
+            getIsPendingFriend();
+        }
+    }, [])
 
     const activateUploadImage = () => {
         const imageUploader = document.getElementById('imgUpload');
