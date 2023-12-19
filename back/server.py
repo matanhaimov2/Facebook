@@ -612,6 +612,30 @@ def acceptFriend(): # Friend acception => both added in db to each other
 
     return jsonify({'res': True})
 
+@app.route("/ignoreFriend", methods=['GET','POST'])
+def ignoreFriend(): # Friend ignore => notification gets delete for the user
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str["Email"]
+    index = json_str["Index"]
+
+    delete_notification_query = f"""
+        UPDATE profiles
+        SET notifications = CASE
+            WHEN JSON_LENGTH(notifications) > 1 THEN JSON_REMOVE(notifications, '$[{index}]')
+            ELSE NULL
+        END
+        WHERE email = '{email}';
+    """
+
+    response = handleUsers(delete_notification_query)
+
+    return jsonify({'res': True})
+    
 @app.route("/startFriendRequest", methods=['GET','POST'])
 def startFriendRequest(): # Starts friend request => info to column notifcations
     data = request.data

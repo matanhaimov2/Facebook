@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import useKey from 'react-use/esm/useKey'
 
 // Icons
 import logo from '../../Assets/Images/facebook-icon.png'; 
@@ -21,7 +20,7 @@ import './topnav.css';
 
 // Services
 import { handleSignOut, getAuthenticatedUser, search } from '../../Services/authService';
-import { getProfileImage, newNotifications, acceptFriend } from '../../Services/profileService';
+import { getProfileImage, newNotifications, acceptFriend, ignoreFriend } from '../../Services/profileService';
 
 
 const TopNav = () => {
@@ -144,15 +143,30 @@ const TopNav = () => {
 
   const acceptFriendship = async (e, friendEmail, index) => { // when accepting friend requsest
     let data = {
-        "Email" : getAuthenticatedUser(), 
-        "FriendEmail": friendEmail,
-        "Index": index
+      "Email" : getAuthenticatedUser(), 
+      "FriendEmail": friendEmail,
+      "Index": index
     }
 
     const friendsResponse = await acceptFriend(data);
     if (friendsResponse && friendsResponse.res===true) {
-        setNotificationAlert(false)
-        console.log('niceeeee')
+      
+      // page needs to refresh in order to update stuff correctly ===========> ask shlomi
+    }
+
+  }
+
+  const ignoreFriendship = async (e, index) => { // when accepting friend requsest
+    let data = {
+      "Email" : getAuthenticatedUser(),
+      "Index": index
+    }
+
+    const ignoreFriendResponse = await ignoreFriend(data);
+    if (ignoreFriendResponse && ignoreFriendResponse.res===true) {
+      console.log('notification deleted successfully')
+
+      // page needs to refresh in order to update stuff correctly ===========> ask shlomi
     }
 
   }
@@ -173,7 +187,7 @@ const TopNav = () => {
 
           <div className='topnav-sub-left-wrapper topnav-round-wrapper'>
             {!notficationAlert ? (
-              <button className='topnav-button-circle topnav-pointer'> <IoNotificationsOutline className='topnav-menu-icon' /> </button>
+              <button className='topnav-button-circle topnav-pointer' onClick={() => {setOpenNotifications(!openNotifications)}}> <IoNotificationsOutline className='topnav-menu-icon' /> </button>
             ) : (
               <button className='topnav-button-circle topnav-pointer' onClick={() => {setOpenNotifications(!openNotifications)}}> <IoNotificationsOutline className='topnav-menu-icon' /> <FaRegCircle className='topnav-menu-alert'/> </button>
             )}
@@ -209,13 +223,18 @@ const TopNav = () => {
                     </div>
 
                     <div className='topnav-notification-sub-wrapper'>
-                        <button className='topnav-notification-yes-button' onClick={(e) => {acceptFriendship(e, notifications.Email, index)}}> כן </button>
+                      <button className='topnav-notification-yes-button' onClick={(e) => {acceptFriendship(e, notifications.Email, index)}}> כן </button>
 
-                          <button className='topnav-notification-no-button' > לא </button>
-                      </div>
+                      <button className='topnav-notification-no-button' onClick={(e) => {ignoreFriendship(e, index)}}> לא </button>
+                    </div>
                   </div>
-
                 ))}
+
+                {notifications.length===0 && (
+                  <div className='topnav-sub-notification-menu topnav-no-notifications-title'>
+                    <span>אין הודעות חדשות</span>
+                  </div>
+                )}
             </div>
           )}
         </div>

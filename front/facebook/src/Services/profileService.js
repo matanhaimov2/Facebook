@@ -118,6 +118,18 @@ const acceptFriend = async (data) => {
     }
 }
 
+const ignoreFriend = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/ignoreFriend", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 const checkFriend = async (data) => {
     try {
         // Get post from back from db
@@ -195,5 +207,6 @@ export {
     hasFriendsAtAll, 
     startFriendRequest,
     newNotifications, 
-    deleteFriendRequest
+    deleteFriendRequest,
+    ignoreFriend
 }
