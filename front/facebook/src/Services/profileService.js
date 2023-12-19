@@ -118,18 +118,6 @@ const acceptFriend = async (data) => {
     }
 }
 
-const isThereNotification = async (data) => {
-    try {
-        // Get post from back from db
-        const response = await axios.post(SERVER_URL + "/isThereNotification", data)
-        
-        return response.data
-    }
-    catch (err) {
-        console.log(err);
-    }
-}
-
 const checkFriend = async (data) => {
     try {
         // Get post from back from db
@@ -141,6 +129,19 @@ const checkFriend = async (data) => {
         console.log(err);
     }
 }
+
+const deleteFriendRequest = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/deleteFriendRequest", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 
 const startFriendRequest = async (data) => {
     try {
@@ -166,9 +167,6 @@ const newNotifications = async (data) => {
     }
 }
 
-
-
-
 const hasFriendsAtAll = async (data) => {
     try {
         // Get post from back from db
@@ -180,6 +178,7 @@ const hasFriendsAtAll = async (data) => {
         console.log(err);
     }
 }
+
 
 
 export {
@@ -195,6 +194,6 @@ export {
     checkFriend,
     hasFriendsAtAll, 
     startFriendRequest,
-    isThereNotification,
-    newNotifications
+    newNotifications, 
+    deleteFriendRequest
 }

@@ -21,12 +21,14 @@ import { MdDeleteForever } from 'react-icons/md'
 import './profile.css';
 
 // Services
-import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, checkFriend, hasFriendsAtAll, startFriendRequest} from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, checkFriend, hasFriendsAtAll, startFriendRequest, deleteFriendRequest} from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService'
 
 // Components
 import SetProfile from '../SetProfile/setprofile';
 import PostUpload from '../../Components/Postupload/postupload';
+import DisplayFriends from '../../Components/DisplayFriends/displayfriends';
+
 
 function Profile() {
 
@@ -45,8 +47,9 @@ function Profile() {
     const [imgProfileTrigger, setImgProfileTrigger] = useState(false); // Trigger to pull image profile
     const [isFriends, setIsFriends] = useState(false);
     const [friendPending, setFriendPending] = useState(false);
+    const [isDisplayFriends, setIsDisplayFriends] = useState(false); // Raises friends display
 
-
+    
    
 
     
@@ -79,22 +82,21 @@ function Profile() {
     useEffect(() => {
         const profilePage = async () => {
 
-            setShowSkeleton(true); // Show skeleton animation
-    
+            setShowSkeleton(true); // Show skeleton animation - didnt do it yet
     
             let data;
 
+            // Checks if user visiting other profile
             if(profileEmail) {
                 data = {
                     "Email" : profileEmail,
                     "UserEmail": getAuthenticatedUser()
                 }
-
+                // Checks if both users are friends with each other
                 const isFriendCheck = await checkFriend(data);
                 console.log(isFriendCheck)
                 if (isFriendCheck && isFriendCheck.res) {
                     setIsFriends(true)
-                    // ask shlomi why use effect isFriends doesnt work. i need it for the page to refresh
                     
                 }
                 else {
@@ -109,16 +111,16 @@ function Profile() {
                 }
             }
 
-
-
             if(getAuthenticatedUser()) {
 
                 // gets the number of friends a user have
                 let friendsData = {
                     "Email" : getAuthenticatedUser(),
-                    "FriendsEmail" : profileEmail
+                    "FriendsEmail" : profileEmail,
+                    "Program": '0'
                 }
                 const numberOfFriendsResponse = await hasFriendsAtAll(friendsData)
+                console.log(numberOfFriendsResponse, 'now1')
                 if (numberOfFriendsResponse && numberOfFriendsResponse.res===true) {
                     setIsFriendsNumber(numberOfFriendsResponse.friendsLengthNumber)
                 }
@@ -126,9 +128,8 @@ function Profile() {
                     setIsFriendsNumber(numberOfFriendsResponse.friendsLengthNumber)
                 }
 
-                
+                // Profile info
                 const response = await profile(data)
-
                 if(response && response.res===true) { 
                     setProfileinfo(response.data);
                        
@@ -148,7 +149,7 @@ function Profile() {
     
         profilePage();
     
-    }, [profileInfo.birthday, profileInfo.relationshipstatus, isFriends])
+    }, [profileInfo.birthday, profileInfo.relationshipstatus])
 
 
     useEffect(() => {
@@ -238,10 +239,26 @@ function Profile() {
 
         const response = await startFriendRequest(data);
         if (response && response.res===true) {
-            // setFriendPending(true)
+            setFriendPending(true)
+            console.log(friendPending, 'herefriend')
             // Sends a friend request
         }
 
+    }
+
+    const toDisplayFriends = () => {
+        setIsDisplayFriends(true)
+    }
+
+    const deleteFriend = async () => {
+        let data = {
+            "Email": getAuthenticatedUser(),
+            "FriendEmail": profileEmail
+        }
+
+        const deleteFriendResponse = await deleteFriendRequest(data)
+        console.log(deleteFriendResponse)
+        
     }
 
     return (
@@ -301,7 +318,7 @@ function Profile() {
 
                         <div className='sub-sub-profile-basics'>
                             <span>חברים </span>  {/* number of friends */}
-                            <button className='profile-friendsnumber-button'> {friendsNumber} </button>
+                            <button className='profile-friendsnumber-button' onClick={toDisplayFriends}> {friendsNumber} </button>
                         </div>
                     </div>
                     
@@ -313,14 +330,17 @@ function Profile() {
                         <>
                         { !isFriends ? (
                             <div className='sub-profile-basics'>
-                                <button onClick={friendRequest} className='sub-profile-friends-button'> הוספת חבר</button>
-                                {/* {friendPending && (
-                                    <button className='sub-profile-friends-button'>מחכה לאישור</button>
-                                )} */}
+                                {!friendPending ? (
+                                    <button onClick={friendRequest} className='sub-profile-friends-button'>הוספת חבר</button>
+
+                                ) : (
+                                    <button className='sub-profile-friends-button'>ממתין לאישור...</button>
+                                )}
                             </div> 
                         ) : (
-                            <div className='sub-profile-basics'>
+                            <div className='sub-profile-basics sub-profile-friends-wrapper'>
                                 <button className='sub-profile-already-friends-button'>חברים</button> {/* onclick needs to open option to unfriend */}
+                                <button onClick={deleteFriend} className='sub-profile-already-friends-button sub-profile-delete-friend-wrapper'><MdDeleteForever className='sub-profile-delete-friend-button'/></button>
                             </div>
                         )}
 
@@ -413,6 +433,12 @@ function Profile() {
                     <SetProfile isUpdateProfile={isEditProfile} setIsEditProfile={setIsEditProfile}/>
                 </div>
             )}
+
+            {isDisplayFriends && (
+                    <div className='marketplace-left-productupload-wrapper'>
+                        <DisplayFriends setIsDisplayFriends={setIsDisplayFriends} />
+                    </div>
+                )}
 
         </div>
     );

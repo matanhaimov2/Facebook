@@ -21,7 +21,7 @@ import './topnav.css';
 
 // Services
 import { handleSignOut, getAuthenticatedUser, search } from '../../Services/authService';
-import { getProfileImage, isThereNotification, newNotifications, acceptFriend } from '../../Services/profileService';
+import { getProfileImage, newNotifications, acceptFriend } from '../../Services/profileService';
 
 
 const TopNav = () => {
@@ -121,19 +121,13 @@ const TopNav = () => {
         'Email' : getAuthenticatedUser()
       }
 
-      // is there any notification for the user?
-      const response_notification = await isThereNotification(data);
-      
-      // get all notifications of the user
-      if (response_notification && response_notification.res===true) {
+          
+      // gets all notifications of the user       
+      const data_notifications = await newNotifications(data)
+      // is there any notification for the user?   
+      if (data_notifications && data_notifications.res===true) {
         setNotificationAlert(true)
-        
-        const data_notifications = await newNotifications(data)
-        if (data_notifications && data_notifications.res===true) {
-          setNotifications(data_notifications.data);
-          console.log(notifications)
-
-        }
+        setNotifications(data_notifications.data);
 
         // theres a notification
         console.log('theres a notification')

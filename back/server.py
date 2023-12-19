@@ -677,28 +677,8 @@ def startFriendRequest(): # Starts friend request => info to column notifcations
 
     return jsonify({'res': True})
 
-@app.route("/isThereNotification", methods=['GET','POST'])
-def isThereNotification(): # Checks if user got any notifications
-    data = request.data
-    print(data)
-    str_data = data.decode('utf-8') # From binary to string
-    json_str = json.loads(str_data) # From string to json
-
-    # Set values
-    email = json_str["Email"]
-
-    query = f'''SELECT notifications FROM profiles WHERE email = '{email}' '''
-    response = handleOneResult(query)
-
-    response = response[0]
-
-    if (response):
-        return jsonify({'res': True, 'Note': 'there are notifications'})
-    else:
-        return jsonify({'res': False, 'Note': 'no notifications'})
-
 @app.route("/newNotifications", methods=['GET','POST'])
-def newNotifications(): # Gets the data of a notification
+def newNotifications(): # Checks if user got any notifications => Gets the data of a notification
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -731,9 +711,6 @@ def newNotifications(): # Gets the data of a notification
         return jsonify(res)
     
     return jsonify({'res': False, 'data' : []})
-
-
-
 
 @app.route("/checkFriend", methods=['GET','POST'])
 def checkFriend(): # Checks if user got any friends
@@ -781,29 +758,83 @@ def hasFriendsAtAll(): # Displays the number of friends user have
     # Set values
     email = json_str.get("Email")
     friend_email_to_check = json_str.get("FriendsEmail")
+    program = json_str["Program"]
 
     if friend_email_to_check is not None:
         query = '''SELECT friends FROM handlefriends WHERE user_email = '{}' '''.format(friend_email_to_check)
     else:
         query = '''SELECT friends FROM handlefriends WHERE user_email = '{}' '''.format(email)
 
-    friends = handleOneResult(query)
+    # Displaying for profile number of friends
+    if (program=='0'):
 
-    friends = friends[0]
+        friends = handleOneResult(query)
 
-    friends_length = 0 
+        friends = friends[0]
 
-    if friends:
-        friends_list = json.loads(friends)
-        friends_length = len(friends_list)
-        return jsonify({'res': True, 'friendsLengthNumber': friends_length})
+        friends_length = 0 
 
+        if friends:
+            friends_list = json.loads(friends)
+            friends_length = len(friends_list)
+            return jsonify({'res': True, 'friendsLengthNumber': friends_length})
+
+        else:
+            friends_length = 0
+            return jsonify({'res': True, 'friendsLengthNumber': friends_length, 'Note': 'No Friends For The User'})
+
+
+
+    # Displaying for profile(displayfriends) friends data
     else:
-        friends_length = 0
-        return jsonify({'res': True, 'friendsLengthNumber': friends_length, 'Note': 'No Friends For The User'})
+        fetch_data_query = f"SELECT username, userimages FROM profiles WHERE email = '{email}' " # here instead of email value => emailAddress value
+
+        friends = handleOneResult(query)
+        friends = friends[0]
+
+        allFetchedUsers = []
+
+        if friends:
+            friends_list = json.loads(friends)
+            for emailAddress in friends_list:
+                fetched_users = handleMultipleResults(fetch_data_query)
+                print(emailAddress, fetched_users, 'please work')
+        
+        # get user's friends emails => get each one his own data(username,userimages) from profiles.
+
+
+    return jsonify({'res': False, 'data' : 'no friends for the user'})
+
+@app.route("/deleteFriendRequest", methods=['GET','POST'])
+def deleteFriendRequest(): # Deletes friendship of each other
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str["Email"]
+    friend_email = json_str["FriendEmail"]
+
+    delete_query = f"UPDATE handlefriends SET friends = JSON_REMOVE(friends, '$[{friend_email}]') WHERE user_email = '{email}'"
+    delete_queryTwo = f"UPDATE handlefriends SET friends = JSON_REMOVE(friends, '$[{friend_email}]') WHERE user_email = '{email}'"
+
+    print(delete_query, 'first')
+    print(delete_queryTwo, 'two')
+
+
+    # responseOne = handleUsers(delete_query)
+    # responseTwo = handleUsers(delete_queryTwo)
+
+    print(responseOne, 'one')
+    print(responseTwo, 'two')
+
 
 
     return jsonify({'res': True})
+
+
+
 
 
 # Marketplace
@@ -1089,7 +1120,7 @@ if __name__ == "__main__":
 
 # Video tasks:
 # 1. learn react classes in udemy.
-# 2.  
+# 2. 
 
 # Problems
 # 1. in productUpload, enter key opens file    !!!
@@ -1107,7 +1138,10 @@ if __name__ == "__main__":
 
 # Friends Related Tasks:
 # 1. Display number of friends ----------------------------------------------------- VVV
-# 2. When clicking on number of friends, list of all friends will appear -----------
-# 3. Option to delete a friend -----------------------------------------------------
+# 2. When clicking on number of friends, list of all friends will appear ----------- XXV
+# 3. Option to delete a friend ----------------------------------------------------- XXV
 # 4. When add friend, user will get notification i wants to accept or no ----------- VVV
 # (red alert of notification => problem, when accepting friend it disapperes and when refersgin it gets back)
+# (friend pending goes back to initial state when page refreshes) => check if db got any notification, if so, return 'pending', else, return 'add friend'.
+
+# 5. (easy) - onclick no friend. notification remove
