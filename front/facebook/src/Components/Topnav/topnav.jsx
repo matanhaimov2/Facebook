@@ -122,7 +122,6 @@ const TopNav = () => {
       // gets all notifications of the user       
       const data_notifications = await newNotifications(data)
       // is there any notification for the user?   
-      console.log(data_notifications,'knsaoioaoon');
       if (data_notifications && data_notifications.res===true) {
         setNotificationAlert(true)
         setNotifications(data_notifications.data);
@@ -158,7 +157,7 @@ const TopNav = () => {
 
       // Edit the email and add accepted flag
       const updatedNotification = notifications.filter((notif) => {
-        if(notif.Email!==acceptedEmail) {
+        if(notif.Email!==acceptedEmail) { // how the email get changed => ask shlomi
           return notif;
         }
         else {
@@ -257,7 +256,7 @@ const TopNav = () => {
                       <div className='topnav-sub-notification-menu-orgnize'>
                         <span className='topnav-sub-notification-box-title'> { notifications.Username }</span>
 
-                        <span> אישר את בקשת החברות</span>
+                        <span> בקשת החברות אושרה</span>
 
                       </div>
                     </div>

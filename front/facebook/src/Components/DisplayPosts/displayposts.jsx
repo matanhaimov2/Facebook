@@ -45,9 +45,7 @@ function DisplayPosts({ profileEmail }) {
             if(getAuthenticatedUser()) {
                 const response = await getProfilePost(data)
 
-                if(response && response.res===true) { // If the response is true, enter
-                    console.log(response.data)
-                    
+                if(response && response.res===true) { // If the response is true, enter                    
                     setProfilePosts(response.data)
 
                 }

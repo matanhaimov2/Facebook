@@ -92,9 +92,9 @@ function Profile() {
                     "Email" : profileEmail,
                     "UserEmail": getAuthenticatedUser()
                 }
+
                 // Checks if both users are friends with each other
                 const isFriendCheck = await checkFriend(data);
-                console.log(isFriendCheck)
                 if (isFriendCheck && isFriendCheck.res) {
                     setIsFriends(true)
                     
@@ -119,8 +119,8 @@ function Profile() {
                     "FriendsEmail" : profileEmail,
                     "Program": '0'
                 }
+
                 const numberOfFriendsResponse = await hasFriendsAtAll(friendsData)
-                console.log(numberOfFriendsResponse, 'now1')
                 if (numberOfFriendsResponse && numberOfFriendsResponse.res===true) {
                     setIsFriendsNumber(numberOfFriendsResponse.friendsLengthNumber)
                 }
@@ -204,9 +204,11 @@ function Profile() {
         
         }
 
+        // something here raises f12 errors ----- ask shlomi
         if(localStorage.getItem('UserInfo') && profileEmail) {
             getIsPendingFriend();
         }
+
     }, [])
 
     const activateUploadImage = () => {
@@ -262,7 +264,7 @@ function Profile() {
         const response = await startFriendRequest(data);
         if (response && response.res===true) {
             setFriendPending(true)
-            console.log(friendPending, 'herefriend')
+            console.log(friendPending, 'friendpending...')
             // Sends a friend request
         }
 
@@ -280,7 +282,8 @@ function Profile() {
 
         const deleteFriendResponse = await deleteFriendRequest(data)
         console.log(deleteFriendResponse)
-        
+        // On progress...
+
     }
 
     return (
@@ -303,7 +306,7 @@ function Profile() {
                                 )}
                             </div>
 
-                        ) :(
+                        ) : (
                             <div>
                                 <div className='profile-img-wrapper'>
                                     <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 

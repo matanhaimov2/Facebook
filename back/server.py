@@ -817,15 +817,29 @@ def hasFriendsAtAll(): # Displays the number of friends user have
 
         allFetchedUsers = []
 
+        
         if friends:
             friends_list = json.loads(friends)
-            for emailAddress in friends_list:
-                fetch_data_query = f"SELECT username, userimages FROM profiles WHERE email = '{emailAddress}' " # here instead of email value => emailAddress value
-                fetched_users = handleMultipleResults(fetch_data_query)
-                print(emailAddress, fetched_users, 'please work')
-        
-        # get user's friends emails => get each one his own data(username,userimages) from profiles.
 
+            # Takes every email from friends_list and gets from db username and userimages to the speceific email.
+            for emailAddress in friends_list:
+                clean_email_address = emailAddress.strip('"') # from "example@gmail.com" => example@gmail.com
+                fetch_data_query = f"SELECT username, userimages FROM profiles WHERE email = '{clean_email_address}' " 
+                fetched_users = handleMultipleResults(fetch_data_query)
+
+                username = fetched_users[0][0]
+                user_image = fetched_users[0][1]
+                
+                # Structure 
+                allFetched = {
+                    'email': clean_email_address,
+                    'username': username,
+                    'userimages': user_image
+                } 
+
+                allFetchedUsers.append(allFetched)
+
+            return jsonify({'res': True, 'friendsData' : allFetchedUsers})
 
     return jsonify({'res': False, 'data' : 'no friends for the user'})
 
@@ -879,6 +893,7 @@ def isFriendPending():
 
     for friend in friends:
         friend = json.loads(friend)
+
         if friend['Email']==email:
             boole = True
 
@@ -1197,4 +1212,4 @@ if __name__ == "__main__":
 # (red alert of notification => problem, when accepting friend it disapperes and when refersgin it gets back)
 # (friend pending goes back to initial state when page refreshes) => check if db got any notification, if so, return 'pending', else, return 'add friend'.
 
-# 5. (easy) - onclick no friend. notification remove
+# 5. when sending friend request, other user can still click on the button that adds friend - problem -

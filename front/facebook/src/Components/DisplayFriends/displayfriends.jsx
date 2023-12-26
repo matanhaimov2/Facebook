@@ -8,6 +8,7 @@ import exitIcon from '../../Assets/Images/exit-icon.png';
 
 
 // React Icons 
+import { LiaUserCircleSolid } from 'react-icons/lia'
 
 
 // CSS
@@ -26,6 +27,8 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
     const { profileEmail } = useParams();
 
     // States
+    const [friendsInfo, setFriendsInfo] = useState(); // Define formattedDate
+
 
     useEffect(() => {
         const DisplayFriendsToProfile = async () => {    
@@ -37,8 +40,13 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
             }
             
             const friend_list_response = await hasFriendsAtAll(data) 
-            console.log(friend_list_response, 'now2')
 
+            if (friend_list_response && friend_list_response.res===true) {
+                setFriendsInfo(friend_list_response.friendsData)
+            }
+            else {
+                setFriendsInfo(friend_list_response.friendsData)
+            }
 
 
         }
@@ -48,12 +56,19 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
     }, [])
 
 
-
-
-
-
     const closeDisplayFriends = () => {
         setIsDisplayFriends(false)
+    }
+
+    const navigateToProfile = (e, email) => {
+        e.preventDefault(); 
+        
+        if (getAuthenticatedUser() === email) {
+            window.location.href = '/profile';
+        }
+        else {
+            window.location.href = '/profile/' + email;
+        }
     }
 
 
@@ -61,6 +76,32 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
         <div className='displayfriends-wrapper'>
             <button className='productupload-exit-icon' onClick={closeDisplayFriends}> <img src={exitIcon} /> </button>
 
+            {friendsInfo ? (
+                <div className='displayfriends-sub-wrapper' >
+             
+                  {friendsInfo && friendsInfo.map((data, i) => (
+                    <div key={i} className='displayfriends-box' onClick={(e) => {navigateToProfile(e, data.email)}}>
+
+                      <span className='topnav-search-box-title'> { data.username }</span>
+                      
+                      <div className='topnav-search-box-img-wrapper'>
+
+                        {data.userimages ? (
+                          <img className='topnav-search-box-img' src={ data.userimages }></img>
+
+                        ) : (
+                          <LiaUserCircleSolid className='topnav-search-box-none-img'/>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+
+                </div>
+            ) :(
+                <div className='displayfriends-no-result-wrapper'>
+                    <span>אין חברים</span>
+                </div>
+            )} 
 
 
         </div>
