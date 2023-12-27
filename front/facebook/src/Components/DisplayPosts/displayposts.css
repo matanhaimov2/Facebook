@@ -1,3 +1,15 @@
+.displayposts-wrapper-wrapper {
+    width: 90%;
+    height: 100%;
+    background: #18191a;
+    margin: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: 5%;
+    gap: 15px;
+}
+
 .displayposts-wrapper {
     background-color: #242526;
     border-radius: 15px;

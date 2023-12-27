@@ -761,6 +761,7 @@ def checkFriend(): # Checks if user got any friends
 
         else:
             print('Friend not found in the list.')
+            
             return jsonify({'res': False, 'Note': 'Users Arent Friends'})
 
     else:
@@ -871,7 +872,6 @@ def deleteFriendRequest(): # Deletes friendship of each other
 
     return jsonify({'res': True})
 
-
 @app.route("/isFriendPending", methods=['GET', 'POST'])
 def isFriendPending():
     data = request.data
@@ -902,7 +902,29 @@ def isFriendPending():
     else:
         return jsonify({'res': True, 'pending' : False})
     
+@app.route("/oneFriendRequestCheck", methods=['GET', 'POST'])
+def oneFriendRequestCheck():
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
 
+    # Set values
+    email = json_str["UserEmail"]
+    friend_email_to_check  = json_str["Email"]
+
+    query = '''SELECT notifications FROM profiles WHERE email = '{}' '''.format(email) 
+    response = handleOneResult(query)
+
+    if friend_email_to_check in response[0]:
+        print('user is waiting for friend approval')
+
+        return jsonify({'res': True, 'Note': 'user is waiting for friend approval'})
+
+    else:
+        print('theres no request waiting')
+
+    return jsonify({'res': False})
 
 
 
@@ -1177,7 +1199,8 @@ if __name__ == "__main__":
 
 # Complex Tasks:
 # 1. Marketplace ------------------------------------------------------ In Progress...
-# 2. Friends ---------------------------------------------------------- In Progress...
+# 2. Friends ---------------------------------------------------------- VVVVVVVVVVVVVV
+# 3. Feed -------------------------------------------------------------
 
 # Can't Tell Tasks:
 # 1. Every new post uploaded by user will appear up so thats the first post in the column
@@ -1206,10 +1229,10 @@ if __name__ == "__main__":
 
 # Friends Related Tasks:
 # 1. Display number of friends ----------------------------------------------------- VVV
-# 2. When clicking on number of friends, list of all friends will appear ----------- XXV
+# 2. When clicking on number of friends, list of all friends will appear ----------- VVV
 # 3. Option to delete a friend ----------------------------------------------------- XXV
 # 4. When add friend, user will get notification i wants to accept or no ----------- VVV
 # (red alert of notification => problem, when accepting friend it disapperes and when refersgin it gets back)
 # (friend pending goes back to initial state when page refreshes) => check if db got any notification, if so, return 'pending', else, return 'add friend'.
 
-# 5. when sending friend request, other user can still click on the button that adds friend - problem -
+# 5. feature to exit window of notification with mouse --------------------------=--- VVV

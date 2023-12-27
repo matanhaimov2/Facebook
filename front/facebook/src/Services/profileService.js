@@ -203,6 +203,19 @@ const getPendingFriend = async (data) => {
     }
 }
 
+const oneFriendRequestCheck = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/oneFriendRequestCheck", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+
 export {
     setprofile,
     profile,
@@ -219,5 +232,7 @@ export {
     newNotifications, 
     deleteFriendRequest,
     ignoreFriend,
-    getPendingFriend
+    getPendingFriend,
+    oneFriendRequestCheck
+
 }

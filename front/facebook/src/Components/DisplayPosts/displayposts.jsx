@@ -72,7 +72,7 @@ function DisplayPosts({ profileEmail }) {
     }
 
     return (
-        <div className='postupload-wrapper'>
+        <div className='displayposts-wrapper-wrapper'>
             {profilePosts && profilePosts.map((post, i) => (
                 <div key={i} className='displayposts-wrapper'>
                 

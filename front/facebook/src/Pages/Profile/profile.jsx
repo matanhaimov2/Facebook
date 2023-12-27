@@ -21,7 +21,7 @@ import { MdDeleteForever } from 'react-icons/md'
 import './profile.css';
 
 // Services
-import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, checkFriend, hasFriendsAtAll, startFriendRequest, deleteFriendRequest, getPendingFriend} from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, checkFriend, hasFriendsAtAll, startFriendRequest, deleteFriendRequest, getPendingFriend, oneFriendRequestCheck} from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService'
 
 // Components
@@ -102,6 +102,12 @@ function Profile() {
                 else {
                     setIsFriends(false)
                     // users arent friends
+
+                    const friendChecksOneRequest = await oneFriendRequestCheck(data);
+                    if (friendChecksOneRequest && friendChecksOneRequest.res===true) {
+                        setFriendPending(true)
+                    }
+
                 }
                 
             }

@@ -40,6 +40,7 @@ const TopNav = () => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setIsSearchBox(false);
+        setOpenNotifications(false);
       }
     };
 
@@ -238,7 +239,7 @@ const TopNav = () => {
           </div>
 
           {openNotifications && (
-            <div className='topnav-notification-menu'>
+            <div tabIndex={0} className='topnav-notification-menu' ref={searchRef}>
                 {notifications && notifications.map((notifications, index) => (
                   <>
                     {notifications.accepted ? (
