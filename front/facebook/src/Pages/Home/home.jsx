@@ -5,6 +5,8 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 
 // Components
+import  Feed from "../../Components/Feed/feed";
+
 
 function Home() {
 
@@ -12,15 +14,15 @@ function Home() {
 
     return (
         <div className='home-wrapper'>
-          <div className='home-left-wrapper'>
+            <div className='home-left-wrapper'>
 
-          </div>
+            </div>
 
-          <div className='home-center-wrapper'>
-        
-          </div>
+            <div className='home-center-wrapper'>
+                <Feed />
+            </div>
 
-          <div className='home-right-wrapper'>
+            <div className='home-right-wrapper'>
             
             </div>
         </div>
