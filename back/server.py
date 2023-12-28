@@ -484,7 +484,6 @@ def getProfilePost(): # Get post/s from db
 
     if (response):
         posts = json.loads(response)
-        print(posts)
 
         allposts = []
 
@@ -497,6 +496,8 @@ def getProfilePost(): # Get post/s from db
             'data' : allposts,
             'res': True
         }    
+
+        print(allposts, 'here')
 
         return jsonify(res)
     
@@ -1135,6 +1136,59 @@ def deleteProductRequest():
 
 
     return jsonify({'res': True})
+
+# Feed
+@app.route("/getPostsToFeed", methods=['GET', 'POST'])
+def getPostsToFeed(): # Get post/s from db
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+
+    query = f"SELECT userposts FROM profiles WHERE email <> '{email}';"
+    print(query)
+    
+    # Get userposts except specific email from db
+    response = handleMultipleResults(query)
+
+    
+    allPosts = []
+
+    if response:
+        # Going through every userPosts and checks if he has any
+        for userPosts in response:
+            # If user has posts => add his posts to allPosts array
+            if userPosts[0]!=None:
+                posts = json.loads(userPosts[0])
+                allPosts.append(posts)
+
+    if(response != None):
+
+        # Merging 3 arrays into one. array = [[array], [array], [array]]
+        one_array_allPosts = []
+
+        for array in allPosts:
+            one_array_allPosts.extend(array)
+
+        # Transfers allPosts to become readable (removing python)
+        transformed_data = []
+
+        for item in one_array_allPosts:
+            json_item = json.loads(item)
+            transformed_data.append(json_item)
+
+        res = {
+            'data' : transformed_data,
+            'res': True
+        }  
+
+        print(one_array_allPosts, 'here')
+
+        return jsonify(res)
+
+    return jsonify({'res': False, 'data' : []})
 
 
 

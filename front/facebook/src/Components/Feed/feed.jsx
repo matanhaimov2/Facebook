@@ -9,6 +9,8 @@ import { profileImgbb, uploadPost } from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 // Components
+import DisplayPosts from '../DisplayPosts/displayposts';
+
 
 
 function Feed() {
@@ -19,7 +21,7 @@ function Feed() {
 
     return (
         <div className='feed-wrapper'>
-            
+            <DisplayPosts />
         </div>
     );
 }
