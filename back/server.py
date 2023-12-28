@@ -1289,4 +1289,10 @@ if __name__ == "__main__":
 # (red alert of notification => problem, when accepting friend it disapperes and when refersgin it gets back)
 # (friend pending goes back to initial state when page refreshes) => check if db got any notification, if so, return 'pending', else, return 'add friend'.
 
-# 5. feature to exit window of notification with mouse --------------------------=--- VVV
+# 5. feature to exit window of notification with mouse ----------------------------- VVV
+
+
+# Feed Related Tasks:
+# 1. Fetch all posts except signed in user to feed -------- VVV
+# 2. Make time for posts. new is up, old is down ----------
+# 3. Fetch also username and user image -------------------
