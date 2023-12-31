@@ -795,12 +795,12 @@ def hasFriendsAtAll(): # Displays the number of friends user have
     if (program=='0'):
 
         friends = handleOneResult(query)
-
-        friends = friends[0]
-
+        
         friends_length = 0 
 
         if friends:
+            friends = friends[0]
+
             friends_list = json.loads(friends)
             friends_length = len(friends_list)
             return jsonify({'res': True, 'friendsLengthNumber': friends_length})
@@ -1252,9 +1252,9 @@ if __name__ == "__main__":
 
 
 # Complex Tasks:
-# 1. Marketplace ------------------------------------------------------ In Progress...
-# 2. Friends ---------------------------------------------------------- VVVVVVVVVVVVVV
-# 3. Feed -------------------------------------------------------------
+# 1. Marketplace ----------------------------------------------------------- In Progress...
+# 2. Friends --------------------------------------------------------------- VVVVVVVVVVVVVV
+# 3. Feed ------------------------------------------------------------------ In Progress...
 
 # Can't Tell Tasks:
 # 1. Every new post uploaded by user will appear up so thats the first post in the column
@@ -1274,25 +1274,24 @@ if __name__ == "__main__":
 
 
 # Marketplace Related Tasks:
-# 1. figure out a way to chunk 6 products in one chunk => make a map ----- VVV
-# 2. format date problem ------------------------------------------------- VVV
-# 3. figure out a way to import every product to a single page ----------- VVV
-# 4. cities api ----------------------------------------------------------
+# 1. figure out a way to chunk 6 products in one chunk => make a map ---------- VVV
+# 2. format date problem ------------------------------------------------------ VVV
+# 3. figure out a way to import every product to a single page ---------------- VVV
+# 4. cities api ---------------------------------------------------------------
 
 
 
 # Friends Related Tasks:
-# 1. Display number of friends ----------------------------------------------------- VVV
-# 2. When clicking on number of friends, list of all friends will appear ----------- VVV
-# 3. Option to delete a friend ----------------------------------------------------- XXV
-# 4. When add friend, user will get notification i wants to accept or no ----------- VVV
+# 1. Display number of friends ------------------------------------------------- VVV
+# 2. When clicking on number of friends, list of all friends will appear ------- VVV
+# 3. Option to delete a friend ------------------------------------------------- XXV
+# 4. When add friend, user will get notification i wants to accept or no ------- VVV
 # (red alert of notification => problem, when accepting friend it disapperes and when refersgin it gets back)
 # (friend pending goes back to initial state when page refreshes) => check if db got any notification, if so, return 'pending', else, return 'add friend'.
 
-# 5. feature to exit window of notification with mouse ----------------------------- VVV
-
+# 5. feature to exit window of notification with mouse ------------------------- VVV
 
 # Feed Related Tasks:
-# 1. Fetch all posts except signed in user to feed -------- VVV
-# 2. Make time for posts. new is up, old is down ----------
-# 3. Fetch also username and user image -------------------
+# 1. Fetch allposts from db to feed -------------------------------------------- VVV
+# 2. Sort posts by time -------------------------------------------------------- VVV
+# 3. Fetch also username and userimages ---------------------------------------- Problem - ask shlomi!

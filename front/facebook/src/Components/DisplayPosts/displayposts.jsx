@@ -16,7 +16,7 @@ import { PiShareFatLight } from "react-icons/pi";
 import './displayposts.css';
 
 // Services
-import { getProfilePost, getPostsToFeed } from '../../Services/profileService';
+import { getProfilePost } from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 
@@ -24,10 +24,6 @@ function DisplayPosts({ profileEmail }) {
 
     // States
     const [profilePosts, setProfilePosts] = useState(null); // 
-
-
-    // Pathnames handle
-    const isProfilePage = window.location.toString().includes("profile")
 
 
     useEffect(() => {
@@ -48,29 +44,16 @@ function DisplayPosts({ profileEmail }) {
             
             if(getAuthenticatedUser()) {
 
-                if(isProfilePage) {
-                    const response = await getProfilePost(data)
-                    console.log(response,'whattt')
-                    if(response && response.res===true) { // If the response is true, enter                    
-                        setProfilePosts(response.data)
 
-                    }
-                    else {
-                        setProfilePosts([])
-                    }
+                const response = await getProfilePost(data)
+                if(response && response.res===true) { // If the response is true, enter                    
+                    setProfilePosts(response.data)
+
                 }
-
                 else {
-                    const response = await getPostsToFeed(data)
-                    console.log(response,'whattt')
-                    if(response && response.res===true) { // If the response is true, enter                    
-                        setProfilePosts(response.data)
-    
-                    }
-                    else {
-                        setProfilePosts([])
-                    }
+                    setProfilePosts([])
                 }
+
             }
 
         }

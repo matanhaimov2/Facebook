@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 
 // Components
-import  Feed from "../../Components/Feed/feed";
+import Feed from "../../Components/Feed/feed";
 
 
 function Home() {
