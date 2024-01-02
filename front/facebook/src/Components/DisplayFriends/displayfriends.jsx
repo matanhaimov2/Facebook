@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams  } from 'react-router-dom';
 
 // Icons
-import plusIcon from '../../Assets/Images/plus-icon.png'; 
-import editIcon from '../../Assets/Images/edit-icon.png'; 
 import exitIcon from '../../Assets/Images/exit-icon.png'; 
 
 
@@ -27,7 +25,7 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
     const { profileEmail } = useParams();
 
     // States
-    const [friendsInfo, setFriendsInfo] = useState(); // Define formattedDate
+    const [friendsInfo, setFriendsInfo] = useState(); 
 
 
     useEffect(() => {

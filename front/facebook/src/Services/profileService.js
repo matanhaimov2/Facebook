@@ -215,19 +215,6 @@ const oneFriendRequestCheck = async (data) => {
     }
 }
 
-const getPostsToFeed = async (data) => {
-    try {
-        // Get post from back from db
-        const response = await axios.post(SERVER_URL + "/getPostsToFeed", data)
-        
-        return response.data
-    }
-    catch (err) {
-        console.log(err);
-    }
-}
-
-
 
 export {
     setprofile,
@@ -238,7 +225,6 @@ export {
     deleteProfileImage,
     uploadPost,
     getProfilePost,
-    getPostsToFeed,
     acceptFriend,
     checkFriend,
     hasFriendsAtAll, 

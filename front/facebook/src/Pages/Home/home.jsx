@@ -6,6 +6,8 @@ import './home.css';
 
 // Components
 import Feed from "../../Components/Feed/feed";
+import OnlineFriends from "../../Components/OnlineFriends/onlinefriends";
+
 
 
 function Home() {
@@ -15,7 +17,7 @@ function Home() {
     return (
         <div className='home-wrapper'>
             <div className='home-left-wrapper'>
-
+                <OnlineFriends />
             </div>
 
             <div className='home-center-wrapper'>

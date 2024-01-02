@@ -702,41 +702,6 @@ def startFriendRequest(): # Starts friend request => info to column notifcations
 
     return jsonify({'res': True})
 
-@app.route("/newNotifications", methods=['GET','POST'])
-def newNotifications(): # Checks if user got any notifications => Gets the data of a notification
-    data = request.data
-    print(data)
-    str_data = data.decode('utf-8') # From binary to string
-    json_str = json.loads(str_data) # From string to json
-
-    # Set values
-    email = json_str["Email"]
-
-    query = f'''SELECT notifications FROM profiles WHERE email = '{email}' '''
- 
-    # Get notifications where email from db
-    response = handleOneResult(query)
-    response = response[0]
-
-    if (response):
-        notifications = json.loads(response)
-
-        allnotifications = []
-
-        for notification in notifications:
-            allnotifications.append(json.loads(notification))
-
-    if(response != None):
-
-        res = {
-            'data' : allnotifications,
-            'res': True
-        }    
-
-        return jsonify(res)
-    
-    return jsonify({'res': False, 'data' : []})
-
 @app.route("/checkFriend", methods=['GET','POST'])
 def checkFriend(): # Checks if user got any friends
     data = request.data
@@ -795,10 +760,12 @@ def hasFriendsAtAll(): # Displays the number of friends user have
     if (program=='0'):
 
         friends = handleOneResult(query)
-        
+
         friends_length = 0 
 
-        if friends:
+        print(friends[0], 'froiejfaknflkanfdsl')
+
+        if friends[0]:
             friends = friends[0]
 
             friends_list = json.loads(friends)
@@ -808,6 +775,9 @@ def hasFriendsAtAll(): # Displays the number of friends user have
         else:
             friends_length = 0
             return jsonify({'res': True, 'friendsLengthNumber': friends_length, 'Note': 'No Friends For The User'})
+        
+        return jsonify({'res': True})
+            
 
 
 
@@ -927,6 +897,42 @@ def oneFriendRequestCheck():
 
     return jsonify({'res': False})
 
+
+# Notifications
+@app.route("/newNotifications", methods=['GET','POST'])
+def newNotifications(): # Checks if user got any notifications => Gets the data of a notification
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str["Email"]
+
+    query = f'''SELECT notifications FROM profiles WHERE email = '{email}' '''
+ 
+    # Get notifications where email from db
+    response = handleOneResult(query)
+    response = response[0]
+
+    if (response):
+        notifications = json.loads(response)
+
+        allnotifications = []
+
+        for notification in notifications:
+            allnotifications.append(json.loads(notification))
+
+    if(response != None):
+
+        res = {
+            'data' : allnotifications,
+            'res': True
+        }    
+
+        return jsonify(res)
+    
+    return jsonify({'res': False, 'data' : []})
 
 
 # Marketplace
@@ -1137,7 +1143,9 @@ def deleteProductRequest():
 
     return jsonify({'res': True})
 
-# Feed
+# Home
+
+# --- Feed
 @app.route("/getPostsToFeed", methods=['GET', 'POST'])
 def getPostsToFeed(): # Get post/s from db
     data = request.data
@@ -1184,13 +1192,71 @@ def getPostsToFeed(): # Get post/s from db
             'res': True
         }  
 
-        print(one_array_allPosts, 'here')
+        # print(one_array_allPosts, 'here')
 
         return jsonify(res)
 
     return jsonify({'res': False, 'data' : []})
 
+# --- FriendsOnline
+@app.route("/friendsStatus", methods=['GET', 'POST'])
+def friendsStatus():
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
 
+    email = json_str["Email"]
+
+    friends_query = f"SELECT friends FROM handlefriends WHERE user_email = '{email}';"
+    print(friends_query)
+    
+    # Get user's allfriends 
+    friends_list = handleOneResult(friends_query)
+
+    allFetchedUsers = []
+
+    if friends_list[0]:
+        friends_list = json.loads(friends_list[0])
+        for emailAddress in friends_list:
+            clean_email_address = emailAddress.strip('"') # from "example@gmail.com" => example@gmail.com
+            fetch_data_query = f"SELECT username, userimages FROM profiles WHERE email = '{clean_email_address}' " 
+            fetched_users = handleMultipleResults(fetch_data_query)
+            username = fetched_users[0][0]
+            user_image = fetched_users[0][1]
+
+            status_user_query = f"SELECT username FROM session WHERE username = '{username}' " 
+            isStatus = handleUsers(status_user_query)
+            if isStatus:
+
+                # Structure 
+                allFetched = {
+                    'username': username,
+                    'userimages': user_image,
+                    'status': 'Online'
+                } 
+
+                # print(allFetched, 'User Is Online')
+
+                allFetchedUsers.append(allFetched)
+
+            else:
+
+                # Structure 
+                allFetched = {
+                    'username': username,
+                    'userimages': user_image,
+                    'status': 'Offline'
+                } 
+
+                # print(allFetched, 'User Is Offilne')
+
+                allFetchedUsers.append(allFetched)
+
+        return jsonify({'res': True, 'Data': allFetchedUsers})
+
+
+    return jsonify({'res': False, 'Note': 'No Friends'})
 
 # Search
 @app.route("/search", methods=['GET', 'POST'])
@@ -1255,6 +1321,7 @@ if __name__ == "__main__":
 # 1. Marketplace ----------------------------------------------------------- In Progress...
 # 2. Friends --------------------------------------------------------------- VVVVVVVVVVVVVV
 # 3. Feed ------------------------------------------------------------------ In Progress...
+# 4. OnlineFriends --------------------------------------------------------- In Progress...
 
 # Can't Tell Tasks:
 # 1. Every new post uploaded by user will appear up so thats the first post in the column
@@ -1288,10 +1355,13 @@ if __name__ == "__main__":
 # 4. When add friend, user will get notification i wants to accept or no ------- VVV
 # (red alert of notification => problem, when accepting friend it disapperes and when refersgin it gets back)
 # (friend pending goes back to initial state when page refreshes) => check if db got any notification, if so, return 'pending', else, return 'add friend'.
-
 # 5. feature to exit window of notification with mouse ------------------------- VVV
 
 # Feed Related Tasks:
 # 1. Fetch allposts from db to feed -------------------------------------------- VVV
 # 2. Sort posts by time -------------------------------------------------------- VVV
 # 3. Fetch also username and userimages ---------------------------------------- Problem - ask shlomi!
+# 4. Reload 5 posts. when user scrolling reload another 5 ----------------------
+
+# FriendsOnline Tasks:
+# 1. Fetch allfriends from db to the component and check there online status

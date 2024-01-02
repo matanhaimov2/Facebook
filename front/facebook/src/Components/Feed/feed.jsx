@@ -14,7 +14,7 @@ import { PiShareFatLight } from "react-icons/pi";
 import './feed.css';
 
 // Services
-import { getPostsToFeed } from '../../Services/profileService';
+import { getPostsToFeed } from '../../Services/homeService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 // Components
