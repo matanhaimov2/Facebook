@@ -30,12 +30,11 @@ function Onlinefriends() {
             }
             
             const friend_list_response = await friendsStatus(data) 
-            console.log(friend_list_response, 'here')
             if (friend_list_response && friend_list_response.res===true) {
                 setFriendsInfo(friend_list_response.Data)
             }
             else {
-                setFriendsInfo(friend_list_response.Data)
+                setFriendsInfo([])
             }
 
 
@@ -51,41 +50,46 @@ function Onlinefriends() {
                 <span>אנשי קשר</span>
             </div>
 
-            <div className='onlinefriends-contacts-wrapper'>
-            {friendsInfo ? (
-                <div className='displayfriends-sub-wrapper' >
-             
-                  {friendsInfo && friendsInfo.map((data, i) => (
-                    <div key={i} className='onilnefriends-box'>
 
-                      <span className='onilnefriends-text'> { data.username }</span>
-                      
-                      <div className='onilnefriends-img-wrapper'>
+            <div className='displayfriends-sub-wrapper' >
+            
+                {friendsInfo && friendsInfo.map((data, i) => (
+                <div key={i} className='onilnefriends-box'>
 
-                        {data.userimages ? (
-                          <img className='topnav-search-box-img' src={ data.userimages }></img>
+                    <span className='onilnefriends-text'> { data.username }</span>
+                    
+                    <div className='onilnefriends-img-wrapper'>
 
-                        ) : (
-                          <LiaUserCircleSolid className='topnav-search-box-none-img'/>
-                        )}
+                    {data.userimages ? (
+                        <img className='topnav-search-box-img' src={ data.userimages }></img>
 
-                        {data.status==='Online' ? (
-                            <GoDotFill className='onlinefriends-online-status'/>
-                        ) : (
-                            <GoDotFill className='onlinefriends-offline-status'/>
-                        )}
-              
-                      </div>
+                    ) : (
+                        <LiaUserCircleSolid className='topnav-search-box-none-img'/>
+                    )}
+
+                    {data.status==='Online' ? (
+                        <GoDotFill className='onlinefriends-online-status'/>
+                    ) : (
+                        <GoDotFill className='onlinefriends-offline-status'/>
+                    )}
+            
                     </div>
-                  ))}
-
                 </div>
-                ) :(
-                    <div className='onlinefriends-no-contacts-wrapper'>
-                        <span>אין אנשי קשר</span>
-                    </div>
-                )} 
+                ))}
+
             </div>
+     
+            {friendsInfo && friendsInfo.length===0 && (
+                <div className='onlinefriends-no-contacts-wrapper'>
+                    <span>אין אנשי קשר</span>
+                </div>
+            )}  
+
+            {!friendsInfo && (
+                <div className='onlinefriends-no-contacts-wrapper'>
+                    <span>...Loading</span>
+                </div>
+            )}   
         </div>
     );
 }

@@ -13,7 +13,7 @@ import { LiaUserCircleSolid } from 'react-icons/lia'
 import './displayfriends.css';
 
 // Services
-import { hasFriendsAtAll} from '../../Services/profileService';
+import { hasFriendsAtAll} from '../../Services/friendsService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 

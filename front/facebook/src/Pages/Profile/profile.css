@@ -203,13 +203,13 @@
     left: 0;
     width: 100%;
     background: #98999b5e !important;
-    z-index: 1;
+    z-index: 1000;
 }
 
 .profile-exit-icon {
     position: absolute;
-    top: -10%;
-    right: -20%;
+    top: -8%;
+    right: -11%;
     width: fit-content;
     cursor: pointer;
     border: none;

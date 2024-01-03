@@ -23,7 +23,7 @@ app.config['MYSQL_DB'] = 'facebook_db'
 secretPassCode = bcrypt.gensalt(rounds=15)
 
 # SQL handle
-def handleUsers(query): 
+def handleUsers(query): # Make actions in db 
     # Create Cursor
     cursor = mysql.connection.cursor()
 
@@ -38,7 +38,7 @@ def handleUsers(query):
 
     return response
 
-def handleOneResult(query):
+def handleOneResult(query): # Make actions and fetch one column
     # Create Cursor
     cursor = mysql.connection.cursor()
 
@@ -56,7 +56,7 @@ def handleOneResult(query):
 
     return data  # Return the data fetched from the query
 
-def handleMultipleResults(query):
+def handleMultipleResults(query): # # Make actions and fetch multiple columns
     # Create Cursor
     cursor = mysql.connection.cursor()
 
@@ -64,7 +64,7 @@ def handleMultipleResults(query):
     cursor.execute(query)
     
     # Fetch data if the query returns any results
-    data = cursor.fetchall()  # Use fetchall() for multiple rows
+    data = cursor.fetchall()
 
     # Commit to DB
     mysql.connection.commit()
@@ -212,7 +212,7 @@ def isAuthenticated():
         return jsonify({'res': False})
 
 @app.route("/handleSignOut", methods=['GET', 'POST'])
-def handleSignOut():
+def handleSignOut(): # Deletes session from user who signes out
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -228,9 +228,10 @@ def handleSignOut():
     return jsonify({'res': True})
 
 
+
 # Profile
 @app.route("/setprofile", methods=['GET', 'POST'])
-def setprofile():
+def setprofile(): # Adds info about the user to db
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -252,8 +253,6 @@ def setprofile():
     else:
         response = 0
         
-    print(response)
-
     if (response == 0): # If doesn't exist, continue
 
         # Initialize an empty list to store the update assignments
@@ -298,7 +297,7 @@ def setprofile():
         return jsonify({'res': False, 'err' : 'Username Exists'})
 
 @app.route("/profile", methods=['GET', 'POST'])
-def profile():
+def profile(): # Gets full data from db about the user
     data = request.data
    
     str_data = data.decode('utf-8') # From binary to string
@@ -504,6 +503,8 @@ def getProfilePost(): # Get post/s from db
     return jsonify({'res': False, 'data' : []})
 
 
+
+# Friends
 @app.route("/acceptFriend", methods=['GET','POST'])
 def acceptFriend(): # Friend acception => both added in db to each other
     data = request.data
@@ -844,7 +845,7 @@ def deleteFriendRequest(): # Deletes friendship of each other
     return jsonify({'res': True})
 
 @app.route("/isFriendPending", methods=['GET', 'POST'])
-def isFriendPending():
+def isFriendPending(): # Checks if signed in user still has a friend request wating for approval from other user
     data = request.data
 
     str_data = data.decode('utf-8') # From binary to string
@@ -874,7 +875,7 @@ def isFriendPending():
         return jsonify({'res': True, 'pending' : False})
     
 @app.route("/oneFriendRequestCheck", methods=['GET', 'POST'])
-def oneFriendRequestCheck():
+def oneFriendRequestCheck(): # Checks if user has a friend request
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -897,42 +898,6 @@ def oneFriendRequestCheck():
 
     return jsonify({'res': False})
 
-
-# Notifications
-@app.route("/newNotifications", methods=['GET','POST'])
-def newNotifications(): # Checks if user got any notifications => Gets the data of a notification
-    data = request.data
-    print(data)
-    str_data = data.decode('utf-8') # From binary to string
-    json_str = json.loads(str_data) # From string to json
-
-    # Set values
-    email = json_str["Email"]
-
-    query = f'''SELECT notifications FROM profiles WHERE email = '{email}' '''
- 
-    # Get notifications where email from db
-    response = handleOneResult(query)
-    response = response[0]
-
-    if (response):
-        notifications = json.loads(response)
-
-        allnotifications = []
-
-        for notification in notifications:
-            allnotifications.append(json.loads(notification))
-
-    if(response != None):
-
-        res = {
-            'data' : allnotifications,
-            'res': True
-        }    
-
-        return jsonify(res)
-    
-    return jsonify({'res': False, 'data' : []})
 
 
 # Marketplace
@@ -1006,7 +971,7 @@ def uploadProduct(): # Upload product/s to db
     return jsonify({'res': True})
 
 @app.route("/editProduct", methods=['GET', 'POST'])
-def editProduct():
+def editProduct(): # Edit product in marketplace
     data = request.data
 
     str_data = data.decode('utf-8') # From binary to string
@@ -1126,7 +1091,7 @@ def getAllProduct(): # Get product/s from db for everyone
     return jsonify({'res': False, 'data' : []})
 
 @app.route("/deleteProductRequest", methods=['GET', 'POST'])
-def deleteProductRequest():
+def deleteProductRequest(): # Delete product from marketplace - PENDING...
     data = request.data
 
     str_data = data.decode('utf-8') # From binary to string
@@ -1143,11 +1108,13 @@ def deleteProductRequest():
 
     return jsonify({'res': True})
 
+
+
 # Home
 
 # --- Feed
 @app.route("/getPostsToFeed", methods=['GET', 'POST'])
-def getPostsToFeed(): # Get post/s from db
+def getPostsToFeed(): # Get post/s from db to feed
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -1200,7 +1167,7 @@ def getPostsToFeed(): # Get post/s from db
 
 # --- FriendsOnline
 @app.route("/friendsStatus", methods=['GET', 'POST'])
-def friendsStatus():
+def friendsStatus(): # Fetchs friends data and checks their statuses
     data = request.data
     print(data)
     str_data = data.decode('utf-8') # From binary to string
@@ -1258,6 +1225,8 @@ def friendsStatus():
 
     return jsonify({'res': False, 'Note': 'No Friends'})
 
+
+
 # Search
 @app.route("/search", methods=['GET', 'POST'])
 def search():
@@ -1295,6 +1264,43 @@ def search():
 
 
 
+# Notifications
+@app.route("/newNotifications", methods=['GET','POST'])
+def newNotifications(): # Checks if user got any notifications => Gets the data of a notification
+    data = request.data
+    print(data)
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    # Set values
+    email = json_str["Email"]
+
+    query = f'''SELECT notifications FROM profiles WHERE email = '{email}' '''
+ 
+    # Get notifications where email from db
+    response = handleOneResult(query)
+    response = response[0]
+
+    if (response):
+        notifications = json.loads(response)
+
+        allnotifications = []
+
+        for notification in notifications:
+            allnotifications.append(json.loads(notification))
+
+    if(response != None):
+
+        res = {
+            'data' : allnotifications,
+            'res': True
+        }    
+
+        return jsonify(res)
+    
+    return jsonify({'res': False, 'data' : []})
+
+
 
 # HealthCheck
 @app.route("/healthCheck", methods=['GET', 'POST'])
@@ -1321,23 +1327,31 @@ if __name__ == "__main__":
 # 1. Marketplace ----------------------------------------------------------- In Progress...
 # 2. Friends --------------------------------------------------------------- VVVVVVVVVVVVVV
 # 3. Feed ------------------------------------------------------------------ In Progress...
-# 4. OnlineFriends --------------------------------------------------------- In Progress...
+# 4. OnlineFriends --------------------------------------------------------- VVVVVVVVVVVVVV
+
 
 # Can't Tell Tasks:
 # 1. Every new post uploaded by user will appear up so thats the first post in the column
 # 2. make a skeleton while loading profile data
+# 3. make session id last for 5 minutes of unactivity.
+# 4. 
+
 
 # Easy Tasks:
 # 1. for search - move between option using buttons 
+# 2. change dot of new notificaton
+
 
 # Video tasks:
 # 1. learn react classes in udemy.
 # 2. 
 
+
 # Problems
-# 1. in productUpload, enter key opens file    !!!
-# 2. db json columns cant get hebrew words     !!!
-# 
+# 1. in productUpload, enter key opens file               !!!
+# 2. db json columns cant get hebrew words                !!!
+# 3. can't press notification to close it                 !!!
+# 4. when loading facebook on home route, errors raise up !!!
 
 
 # Marketplace Related Tasks:
@@ -1345,7 +1359,6 @@ if __name__ == "__main__":
 # 2. format date problem ------------------------------------------------------ VVV
 # 3. figure out a way to import every product to a single page ---------------- VVV
 # 4. cities api ---------------------------------------------------------------
-
 
 
 # Friends Related Tasks:
@@ -1357,11 +1370,9 @@ if __name__ == "__main__":
 # (friend pending goes back to initial state when page refreshes) => check if db got any notification, if so, return 'pending', else, return 'add friend'.
 # 5. feature to exit window of notification with mouse ------------------------- VVV
 
+
 # Feed Related Tasks:
 # 1. Fetch allposts from db to feed -------------------------------------------- VVV
 # 2. Sort posts by time -------------------------------------------------------- VVV
 # 3. Fetch also username and userimages ---------------------------------------- Problem - ask shlomi!
-# 4. Reload 5 posts. when user scrolling reload another 5 ----------------------
-
-# FriendsOnline Tasks:
-# 1. Fetch allfriends from db to the component and check there online status
+# 4. Reload 5 posts. when user is scrolling reload another 5 -------------------

@@ -20,7 +20,10 @@ import './topnav.css';
 
 // Services
 import { handleSignOut, getAuthenticatedUser, search } from '../../Services/authService';
-import { getProfileImage, newNotifications, acceptFriend, ignoreFriend } from '../../Services/profileService';
+import { getProfileImage} from '../../Services/profileService';
+import { acceptFriend, ignoreFriend } from '../../Services/friendsService';
+import { newNotifications } from '../../Services/notificationsService';
+
 
 
 const TopNav = () => {

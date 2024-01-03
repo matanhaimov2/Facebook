@@ -21,7 +21,8 @@ import { MdDeleteForever } from 'react-icons/md'
 import './profile.css';
 
 // Services
-import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, checkFriend, hasFriendsAtAll, startFriendRequest, deleteFriendRequest, getPendingFriend, oneFriendRequestCheck} from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage} from '../../Services/profileService';
+import { checkFriend, hasFriendsAtAll, startFriendRequest, deleteFriendRequest, getPendingFriend, oneFriendRequestCheck } from '../../Services/friendsService'
 import { getAuthenticatedUser } from '../../Services/authService'
 
 // Components
