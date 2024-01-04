@@ -1333,7 +1333,7 @@ if __name__ == "__main__":
 # Can't Tell Tasks:
 # 1. Every new post uploaded by user will appear up so thats the first post in the column
 # 2. make a skeleton while loading profile data
-# 3. make session id last for 5 minutes of unactivity.
+# 3. make session id last for 5 minutes of inactivity.
 # 4. 
 
 
@@ -1348,10 +1348,10 @@ if __name__ == "__main__":
 
 
 # Problems
-# 1. in productUpload, enter key opens file               !!!
-# 2. db json columns cant get hebrew words                !!!
-# 3. can't press notification to close it                 !!!
-# 4. when loading facebook on home route, errors raise up !!!
+# 1. in productUpload, enter key opens file                !!!
+# 2. db json columns cant get hebrew words                 !!!
+# 3. can't press notification to close it                  !!!
+# 4. when loading facebook on home route, errors raises up !!!
 
 
 # Marketplace Related Tasks:

@@ -60,18 +60,18 @@ function Onlinefriends() {
                     
                     <div className='onilnefriends-img-wrapper'>
 
-                    {data.userimages ? (
-                        <img className='topnav-search-box-img' src={ data.userimages }></img>
+                        {data.userimages ? (
+                            <img className='topnav-search-box-img' src={ data.userimages }></img>
 
-                    ) : (
-                        <LiaUserCircleSolid className='topnav-search-box-none-img'/>
-                    )}
+                        ) : (
+                            <LiaUserCircleSolid className='topnav-search-box-none-img'/>
+                        )}
 
-                    {data.status==='Online' ? (
-                        <GoDotFill className='onlinefriends-online-status'/>
-                    ) : (
-                        <GoDotFill className='onlinefriends-offline-status'/>
-                    )}
+                        {data.status==='Online' ? (
+                            <GoDotFill className='onlinefriends-online-status'/>
+                        ) : (
+                            <GoDotFill className='onlinefriends-offline-status'/>
+                        )}
             
                     </div>
                 </div>
