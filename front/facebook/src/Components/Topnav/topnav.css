@@ -362,3 +362,19 @@
     position: absolute;
     z-index: 0;
 }
+
+.topnav-search-skeleton {
+    display: flex;
+    flex-direction: row-reverse !important;
+    gap: 3%;
+    align-items: start;
+}
+
+.topnav-search-skeleton-text {
+    width: 30%;
+}
+
+.css-jfdv4h-MuiStack-root>:not(style):not(style) {
+    margin: 0;
+    background: grey;
+}

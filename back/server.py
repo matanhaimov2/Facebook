@@ -1331,9 +1331,9 @@ if __name__ == "__main__":
 
 
 # Can't Tell Tasks:
-# 1. Every new post uploaded by user will appear up so thats the first post in the column
+# 1. make session id last for 5 minutes of inactivity. --------------------- Problem - ask shlomi!
 # 2. make a skeleton while loading profile data
-# 3. make session id last for 5 minutes of inactivity.
+# 3. 
 # 4. 
 
 
@@ -1375,4 +1375,4 @@ if __name__ == "__main__":
 # 1. Fetch allposts from db to feed -------------------------------------------- VVV
 # 2. Sort posts by time -------------------------------------------------------- VVV
 # 3. Fetch also username and userimages ---------------------------------------- Problem - ask shlomi!
-# 4. Reload 5 posts. when user is scrolling reload another 5 -------------------
+# 4. Reload 5 posts. when user is scrolling reload another 5 ------------------- Problem - ask shlomi!

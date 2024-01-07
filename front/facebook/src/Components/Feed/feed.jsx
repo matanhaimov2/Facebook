@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BiSolidLock } from 'react-icons/bi'
 import { FaUserFriends } from 'react-icons/fa'
 import { MdPublic } from 'react-icons/md'
@@ -23,8 +23,32 @@ import { getAuthenticatedUser } from '../../Services/authService';
 function Feed() {
 
     // States
-    const [profilePosts, setProfilePosts] = useState(null); // 
+    const [profilePosts, setProfilePosts] = useState([]); 
+    
+    // const [hasMore, setHasMore] = useState(true); 
+    // const [page, setPage] = useState(0);
+    
+    // const elementRef = useRef(null)
 
+    // function onIntersection (entries) {
+    //     const firstEntry = entries[0]
+    //     if (firstEntry.isIntersecting && hasMore) {
+    //         //hasMoreItems()
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     const observer = new IntersectionObserver(onIntersection)
+    //     if(observer && elementRef.current) {
+    //         observer.observe(elementRef.current)
+    //     }
+
+    //     return () => {
+    //         if(observer) {
+    //             observer.disconnect()
+    //         }
+    //     }
+    // }, [profilePosts])
 
     useEffect(() => {
         

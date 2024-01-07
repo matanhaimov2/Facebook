@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
 
 // Icons
 import logo from '../../Assets/Images/facebook-icon.png'; 
@@ -364,6 +366,17 @@ const TopNav = () => {
                     <div className='topnav-search-no-result-wrapper'>
                       <span className='topnav-search-no-result-title'>אין תוצאות חיפוש</span>
                     </div>
+                  )}
+
+                  {!searchedProfiles && (
+                        <Stack className='topnav-search-skeleton' spacing={1}>
+                        {/* For other variants, adjust the size with `width` and `height` */}
+
+                        <Skeleton variant="circular" width={40} height={40} />
+                        {/* For variant="text", adjust the height via font-size */}
+                        <Skeleton className='topnav-search-skeleton-text' variant="text" sx={{ fontSize: '1rem' }} />
+
+                      </Stack>
                   )}
                 
                 </div>
