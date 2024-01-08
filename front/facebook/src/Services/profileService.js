@@ -113,5 +113,4 @@ export {
     deleteProfileImage,
     uploadPost,
     getProfilePost
-
 }
