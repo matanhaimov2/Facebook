@@ -57,7 +57,7 @@ function DisplayPosts({ profileEmail }) {
     return (
         <div className='displayposts-wrapper-wrapper'>
             {profilePosts && profilePosts.map((post, i) => (
-                <Post index={i} post={post} />                    
+                <Post index={i} post={post} profileEmail={profileEmail} />                    
             ))}      
 
             {profilePosts && profilePosts.length===0 && (

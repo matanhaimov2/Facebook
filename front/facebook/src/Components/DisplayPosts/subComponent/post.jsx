@@ -14,16 +14,40 @@ import { PiShareFatLight } from "react-icons/pi";
 import '../displayposts.css';
 
 // Services
-import { getProfilePost } from '../../../Services/profileService';
+import { likePost } from '../../../Services/postService';
 import { getAuthenticatedUser } from '../../../Services/authService';
 
 
-function Post({ index, post }) {
+function Post({ index, post, profileEmail}) {
 
-    
-    const likeButton = () => {
-        
+    // States
+    const [isLike, setIsLike] = useState(false); 
+
+
+
+    const likeButton = async (e, index) => {
+        if (profileEmail) {
+            let data = {
+                "friendEmail" : profileEmail,
+                "Index" : index,
+                "IsLike" : isLike
+            }
+
+            console.log(data,'kjshdlksabflka')
+
+            const response = await likePost(data)
+            if(response && response.res===true) {                   
+                console.log('Like Has Been Added')
+                setIsLike(!isLike)
+            }
+            else {
+                console.log('Something Went Wrong')
+            }
+        }
     }
+
+
+
 
     const commentButton = () => {
         
@@ -72,7 +96,7 @@ function Post({ index, post }) {
                     <span>Comment</span>
                 </div>
 
-                <div className='displayposts-like-board-trio-wrapper' onClick={likeButton}>
+                <div className='displayposts-like-board-trio-wrapper' onClick={(e) => {likeButton(e, index)}}>
                     <span className='displayposts-like'> <SlLike /> </span>
                     <span>Like</span>
                 </div>

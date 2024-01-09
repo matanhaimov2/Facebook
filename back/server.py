@@ -418,7 +418,8 @@ def uploadPost(): # Upload post/s to db
         'Text': uploadedtext,
         'Image': uploadedimg,
         'Privacy': uploadedprivacy,
-        'date': str(datetime.now())
+        'date': str(datetime.now()),
+        'Likes': 0
     }
 
     query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
@@ -502,7 +503,29 @@ def getProfilePost(): # Get post/s from db
     
     return jsonify({'res': False, 'data' : []})
 
+# Post
+@app.route("/likePost", methods=['GET', 'POST'])
+def likePost(): # 
+    data = request.data
+    print(data,'sbdfkjsbhabldfsda')
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
 
+    friendEmail = json_str["friendEmail"]
+    index = json_str["Index"]
+    isLike = json_str["IsLike"]
+
+    if isLike==False:
+        
+
+
+        return jsonify({'res': True, 'note': 'Like Added'})
+    else:    
+
+
+        return jsonify({'res': False, 'note': 'Like Has Been Deleted'})
+    
+    return jsonify({'res': False, 'data' : []})
 
 # Friends
 @app.route("/acceptFriend", methods=['GET','POST'])
