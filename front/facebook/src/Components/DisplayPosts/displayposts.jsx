@@ -19,6 +19,9 @@ import './displayposts.css';
 import { getProfilePost } from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
+// Components
+import { LikeOption } from '../LikeOption/likeoption';
+
 
 function DisplayPosts({ profileEmail }) {
 
@@ -61,8 +64,20 @@ function DisplayPosts({ profileEmail }) {
         getPostToFacebook();
     }, [])
 
-    const likeButton = () => {
+    const likeButton = (e, index) => {
         
+        let data;
+         
+        if(profileEmail) {
+            data = {
+                "Email" : profileEmail
+            }
+        }
+        else {
+            data = {
+                "Email" : getAuthenticatedUser()
+            }
+        }
     }
 
     const commentButton = () => {
@@ -114,7 +129,7 @@ function DisplayPosts({ profileEmail }) {
                             <span>Comment</span>
                         </div>
 
-                        <div className='displayposts-like-board-trio-wrapper' onClick={likeButton}>
+                        <div className='displayposts-like-board-trio-wrapper'  onClick={(e) => {likeButton(e, i)}}>
                             <span className='displayposts-like'> <SlLike /> </span>
                             <span>Like</span>
                         </div>

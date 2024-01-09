@@ -418,7 +418,8 @@ def uploadPost(): # Upload post/s to db
         'Text': uploadedtext,
         'Image': uploadedimg,
         'Privacy': uploadedprivacy,
-        'date': str(datetime.now())
+        'date': str(datetime.now()),
+        'Likes': 0
     }
 
     query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
