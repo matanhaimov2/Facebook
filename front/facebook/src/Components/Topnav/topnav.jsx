@@ -212,6 +212,11 @@ const TopNav = () => {
     }
 
   }
+
+  const openNotificationsHandler = () => {
+    setOpenNotifications(!openNotifications);
+    console.log(openNotifications)
+  }
   
   return (
     <div className='topnav-wrapper'>
@@ -229,9 +234,9 @@ const TopNav = () => {
 
           <div className='topnav-sub-left-wrapper topnav-round-wrapper'>
             {!notficationAlert ? (
-              <button className='topnav-button-circle topnav-pointer' onClick={() => {setOpenNotifications(!openNotifications)}}> <IoNotificationsOutline className='topnav-menu-icon' /> </button>
+              <button className='topnav-button-circle topnav-pointer' onClick={openNotificationsHandler}> <IoNotificationsOutline className='topnav-menu-icon' /> </button>
             ) : (
-              <button className='topnav-button-circle topnav-pointer' onClick={() => {setOpenNotifications(!openNotifications)}}> <IoNotificationsOutline className='topnav-menu-icon' /> <FaRegCircle className='topnav-menu-alert'/> </button>
+              <button className='topnav-button-circle topnav-pointer' onClick={openNotificationsHandler}> <IoNotificationsOutline className='topnav-menu-icon' /> <FaRegCircle className='topnav-menu-alert'/> </button>
             )}
           </div>
 

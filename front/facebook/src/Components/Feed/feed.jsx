@@ -1,14 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BiSolidLock } from 'react-icons/bi'
-import { FaUserFriends } from 'react-icons/fa'
-import { MdPublic } from 'react-icons/md'
-
-
-// React Icons
-import { SlLike } from "react-icons/sl";
-import { FaRegComment } from "react-icons/fa";
-import { PiShareFatLight } from "react-icons/pi";
-
 
 // CSS
 import './feed.css';
@@ -17,38 +7,52 @@ import './feed.css';
 import { getPostsToFeed } from '../../Services/homeService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
-// Components
+// Sub Components
+import Post from '../DisplayPosts/subComponent/post';
 
 
 function Feed() {
 
     // States
-    const [profilePosts, setProfilePosts] = useState([]); 
+    const [profilePosts, setProfilePosts] = useState(false); 
     
-    // const [hasMore, setHasMore] = useState(true); 
-    // const [page, setPage] = useState(0);
+    const NumberOfPostsToDisplay = 5; // Change this if you want to get more or less posts at the time
+    const [postIndex, setPostIndex] = useState(1);
+
+    useEffect(() => {
+        const AddEventLisenterToScroll = (feed) => {
+
+            const handleScroll = () => {
+                console.log('Scrolling...');
+                const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
+                console.log('Is at bottom:', isAtBottom);
+                if (isAtBottom) {
+                  // Do something when the user reaches the bottom
+                  console.log('User reached the bottom of the page!');
+                }
+              };
+
+            window.onscroll = null;
+            // Attach the event listener to the 'scroll' event
+            // window.addEventListener('scroll', handleScroll);
+            window.addEventListener('scroll',(event) => {
+                console.log('Scrolling...');
+            });
+
+            // Clean up the event listener when the component is unmounted
+            return () => {
+              window.removeEventListener('scroll', handleScroll);
+            };
+        }
+        
+        const feed = document.getElementById('feed-wrapper');
+     
+        if(feed) {
+            AddEventLisenterToScroll(feed);
+        }
+
+      }, []); // Empty dependency array ensures that the effect runs only once during mount
     
-    // const elementRef = useRef(null)
-
-    // function onIntersection (entries) {
-    //     const firstEntry = entries[0]
-    //     if (firstEntry.isIntersecting && hasMore) {
-    //         //hasMoreItems()
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     const observer = new IntersectionObserver(onIntersection)
-    //     if(observer && elementRef.current) {
-    //         observer.observe(elementRef.current)
-    //     }
-
-    //     return () => {
-    //         if(observer) {
-    //             observer.disconnect()
-    //         }
-    //     }
-    // }, [profilePosts])
 
     useEffect(() => {
         
@@ -85,68 +89,11 @@ function Feed() {
         getPostToFacebook();
     }, [])
 
-    const likeButton = () => {
-        
-    }
-
-    const commentButton = () => {
-        
-    }
-
-    const shareButton = () => {
-        
-    }
 
     return (
-        <div className='feed-wrapper'>
+        <div id='feed-wrapper' className='feed-wrapper'>
             {profilePosts && profilePosts.map((post, i) => (
-                <div key={i} className='feed-sub-wrapper'>
-                
-
-                    <div className='feed-datetext-wrapper'>
-                        <div className='displayposts-privacydate-wrapper'> 
-                            {post.Privacy==='only me' && (
-                                <BiSolidLock className='privacy-icon'/>
-                            )}
-
-                            {post.Privacy==='friends' && (
-                                <FaUserFriends className='privacy-icon'/>
-                            )}
-
-                            {post.Privacy==='public' && (
-                                <MdPublic className='privacy-icon'/>
-                            )}
-
-                            <span className='displayposts-date-wrapper'> { post.date }</span>
-
-                        </div>
-
-                        <span className='displayposts-text-wrapper'>{ post.Text }</span>
-                        
-                    </div>
-                    
-                    <div className='feed-image-wrapper'>
-                        <img className='feed-image' src={ post.Image }></img>
-                    </div>
-
-                    <div className='feed-like-board-wrapper'>
-                        <div className='displayposts-like-board-trio-wrapper' onClick={shareButton}>
-                            <span className='displayposts-like'> <PiShareFatLight /> </span>
-                            <span>Share</span>
-                        </div>
-
-                        <div className='displayposts-like-board-trio-wrapper' onClick={commentButton}>
-                            <span className='displayposts-like'> <FaRegComment /> </span>
-                            <span>Comment</span>
-                        </div>
-
-                        <div className='displayposts-like-board-trio-wrapper' onClick={likeButton}>
-                            <span className='displayposts-like'> <SlLike /> </span>
-                            <span>Like</span>
-                        </div>
-                    </div>
-
-                </div>                         
+                <Post index={i} post={post} />                         
             ))}      
 
             {profilePosts && profilePosts.length===0 && (
