@@ -14,40 +14,35 @@ import { PiShareFatLight } from "react-icons/pi";
 import '../displayposts.css';
 
 // Services
-import { likePost } from '../../../Services/postService';
+import { likePost, displayLikes } from '../../../Services/postService';
 import { getAuthenticatedUser } from '../../../Services/authService';
 
 
 function Post({ index, post, profileEmail}) {
 
     // States
-    const [isLike, setIsLike] = useState(false); 
-
+    const [likeClick, setLikeClick] = useState(); 
+    const [isLike, setIsLike] = useState(); 
+    const [numberOfLikes, setNumberOfLikes] = useState(); 
 
 
     const likeButton = async (e, index) => {
         if (profileEmail) {
             let data = {
+                "Email" : getAuthenticatedUser(),
                 "friendEmail" : profileEmail,
-                "Index" : index,
-                "IsLike" : isLike
+                "Index" : index
             }
-
-            console.log(data,'kjshdlksabflka')
 
             const response = await likePost(data)
             if(response && response.res===true) {                   
                 console.log('Like Has Been Added')
-                setIsLike(!isLike)
             }
             else {
                 console.log('Something Went Wrong')
             }
         }
     }
-
-
-
 
     const commentButton = () => {
         
@@ -56,6 +51,10 @@ function Post({ index, post, profileEmail}) {
     const shareButton = () => {
         
     }
+
+    const getLikesLength = (likes) => {
+        return likes.length;
+      };
 
     return (
         <div key={index} className='displayposts-wrapper'>
@@ -99,6 +98,12 @@ function Post({ index, post, profileEmail}) {
                 <div className='displayposts-like-board-trio-wrapper' onClick={(e) => {likeButton(e, index)}}>
                     <span className='displayposts-like'> <SlLike /> </span>
                     <span>Like</span>
+                    {post.Likes ?  (
+                        <div> { getLikesLength(post.Likes) }</div>
+                    ) : (
+                        <div> 0 </div>
+                    )}
+
                 </div>
             </div>
 

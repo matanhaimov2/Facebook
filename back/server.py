@@ -419,7 +419,7 @@ def uploadPost(): # Upload post/s to db
         'Image': uploadedimg,
         'Privacy': uploadedprivacy,
         'date': str(datetime.now()),
-        'Likes': 0
+        'Likes': ''
     }
 
     query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
@@ -511,19 +511,46 @@ def likePost(): #
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
+    email = json_str["Email"]
     friendEmail = json_str["friendEmail"]
     index = json_str["Index"]
-    isLike = json_str["IsLike"]
 
-    if isLike==False:
-        
+    query = f"""
+        SELECT JSON_EXTRACT(userposts, '$[{index}]')
+        FROM profiles
+        WHERE email = '{friendEmail}';
+    """
+    response = handleOneResult(query)
+    print(response, 'Here1')
+
+    response = response[0]
+    posts = json.loads(response)
+
+    print(response, 'Here2')
+    print(posts, 'Here3')
 
 
-        return jsonify({'res': True, 'note': 'Like Added'})
-    else:    
 
 
-        return jsonify({'res': False, 'note': 'Like Has Been Deleted'})
+
+    # Goal: fetch from db the specefic post - VVV => add to likes {email} and fetch back to db
+
+    
+    return jsonify({'res': False, 'data' : []})
+
+@app.route("/displayLikes", methods=['GET', 'POST'])
+def displayLikes(): # 
+    data = request.data
+    print(data,'here')
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email - json_str["Email"]
+    friendEmail = json_str["friendEmail"]
+    index = json_str["Index"]
+
+
+
     
     return jsonify({'res': False, 'data' : []})
 
