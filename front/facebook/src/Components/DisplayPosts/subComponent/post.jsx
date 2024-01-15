@@ -22,26 +22,38 @@ function Post({ index, post, profileEmail}) {
 
     // States
     const [likeClick, setLikeClick] = useState(); 
-    const [isLike, setIsLike] = useState(); 
+    const [isLike, setIsLike] = useState(post.Likes ? post.Likes.includes(getAuthenticatedUser()) : false);
     const [numberOfLikes, setNumberOfLikes] = useState(); 
-
-
+    const [likesLength, setLikesLength] = useState(post.Likes ? post.Likes.length : 0);
+    console.log(post)
     const likeButton = async (e, index) => {
-        if (profileEmail) {
-            let data = {
-                "Email" : getAuthenticatedUser(),
-                "friendEmail" : profileEmail,
-                "Index" : index
-            }
+        
+        setIsLike(!isLike);
 
-            const response = await likePost(data)
-            if(response && response.res===true) {                   
-                console.log('Like Has Been Added')
-            }
-            else {
-                console.log('Something Went Wrong')
-            }
+        if(!isLike) {
+            setLikesLength(likesLength + 1);
         }
+        else {
+            setLikesLength(likesLength - 1);
+        }
+        
+
+        const data = {
+            "ID" : post.ID ? post.ID : null,
+            "Email" : getAuthenticatedUser(),
+            "PostCreator" : post.Email ? post.Email : null,
+            "LikeOrDislike" : !isLike
+        }
+
+        const response = await likePost(data)
+
+        if(response && response.res===true) {                   
+            console.log('Like Has Been Added')
+        }
+        else {
+            console.log('Something Went Wrong')
+        }
+    
     }
 
     const commentButton = () => {
@@ -52,12 +64,8 @@ function Post({ index, post, profileEmail}) {
         
     }
 
-    const getLikesLength = (likes) => {
-        return likes.length;
-      };
-
     return (
-        <div key={index} className='displayposts-wrapper'>
+        <div key={index} id={post.ID ? post.ID : 'null'} className='displayposts-wrapper'>
         
 
             <div className='displayposts-datetext-wrapper'>
@@ -85,6 +93,7 @@ function Post({ index, post, profileEmail}) {
             <img className='displayposts-image-wrapper' src={ post.Image }></img>
 
             <div className='displayposts-like-board-wrapper'>
+
                 <div className='displayposts-like-board-trio-wrapper' onClick={shareButton}>
                     <span className='displayposts-like'> <PiShareFatLight /> </span>
                     <span>Share</span>
@@ -95,15 +104,21 @@ function Post({ index, post, profileEmail}) {
                     <span>Comment</span>
                 </div>
 
-                <div className='displayposts-like-board-trio-wrapper' onClick={(e) => {likeButton(e, index)}}>
-                    <span className='displayposts-like'> <SlLike /> </span>
-                    <span>Like</span>
-                    {post.Likes ?  (
-                        <div> { getLikesLength(post.Likes) }</div>
+                <div id={post.ID ? post.ID : 'null'} className='displayposts-like-board-trio-wrapper' onClick={(e) => {likeButton(e, index)}}>
+                    {!isLike ? (
+                        <>
+                            <span className='displayposts-like'> <SlLike /> </span>
+                            <span>Like</span>
+                        </>
                     ) : (
-                        <div> 0 </div>
+                        <>
+                            <span className='displayposts-like'> <SlLike /> </span>
+                            <span>Dislike</span>
+                        </>
                     )}
 
+                    <div> { likesLength }</div>
+                 
                 </div>
             </div>
 

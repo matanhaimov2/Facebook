@@ -288,8 +288,7 @@ function Profile() {
         }
 
         const deleteFriendResponse = await deleteFriendRequest(data)
-        console.log(deleteFriendResponse)
-        // On progress...
+        setIsFriends(false)
 
     }
 
