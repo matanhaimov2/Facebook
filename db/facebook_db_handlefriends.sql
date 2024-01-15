@@ -36,7 +36,7 @@ CREATE TABLE `handlefriends` (
 
 LOCK TABLES `handlefriends` WRITE;
 /*!40000 ALTER TABLE `handlefriends` DISABLE KEYS */;
-INSERT INTO `handlefriends` VALUES (1,'matanhaimov@gmail.com',NULL),(2,'shlomihaimov@gmail.com',NULL),(3,'yazenhamoud@gmail.com',NULL),(4,'etgarb1237@gmail.com',NULL),(5,'ritahaimov@gmail.com',NULL),(6,'edikhaimov@gmail.com',NULL);
+INSERT INTO `handlefriends` VALUES (1,'matanhaimov@gmail.com','[\"\\\"shlomihaimov@gmail.com\\\"\", \"\\\"etgarb1237@gmail.com\\\"\", \"\\\"yazenhamoud@gmail.com\\\"\"]'),(2,'shlomihaimov@gmail.com','[\"\\\"matanhaimov@gmail.com\\\"\", \"\\\"etgarb1237@gmail.com\\\"\"]'),(3,'yazenhamoud@gmail.com','[\"\\\"etgarb1237@gmail.com\\\"\", \"\\\"matanhaimov@gmail.com\\\"\"]'),(4,'etgarb1237@gmail.com','[\"\\\"shlomihaimov@gmail.com\\\"\", \"\\\"matanhaimov@gmail.com\\\"\", \"\\\"yazenhamoud@gmail.com\\\"\"]'),(5,'ritahaimov@gmail.com',NULL),(6,'edikhaimov@gmail.com',NULL);
 /*!40000 ALTER TABLE `handlefriends` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-18 14:29:04
+-- Dump completed on 2024-01-14 13:47:52

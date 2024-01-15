@@ -40,7 +40,6 @@ function DisplayPosts({ profileEmail }) {
                 const response = await getProfilePost(data)
                 if(response && response.res===true) { // If the response is true, enter                    
                     setProfilePosts(response.data)
-                    console.log(response.data.Likes,'here')
 
                 }
                 else {

@@ -877,20 +877,63 @@ def deleteFriendRequest(): # Deletes friendship of each other
     email = json_str["Email"]
     friend_email = json_str["FriendEmail"]
 
-    delete_query = f"UPDATE handlefriends SET friends = JSON_REMOVE(friends, '$[{friend_email}]') WHERE user_email = '{email}'"
-    delete_queryTwo = f"UPDATE handlefriends SET friends = JSON_REMOVE(friends, '$[{friend_email}]') WHERE user_email = '{email}'"
+    query = f'''SELECT friends FROM handlefriends WHERE user_email = '{email}' '''
+    response = handleOneResult(query)
+    friends = response[0]
+    friends_list = json.loads(friends)
 
-    print(delete_query, 'first')
-    print(delete_queryTwo, 'two')
+    # for deleting friend from current user that logged in
+    updated_friends_list = []
+    str_friend_email = '"' + friend_email + '"'
+
+    # for deleting friend from his user
+    updated_his_friends_list = []
+    str_email = '"' + email + '"'
+
+    for friend in friends_list:
+        # if wanted-friend-delete is not in the list
+        if friend != str_friend_email:
+            updated_friends_list.append(json.dumps(friend))
+
+        # if wanted-friend-delete is on the list - Remove Him
+        else:
+            print('Friend Is Removed From Current User Logged In')
+
+            # Deletes from his friend list, the logged in user
+            select_friend_query = f'''SELECT friends FROM handlefriends WHERE user_email = '{friend_email}' '''
+            friend_response = handleOneResult(select_friend_query)
+            friend_response = friend_response[0]
+
+            his_friends_list = json.loads(friend_response)
+
+            for friend in his_friends_list:
+                # if wanted-friend-delete is not in the list
+                if friend != str_email:
+                    updated_his_friends_list.append(json.dumps(friend))
+
+                # if wanted-friend-delete is on the list - Remove Him
+                else:
+                    print('Friend Is Removed From His User')
+                    
+            print('Friend List Of His User', updated_his_friends_list)
 
 
-    # responseOne = handleUsers(delete_query)
-    # responseTwo = handleUsers(delete_queryTwo)
+            his_sql_query = f"""
+                UPDATE handlefriends
+                SET friends = JSON_ARRAY({', '.join(updated_his_friends_list)})
+                WHERE user_email = '{friend_email}';
+            """
+            delete_his_friend_query = handleUsers(his_sql_query)
 
-    print(responseOne, 'one')
-    print(responseTwo, 'two')
 
+    print('Friend List Of Logged In User', updated_friends_list)
 
+    sql_query = f"""
+        UPDATE handlefriends
+        SET friends = JSON_ARRAY({', '.join(updated_friends_list)})
+        WHERE user_email = '{email}';
+    """
+    delete_friend_query = handleUsers(sql_query)
 
     return jsonify({'res': True})
 
@@ -910,14 +953,15 @@ def isFriendPending(): # Checks if signed in user still has a friend request wat
     response = handleOneResult(friendsNotifications)
   
     friends = response[0]
-    friends = json.loads(friends)
     boole = False 
+    if friends:
+        friends = json.loads(friends)
+        
+        for friend in friends:
+            friend = json.loads(friend)
 
-    for friend in friends:
-        friend = json.loads(friend)
-
-        if friend['Email']==email:
-            boole = True
+            if friend['Email']==email:
+                boole = True
 
     if boole:
         return jsonify({'res': True, 'pending' : True})
@@ -938,10 +982,11 @@ def oneFriendRequestCheck(): # Checks if user has a friend request
     query = '''SELECT notifications FROM profiles WHERE email = '{}' '''.format(email) 
     response = handleOneResult(query)
 
-    if friend_email_to_check in response[0]:
-        print('user is waiting for friend approval')
+    if response[0]:
+        if friend_email_to_check in response[0]:
+            print('user is waiting for friend approval')
 
-        return jsonify({'res': True, 'Note': 'user is waiting for friend approval'})
+            return jsonify({'res': True, 'Note': 'user is waiting for friend approval'})
 
     else:
         print('theres no request waiting')
