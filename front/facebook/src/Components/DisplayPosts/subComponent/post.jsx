@@ -14,18 +14,43 @@ import { PiShareFatLight } from "react-icons/pi";
 import '../displayposts.css';
 
 // Services
-import { likePost, displayLikes } from '../../../Services/postService';
+import { likePost, displayUsernameAndImage } from '../../../Services/postService';
 import { getAuthenticatedUser } from '../../../Services/authService';
 
 
-function Post({ index, post, profileEmail}) {
+function Post({ index, post }) {
 
     // States
-    const [likeClick, setLikeClick] = useState(); 
     const [isLike, setIsLike] = useState(post.Likes ? post.Likes.includes(getAuthenticatedUser()) : false);
-    const [numberOfLikes, setNumberOfLikes] = useState(); 
     const [likesLength, setLikesLength] = useState(post.Likes ? post.Likes.length : 0);
-    console.log(post)
+
+    // useEffect(() => {
+        
+    //     const getUsernameAndImage = async () => {
+    //         let data = {
+    //             "PostCreator" : post.Email
+    //         }
+
+    //         const additionalDataResponse = await displayUsernameAndImage(data)
+
+    //         if(additionalDataResponse && additionalDataResponse.res===true) {                   
+    //             post.UserImage = additionalDataResponse.data.Userimage;
+    //             post.Username = additionalDataResponse.data.Username;    
+
+    //             console.log(post)
+
+    //         }
+    //         else {
+    //             console.log('Something Went Wrong')
+    //         }
+    //     }
+
+    //     getUsernameAndImage();
+    // }, [])
+
+
+
+
     const likeButton = async (e, index) => {
         
         setIsLike(!isLike);
@@ -39,9 +64,9 @@ function Post({ index, post, profileEmail}) {
         
 
         const data = {
-            "ID" : post.ID ? post.ID : null,
+            "ID" : post.ID,
             "Email" : getAuthenticatedUser(),
-            "PostCreator" : post.Email ? post.Email : null,
+            "PostCreator" : post.Email,
             "LikeOrDislike" : !isLike
         }
 
@@ -66,7 +91,11 @@ function Post({ index, post, profileEmail}) {
 
     return (
         <div key={index} id={post.ID ? post.ID : 'null'} className='displayposts-wrapper'>
-        
+            <div className='displayposts-user-info-wrapper'>
+                <span>{post.Username}</span>
+                <img className='displayposts-userimage-wrapper' src={ post.UserImage }></img>
+
+            </div>
 
             <div className='displayposts-datetext-wrapper'>
                 <div className='displayposts-privacydate-wrapper'> 
@@ -117,7 +146,7 @@ function Post({ index, post, profileEmail}) {
                         </>
                     )}
 
-                    <div> { likesLength }</div>
+                    <div> { likesLength } </div>
                  
                 </div>
             </div>

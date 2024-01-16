@@ -5,6 +5,7 @@ import './feed.css';
 
 // Services
 import { getPostsToFeed } from '../../Services/homeService';
+import { displayUsernameAndImage } from '../../Services/postService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 // Sub Components
@@ -54,42 +55,58 @@ function Feed() {
       }, []); // Empty dependency array ensures that the effect runs only once during mount
     
 
-    useEffect(() => {
-        
+      useEffect(() => {
         const getPostToFacebook = async () => {
-
             let data = {
                 "Email" : getAuthenticatedUser()
             }
-
-            
+    
             if(getAuthenticatedUser()) {
+                try {
+                    const response = await getPostsToFeed(data);
+                    
+                    if (response && response.res === true) {
+                        // Fetch additional data for each post
+                        let updatedPosts = await Promise.all(response.data.map(async (post) => {
+                            const additionalDataResponse = await displayUsernameAndImage({ "PostCreator": post.Email });
+    
+                            if (additionalDataResponse && additionalDataResponse.res === true) {
+                                return {
+                                    ...post,
+                                    UserImage: additionalDataResponse.data.Userimage,
+                                    Username: additionalDataResponse.data.Username
+                                };
+                            } else {
+                                console.log('Something Went Wrong');
+                                return post;
+                            }
+                        }));
+    
+                        console.log(updatedPosts);
 
-                const response = await getPostsToFeed(data)
-                if(response && response.res===true) { // If the response is true, enter                    
-                    setProfilePosts(response.data)
+                        // Time Sort
+                        updatedPosts = updatedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-                    // Time Sort
-                    response.data.sort((a, b) => {
-                        return new Date(a.date) - new Date(b.date); // descending
-                    })
-                      
-                    response.data.sort((a, b) => {
-                        return new Date(b.date) - new Date(a.date); // ascending
-                    })
+                        console.log('Sorted Posts:', updatedPosts);
+
+    
+                        setProfilePosts(updatedPosts);
+                    }
+                    else {
+                        setProfilePosts([]);
+                    }
+
+                } catch (error) {
+                    console.error('An error occurred while fetching posts:', error);
+                    setProfilePosts([]);
                 }
-                else {
-                    setProfilePosts([])
-                }
-
             }
-
-        }
-
+        };
+    
         getPostToFacebook();
-    }, [])
+    }, []);
 
-
+    console.log(profilePosts)
     return (
         <div id='feed-wrapper' className='feed-wrapper'>
             {profilePosts && profilePosts.map((post, i) => (

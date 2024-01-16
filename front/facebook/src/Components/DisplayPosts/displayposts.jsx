@@ -41,6 +41,15 @@ function DisplayPosts({ profileEmail }) {
                 if(response && response.res===true) { // If the response is true, enter                    
                     setProfilePosts(response.data)
 
+                    // Time Sort
+                    response.data.sort((a, b) => {
+                        return new Date(a.date) - new Date(b.date); // descending
+                    })
+                        
+                    response.data.sort((a, b) => {
+                        return new Date(b.date) - new Date(a.date); // ascending
+                    })
+
                 }
                 else {
                     setProfilePosts([])
@@ -57,7 +66,7 @@ function DisplayPosts({ profileEmail }) {
     return (
         <div className='displayposts-wrapper-wrapper'>
             {profilePosts && profilePosts.map((post, i) => (
-                <Post index={i} post={post} profileEmail={profileEmail} />                    
+                <Post index={i} post={post} />                    
             ))}      
 
             {profilePosts && profilePosts.length===0 && (

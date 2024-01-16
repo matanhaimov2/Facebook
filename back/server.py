@@ -151,7 +151,7 @@ if __name__ == "__main__":
 # Friends Related Tasks:
 # 1. Display number of friends ------------------------------------------------- VVV
 # 2. When clicking on number of friends, list of all friends will appear ------- VVV
-# 3. Option to delete a friend ------------------------------------------------- XXV
+# 3. Option to delete a friend ------------------------------------------------- VVV
 # 4. When add friend, user will get notification i wants to accept or no ------- VVV
 # (red alert of notification => problem, when accepting friend it disapperes and when refersgin it gets back)
 # (friend pending goes back to initial state when page refreshes) => check if db got any notification, if so, return 'pending', else, return 'add friend'.

@@ -302,7 +302,7 @@ def getProfilePost(): # Get post/s from db
 
 # Post
 @profiles_bp.route("/likePost", methods=['GET', 'POST'])
-def likePost(): # 
+def likePost(): # Gets userposts from db and adds or removes like
     from server import handleUsers, handleOneResult
 
     data = request.data
@@ -331,22 +331,18 @@ def likePost(): #
     for post in posts:
         post = json.loads(post)
      
-        try:
-            if(post["ID"] == id):
-                targetPost = post
-            else: 
-                allPosts.append(json.dumps(post))
-        except:
-            # Old post without ID
+        if(post["ID"] == id):
+            targetPost = post
+        else: 
             allPosts.append(json.dumps(post))
-            
 
+            
     # Add Like or Remove like
     thereAreLikes = targetPost.get('Likes', None)
 
     if(likeOrDislike): 
         # Like accured plus 1
-        if(thereAreLikes and len(thereAreLikes) > 0): # There are privous likes     
+        if(thereAreLikes and len(thereAreLikes) > 0): # There are preivous likes     
             targetPost["Likes"].append(email) 
         else: # No Likes what so ever
             targetPost["Likes"] = [email]
@@ -375,8 +371,40 @@ def likePost(): #
    
     return jsonify({'res': True})
 
+@profiles_bp.route("/displayUsernameAndImage", methods=['GET', 'POST'])
+def displayUsernameAndImage():
+    from server import handleMultipleResults
 
-
-
+    data = request.data
     
-    return jsonify({'res': False, 'data' : []})
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    postCreator = json_str["PostCreator"]
+
+    query = f"""
+        SELECT username, userimages FROM profiles WHERE email = '{postCreator}'
+    """
+
+    response = handleMultipleResults(query)
+    response = response[0]
+
+    if(response):
+        # Set values
+        res = {
+            'res' : True,
+            'data' : {
+                'Username': response[0],
+                'Userimage': response[1]
+            }
+    }
+    else:
+        # Set values
+        res = {
+            'res' : False,
+        }
+
+    print(response, 'here11')
+
+    return jsonify(res)
+
