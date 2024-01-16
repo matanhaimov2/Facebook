@@ -271,7 +271,7 @@ def getProfilePost(): # Get post/s from db
     json_str = json.loads(str_data) # From string to json
 
     email = json_str["Email"]
-
+    
     query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
     print(query)
     
@@ -287,6 +287,7 @@ def getProfilePost(): # Get post/s from db
         for post in posts:
             allposts.append(json.loads(post))
 
+
     if(response != None):
 
         res = {
@@ -294,7 +295,6 @@ def getProfilePost(): # Get post/s from db
             'res': True
         }    
 
-        print(allposts, 'here')
 
         return jsonify(res)
     
@@ -370,41 +370,3 @@ def likePost(): # Gets userposts from db and adds or removes like
     handleUsers(query)
    
     return jsonify({'res': True})
-
-@profiles_bp.route("/displayUsernameAndImage", methods=['GET', 'POST'])
-def displayUsernameAndImage():
-    from server import handleMultipleResults
-
-    data = request.data
-    
-    str_data = data.decode('utf-8') # From binary to string
-    json_str = json.loads(str_data) # From string to json
-
-    postCreator = json_str["PostCreator"]
-
-    query = f"""
-        SELECT username, userimages FROM profiles WHERE email = '{postCreator}'
-    """
-
-    response = handleMultipleResults(query)
-    response = response[0]
-
-    if(response):
-        # Set values
-        res = {
-            'res' : True,
-            'data' : {
-                'Username': response[0],
-                'Userimage': response[1]
-            }
-    }
-    else:
-        # Set values
-        res = {
-            'res' : False,
-        }
-
-    print(response, 'here11')
-
-    return jsonify(res)
-

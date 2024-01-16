@@ -37,5 +37,4 @@ const friendsStatus = async (data) => {
 export {
     getPostsToFeed,
     friendsStatus
-
 }

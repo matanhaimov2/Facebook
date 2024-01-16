@@ -54,12 +54,30 @@ def getPostsToFeed(): # Get post/s from db to feed
             json_item = json.loads(item)
             transformed_data.append(json_item)
 
+
+        # One more step get the username and the userimage
+        
+        allPostsWithFullInfo = []
+
+        for post in transformed_data:
+            postCreator = post["Email"]
+            
+            query = f"""
+                SELECT username, userimages FROM profiles WHERE email = '{postCreator}'
+            """
+
+            response = handleMultipleResults(query)
+            response = response[0]
+
+            post["Username"] = response[0]
+            post["UserImage"] = response[1]
+
+            allPostsWithFullInfo.append(post)
+
         res = {
-            'data' : transformed_data,
+            'data' : allPostsWithFullInfo,
             'res': True
         }  
-
-        # print(one_array_allPosts, 'here')
 
         return jsonify(res)
 

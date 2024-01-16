@@ -66,28 +66,12 @@ function Feed() {
                     const response = await getPostsToFeed(data);
                     
                     if (response && response.res === true) {
-                        // Fetch additional data for each post
-                        let updatedPosts = await Promise.all(response.data.map(async (post) => {
-                            const additionalDataResponse = await displayUsernameAndImage({ "PostCreator": post.Email });
-    
-                            if (additionalDataResponse && additionalDataResponse.res === true) {
-                                return {
-                                    ...post,
-                                    UserImage: additionalDataResponse.data.Userimage,
-                                    Username: additionalDataResponse.data.Username
-                                };
-                            } else {
-                                console.log('Something Went Wrong');
-                                return post;
-                            }
-                        }));
-    
-                        console.log(updatedPosts);
-
-                        // Time Sort
-                        updatedPosts = updatedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-                        console.log('Sorted Posts:', updatedPosts);
+                        // Fetch additional data for each post                       
+                        let updatedPosts = response.data;
+                        
+                        updatedPosts.sort((a, b) => {
+                            return new Date(b.date) - new Date(a.date); // ascending
+                        })
 
     
                         setProfilePosts(updatedPosts);
@@ -106,7 +90,6 @@ function Feed() {
         getPostToFacebook();
     }, []);
 
-    console.log(profilePosts)
     return (
         <div id='feed-wrapper' className='feed-wrapper'>
             {profilePosts && profilePosts.map((post, i) => (

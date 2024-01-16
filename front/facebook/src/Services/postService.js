@@ -20,21 +20,7 @@ const likePost = async (data) => {
     }
 }
 
-const displayUsernameAndImage = async (data) => {
-    try {
-        // Get post from back from db
-        const response = await axios.post(SERVER_URL + "/displayUsernameAndImage", data)
-        
-        return response.data
-    }
-    catch (err) {
-        console.log(err);
-    }
-}
-
 
 export {
     likePost,
-    displayUsernameAndImage
-
 }

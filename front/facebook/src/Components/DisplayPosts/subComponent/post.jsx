@@ -91,11 +91,12 @@ function Post({ index, post }) {
 
     return (
         <div key={index} id={post.ID ? post.ID : 'null'} className='displayposts-wrapper'>
-            <div className='displayposts-user-info-wrapper'>
-                <span>{post.Username}</span>
-                <img className='displayposts-userimage-wrapper' src={ post.UserImage }></img>
-
-            </div>
+            {post.Username && (
+                <div className='displayposts-user-info-wrapper'>
+                    <span>{post.Username}</span>
+                    <img className='displayposts-userimage-wrapper' src={ post.UserImage }></img>
+                </div>
+            )}
 
             <div className='displayposts-datetext-wrapper'>
                 <div className='displayposts-privacydate-wrapper'> 
