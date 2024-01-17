@@ -104,6 +104,18 @@ const getProfilePost = async (data) => {
     }
 }
 
+const getPostsToFeed = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/getPostsToFeed", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     setprofile,
     profile,
@@ -112,5 +124,6 @@ export {
     getProfileImage,
     deleteProfileImage,
     uploadPost,
-    getProfilePost
+    getProfilePost,
+    getPostsToFeed
 }

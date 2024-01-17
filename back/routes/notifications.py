@@ -14,7 +14,7 @@ def newNotifications(): # Checks if user got any notifications => Gets the data 
     from server import handleOneResult
     
     data = request.data
-    print(data)
+    
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 

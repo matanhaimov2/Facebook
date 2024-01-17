@@ -93,14 +93,11 @@ const Marketplace = () => {
                 const all_response = await getSpecificProduct(data) // Gets all products from the specific user signed in
                 if(all_response && all_response.res===true) {
                     setMarketSpecificProduct(all_response.data);
-                    console.log(marketSpecificProduct); 
                 }
 
                 const response = await getAllProduct(data) // Gets all products from all users
                 if(response && response.res===true) { 
-                    setMarketProducts(response.data);
-                    console.log(marketProducts);        
-                     
+                    setMarketProducts(response.data);                     
                 }
                 else {
                     setMarketSpecificProduct([]);

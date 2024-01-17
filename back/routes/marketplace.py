@@ -44,8 +44,6 @@ def uploadProduct(): # Upload product/s to db
 
     if (products == None): # If db-products has no image in it
 
-        # post['id'] = 1 # check if work later!
-
         query = f'''UPDATE marketplace
             SET products = JSON_ARRAY(
                 '{json.dumps(product)}'
@@ -118,7 +116,6 @@ def editProduct(): # Edit product in marketplace
         )
         WHERE user_email = '{email}'
     """
-    print(edit_query)
     
     response = handleUsers(edit_query)
 
@@ -130,14 +127,13 @@ def getSpecificProduct(): # Get product/s from db to a specific user
     from server import handleOneResult
 
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
     email = json_str["Email"]
 
     query = '''SELECT products FROM marketplace WHERE user_email = '{}' '''.format(email) 
-    print(query)
     
     # Get product where email from db
     response = handleOneResult(query)
@@ -145,7 +141,6 @@ def getSpecificProduct(): # Get product/s from db to a specific user
 
     if (response):
         products = json.loads(response)
-        print(products)
 
         allproducts = []
 
@@ -168,14 +163,13 @@ def getAllProduct(): # Get product/s from db for everyone
     from server import handleMultipleResults
 
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
     email = json_str["Email"]
 
     query = '''SELECT products FROM marketplace'''
-    print(query)
     response = handleMultipleResults(query)
 
     allproducts = []

@@ -16,7 +16,7 @@ def setprofile(): # Adds info about the user to db
     from server import handleUsers
     
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -91,7 +91,6 @@ def profile(): # Gets full data from db about the user
     email = json_str["Email"]
 
     query = '''SELECT * FROM profiles WHERE email = '{}' '''.format(email) 
-    print(query)
 
     # Get full data about the email from db
     response = handleOneResult(query)
@@ -119,17 +118,15 @@ def uploadimage(): # Sends uploaded profile image to db
     from server import handleUsers
 
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
     # Set values
     email = json_str['Email']
     uploadedimage = json_str['UploadedImage']
-    print(uploadedimage)
 
     query = f'''UPDATE profiles SET userimages = '{uploadedimage}' WHERE email = '{email}' '''
-    print(query)
 
     response = handleUsers(query)
 
@@ -148,7 +145,6 @@ def getProfileImage(): # Gets from db an uploaded profile image
     email = json_str["Email"]
 
     query = '''SELECT userimages FROM profiles WHERE email = '{}' '''.format(email) 
-    print(query)
     
     # Get userimage where email from db
     response = handleOneResult(query)
@@ -167,8 +163,6 @@ def getProfileImage(): # Gets from db an uploaded profile image
             'res' : False,
         }
 
-    print(res)
-
     return jsonify(res)
 
 @profiles_bp.route("/deleteProfileImage", methods=['GET', 'POST'])
@@ -176,7 +170,7 @@ def deleteProfileImage(): # Delete from db a profile image
     from server import handleUsers
 
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -184,8 +178,6 @@ def deleteProfileImage(): # Delete from db a profile image
     email = json_str['Email']
 
     query = f'''UPDATE profiles SET userimages = NULL WHERE email = '{email}' '''
-
-    print(query)
 
     response = handleUsers(query)
 
@@ -266,14 +258,13 @@ def getProfilePost(): # Get post/s from db
     from server import handleOneResult
 
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
     email = json_str["Email"]
     
     query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
-    print(query)
     
     # Get userimage where email from db
     response = handleOneResult(query)
@@ -299,6 +290,79 @@ def getProfilePost(): # Get post/s from db
         return jsonify(res)
     
     return jsonify({'res': False, 'data' : []})
+
+# Feed
+@profiles_bp.route("/getPostsToFeed", methods=['GET', 'POST'])
+def getPostsToFeed(): # Get post/s from db to feed
+    from server import handleMultipleResults
+    
+    data = request.data
+
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+
+    query = f"SELECT userposts FROM profiles WHERE email <> '{email}';"
+    
+    # Get userposts except specific email from db
+    response = handleMultipleResults(query)
+
+    
+    allPosts = []
+
+    if response:
+        # Going through every userPosts and checks if he has any
+        for userPosts in response:
+            # If user has posts => add his posts to allPosts array
+            if userPosts[0]!=None:
+                posts = json.loads(userPosts[0])
+                allPosts.append(posts)
+
+    if(response != None):
+
+        # Merging 3 arrays into one. array = [[array], [array], [array]]
+        one_array_allPosts = []
+
+        for array in allPosts:
+            one_array_allPosts.extend(array)
+
+        # Transfers allPosts to become readable (removing python)
+        transformed_data = []
+
+        for item in one_array_allPosts:
+            json_item = json.loads(item)
+            transformed_data.append(json_item)
+
+
+        # One more step get the username and the userimage
+        
+        allPostsWithFullInfo = []
+
+        for post in transformed_data:
+            postCreator = post["Email"]
+            
+            query = f"""
+                SELECT username, userimages FROM profiles WHERE email = '{postCreator}'
+            """
+
+            response = handleMultipleResults(query)
+            response = response[0]
+
+            post["Username"] = response[0]
+            post["UserImage"] = response[1]
+
+            allPostsWithFullInfo.append(post)
+
+        res = {
+            'data' : allPostsWithFullInfo,
+            'res': True
+        }  
+
+        return jsonify(res)
+
+    return jsonify({'res': False, 'data' : []})
+
 
 # Post
 @profiles_bp.route("/likePost", methods=['GET', 'POST'])

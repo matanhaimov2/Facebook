@@ -7,9 +7,6 @@ import schoolIcon from '../../Assets/Images/school-mini-icon.png';
 import birthIcon from '../../Assets/Images/birth-mini-icon.png'; 
 import locationIcon from '../../Assets/Images/location-mini-icon.png'; 
 import heartIcon from '../../Assets/Images/heart-mini-icon.png'; 
-import editIcon from '../../Assets/Images/edit-icon.png'; 
-import searchIcon from '../../Assets/Images/search-icon.png'; 
-import exitIcon from '../../Assets/Images/exit-icon.png'; 
 import plusIcon from '../../Assets/Images/plus-icon.png'; 
 
 // React Icons
@@ -148,7 +145,7 @@ function Profile() {
                     
                 }
                 else {
-                    console.log('Somthing went wrong')
+                    console.log('Something went wrong')
                 }
             }
 
@@ -183,7 +180,7 @@ function Profile() {
                 setImgProfile(response.data.userimage)
             }
             else {
-                console.log(imgProfile)
+                console.log('Something went wrong')
             }
 
         }
@@ -271,7 +268,6 @@ function Profile() {
         const response = await startFriendRequest(data);
         if (response && response.res===true) {
             setFriendPending(true)
-            console.log(friendPending, 'friendpending...')
             // Sends a friend request
         }
 

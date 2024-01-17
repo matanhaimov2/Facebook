@@ -133,12 +133,9 @@ const TopNav = () => {
         setNotifications(data_notifications.data);
 
         // theres a notification
-        console.log('theres a notification')
-
       }
       else {
         // no notifications for the user
-        console.log('no notifications for the user')
       }
     }
 
@@ -192,7 +189,6 @@ const TopNav = () => {
     const ignoreFriendResponse = await ignoreFriend(data);
 
     if (ignoreFriendResponse && ignoreFriendResponse.res===true) {
-      console.log('notification deleted successfully')
   
       // Delete him logicly
       const deletedEmail = friendNotification.Email;
@@ -206,6 +202,8 @@ const TopNav = () => {
 
       setNotifications(updatedNotification);
 
+      // notification deleted successfully
+
       if(updatedNotification.length===0) {
         setNotificationAlert(false);
       }
@@ -215,7 +213,6 @@ const TopNav = () => {
 
   const openNotificationsHandler = () => {
     setOpenNotifications(!openNotifications);
-    console.log(openNotifications)
   }
   
   return (

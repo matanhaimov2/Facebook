@@ -8,7 +8,7 @@ import { GoDotFill } from "react-icons/go";
 import './onlinefriends.css';
 
 // Services
-import { friendsStatus } from '../../Services/homeService';
+import { friendsStatus } from '../../Services/friendsService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 

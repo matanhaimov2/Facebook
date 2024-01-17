@@ -4,8 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './feed.css';
 
 // Services
-import { getPostsToFeed } from '../../Services/homeService';
-import { displayUsernameAndImage } from '../../Services/postService';
+import { getPostsToFeed } from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
 // Sub Components
@@ -93,7 +92,7 @@ function Feed() {
     return (
         <div id='feed-wrapper' className='feed-wrapper'>
             {profilePosts && profilePosts.map((post, i) => (
-                <Post index={i} post={post} />                         
+                <Post key={i} index={i} post={post} />                         
             ))}      
 
             {profilePosts && profilePosts.length===0 && (

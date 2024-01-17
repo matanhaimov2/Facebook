@@ -14,7 +14,7 @@ import { PiShareFatLight } from "react-icons/pi";
 import '../displayposts.css';
 
 // Services
-import { likePost, displayUsernameAndImage } from '../../../Services/postService';
+import { likePost } from '../../../Services/postService';
 import { getAuthenticatedUser } from '../../../Services/authService';
 
 
@@ -24,34 +24,8 @@ function Post({ index, post }) {
     const [isLike, setIsLike] = useState(post.Likes ? post.Likes.includes(getAuthenticatedUser()) : false);
     const [likesLength, setLikesLength] = useState(post.Likes ? post.Likes.length : 0);
 
-    // useEffect(() => {
-        
-    //     const getUsernameAndImage = async () => {
-    //         let data = {
-    //             "PostCreator" : post.Email
-    //         }
 
-    //         const additionalDataResponse = await displayUsernameAndImage(data)
-
-    //         if(additionalDataResponse && additionalDataResponse.res===true) {                   
-    //             post.UserImage = additionalDataResponse.data.Userimage;
-    //             post.Username = additionalDataResponse.data.Username;    
-
-    //             console.log(post)
-
-    //         }
-    //         else {
-    //             console.log('Something Went Wrong')
-    //         }
-    //     }
-
-    //     getUsernameAndImage();
-    // }, [])
-
-
-
-
-    const likeButton = async (e, index) => {
+    const likeButton = async () => {
         
         setIsLike(!isLike);
 
@@ -71,13 +45,8 @@ function Post({ index, post }) {
         }
 
         const response = await likePost(data)
-
-        if(response && response.res===true) {                   
-            console.log('Like Has Been Added')
-        }
-        else {
-            console.log('Something Went Wrong')
-        }
+  
+        // Like Has Been Added
     
     }
 

@@ -76,7 +76,6 @@ function PostUpload({ profileEmail }) {
         if(getAuthenticatedUser()) {
 
             const response = await uploadPost(data)
-            console.log(response)
 
             // Set trigger
             setProfilePostTrigger(true)

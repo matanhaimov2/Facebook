@@ -12,7 +12,6 @@ from routes.authontication import authontication_bp
 from routes.profiles import profiles_bp
 from routes.friends import friends_bp
 from routes.search import search_bp
-from routes.home import home_bp
 from routes.notifications import notifications_bp
 
 
@@ -27,7 +26,6 @@ app.register_blueprint(authontication_bp)
 app.register_blueprint(profiles_bp)
 app.register_blueprint(friends_bp)
 app.register_blueprint(search_bp)
-app.register_blueprint(home_bp)
 app.register_blueprint(notifications_bp)
 
 # Config MySQL

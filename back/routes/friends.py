@@ -14,7 +14,7 @@ def acceptFriend(): # Friend acception => both added in db to each other
     from server import handleUsers, handleOneResult
     
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -125,7 +125,7 @@ def ignoreFriend(): # Friend ignore => notification gets delete for the user
     from server import handleUsers
     
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -151,7 +151,7 @@ def startFriendRequest(): # Starts friend request => info to column notifcations
     from server import handleUsers, handleOneResult, handleMultipleResults
     
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -218,7 +218,7 @@ def checkFriend(): # Checks if user got any friends
     from server import handleOneResult
     
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -236,10 +236,10 @@ def checkFriend(): # Checks if user got any friends
 
         # Check if the friend_email_to_check is in the list with quotes
         if f'"{friend_email_to_check}"' in friends_list:
-            print('Success! Friend found')
+            pass # Success! Friend found
 
         else:
-            print('Friend not found in the list.')
+            # Friend not found in the list
             
             return jsonify({'res': False, 'Note': 'Users Arent Friends'})
 
@@ -255,7 +255,7 @@ def hasFriendsAtAll(): # Displays the number of friends user have
     from server import handleOneResult, handleMultipleResults
     
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -277,8 +277,6 @@ def hasFriendsAtAll(): # Displays the number of friends user have
         friends = handleOneResult(query)
 
         friends_length = 0 
-
-        print(friends[0], 'froiejfaknflkanfdsl')
 
         if friends[0]:
             friends = friends[0]
@@ -335,7 +333,7 @@ def deleteFriendRequest(): # Deletes friendship of each other
     from server import handleUsers, handleOneResult
     
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -363,7 +361,8 @@ def deleteFriendRequest(): # Deletes friendship of each other
 
         # if wanted-friend-delete is on the list - Remove Him
         else:
-            print('Friend Is Removed From Current User Logged In')
+            # Friend Is Removed From Current User Logged In
+
 
             # Deletes from his friend list, the logged in user
             select_friend_query = f'''SELECT friends FROM handlefriends WHERE user_email = '{friend_email}' '''
@@ -379,9 +378,9 @@ def deleteFriendRequest(): # Deletes friendship of each other
 
                 # if wanted-friend-delete is on the list - Remove Him
                 else:
-                    print('Friend Is Removed From His User')
+                    pass # Friend Is Removed From His User
                     
-            print('Friend List Of His User', updated_his_friends_list)
+            # print('Friend List Of His User', updated_his_friends_list)
 
 
             his_sql_query = f"""
@@ -392,7 +391,7 @@ def deleteFriendRequest(): # Deletes friendship of each other
             handleUsers(his_sql_query)
 
 
-    print('Friend List Of Logged In User', updated_friends_list)
+    # print('Friend List Of Logged In User', updated_friends_list)
 
     sql_query = f"""
         UPDATE handlefriends
@@ -441,7 +440,7 @@ def oneFriendRequestCheck(): # Checks if user has a friend request
     from server import handleOneResult
     
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -454,11 +453,72 @@ def oneFriendRequestCheck(): # Checks if user has a friend request
 
     if response[0]:
         if friend_email_to_check in response[0]:
-            print('user is waiting for friend approval')
+            # user is waiting for friend approval
 
             return jsonify({'res': True, 'Note': 'user is waiting for friend approval'})
 
     else:
-        print('theres no request waiting')
+        pass # theres no request waiting
 
     return jsonify({'res': False})
+
+@friends_bp.route("/friendsStatus", methods=['GET', 'POST'])
+def friendsStatus(): # Fetchs friends data and checks their statuses
+    from server import handleUsers, handleOneResult, handleMultipleResults
+    
+    data = request.data
+
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["Email"]
+
+    friends_query = f"SELECT friends FROM handlefriends WHERE user_email = '{email}';"
+    
+    # Get user's allfriends 
+    friends_list = handleOneResult(friends_query)
+
+    allFetchedUsers = []
+
+    if friends_list[0]:
+        friends_list = json.loads(friends_list[0])
+        for emailAddress in friends_list:
+            clean_email_address = emailAddress.strip('"') # from "example@gmail.com" => example@gmail.com
+            fetch_data_query = f"SELECT username, userimages FROM profiles WHERE email = '{clean_email_address}' " 
+            fetched_users = handleMultipleResults(fetch_data_query)
+            username = fetched_users[0][0]
+            user_image = fetched_users[0][1]
+
+            status_user_query = f"SELECT username FROM session WHERE username = '{username}' " 
+            isStatus = handleUsers(status_user_query)
+            if isStatus:
+
+                # Structure 
+                allFetched = {
+                    'username': username,
+                    'userimages': user_image,
+                    'status': 'Online'
+                } 
+
+                # print(allFetched, 'User Is Online')
+
+                allFetchedUsers.append(allFetched)
+
+            else:
+
+                # Structure 
+                allFetched = {
+                    'username': username,
+                    'userimages': user_image,
+                    'status': 'Offline'
+                } 
+
+                # print(allFetched, 'User Is Offilne')
+
+                allFetchedUsers.append(allFetched)
+
+        return jsonify({'res': True, 'Data': allFetchedUsers})
+
+
+    return jsonify({'res': False, 'Note': 'No Friends'})
+

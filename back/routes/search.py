@@ -25,7 +25,6 @@ def search():
     search_query =  f'''SELECT email, username, userimages FROM profiles WHERE username LIKE '%{searchPhrase}%' '''
     
     data = handleMultipleResults(search_query)
-    print(data)
 
     # Set values
     jsonedData = []

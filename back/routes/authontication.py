@@ -18,6 +18,7 @@ def register():
     from server import handleUsers
     
     data = request.data
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
@@ -160,13 +161,12 @@ def handleSignOut(): # Deletes session from user who signes out
     from server import handleUsers
 
     data = request.data
-    print(data)
+
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
     # Set values
     sessionID = json_str['sessionID']
-    print(sessionID, 'YES!')
 
     deletequery = f''' DELETE FROM session WHERE sessionID = '{sessionID}'; '''
     handleUsers(deletequery)
