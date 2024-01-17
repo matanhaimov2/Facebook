@@ -1,0 +1,103 @@
+.post-wrapper {
+    background-color: #242526;
+    border-radius: 15px;
+    padding: 7%;
+}
+
+
+.post-top-info-wrapper {
+    display: flex;
+    flex-direction: row;
+    direction: rtl;
+    gap: 7px;
+}
+
+.post-userimage-wrapper {
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.post-userimage-wrapper:hover {
+    filter: brightness(120%);
+}
+
+.post-top-text-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.post-top-username-wrapper {
+    font-weight: 600;
+    cursor: pointer;
+}
+.post-top-username:hover {
+    filter: brightness(120%);
+}
+
+.post-top-privacydate-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    direction: ltr;
+    justify-content: right;
+    align-items: center;
+}
+
+.privacy-icon {
+    font-size: 70%;
+}
+
+.post-top-date-wrapper {
+    font-size: 65%;
+    display: flex;
+    align-items: center;
+    color: #909296;
+}
+
+
+.post-top-text-wrapper {
+    display: flex;
+    padding: 1% 1% 2% 1%;
+}
+
+.post-top-image-wrapper {
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+
+.post-like-board-wrapper {
+    padding-right: 2%;
+    padding-left: 2%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 5%;
+    justify-content: space-between;
+}
+
+.post-like-board-trio-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;;
+    direction: rtl;
+    color: #a6a8ad;
+    cursor: pointer;
+    align-items: center;
+}
+
+.post-like {
+    display: flex;
+    align-items: center;
+    font-size: 120%;
+
+}
+
+.post-dislike {
+    display: flex;
+    align-items: center;
+    color: #0566ff;
+    font-size: 120%;
+}
+
+

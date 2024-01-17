@@ -10,87 +10,12 @@
     gap: 15px;
 }
 
-.displayposts-wrapper {
-    background-color: #242526;
-    border-radius: 15px;
-    padding: 7%;
-}
-
-.displayposts-user-info-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-    align-items: center;
-    gap: 7px;
-    padding-bottom: 2%;
-}
-
-.displayposts-userimage-wrapper {
-    width: 40px;
-    border-radius: 50%;
-}
-
-.displayposts-datetext-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 2px;
-    direction: rtl;
-}
-
-.displayposts-privacydate-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.displayposts-text-wrapper {
-    padding-right: 1%;
-}
-
-.displayposts-image-wrapper {
-    width: 100%;
-    margin-bottom: 5%;
-}
-
-.displayposts-privacy-wrapper {
-    font-size: 60%;
-}
-
-.privacy-icon {
-    font-size: 70%;
-}
-
-.displayposts-date-wrapper {
-    font-size: 60%;
-    display: flex;
-    align-items: center;
-}
-
-.displayposts-like-board-wrapper {
-    padding-right: 2%;
-    padding-left: 2%;
-    display: flex;
-    flex-direction: row;
-    margin-top: 5%;
-    justify-content: space-between;
-}
-
 .displaypost-noposts {
     display: flex;
     justify-content: center;
 }
 
-.displayposts-like-board-trio-wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;;
-    direction: rtl;
-    color: #a6a8ad;
-    cursor: pointer;
-}
 
-.displayposts-like {
-    display: flex;
-    align-items: center;
-}
+
+
+

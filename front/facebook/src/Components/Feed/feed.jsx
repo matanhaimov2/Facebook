@@ -96,7 +96,7 @@ function Feed() {
             ))}      
 
             {profilePosts && profilePosts.length===0 && (
-                <div className='displaypost-noposts'>
+                <div className='feed-noposts'>
                     No Posts To Display
                 </div>
             )}       

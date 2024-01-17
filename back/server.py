@@ -113,13 +113,13 @@ if __name__ == "__main__":
 # 2. Friends --------------------------------------------------------------- VVVVVVVVVVVVVV
 # 3. Feed ------------------------------------------------------------------ In Progress...
 # 4. OnlineFriends --------------------------------------------------------- VVVVVVVVVVVVVV
-
+# 5. Add light mode option to the entire website --------------------------- Wating........
+# 6. Add an option to switch between languages (eng, heb) ------------------ Wating........
 
 # Can't Tell Tasks:
 # 1. make session id last for 5 minutes of inactivity. --------------------- Problem - ask shlomi!
 # 2. make a skeleton while loading profile data
-# 3. 
-# 4. 
+# 3. add the number of notifications in the circle ------------------------- wating........
 
 
 # Easy Tasks:
@@ -159,5 +159,6 @@ if __name__ == "__main__":
 # Feed Related Tasks:
 # 1. Fetch allposts from db to feed -------------------------------------------- VVV
 # 2. Sort posts by time -------------------------------------------------------- VVV
-# 3. Fetch also username and userimages ---------------------------------------- Problem - ask shlomi!
+# 3. Fetch also username and userimages ---------------------------------------- VVV
 # 4. Reload 5 posts. when user is scrolling reload another 5 ------------------- Problem - ask shlomi!
+# 5. Get posts according to privacy settings -----------------------------------
