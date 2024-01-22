@@ -65,9 +65,23 @@ function DisplayPosts({ profileEmail }) {
 
     return (
         <div className='displayposts-wrapper-wrapper'>
-            {profilePosts && profilePosts.map((post, i) => (
-                <Post key={i} index={i} post={post} />                    
-            ))}      
+            {!profileEmail ? (
+                <>
+                    {/* display without filtering logged in user, posts */}
+                    {profilePosts && profilePosts.map((post, i) => (
+                        <Post key={i} index={i} post={post} />                    
+                    ))}  
+                </>
+            ):(
+                <>
+                    {/* display only filtered privacy when visiting another profile*/}
+                    {profilePosts && profilePosts
+                    .filter(post => post.Privacy === "public" || post.Privacy === "friends")
+                    .map((post, i) => (
+                        <Post key={i} index={i} post={post} />
+                    ))}
+                </>
+            )}
 
             {profilePosts && profilePosts.length===0 && (
                 <div className='displaypost-noposts'>

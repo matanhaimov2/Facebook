@@ -79,6 +79,18 @@ const hasFriendsAtAll = async (data) => {
     }
 }
 
+const getAllUsersFromFriendsDB = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/getAllUsersFromFriendsDB", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 const getPendingFriend = async (data) => {
     try {
         // Get post from back from db
@@ -120,6 +132,7 @@ export {
     acceptFriend,
     checkFriend,
     hasFriendsAtAll, 
+    getAllUsersFromFriendsDB,
     startFriendRequest,
     deleteFriendRequest,
     ignoreFriend,

@@ -91,9 +91,13 @@ function Feed() {
 
     return (
         <div id='feed-wrapper' className='feed-wrapper'>
-            {profilePosts && profilePosts.map((post, i) => (
-                <Post key={i} index={i} post={post} />                         
-            ))}      
+            {/* display only filtered privacy*/}
+            {profilePosts && profilePosts
+            .filter(post => post.Privacy === "public" || post.Privacy === "friends")
+            .map((post, i) => (
+                <Post key={i} index={i} post={post} />
+            ))}
+    
 
             {profilePosts && profilePosts.length===0 && (
                 <div className='feed-noposts'>
@@ -106,6 +110,7 @@ function Feed() {
                     Loading
                 </div>
             )}         
+
         </div>
     );
 }

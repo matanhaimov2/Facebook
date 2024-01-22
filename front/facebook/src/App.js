@@ -11,6 +11,7 @@ import Home from './Pages/Home/home';
 import SetProfile from './Pages/SetProfile/setprofile';
 import Profile from './Pages/Profile/profile';
 import Marketplace from './Pages/Marketplace/marketplace';
+import Friends from './Pages/Friends/friends';
 
 // Components
 import TopNav from './Components/Topnav/topnav';
@@ -44,6 +45,10 @@ function marketplace() {
   return <Marketplace />
 }
 
+function friends() {
+  return <Friends />
+}
+
 // For Pages that are private
 const PrivateRoutes = () => {
 
@@ -64,6 +69,9 @@ const PrivateRoutes = () => {
             <Route path="/profile/:profileEmail" element={ profile() } />
             <Route path="/marketplace" element={ marketplace() } /> 
             <Route path="/marketplace/:categoryTitle" element={ marketplace() } /> 
+            <Route path="/friends" element={ friends() } /> 
+            <Route path="/friends/:friendsTitle" element={ friends() } /> 
+
 
 
             

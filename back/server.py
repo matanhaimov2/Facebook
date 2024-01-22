@@ -161,4 +161,4 @@ if __name__ == "__main__":
 # 2. Sort posts by time -------------------------------------------------------- VVV
 # 3. Fetch also username and userimages ---------------------------------------- VVV
 # 4. Reload 5 posts. when user is scrolling reload another 5 ------------------- Problem - ask shlomi!
-# 5. Get posts according to privacy settings -----------------------------------
+# 5. Get posts according to privacy settings ----------------------------------- VVV
