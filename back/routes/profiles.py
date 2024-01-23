@@ -206,7 +206,8 @@ def uploadPost(): # Upload post/s to db
         'Image': uploadedimg,
         'Privacy': uploadedprivacy,
         'date': str(datetime.now()),
-        'Likes': ''
+        'Likes': '',
+        'Comments': ''
     }
 
     query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
@@ -255,7 +256,7 @@ def uploadPost(): # Upload post/s to db
 
 @profiles_bp.route("/getProfilePost", methods=['GET', 'POST'])
 def getProfilePost(): # Get post/s from db
-    from server import handleOneResult
+    from server import handleOneResult, handleMultipleResults
 
     data = request.data
 
@@ -266,23 +267,43 @@ def getProfilePost(): # Get post/s from db
     
     query = '''SELECT userposts FROM profiles WHERE email = '{}' '''.format(email) 
     
-    # Get userimage where email from db
+    # Get userposts where email from db
     response = handleOneResult(query)
     response = response[0]
 
     if (response):
+
         posts = json.loads(response)
 
-        allposts = []
+        # Transfers allPosts to become readable (removing python)
+        transformed_data = []
 
+        # Convert the array so it will be with one quotes instead of two. (don't know why with 2 quotes it doesnt work)
         for post in posts:
-            allposts.append(json.loads(post))
+            json_item = json.loads(post)
+            transformed_data.append(json_item)
 
+        for post in transformed_data:
+            
+            # Get username and userimage for comments creators
+            allComments = post["Comments"]
 
+            for comment in allComments:
+                emailCommentCreator = comment[0]
+
+                sql_query = f"""
+                    SELECT username, userimages FROM profiles WHERE email = '{emailCommentCreator}'
+                """
+                response = handleMultipleResults(sql_query)
+                response = response[0]
+
+                comment.append(response[0])
+                comment.append(response[1])
+                
     if(response != None):
 
         res = {
-            'data' : allposts,
+            'data' : transformed_data,
             'res': True
         }    
 
@@ -335,11 +356,28 @@ def getPostsToFeed(): # Get post/s from db to feed
             transformed_data.append(json_item)
 
 
-        # One more step get the username and the userimage
+        # One more step, get the username and userimage for post creators and  comments creators
         
         allPostsWithFullInfo = []
 
         for post in transformed_data:
+            
+            # Get username and userimage for comments creators
+            allComments = post["Comments"]
+
+            for comment in allComments:
+                emailCommentCreator = comment[0]
+
+                sql_query = f"""
+                    SELECT username, userimages FROM profiles WHERE email = '{emailCommentCreator}'
+                """
+                response = handleMultipleResults(sql_query)
+                response = response[0]
+
+                comment.append(response[0])
+                comment.append(response[1])
+                
+            # Get username and userimage for posts creators
             postCreator = post["Email"]
             
             query = f"""
@@ -433,4 +471,66 @@ def likePost(): # Gets userposts from db and adds or removes like
 
     handleUsers(query)
    
+    return jsonify({'res': True})
+
+@profiles_bp.route("/commentPost", methods=['GET', 'POST'])
+def commentPost(): # Gets userposts from db and adds or removes like
+    from server import handleUsers, handleOneResult
+
+    data = request.data
+    
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    id = json_str["ID"]
+    email = json_str["Email"]
+    postCreator = json_str["PostCreator"]
+    comment = (email, json_str["Comment"], str(datetime.now()))
+
+
+    query = f"""
+        SELECT userposts FROM profiles WHERE email = '{postCreator}'
+    """
+
+    response = handleOneResult(query)
+    response = response[0]
+
+    posts = json.loads(response)
+
+    targetPost = None
+    allPosts = []
+
+    # Get Target Post
+    for post in posts:
+        post = json.loads(post)
+     
+        if(post["ID"] == id):
+            targetPost = post
+        else: 
+            allPosts.append(json.dumps(post))
+    
+    thereAreComments = targetPost.get('Comments', None)
+
+    if(thereAreComments and len(thereAreComments) > 0): # There are preivous comments     
+        targetPost["Comments"].append(comment) 
+    else: # No comments what so ever
+        targetPost["Comments"] = [comment]
+
+    # After comments has changed - Update the DB
+    allPosts.append(json.dumps(targetPost)) # add the newly updated post 
+    
+    # Convert the array back to fit the sql query
+    allposts_str = ',\n'.join(f"'{postFromAllPosts}'" for postFromAllPosts in allPosts)
+
+    sql_query = f'''UPDATE profiles
+        SET userposts = JSON_ARRAY(
+            {allposts_str}
+        )
+        WHERE email = '{postCreator}';
+    '''
+
+    handleUsers(sql_query)
+
+    print(allposts_str)
+
     return jsonify({'res': True})

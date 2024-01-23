@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Global Veribales
-import { SERVER_URL, IMAGE_BB_key } from "../Assets/GlobalVeriables";
+import { SERVER_URL } from "../Assets/GlobalVeriables";
 
 
 
@@ -20,7 +20,20 @@ const likePost = async (data) => {
     }
 }
 
+const commentPost = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/commentPost", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 
 export {
     likePost,
+    commentPost
 }

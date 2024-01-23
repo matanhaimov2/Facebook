@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Global Veribales
-import { SERVER_URL, IMAGE_BB_key } from "../Assets/GlobalVeriables";
+import { SERVER_URL } from "../Assets/GlobalVeriables";
 
 
 

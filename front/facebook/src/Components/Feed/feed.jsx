@@ -63,6 +63,7 @@ function Feed() {
             if(getAuthenticatedUser()) {
                 try {
                     const response = await getPostsToFeed(data);
+                    console.log(response)
                     
                     if (response && response.res === true) {
                         // Fetch additional data for each post                       

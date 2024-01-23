@@ -95,7 +95,7 @@ function Register() {
                         <form className='register-form' onSubmit={ handleSubmit }>
                             <div className='register-name-wrapper'>
                                 <input className='register-name-input' onChange={(e) => setFirstname(e.target.value)} placeholder='שם פרטי' required/>
-                                <input className='register-name-input' onChange={(e) => setLastname(e.target.value)}placeholder='שם משפחה' required/>
+                                <input className='register-name-input' onChange={(e) => setLastname(e.target.value)} placeholder='שם משפחה' required/>
                             </div>
 
                             <div className='register-email-wrapper'>
