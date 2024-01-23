@@ -53,11 +53,11 @@ function DisplayFriendsList({ friendsTitle }) {
                 <>
                 {usersList ? (
                     <>
-                    {usersList && usersList.map((data, i) => (
-                        
-                        <FriendListItem key={i} index={i} data={data} isUserList={true}/>
+                        {usersList && usersList.map((data, i) => (
+                            
+                            <FriendListItem key={i} index={i} data={data} isUserList={true}/>
 
-                    ))}
+                        ))}
 
                     </>
                 ) : (
@@ -70,11 +70,11 @@ function DisplayFriendsList({ friendsTitle }) {
                 <>
                 {friendsList ? (
                     <>
-                    {friendsList && friendsList.map((data, i) => (
-                        
-                        <FriendListItem key={i} index={i} data={data} isUserList={false}/>
+                        {friendsList && friendsList.map((data, i) => (
+                            
+                            <FriendListItem key={i} index={i} data={data} isUserList={false}/>
 
-                    ))}
+                        ))}
                     </>
                 ) : (
                     <div className='displayfriends-no-result-wrapper'>

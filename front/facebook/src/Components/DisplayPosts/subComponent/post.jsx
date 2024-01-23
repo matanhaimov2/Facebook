@@ -76,7 +76,7 @@ function Post({ index, post }) {
             "Comment" : comment
         }
 
-        const commentResponse = await commentPost(data)
+        await commentPost(data)
 
         // Comment has been added
 
@@ -176,31 +176,33 @@ function Post({ index, post }) {
             </div>
 
             {isCommentClicked && (
-                <div className='post-comment-wrapper'>
-                    <button className='post-comment-exit-icon' onClick={openCommentBox}> <img src={exitIcon} /> </button>
+                <div className='post-background'>
+                    <div className='post-comment-wrapper'>
+                        <button className='post-comment-exit-icon' onClick={openCommentBox}> <img src={exitIcon} /> </button>
 
 
-                    <div className='post-all_comments-wrapper'>
-                        {post.Comments && post.Comments.map((comment, i) => (
-                            <div key={i} id={post.ID} className='post-all_comments-content'>
-                                <div className=''>
-                                    <img className='post-userimage-wrapper' src={ comment[4] } onClick={(e) => {navigateToProfile(e, comment[0])}}></img>
-                                </div>
+                        <div className='post-all_comments-wrapper'>
+                            {post.Comments && post.Comments.map((comment, i) => (
+                                <div key={i} id={post.ID} className='post-all_comments-content'>
+                                    <div className=''>
+                                        <img className='post-userimage-wrapper' src={ comment[4] } onClick={(e) => {navigateToProfile(e, comment[0])}}></img>
+                                    </div>
 
-                                <div className='post-all_comments-info'>
-                                    <span className='post-top-username-wrapper' onClick={(e) => {navigateToProfile(e, comment[0])}}> {comment[3]} </span>
+                                    <div className='post-all_comments-info'>
+                                        <span className='post-top-username-wrapper' onClick={(e) => {navigateToProfile(e, comment[0])}}> {comment[3]} </span>
 
-                                    <span className='post-all_comments-text'> {comment[1]} </span>
-                                </div>
-                            </div>                   
-                        ))}  
+                                        <span className='post-all_comments-text'> {comment[1]} </span>
+                                    </div>
+                                </div>                   
+                            ))}  
+                        </div>
+
+                        <form onSubmit={(e) => sendComment(e)} className='post-comment_action-wrapper'>
+                            <input type='text' className='post-comment-placeholder' onChange={(e) => setComment(e.target.value)} placeholder='...הוספת תגובה'></input>
+
+                            <button type='submit' className='post-comment-submit-button'> <IoSend /> </button>
+                        </form>  
                     </div>
-
-                    <form onSubmit={(e) => sendComment(e)} className='post-comment_action-wrapper'>
-                        <input type='text' className='post-comment-placeholder' onChange={(e) => setComment(e.target.value)} placeholder='...הוספת תגובה'></input>
-
-                        <button type='submit' className='post-comment-submit-button'> <IoSend /> </button>
-                    </form>  
                 </div>
             )}
         </div>                         

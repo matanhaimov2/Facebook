@@ -23,7 +23,7 @@ const Friends = () => {
 
     
     // States
-    const [isButtonMarker, setIsButtonMarker] = useState(false); 
+    const [isButtonMarker, setIsButtonMarker] = useState(true); 
 
 
     // Navigateor

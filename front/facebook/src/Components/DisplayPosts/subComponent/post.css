@@ -1,3 +1,13 @@
+.post-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ffffff33;
+    z-index: 100000;
+}
+
 .post-wrapper {
     background-color: #242526;
     border-radius: 15px;
@@ -109,7 +119,7 @@
     flex-direction: column;
     z-index: 1;
     width: 29%;
-    height: 40%;
+    height: 50%;
     overflow-y: auto;
     background: #181616;
     border-radius: 5px;
@@ -129,7 +139,7 @@
 
 .post-all_comments-wrapper {
     height: 80%;
-    padding: 3%;
+    padding: 7% 4% 0% 1%;
     overflow-y: auto;
 }
 .post-all_comments-content {
