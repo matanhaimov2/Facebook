@@ -366,7 +366,7 @@ function Profile() {
                             </div> 
                         ) : (
                             <div className='sub-profile-basics sub-profile-friends-wrapper'>
-                                <button className='sub-profile-already-friends-button'>חברים</button> {/* onclick needs to open option to unfriend */}
+                                <button className='sub-profile-already-friends-button'>חברים</button>
                                 <button onClick={deleteFriend} className='sub-profile-already-friends-button sub-profile-delete-friend-wrapper'><MdDeleteForever className='sub-profile-delete-friend-button'/></button>
                             </div>
                         )}

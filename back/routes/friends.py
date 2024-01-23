@@ -335,35 +335,47 @@ def getAllUsersFromFriendsDB():
     str_data = data.decode('utf-8') # From binary to string
     json_str = json.loads(str_data) # From string to json
 
-    # get the all friends of the user and send to front
-
     # Set values
     email = json_str.get("Email")
 
     # get all friends of the user logged in 
     query = f"SELECT friends FROM handlefriends WHERE user_email = '{email}';"
     unwantedFriends = handleOneResult(query)
-
     unwantedFriends = unwantedFriends[0]
-    unwantedFriends = json.loads(unwantedFriends)
-
-    # add the logged in user to the list of unwanted
-    unwantedFriends.append('"' + email + '"')
-
-    # convert them to tuple
-    unwantedFriendsTuple = tuple(friend.strip('"') for friend in unwantedFriends)
-
-    # fetch all wanted friends (those who aren't friends with the logged in user)
-    filterQuery = f"""
-        SELECT user_email FROM handlefriends
-        WHERE user_email NOT IN {unwantedFriendsTuple};
-    """
-    suitableFriends = handleMultipleResults(filterQuery)
-
-    # convert to array with the right syntax 
-    formatted_suitableFriends_emails = [f'"{email[0]}"' for email in suitableFriends]
 
     allFetchedUsers = []
+
+    if unwantedFriends: # if user have friends
+        unwantedFriends = json.loads(unwantedFriends)
+
+        # add the logged in user to the list of unwanted
+        unwantedFriends.append('"' + email + '"')
+
+        # convert them to tuple
+        unwantedFriendsTuple = tuple(friend.strip('"') for friend in unwantedFriends)
+
+        # fetch all wanted friends (those who aren't friends with the logged in user)
+        filterQuery = f"""
+            SELECT user_email FROM handlefriends
+            WHERE user_email NOT IN {unwantedFriendsTuple};
+        """
+        suitableFriends = handleMultipleResults(filterQuery)
+
+        # convert to array with the right syntax 
+        formatted_suitableFriends_emails = [f'"{email[0]}"' for email in suitableFriends]
+    
+    else: # if user doesnt have friends
+
+        # fetch every email existed
+        fetchEmailQuery = f"SELECT user_email FROM handlefriends;"
+        unwantedFriends = handleMultipleResults(fetchEmailQuery)
+
+        # convert to array with the right syntax 
+        formatted_unwantedFriends_emails = [f'"{email[0]}"' for email in unwantedFriends] 
+
+        # Filter out unwanted email (logged in user) - iterates through all emails and keeps only the email needed
+        formatted_suitableFriends_emails = [mail for mail in formatted_unwantedFriends_emails if mail != f'"{email}"']
+
 
     for emailAddress in formatted_suitableFriends_emails:
         clean_email_address = emailAddress.strip('"') # from "example@gmail.com" => example@gmail.com
@@ -383,9 +395,6 @@ def getAllUsersFromFriendsDB():
         allFetchedUsers.append(allFetched)
 
     return jsonify({'res': True, 'friendsData' : allFetchedUsers})
-
-
-
 
 @friends_bp.route("/deleteFriendRequest", methods=['GET','POST'])
 def deleteFriendRequest(): # Deletes friendship of each other

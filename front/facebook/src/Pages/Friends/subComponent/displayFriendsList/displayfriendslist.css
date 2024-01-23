@@ -1,6 +1,6 @@
 .friendslist-wrapper {
     direction: rtl;
-    padding: 2%;
+    padding: 2% 5% 0% 0%;
     display: flex;
     flex-direction: row;
     gap: 1%;
@@ -20,17 +20,21 @@
     cursor: pointer;
 }
 .friendslist-img:hover{
-    filter: brightness(120%);
+    filter: brightness(110%);
 }
+
+.friendslist-none-img {
+    width: 100%;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.friendslist-none-img:hover{
+    filter: brightness(105%);
+}
+
 
 .friendslist-username {
     font-size: 120%;
     font-weight: 600;
 }
 
-.friendslist-none-img {
-    font-size: 203.83px;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-}

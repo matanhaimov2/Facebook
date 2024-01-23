@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 
-// SubComponents
+// Sub Components
 import Post from './subComponent/post';
 
 //CSS

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// React Icons 
-import { LiaUserCircleSolid } from 'react-icons/lia'
-
 // CSS
 import './displayfriendslist.css';
 
@@ -11,6 +8,7 @@ import { getAuthenticatedUser } from '../../../../Services/authService';
 import { hasFriendsAtAll, getAllUsersFromFriendsDB } from '../../../../Services/friendsService';
 
 // Sub Components
+import FriendListItem from './FriendListItem/friendlistitem';
 
 function DisplayFriendsList({ friendsTitle }) {
 
@@ -47,11 +45,6 @@ function DisplayFriendsList({ friendsTitle }) {
     
     }, [friendsTitle])
 
-    const navigateToProfile = (e, email) => {
-        e.preventDefault(); 
-        
-        window.location.href = '/profile/' + email;
-    }
 
     return (
         
@@ -61,25 +54,9 @@ function DisplayFriendsList({ friendsTitle }) {
                 {usersList ? (
                     <>
                     {usersList && usersList.map((data, i) => (
-                        <div key={i} className='friendslist-box' onClick={(e) => {navigateToProfile(e, data.email)}}>
+                        
+                        <FriendListItem key={i} index={i} data={data} isUserList={true}/>
 
-                            <div className='topnav-search-box-img-wrapper'>
-
-                            {data.userimages ? (
-                                <img className='friendslist-img' src={ data.userimages }></img>
-
-                            ) : (
-                                <LiaUserCircleSolid className='friendslist-none-img'/>
-                            )}
-                            </div>
-
-                            <span className='friendslist-username'> { data.username }</span>
-                            
-                            <div className='marketplace-create-button-wrapper'>
-                                <button className='marketplace-create-button' >הוספה לחברים</button>
-                            </div>
-
-                        </div>
                     ))}
 
                     </>
@@ -94,27 +71,10 @@ function DisplayFriendsList({ friendsTitle }) {
                 {friendsList ? (
                     <>
                     {friendsList && friendsList.map((data, i) => (
-                        <div key={i} className='friendslist-box' onClick={(e) => {navigateToProfile(e, data.email)}}>
+                        
+                        <FriendListItem key={i} index={i} data={data} isUserList={false}/>
 
-                            <div className='topnav-search-box-img-wrapper'>
-
-                            {data.userimages ? (
-                                <img className='friendslist-img' src={ data.userimages }></img>
-
-                            ) : (
-                                <LiaUserCircleSolid className='topnav-search-box-none-img'/>
-                            )}
-                            </div>
-
-                            <span className='friendslist-username'> { data.username }</span>
-                            
-                            <div className='marketplace-create-button-wrapper'>
-                                <button className='marketplace-create-button' >הוספה לחברים</button>
-                            </div>
-
-                        </div>
                     ))}
-
                     </>
                 ) : (
                     <div className='displayfriends-no-result-wrapper'>
