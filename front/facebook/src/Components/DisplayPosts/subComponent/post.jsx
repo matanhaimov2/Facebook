@@ -157,7 +157,7 @@ function Post({ index, post }) {
                     <span> { commentsLength } </span>
                 </div>
 
-                <div id={post.ID ? post.ID : 'null'} className='post-like-board-trio-wrapper' onClick={(e) => {likeButton(e, index)}}>
+                <div id={post.ID} className='post-like-board-trio-wrapper' onClick={(e) => {likeButton(e, index)}}>
                     {!isLike ? (
                         <>
                             <span className='post-like'> <BiLike /> </span>
@@ -176,7 +176,7 @@ function Post({ index, post }) {
             </div>
 
             {isCommentClicked && (
-                <div className='post-background'>
+                <div className='post-comment-background'>
                     <div className='post-comment-wrapper'>
                         <button className='post-comment-exit-icon' onClick={openCommentBox}> <img src={exitIcon} /> </button>
 
@@ -184,9 +184,8 @@ function Post({ index, post }) {
                         <div className='post-all_comments-wrapper'>
                             {post.Comments && post.Comments.map((comment, i) => (
                                 <div key={i} id={post.ID} className='post-all_comments-content'>
-                                    <div className=''>
-                                        <img className='post-userimage-wrapper' src={ comment[4] } onClick={(e) => {navigateToProfile(e, comment[0])}}></img>
-                                    </div>
+
+                                    <img className='post-userimage-wrapper' src={ comment[4] } onClick={(e) => {navigateToProfile(e, comment[0])}}></img>
 
                                     <div className='post-all_comments-info'>
                                         <span className='post-top-username-wrapper' onClick={(e) => {navigateToProfile(e, comment[0])}}> {comment[3]} </span>

@@ -531,4 +531,6 @@ def commentPost(): # Gets userposts from db and adds or removes like
 
     handleUsers(sql_query)
 
+    print(allposts_str)
+
     return jsonify({'res': True})

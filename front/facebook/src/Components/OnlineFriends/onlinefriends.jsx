@@ -13,6 +13,7 @@ import { getAuthenticatedUser } from '../../Services/authService';
 
 
 // Components
+import Chats from '../Chats/chats';
 
 
 
@@ -20,6 +21,10 @@ function Onlinefriends() {
 
     // States
     const [friendsInfo, setFriendsInfo] = useState(); 
+
+    const [openChat, setOpenChat] = useState(false); // Opens chat box
+    const [userData, setUserData] = useState(); // Contains clicked user's data
+
 
 
     useEffect(() => {
@@ -44,6 +49,12 @@ function Onlinefriends() {
     
     }, [])
 
+    // Chat Handler
+    const chatOpener = (e, data) => {
+        setOpenChat(!openChat) // opens and closes chat box 
+        setUserData(data)
+    }
+
     return (
         <div className='onlinefriends-wrapper'>
             <div className='onlinefriends-top-wrapper'>
@@ -54,7 +65,7 @@ function Onlinefriends() {
             <div className='displayfriends-sub-wrapper' >
             
                 {friendsInfo && friendsInfo.map((data, i) => (
-                <div key={i} className='onilnefriends-box'>
+                <div key={i} className='onilnefriends-box' onClick={(e) => {chatOpener(e, data)}}>
 
                     <span className='onilnefriends-text'> { data.username }</span>
                     
@@ -74,8 +85,10 @@ function Onlinefriends() {
                         )}
             
                     </div>
+
                 </div>
                 ))}
+
 
             </div>
      
@@ -90,6 +103,13 @@ function Onlinefriends() {
                     <span>...Loading</span>
                 </div>
             )}   
+
+            {/* sends to chats component, clicked user's data */}
+            {openChat && (
+                <Chats data={userData} />
+            )}
+
+
         </div>
     );
 }

@@ -107,58 +107,78 @@ if __name__ == "__main__":
     app.run(debug = True)
 
 
-
-# Complex Tasks:
-# 1. Marketplace ----------------------------------------------------------- In Progress...
-# 2. Friends --------------------------------------------------------------- VVVVVVVVVVVVVV
-# 3. Feed ------------------------------------------------------------------ In Progress...
-# 4. OnlineFriends --------------------------------------------------------- VVVVVVVVVVVVVV
-# 5. Add light mode option to the entire website --------------------------- Wating........
-# 6. Add an option to switch between languages (eng, heb) ------------------ Wating........
-
-# Can't Tell Tasks:
-# 1. make session id last for 5 minutes of inactivity. --------------------- Problem - ask shlomi!
-# 2. make a skeleton while loading profile data
-# 3. add the number of notifications in the circle ------------------------- wating........
+# Guider :
+    # Main Tasks:
+    # 1. Marketplace --------------------------------------------------------------- In Progress...
+    # 2. Friends ------------------------------------------------------------------- VVVVVVVVVVVVVV
+    # 3. Feed ---------------------------------------------------------------------- In Progress...
+    # 4. OnlineFriends ------------------------------------------------------------- VVVVVVVVVVVVVV
 
 
-# Easy Tasks:
-# 1. for search - move between option using buttons 
-# 2. change dot of new notificaton
+    # Marketplace Related Tasks:
+    # 1. figure out a way to chunk 6 products in one chunk => make a map ----------- VVV
+    # 2. format date problem ------------------------------------------------------- VVV
+    # 3. figure out a way to import every product to a single page ----------------- VVV
+    # 4. cities api ----------------------------------------------------------------
+    # 5. buying option - starting chat with product creator ------------------------ wating for chat...
 
 
-# Video tasks:
-# 1. learn react classes in udemy.
-# 2. 
+    # Friends Related Tasks:
+    # 1. Display number of friends ------------------------------------------------- VVV
+    # 2. When clicking on number of friends, list of all friends will appear ------- VVV
+    # 3. Option to delete a friend ------------------------------------------------- VVV
+    # 4. When add friend, user will get notification i wants to accept or no ------- VVV
+    # 5. feature to exit window of notification with mouse ------------------------- VVV
+    # ==> Friends Page:
+    # 6. section of user's friends ------------------------------------------------- VVV
+    # 7. section of suggestions for new friends ------------------------------------ VVV
 
 
-# Problems
-# 1. in productUpload, enter key opens file                !!!
-# 2. db json columns cant get hebrew words                 !!!
-# 3. can't press notification to close it                  !!!
-# 4. when loading facebook on home route, errors raises up !!!
+    # Feed Related Tasks:
+    # 1. Fetch allposts from db to feed -------------------------------------------- VVV
+    # 2. Sort posts by time -------------------------------------------------------- VVV
+    # 3. Fetch also username and userimages ---------------------------------------- VVV
+    # 4. Reload 5 posts. when user is scrolling reload another 5 ------------------- Problem - ask shlomi!
+    # 5. Get posts according to privacy settings ----------------------------------- VVV
+
+    # Notifications
+    # 1. notifications for friend request and approval ----------------------------- VVV
+    # 2. notificaions for likes added to user's post ------------------------------- Wating........
+    # 3. notifications for comments added to user's post --------------------------- Wating........
 
 
-# Marketplace Related Tasks:
-# 1. figure out a way to chunk 6 products in one chunk => make a map ---------- VVV
-# 2. format date problem ------------------------------------------------------ VVV
-# 3. figure out a way to import every product to a single page ---------------- VVV
-# 4. cities api ---------------------------------------------------------------
+    # Chats
+    # 1. design the all thing ------------------------------------------------------
+    # 2. option to visit user profile - feature ------------------------------------
+    # 3.
+
+    # **********************************************************************************************************************************
+    # **********************************************************************************************************************************
+
+    # Complex Tasks :
+    # 1. Add light mode option to the entire website ------------------------------- Wating........
+    # 2. Add an option to switch between languages (eng, heb) ---------------------- Wating........
 
 
-# Friends Related Tasks:
-# 1. Display number of friends ------------------------------------------------- VVV
-# 2. When clicking on number of friends, list of all friends will appear ------- VVV
-# 3. Option to delete a friend ------------------------------------------------- VVV
-# 4. When add friend, user will get notification i wants to accept or no ------- VVV
-# (red alert of notification => problem, when accepting friend it disapperes and when refersgin it gets back)
-# (friend pending goes back to initial state when page refreshes) => check if db got any notification, if so, return 'pending', else, return 'add friend'.
-# 5. feature to exit window of notification with mouse ------------------------- VVV
+    # Can't Tell Tasks:
+    # 1. make session id last for 5 minutes of inactivity. ------------------------- Problem - ask shlomi!
+    # 2. make a skeleton while loading profile data -------------------------------- Wating........
+    # 3. add the number of notifications in the circle ----------------------------- wating........
 
 
-# Feed Related Tasks:
-# 1. Fetch allposts from db to feed -------------------------------------------- VVV
-# 2. Sort posts by time -------------------------------------------------------- VVV
-# 3. Fetch also username and userimages ---------------------------------------- VVV
-# 4. Reload 5 posts. when user is scrolling reload another 5 ------------------- Problem - ask shlomi!
-# 5. Get posts according to privacy settings ----------------------------------- VVV
+    # Easy Tasks:
+    # 1. for search - move between option using buttons ---------------------------- Wating........
+    # 2. change dot of new notificaton --------------------------------------------- Wating........
+
+
+    # Problems
+    # 1. in productUpload, enter key, opens file ----------------------------------- !!!
+    # 2. db json columns cant get hebrew words ------------------------------------- !!!
+    # 3. can't press notification to close it -------------------------------------- !!!
+    # 4. when loading facebook on home route, errors raises up --------------------- !!!
+    # 5. make session id last for 5 minutes of inactivity. ------------------------- problem - ask shlomi!
+
+
+    # Video tasks:
+    # 1. learn react classes in udemy.
+    # 2. 
