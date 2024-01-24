@@ -54,7 +54,7 @@ function Feed() {
       }, []); // Empty dependency array ensures that the effect runs only once during mount
     
 
-      useEffect(() => {
+    useEffect(() => {
         const getPostToFacebook = async () => {
             let data = {
                 "Email" : getAuthenticatedUser()

@@ -119,7 +119,7 @@
     flex-direction: column;
     z-index: 1;
     width: 29%;
-    height: 50%;
+    height: 60%;
     overflow-y: auto;
     background: #181616;
     border-radius: 5px;
@@ -138,9 +138,12 @@
 }
 
 .post-all_comments-wrapper {
+    display: flex;
+    flex-direction: column;
     height: 80%;
     padding: 7% 4% 0% 1%;
     overflow-y: auto;
+    gap: 5px;
 }
 .post-all_comments-content {
     display: flex;

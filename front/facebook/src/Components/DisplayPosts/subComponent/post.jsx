@@ -34,9 +34,18 @@ function Post({ index, post }) {
 
     const [isCommentClicked, setIsCommentClicked] = useState(false); // raise comment box
     const [comment, setComment] = useState(); // content of the comment
+    const [allComments, setAllComments] = useState(post.Comments ? post.Comments : []);
     const [commentsLength, setCommentsLength] = useState(post.Comments ? post.Comments.length : 0);
-
+   
     
+    // Sort comments by time of creation
+    useEffect(() => {
+        
+        allComments.sort((a, b) => {
+            return new Date(b[2].date) - new Date(a[2].date); // ascending
+        })
+
+    }, [allComments])
 
     // Like Handler
     const likeButton = async () => {
@@ -58,7 +67,7 @@ function Post({ index, post }) {
             "LikeOrDislike" : !isLike
         }
 
-        const likeResponse = await likePost(data)
+        await likePost(data)
   
         // Like Has Been Added
     
@@ -78,13 +87,21 @@ function Post({ index, post }) {
 
         await commentPost(data)
 
-        // Comment has been added
+        // Delete the content of the privous message
+        document.getElementById('post-comment-text').value = "";
 
+
+        let allNotUpdatedComments = allComments;
+
+        allNotUpdatedComments.push(data);
+        
+        setAllComments(allNotUpdatedComments);
+        // setAllComments(prevComments => [...prevComments, data]);
+        // console.log(allComments)
     }
     
     const openCommentBox = () => {
         setIsCommentClicked(!isCommentClicked)
-
     }
 
     
@@ -180,9 +197,8 @@ function Post({ index, post }) {
                     <div className='post-comment-wrapper'>
                         <button className='post-comment-exit-icon' onClick={openCommentBox}> <img src={exitIcon} /> </button>
 
-
                         <div className='post-all_comments-wrapper'>
-                            {post.Comments && post.Comments.map((comment, i) => (
+                            {allComments && allComments.map((comment, i) => (
                                 <div key={i} id={post.ID} className='post-all_comments-content'>
 
                                     <img className='post-userimage-wrapper' src={ comment[4] } onClick={(e) => {navigateToProfile(e, comment[0])}}></img>
@@ -197,7 +213,7 @@ function Post({ index, post }) {
                         </div>
 
                         <form onSubmit={(e) => sendComment(e)} className='post-comment_action-wrapper'>
-                            <input type='text' className='post-comment-placeholder' onChange={(e) => setComment(e.target.value)} placeholder='...הוספת תגובה'></input>
+                            <input type='text' id='post-comment-text' className='post-comment-placeholder' onChange={(e) => setComment(e.target.value)} placeholder='...הוספת תגובה'></input>
 
                             <button type='submit' className='post-comment-submit-button'> <IoSend /> </button>
                         </form>  
