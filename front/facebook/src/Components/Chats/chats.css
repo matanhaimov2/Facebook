@@ -4,7 +4,7 @@
     position: fixed;
     bottom: 0;
     left: 2%;
-    width: 15%;
+    width: 20%;
     height: 50%;
     background: #242526;
     border-radius: 5px;
@@ -12,7 +12,7 @@
 }
 
 .chats-user-info {
-    height: 10%;
+    /* height: 10%; */
     display: flex;
     flex-direction: row;
     color: white;
@@ -32,7 +32,7 @@
 }
 
 .chats-message-wrapper {
-    height: 10%;
+    /* height: 10%; */
     display: flex;
     flex-direction: row;
     padding: 1%;
@@ -58,4 +58,17 @@
     cursor: pointer;
     color: grey;
     font-size: 110%;
+}
+
+.chats-conversation-message-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    padding: 3%;
+}
+
+.chats-conversation-message {
+    color: white;
+    font-size: 80%;
 }

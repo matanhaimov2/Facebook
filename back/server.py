@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_mysqldb import MySQL
+from flask_socketio import SocketIO, join_room, leave_room, send
 
 # Other imports
 import random, string
@@ -19,6 +20,8 @@ app = Flask(__name__)
 mysql = MySQL(app)
 CORS(app)
 
+# Socket config
+socketIo = SocketIO(app, cors_allowed_origins="*") 
 
 # Register the Blueprints
 app.register_blueprint(marketplace_bp)
@@ -94,6 +97,48 @@ def healthCheck():
 
 
 
+# Chat Config
+@socketIo.on('join')
+def handle_connect(payload):
+
+    room_name = payload["roomName"]   
+
+    room = f'usertypechat_{room_name}'
+    print("room: ",room)
+
+    # Create room
+    join_room(room)
+
+
+@socketIo.on('message')
+def handle_message(payload):
+
+    sender = payload["sender"]
+    message = payload["message"]
+    to_user = payload["to"]
+    room_name = payload["roomName"]
+
+
+    room = f'usertypechat_{room_name}'
+
+    message_data = {
+        "sender": sender,
+        "message": message,
+        "to": to_user
+    }
+    
+
+    print("message_data: ",message_data)
+    print("to: ",room)
+
+    send(message_data, to=room)
+    # socketIo.emit('message', message_data, room=room)    # MATAN dont delete this keep it until we will finish completly
+
+    return None
+ 
+
+
+
 # Sub Functions
 def genereteSessionID(length):
 
@@ -104,8 +149,7 @@ def genereteSessionID(length):
 
 
 if __name__ == "__main__":
-    app.run(debug = True)
-
+    socketIo.run(app, debug=True)
 
 # Guider :
     # Main Tasks:

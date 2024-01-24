@@ -26,6 +26,7 @@
     "react-transition-group": "^4.4.5",
     "reactflow": "^11.9.4",
     "reactjs-popup": "^2.0.5",
+    "socket.io-client": "^4.7.4",
     "styled-components": "^5.3.11",
     "web-vitals": "^2.1.4"
   },

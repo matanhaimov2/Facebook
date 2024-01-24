@@ -24,7 +24,7 @@ function Onlinefriends() {
 
     const [openChat, setOpenChat] = useState(false); // Opens chat box
     const [userData, setUserData] = useState(); // Contains clicked user's data
-
+    const [prevUserData, setPrevUserData] = useState();
 
 
     useEffect(() => {
@@ -51,8 +51,19 @@ function Onlinefriends() {
 
     // Chat Handler
     const chatOpener = (e, data) => {
-        setOpenChat(!openChat) // opens and closes chat box 
-        setUserData(data)
+      
+        if(!userData) {
+            setOpenChat(true); // opens and closes chat box 
+            setUserData(data);
+        }
+        else {
+            setPrevUserData(userData);
+            setUserData(data);
+
+            if(userData===data) {
+                setPrevUserData();
+            }
+        }
     }
 
     return (
@@ -65,28 +76,28 @@ function Onlinefriends() {
             <div className='displayfriends-sub-wrapper' >
             
                 {friendsInfo && friendsInfo.map((data, i) => (
-                <div key={i} className='onilnefriends-box' onClick={(e) => {chatOpener(e, data)}}>
+                    <div key={i} className='onilnefriends-box' onClick={(e) => {chatOpener(e, data)}}>
 
-                    <span className='onilnefriends-text'> { data.username }</span>
-                    
-                    <div className='onilnefriends-img-wrapper'>
+                        <span className='onilnefriends-text'> { data.username }</span>
+                        
+                        <div className='onilnefriends-img-wrapper'>
 
-                        {data.userimages ? (
-                            <img className='topnav-search-box-img' src={ data.userimages }></img>
+                            {data.userimages ? (
+                                <img className='topnav-search-box-img' src={ data.userimages }></img>
 
-                        ) : (
-                            <LiaUserCircleSolid className='topnav-search-box-none-img'/>
-                        )}
+                            ) : (
+                                <LiaUserCircleSolid className='topnav-search-box-none-img'/>
+                            )}
 
-                        {data.status==='Online' ? (
-                            <GoDotFill className='onlinefriends-online-status'/>
-                        ) : (
-                            <GoDotFill className='onlinefriends-offline-status'/>
-                        )}
-            
+                            {data.status==='Online' ? (
+                                <GoDotFill className='onlinefriends-online-status'/>
+                            ) : (
+                                <GoDotFill className='onlinefriends-offline-status'/>
+                            )}
+                
+                        </div>
+
                     </div>
-
-                </div>
                 ))}
 
 
@@ -105,7 +116,7 @@ function Onlinefriends() {
             )}   
 
             {/* sends to chats component, clicked user's data */}
-            {openChat && (
+            {openChat && prevUserData !== userData && (
                 <Chats data={userData} />
             )}
 
