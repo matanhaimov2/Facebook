@@ -378,3 +378,8 @@
     margin: 0;
     background: grey;
 }
+
+/* notifications alert style */
+span.MuiBadge-root.css-1c32n2y-MuiBadge-root {
+    display: flex;
+}

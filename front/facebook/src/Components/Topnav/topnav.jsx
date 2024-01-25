@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
 
 // Icons
 import logo from '../../Assets/Images/facebook-icon.png'; 
@@ -233,7 +235,10 @@ const TopNav = () => {
             {!notficationAlert ? (
               <button className='topnav-button-circle topnav-pointer' onClick={openNotificationsHandler}> <IoNotificationsOutline className='topnav-menu-icon' /> </button>
             ) : (
-              <button className='topnav-button-circle topnav-pointer' onClick={openNotificationsHandler}> <IoNotificationsOutline className='topnav-menu-icon' /> <FaRegCircle className='topnav-menu-alert'/> </button>
+              <button className='topnav-button-circle topnav-pointer' onClick={openNotificationsHandler}> <IoNotificationsOutline className='topnav-menu-icon' />
+                <Badge badgeContent={notifications.length} color="error">
+                </Badge>
+              </button>
             )}
           </div>
 

@@ -192,7 +192,7 @@ if __name__ == "__main__":
 
 
     # Chats
-    # 1. design the all thing ------------------------------------------------------
+    # 1. design the all thing ------------------------------------------------------ VVV
     # 2. option to visit user profile - feature ------------------------------------
     # 3.
 
@@ -212,7 +212,6 @@ if __name__ == "__main__":
 
     # Easy Tasks:
     # 1. for search - move between option using buttons ---------------------------- Wating........
-    # 2. change dot of new notificaton --------------------------------------------- Wating........
 
 
     # Problems

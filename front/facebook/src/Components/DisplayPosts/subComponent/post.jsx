@@ -37,15 +37,7 @@ function Post({ index, post }) {
     const [allComments, setAllComments] = useState(post.Comments ? post.Comments : []);
     const [commentsLength, setCommentsLength] = useState(post.Comments ? post.Comments.length : 0);
    
-    
-    // Sort comments by time of creation
-    useEffect(() => {
-        
-        allComments.sort((a, b) => {
-            return new Date(b[2].date) - new Date(a[2].date); // ascending
-        })
 
-    }, [allComments])
 
     // Like Handler
     const likeButton = async () => {
@@ -103,7 +95,16 @@ function Post({ index, post }) {
     const openCommentBox = () => {
         setIsCommentClicked(!isCommentClicked)
     }
+    
+    // Sort comments by time of creation
+    useEffect(() => {
+    
+        allComments.sort((a, b) => {
+            return new Date(b[2].date) - new Date(a[2].date); // ascending
+        })
 
+    }, [allComments])
+    
     
     // Share Handler
     const shareButton = () => {
