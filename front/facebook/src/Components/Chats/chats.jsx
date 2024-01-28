@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import io from "socket.io-client";
 
 // React Icons 
@@ -24,11 +24,30 @@ import './chats.css';
 function Chats({ data, setOpenChat }) {
 
     // States
-    const [connected, setConnected] = useState(false); 
+    const [connected, setConnected] = useState(false);
     const [message, setMessage] = useState(); // content of the comment
     const [allMessages, setAllMessages] = useState([]);
     const [chat, setChat] = useState([]);
-    
+
+    // Refs
+    const chatRef = useRef(null);
+
+    // Close chat box when clicking outside of the box
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (chatRef.current && !chatRef.current.contains(event.target)) {
+                setOpenChat(false)
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside, true);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, []);
+
+
     const socket = io.connect(SERVER_URL);
 
     //  Means an other chat is online delete the last chat info
@@ -52,16 +71,16 @@ function Chats({ data, setOpenChat }) {
 
             // Concatenate usernames in alphabetical order
             const roomName = [sender, to].sort().join('_');
-            
+
             const payload = {
-                "roomName" : roomName
+                "roomName": roomName
             }
 
             socket.emit('join', payload);
-        
+
             setConnected(true);
         }
-      
+
         connect();
 
     }, [connected])
@@ -77,7 +96,7 @@ function Chats({ data, setOpenChat }) {
 
         }
 
-        if(connected) {
+        if (connected) {
             getMessages();
         }
 
@@ -89,9 +108,9 @@ function Chats({ data, setOpenChat }) {
     }, [allMessages.length, connected])
 
     useEffect(() => {
-        if(allMessages.length > 0) {
+        if (allMessages.length > 0) {
             let curChat = chat;
-            
+
             curChat.push(allMessages[0]);
 
             console.log(curChat)
@@ -104,9 +123,9 @@ function Chats({ data, setOpenChat }) {
 
     // Conversation Handler
     const sendMessage = async (e) => {
-        e.preventDefault(); 
-        
-        if(message.length > 0) {
+        e.preventDefault();
+
+        if (message.length > 0) {
 
             const sender = JSON.parse(localStorage.getItem("UserInfo")).username;
             const to = data.username;
@@ -115,14 +134,14 @@ function Chats({ data, setOpenChat }) {
             const roomName = [sender, to].sort().join('_');
 
             const payload = {
-                "sender" : sender,
-                "to" : to,
-                "message" : message,
-                "roomName" : roomName
+                "sender": sender,
+                "to": to,
+                "message": message,
+                "roomName": roomName
             }
 
             socket.emit("message", payload);
-            
+
             // Reset message
             setMessage("");
 
@@ -130,39 +149,45 @@ function Chats({ data, setOpenChat }) {
             document.getElementById('chats-text-box').value = "";
         }
     }
-    
+
     // Chat Handler
     const chatOpener = (e, condition) => {
         setOpenChat(condition)
     }
 
+    // useEffect(() => {
+    //     console.log(allMessages, 'here4e');
+    //     console.log(chat, 'hereas');
 
-    return (                
-        <div className='chats-background'>
+
+    // }, [allMessages])
+
+    return (
+        <div className='chats-background' ref={chatRef}>
             <div className='chats-wrapper'>
-                <button className='chats-exit-icon' onClick={(e) => {chatOpener(false)}}> <img src={exitIcon} /> </button>
+                <button className='chats-exit-icon' onClick={(e) => { chatOpener(false) }}> <img src={exitIcon} /> </button>
 
                 <div className='chats-user-info'>
-                    
+
                     <div className='chats-user-info-img-wrapper'>
-                        <img className='post-userimage-wrapper' src={ data.userimages }></img>
+                        <img className='post-userimage-wrapper' src={data.userimages}></img>
                     </div>
 
                     <div className='chats-user-info-text-wrapper'>
-                        <span className='post-top-username-wrapper'>{ data.username }</span>
-                        <span>{ data.status }</span>
+                        <span className='post-top-username-wrapper'>{data.username}</span>
+                        <span>{data.status}</span>
                     </div>
 
                 </div>
 
                 <div className='chats-conversation-wrapper'>
-                    
+
                     {chat.map((message, i) => (
-                        <div key={i} className='chats-conversation-message-wrapper'>
+                        <div key={message.message} className='chats-conversation-message-wrapper'>
 
                             <div className='chats-conversation-message-sender'>
                                 <div className='chats-user-info-img-wrapper'>
-                                    <img className='post-userimage-wrapper' src={ data.userimages }></img>
+                                    <img className='post-userimage-wrapper' src={data.userimages}></img>
                                 </div>
                             </div>
 
@@ -178,7 +203,7 @@ function Chats({ data, setOpenChat }) {
                     <input id='chats-text-box' type='text' className='chats-message-text' onChange={(e) => setMessage(e.target.value)} placeholder='...שלח הודעה'></input>
 
                     <button type='submit' className='chats-message-send-button'> <IoSend /> </button>
-                </form> 
+                </form>
             </div>
         </div>
     );

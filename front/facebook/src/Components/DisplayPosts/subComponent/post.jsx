@@ -83,16 +83,17 @@ function Post({ index, post }) {
         document.getElementById('post-comment-text').value = "";
 
 
-        let allNotUpdatedComments = allComments;
+        // let allNotUpdatedComments = allComments;
 
-        allNotUpdatedComments.push(data);
+        // allNotUpdatedComments.push(data);
         
-        setAllComments(allNotUpdatedComments);
+        // setAllComments(allNotUpdatedComments);
+        setAllComments([...allComments, data]);
 
         // setAllComments(prevComments => [...prevComments, data]);
         // console.log(allComments)
 
-        window.location.href = '/home' // meanwhile => problem! - comments dont update when submiting a comment
+        // window.location.href = '/home' // meanwhile => problem! - comments dont update when submiting a comment
 
     }
     
@@ -100,14 +101,14 @@ function Post({ index, post }) {
         setIsCommentClicked(!isCommentClicked)
     }
     
-    // Sort comments by time of creation
-    useEffect(() => {
+    // // Sort comments by time of creation
+    // useEffect(() => {
     
-        allComments.sort((a, b) => {
-            return new Date(b[2].date) - new Date(a[2].date); // ascending
-        })
+    //     allComments.sort((a, b) => {
+    //         return new Date(b[2].date) - new Date(a[2].date); // ascending
+    //     })
 
-    }, [allComments])
+    // }, [allComments])
     
 
     // Share Handler
@@ -204,7 +205,7 @@ function Post({ index, post }) {
 
                         <div className='post-all_comments-wrapper'>
                             {allComments && allComments.map((comment, i) => (
-                                <div key={i} id={post.ID} className='post-all_comments-content'>
+                                <div key={post.ID} id={post.ID} className='post-all_comments-content'>
 
                                     <img className='post-userimage-wrapper' src={ comment[4] } onClick={(e) => {navigateToProfile(e, comment[0])}}></img>
 
