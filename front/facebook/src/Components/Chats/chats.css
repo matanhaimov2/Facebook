@@ -1,3 +1,11 @@
+.chats-background {
+    width: 100vw;
+    height: 50%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
 .chats-wrapper {
     display: flex;
     flex-direction: column;
@@ -71,4 +79,15 @@
 .chats-conversation-message {
     color: white;
     font-size: 80%;
+}
+
+.chats-exit-icon {
+    outline: none;
+    background: none;
+    border: none;
+    position: absolute;
+    top: -33px;
+    right: -33px;
+    cursor: pointer;
+    padding: 1%;
 }

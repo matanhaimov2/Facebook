@@ -59,6 +59,7 @@ function Onlinefriends() {
         else {
             setPrevUserData(userData);
             setUserData(data);
+            setOpenChat(true); // i added only this and close chat function in chats
 
             if(userData===data) {
                 setPrevUserData();
@@ -117,7 +118,7 @@ function Onlinefriends() {
 
             {/* sends to chats component, clicked user's data */}
             {openChat && prevUserData !== userData && (
-                <Chats data={userData} />
+                <Chats data={userData} setOpenChat={setOpenChat} />
             )}
 
 

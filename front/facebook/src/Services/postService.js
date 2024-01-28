@@ -32,7 +32,6 @@ const commentPost = async (data) => {
     }
 }
 
-
 export {
     likePost,
     commentPost

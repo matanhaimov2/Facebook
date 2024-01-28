@@ -4,6 +4,9 @@ import io from "socket.io-client";
 // React Icons 
 import { IoSend } from "react-icons/io5";
 
+// Icons
+import exitIcon from '../../Assets/Images/exit-icon.png'
+
 
 // Global Veribales
 import { SERVER_URL } from "../../Assets/GlobalVeriables";
@@ -18,7 +21,7 @@ import './chats.css';
 
 
 
-function Chats({ data }) {
+function Chats({ data, setOpenChat }) {
 
     // States
     const [connected, setConnected] = useState(false); 
@@ -34,7 +37,9 @@ function Chats({ data }) {
         // Reset all the parameters
         setMessage()
         setAllMessages([])
+        setChat([])
         setConnected(false)
+
     }, [data])
 
     // Connect to the right chat room
@@ -121,51 +126,60 @@ function Chats({ data }) {
             // Reset message
             setMessage("");
 
-            // Delete the content of the privous message
+            // Delete the content of the previous message
             document.getElementById('chats-text-box').value = "";
         }
     }
+    
+    // Chat Handler
+    const chatOpener = (e, condition) => {
+        setOpenChat(condition)
+    }
 
 
-    return (
-        <div className='chats-wrapper'>
-            <div className='chats-user-info'>
-                
-                <div className='chats-user-info-img-wrapper'>
-                    <img className='post-userimage-wrapper' src={ data.userimages }></img>
+    return (                
+        <div className='chats-background'>
+            <div className='chats-wrapper'>
+                <button className='chats-exit-icon' onClick={(e) => {chatOpener(false)}}> <img src={exitIcon} /> </button>
+
+                <div className='chats-user-info'>
+                    
+                    <div className='chats-user-info-img-wrapper'>
+                        <img className='post-userimage-wrapper' src={ data.userimages }></img>
+                    </div>
+
+                    <div className='chats-user-info-text-wrapper'>
+                        <span className='post-top-username-wrapper'>{ data.username }</span>
+                        <span>{ data.status }</span>
+                    </div>
+
                 </div>
 
-                <div className='chats-user-info-text-wrapper'>
-                    <span className='post-top-username-wrapper'>{ data.username }</span>
-                    <span>{ data.status }</span>
-                </div>
+                <div className='chats-conversation-wrapper'>
+                    
+                    {chat.map((message, i) => (
+                        <div key={i} className='chats-conversation-message-wrapper'>
 
-            </div>
+                            <div className='chats-conversation-message-sender'>
+                                <div className='chats-user-info-img-wrapper'>
+                                    <img className='post-userimage-wrapper' src={ data.userimages }></img>
+                                </div>
+                            </div>
 
-            <div className='chats-conversation-wrapper'>
-                
-                {chat.map((message, i) => (
-                    <div key={i} className='chats-conversation-message-wrapper'>
-
-                        <div className='chats-conversation-message-sender'>
-                            <div className='chats-user-info-img-wrapper'>
-                                <img className='post-userimage-wrapper' src={ data.userimages }></img>
+                            <div className='chats-conversation-message'>
+                                {message.message}
                             </div>
                         </div>
+                    ))}
 
-                        <div className='chats-conversation-message'>
-                            {message.message}
-                        </div>
-                    </div>
-                ))}
+                </div>
 
+                <form onSubmit={(e) => sendMessage(e)} className='chats-message-wrapper'>
+                    <input id='chats-text-box' type='text' className='chats-message-text' onChange={(e) => setMessage(e.target.value)} placeholder='...שלח הודעה'></input>
+
+                    <button type='submit' className='chats-message-send-button'> <IoSend /> </button>
+                </form> 
             </div>
-
-            <form onSubmit={(e) => sendMessage(e)} className='chats-message-wrapper'>
-                <input id='chats-text-box' type='text' className='chats-message-text' onChange={(e) => setMessage(e.target.value)} placeholder='...שלח הודעה'></input>
-
-                <button type='submit' className='chats-message-send-button'> <IoSend /> </button>
-            </form> 
         </div>
     );
 }

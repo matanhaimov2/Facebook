@@ -79,7 +79,7 @@ function Post({ index, post }) {
 
         await commentPost(data)
 
-        // Delete the content of the privous message
+        // Delete the content of the previous message
         document.getElementById('post-comment-text').value = "";
 
 
@@ -88,8 +88,12 @@ function Post({ index, post }) {
         allNotUpdatedComments.push(data);
         
         setAllComments(allNotUpdatedComments);
+
         // setAllComments(prevComments => [...prevComments, data]);
         // console.log(allComments)
+
+        window.location.href = '/home' // meanwhile => problem! - comments dont update when submiting a comment
+
     }
     
     const openCommentBox = () => {
@@ -105,7 +109,7 @@ function Post({ index, post }) {
 
     }, [allComments])
     
-    
+
     // Share Handler
     const shareButton = () => {
         
