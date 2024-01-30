@@ -205,7 +205,7 @@ function Post({ index, post }) {
 
                         <div className='post-all_comments-wrapper'>
                             {allComments && allComments.map((comment, i) => (
-                                <div key={post.ID} id={post.ID} className='post-all_comments-content'>
+                                <div key={i} id={post.ID} className='post-all_comments-content'>
 
                                     <img className='post-userimage-wrapper' src={ comment[4] } onClick={(e) => {navigateToProfile(e, comment[0])}}></img>
 

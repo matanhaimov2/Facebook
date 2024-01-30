@@ -142,10 +142,19 @@
 }
 
 .marketplace-filter-button-wrapper {
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 95%;
     padding-top: 5%;
+}
+
+.marketplace-filter-cities-search {
+    outline: none;
+    border: 1px solid grey;
+    background: none;
+    padding: 2%;
+    color: white;
 }
 
 .marketplace-filter-title {
@@ -166,6 +175,37 @@
     font-size: 100%;
     cursor: pointer;
     text-align: right;
+    text-decoration: underline;
+}
+
+.marketplace-filter-cities-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    overflow-y: auto;
+    position: absolute;
+    top: 125%;
+    left: 5%;
+    z-index: 100;
+    background: #2f2f35;
+    border-radius: 5px;
+}
+
+.marketplace-filter-cities {
+    color: white;
+    gap: 2px;
+    display: flex;
+    padding: 2%;
+    border: 1px solid lightslategrey;
+
+}
+
+.marketplace-filter-cities-button {
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    cursor: pointer;
 }
 
 .marketplace-category-wrapper{

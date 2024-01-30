@@ -206,12 +206,12 @@ if __name__ == "__main__":
 
     # Can't Tell Tasks:
     # 1. make session id last for 5 minutes of inactivity. ------------------------- Problem - ask shlomi!
-    # 2. make a skeleton while loading profile data -------------------------------- Wating........
-    # 3. add the number of notifications in the circle ----------------------------- wating........
+    # 2. add the number of notifications in the circle ----------------------------- wating........
 
 
     # Easy Tasks:
     # 1. for search - move between option using buttons ---------------------------- Wating........
+    # 2. make a skeleton while loading profile data -------------------------------- Wating........
 
 
     # Problems
@@ -219,8 +219,6 @@ if __name__ == "__main__":
     # 2. db json columns cant get hebrew words ------------------------------------- !!!
     # 3. can't press notification to close it -------------------------------------- !!!
     # 4. when loading facebook on home route, errors raises up --------------------- !!!
-    # 5. make session id last for 5 minutes of inactivity. ------------------------- problem - ask shlomi!
-
 
     # Video tasks:
     # 1. learn react classes in udemy.
