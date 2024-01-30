@@ -49,3 +49,19 @@ body {
     width: 100%;
     height: 100%;
 }
+
+.language-selector-wrapper {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 2%;
+    z-index: 10000000;
+}
+
+.direction-rtl {
+    direction: rtl;
+}
+
+.direction-ltr {
+    direction: ltr;
+}

@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+// React mui
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
@@ -7,6 +13,7 @@ import './login.css';
 
 // Services
 import { login } from '../../Services/authService';
+
 
 function Login() {
 
@@ -17,7 +24,10 @@ function Login() {
     const [showLoading, setShowLoading] = useState(false);
 
 
-    
+    // Translator
+    const { t } = useTranslation();
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -60,7 +70,7 @@ function Login() {
 
                 <div className='login-content'>
                     <div className='login-content-title-wrapper'>
-                        <label className='login-content-title'>התחבר\י לפייסבוק</label>
+                        <label className='login-content-title'>{t('login.log_to_facebook')}</label>
                     </div>
 
                     <form className='login-form' onSubmit={ handleSubmit }>

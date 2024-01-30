@@ -185,10 +185,10 @@ const Marketplace = () => {
                             <span className='marketplace-filter-title'> {cityFilter} </span>
                             <button className='marketplace-filter-button' onClick={() => setIsEditCity(!isEditCity)}> ערוך </button>
                             {isEditCity && (
-                                <div className='marketplace-filter-cities-wrapper'>
+                                <div className='marketplace-filter-cities-wrapper' style={searchTerm.length >=  1 ? {} : {height : 'fit-content'}}>
                                     <input className='marketplace-filter-cities-search' type="text" placeholder="חפש..." value={searchTerm} onChange={handleInputChange} />
 
-                                    {isEditCity && (
+                                    {isEditCity && searchTerm.length >=  1 && (
                                         filteredData.map((item, i) => (
                                             <div key={i} className='marketplace-filter-cities'>
                                                 <button className='marketplace-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
@@ -404,6 +404,19 @@ const Marketplace = () => {
                         </div>
                     ))}
 
+                
+                {/* Display no products availble - when there are no products */}
+                {marketProducts && marketProducts.flat()
+                    .filter((item) => {
+                        const product = typeof item === 'string' ? JSON.parse(item) : item; // if item is a string, convert to js object, else keep it as is.
+
+                        // Check if cityFilter is 'anything' or if product.City matches the cityFilter
+                        return cityFilter === 'הכל' || product.City === cityFilter;
+                    }).length === 0 && (
+                    <div>
+                        No Products That Fits Your Search
+                    </div>
+                )}
 
                 {extendUploadProduct && (
                     <div className='marketplace-left-productupload-wrapper'>

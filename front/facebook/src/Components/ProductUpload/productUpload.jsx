@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
+
+// Mui
 import Select from '@mui/joy/Select';
 import { Option } from '@mui/joy';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
 // Icons
-import plusIcon from '../../Assets/Images/plus-icon.png'; 
-import editIcon from '../../Assets/Images/edit-icon.png'; 
-import exitIcon from '../../Assets/Images/exit-icon.png'; 
-
-
-// React Icons 
-
+import plusIcon from '../../Assets/Images/plus-icon.png';
+import editIcon from '../../Assets/Images/edit-icon.png';
+import exitIcon from '../../Assets/Images/exit-icon.png';
 
 // CSS
 import './productUpload.css';
@@ -21,9 +19,9 @@ import { uploadProduct, editProduct } from '../../Services/marketplaceService';
 import { profileImgbb } from '../../Services/profileService';
 import { getAuthenticatedUser } from '../../Services/authService';
 
+// Cities Data
+import cities_data from '../../Assets/israel_cities.json'
 
-
-// Components
 
 const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduct, updatePage, updatePageCurrentState, selectedOption }) => {
 
@@ -32,16 +30,17 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
     const [uploadText, setUploadText] = useState('');
     const [uploadImg, setUploadImg] = useState(false);
     const [uploadPrice, setUploadPrice] = useState('');
-    const [uploadCity, setuUploadCity] = useState('');
+    const [uploadCity, setUploadCity] = useState('');
 
     const [showLoading, setShowLoading] = useState(false);
 
+    const [filteredData, setFilteredData] = useState(cities_data);
 
 
     const activateUploadImage = () => {
         const imageUploader = document.getElementById('imgProductUpload');
 
-        if(imageUploader) {
+        if (imageUploader) {
             imageUploader.click()
         }
     }
@@ -51,7 +50,7 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
         // Get the selected image file
         const imageFile = document.getElementById('imgProductUpload')['files'][0];
 
-        if(imageFile) {
+        if (imageFile) {
             // Save img to display it to the user
             setUploadImg(imageFile)
         }
@@ -62,43 +61,43 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
 
         setShowLoading(true); // Show loading animation
 
-       // Get the selected image file
+        // Get the selected image file
         const imageFile = document.getElementById('imgProductUpload')['files'][0];
 
 
         let form = new FormData();
         form.append('image', imageFile)
-        
+
         const responseUrlImgBB = await profileImgbb(form);
 
         let data = {
-            "Email" : getAuthenticatedUser(), 
-            "Index" : selectedOption,
-            "UploadedCategory" : uploadCategory,
-            "UploadedText" : uploadText,
-            "UploadedImg" : responseUrlImgBB.data.display_url,
-            "UploadedPrice" : uploadPrice,
-            "UploadedCity" : uploadCity
+            "Email": getAuthenticatedUser(),
+            "Index": selectedOption,
+            "UploadedCategory": uploadCategory,
+            "UploadedText": uploadText,
+            "UploadedImg": responseUrlImgBB.data.display_url,
+            "UploadedPrice": uploadPrice,
+            "UploadedCity": uploadCity
         }
 
-        if(getAuthenticatedUser()) {
+        if (getAuthenticatedUser()) {
 
-            if(isUpdateProduct) {
+            if (isUpdateProduct) {
                 const edit_response = await editProduct(data)
-                
-                if(edit_response && edit_response.res===true) {
+
+                if (edit_response && edit_response.res === true) {
 
                     // Turn off the form
                     setIsEditProduct(false);
-                    
+
                     // Update data
                     updatePage(!updatePageCurrentState);
-                    
+
                 }
             }
             else {
                 const response = await uploadProduct(data)
-       
+
                 setExtendUploadPoduct(false);
             }
 
@@ -115,16 +114,44 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
         setIsEditProduct(false)
     }
 
+
+    // Search products for a specific city from cities api
+
+    const handleInputChange = (event) => { // when user changes input
+        const { value } = event.target;
+        setUploadCity(value);
+        filterData(value);
+    };
+
+    const filterData = (searchTerm) => { // filtered displayed data(cities) according to searchTerm
+        const filteredData = cities_data.filter((item) =>
+            item.name.includes(searchTerm)
+        );
+        setFilteredData(filteredData);
+    };
+
+    const handleCityClick = (city_english_name) => { // when user clickes on a city to filter
+        setUploadCity(capitalizeWords(city_english_name));
+    }
+
+    const capitalizeWords = (city_english_name) => { // uppercase the selected city(from 'two words' => 'Two Words')
+        return city_english_name
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
+
+
     return (
         <div className='productupload-wrapper'>
-            
+
             {isUpdateProduct ? (
                 <button className='productupload-exit-icon' onClick={closeEdit}> <img src={exitIcon} /> </button>
             ) : (
-                <button className='productupload-exit-icon' onClick={() => {setExtendUploadPoduct(false)}}> <img src={exitIcon} /> </button>
+                <button className='productupload-exit-icon' onClick={() => { setExtendUploadPoduct(false) }}> <img src={exitIcon} /> </button>
             )}
 
-            <form className='productupload-sub-wrapper' onSubmit={ uploadProductToFacebook }>
+            <form className='productupload-sub-wrapper' onSubmit={uploadProductToFacebook}>
                 <div>
                     <Select
                         color="primary"
@@ -141,24 +168,24 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                 </div>
 
                 <div>
-                    <input type='text'className='productupload-input-text' onChange={(e) => setUploadText(e.target.value)} placeholder='כמה מילים על המוצר...' required/>
+                    <input type='text' className='productupload-input-text' onChange={(e) => setUploadText(e.target.value)} placeholder='כמה מילים על המוצר...' required />
                 </div>
-                
+
                 <div className='productupload-image-wrapper'>
                     {isUpdateProduct ? (
                         <>
                             <span>שנה תמונה :</span>
-                        
+
                             <div className='productupload-image-sub-wrapper'>
-                            <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
-                            
-
-                            <button type='button' className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
+                                <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required />
 
 
-                            {uploadImg  && (
-                                <img src={URL.createObjectURL(uploadImg)} className='postupload-ed-image'></img>
-                            )}
+                                <button type='button' className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
+
+
+                                {uploadImg && (
+                                    <img src={URL.createObjectURL(uploadImg)} className='postupload-ed-image'></img>
+                                )}
                             </div>
                         </>
                     ) : (
@@ -166,15 +193,15 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                             <span>הוסף תמונה להמחשה:</span>
 
                             <div className='productupload-image-sub-wrapper'>
-                                <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required/> 
-                                
+                                <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required />
+
                                 {!uploadImg ? (
                                     <button type='button' className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={plusIcon} className="postupload-img-plusicon" /> </button>
                                 ) : (
                                     <button type='button' className='postupload-upload-img-wrapper postupload-plusicon' onClick={activateUploadImage}> <img src={editIcon} className="postupload-img-plusicon" /> </button>
                                 )}
-        
-                                {uploadImg  && (
+
+                                {uploadImg && (
                                     <img src={URL.createObjectURL(uploadImg)} className='postupload-ed-image'></img>
                                 )}
                             </div>
@@ -186,13 +213,20 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                 </div>
 
                 <div>
-                    <input type='text' className='productupload-input-price' onChange={(e) => setUploadPrice(e.target.value)} placeholder='מחיר:' required/>
+                    <input type='text' className='productupload-input-price' onChange={(e) => setUploadPrice(e.target.value)} placeholder='מחיר:' required />
                     <span> ש"ח </span>
                 </div>
-                
+
                 <div>
-                    <input type='text' className='productupload-input-city' onChange={(e) => setuUploadCity(e.target.value)}  placeholder='עיר איסוף:' required/>
-                    {/* advenced : try to use an api of cities in israel */}
+                    <input type='text' className='productupload-input-city' value={uploadCity} onChange={handleInputChange} placeholder='עיר איסוף..' required />
+
+                    {uploadCity.length >= 2 && (
+                        filteredData.map((item, i) => (
+                            <div key={i} className='marketplace-filter-cities'>
+                                <button className='marketplace-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
+                            </div>
+                        ))
+                    )}
                 </div>
 
                 <div className='postupload-post-wrapper'>
@@ -206,7 +240,7 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                             )}
                         </>
                     ) : (
-                        <Box type='submit' className='postupload-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
+                        <Box type='submit' className='postupload-form-loading'> <CircularProgress style={{ 'color': 'white' }} /> </Box>
                     )}
                 </div>
             </form>

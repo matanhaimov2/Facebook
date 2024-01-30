@@ -334,7 +334,8 @@ const TopNav = () => {
       </div>
 
 
-      <div className='topnav-right-side'>
+      <div className={`topnav-right-side ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
+        
         <div className='topnav-facebook-icon-wrapper'>
           <a href='/home' className='topnav-pointer'> <img className='topnav-facebook-icon' src={logo} /> </a>
         </div>

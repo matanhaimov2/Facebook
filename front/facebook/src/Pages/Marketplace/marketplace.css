@@ -189,6 +189,8 @@
     z-index: 100;
     background: #2f2f35;
     border-radius: 5px;
+    height: 35vh;
+    overflow-x: hidden;
 }
 
 .marketplace-filter-cities {

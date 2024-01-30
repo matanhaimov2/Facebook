@@ -15,10 +15,12 @@ import Friends from './Pages/Friends/friends';
 
 // Components
 import TopNav from './Components/Topnav/topnav';
+import LanguageSwitcher from './Components/LanguageSelector/languageSelector';
 
 // Service
 import { healthCheck } from './Services/administrationService';
 import { isAuthenticated } from './Services/authService';
+
 
 // --- Functions
 function login() {
@@ -127,6 +129,7 @@ function App() {
     healthChecker();
   }, [])
 
+
   return (
     <div className="outer-wrapper">
         <div className='wrapper'>
@@ -145,6 +148,8 @@ function App() {
 
             </Router>
         </div>
+
+        <LanguageSwitcher />
     </div>
   );
 }
