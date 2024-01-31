@@ -1,0 +1,4 @@
+flask
+flask_cors
+flask_mysqldb
+flask_socketio

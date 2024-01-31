@@ -1,0 +1,17 @@
+docker commands: 
+
+
+docker build -t <name_of_image> . // from the docker file create the image (recepie)
+
+docker images // show all existing images
+docker images rm -f  <id_of_image> // delete image
+
+
+docker run -dit -p 80:3000 <image_name> // Creates the container
+
+docker ps -a // all the containers that are running currently (container - runs the recepie - like a mini computer)
+docker rm -f  <name_of_container> // Delete container by its name 
+
+
+
+dockerfile command: (image - recepie)
