@@ -229,9 +229,9 @@ def checkFriend(): # Checks if user got any friends
     query = '''SELECT friends FROM handlefriends WHERE user_email = '{}' '''.format(email) 
     friends = handleOneResult(query)
 
-    friends = friends[0]
-
     if friends:
+        friends = friends[0]
+
         friends_list = json.loads(friends)
 
         # Check if the friend_email_to_check is in the list with quotes
@@ -244,7 +244,6 @@ def checkFriend(): # Checks if user got any friends
             return jsonify({'res': False, 'Note': 'Users Arent Friends'})
 
     else:
-        friends_length = 0
         return jsonify({'res': False, 'Note': 'No Friends For The User'})
 
 
@@ -278,7 +277,7 @@ def hasFriendsAtAll(): # Displays the number of friends user have
 
         friends_length = 0 
 
-        if friends[0]:
+        if friends:
             friends = friends[0]
 
             friends_list = json.loads(friends)
@@ -288,20 +287,18 @@ def hasFriendsAtAll(): # Displays the number of friends user have
         else:
             friends_length = 0
             return jsonify({'res': True, 'friendsLengthNumber': friends_length, 'Note': 'No Friends For The User'})
-        
-        return jsonify({'res': True})
-            
+                    
 
     # Displaying for profile(displayfriends) friends data
     else:
         
         friends = handleOneResult(query)
-        friends = friends[0]
-
         allFetchedUsers = []
 
         
         if friends:
+            friends = friends[0]
+
             friends_list = json.loads(friends)
 
             # Takes every email from friends_list and gets from db username and userimages to the speceific email.
@@ -341,11 +338,12 @@ def getAllUsersFromFriendsDB():
     # get all friends of the user logged in 
     query = f"SELECT friends FROM handlefriends WHERE user_email = '{email}';"
     unwantedFriends = handleOneResult(query)
-    unwantedFriends = unwantedFriends[0]
 
     allFetchedUsers = []
 
     if unwantedFriends: # if user have friends
+        unwantedFriends = unwantedFriends[0]
+
         unwantedFriends = json.loads(unwantedFriends)
 
         # add the logged in user to the list of unwanted

@@ -13,6 +13,8 @@ import { BiSolidDislike } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 import { PiShareFatLight } from "react-icons/pi";
 import { IoSend } from "react-icons/io5";
+import { LiaUserCircleSolid } from 'react-icons/lia'
+
 
 
 
@@ -36,45 +38,45 @@ function Post({ index, post }) {
     const [comment, setComment] = useState(); // content of the comment
     const [allComments, setAllComments] = useState(post.Comments ? post.Comments : []);
     const [commentsLength, setCommentsLength] = useState(post.Comments ? post.Comments.length : 0);
-   
+
 
 
     // Like Handler
     const likeButton = async () => {
-        
+
         setIsLike(!isLike);
 
-        if(!isLike) {
+        if (!isLike) {
             setLikesLength(likesLength + 1);
         }
         else {
             setLikesLength(likesLength - 1);
         }
-        
+
 
         let data = {
-            "ID" : post.ID,
-            "Email" : getAuthenticatedUser(),
-            "PostCreator" : post.Email,
-            "LikeOrDislike" : !isLike
+            "ID": post.ID,
+            "Email": getAuthenticatedUser(),
+            "PostCreator": post.Email,
+            "LikeOrDislike": !isLike
         }
 
         await likePost(data)
-  
+
         // Like Has Been Added
-    
+
     }
 
 
     // Commment Handlers
     const sendComment = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
 
         let data = {
-            "ID" : post.ID,
-            "Email" : getAuthenticatedUser(),
-            "PostCreator" : post.Email,
-            "Comment" : comment
+            "ID": post.ID,
+            "Email": getAuthenticatedUser(),
+            "PostCreator": post.Email,
+            "Comment": comment
         }
 
         await commentPost(data)
@@ -86,7 +88,7 @@ function Post({ index, post }) {
         // let allNotUpdatedComments = allComments;
 
         // allNotUpdatedComments.push(data);
-        
+
         // setAllComments(allNotUpdatedComments);
         setAllComments([...allComments, data]);
 
@@ -96,31 +98,31 @@ function Post({ index, post }) {
         // window.location.href = '/home' // meanwhile => problem! - comments dont update when submiting a comment
 
     }
-    
+
     const openCommentBox = () => {
         setIsCommentClicked(!isCommentClicked)
     }
-    
+
     // // Sort comments by time of creation
     // useEffect(() => {
-    
+
     //     allComments.sort((a, b) => {
     //         return new Date(b[2].date) - new Date(a[2].date); // ascending
     //     })
 
     // }, [allComments])
-    
+
 
     // Share Handler
     const shareButton = () => {
-        
+
     }
 
-    
+
     // Profile Navigator
     const navigateToProfile = (e, email) => {
-        e.preventDefault(); 
-        
+        e.preventDefault();
+
         window.location.href = '/profile/' + email;
 
     }
@@ -130,42 +132,42 @@ function Post({ index, post }) {
         <div key={index} id={post.ID ? post.ID : 'null'} className='post-wrapper'>
             <div className='post-top-info-wrapper'>
                 {post.Username && (
-                    <img className='post-userimage-wrapper' src={ post.UserImage } onClick={(e) => {navigateToProfile(e, post.Email)}}></img>
+                    <img className='post-userimage-wrapper' src={post.UserImage} onClick={(e) => { navigateToProfile(e, post.Email) }}></img>
 
                 )}
 
                 <div className='post-top-text-info'>
 
-                    <div className='post-top-username-wrapper' onClick={(e) => {navigateToProfile(e, post.Email)}}>
+                    <div className='post-top-username-wrapper' onClick={(e) => { navigateToProfile(e, post.Email) }}>
                         {post.Username && (
                             <span>{post.Username}</span>
                         )}
                     </div>
 
-                    <div className='post-top-privacydate-wrapper'> 
-                        {post.Privacy==='only me' && (
-                            <BiSolidLock className='privacy-icon'/>
+                    <div className='post-top-privacydate-wrapper'>
+                        {post.Privacy === 'only me' && (
+                            <BiSolidLock className='privacy-icon' />
                         )}
 
-                        {post.Privacy==='friends' && (
-                            <FaUserFriends className='privacy-icon'/>
+                        {post.Privacy === 'friends' && (
+                            <FaUserFriends className='privacy-icon' />
                         )}
 
-                        {post.Privacy==='public' && (
-                            <MdPublic className='privacy-icon'/>
+                        {post.Privacy === 'public' && (
+                            <MdPublic className='privacy-icon' />
                         )}
 
-                        <span className='post-top-date-wrapper'> { post.date.split(' ')[0]} </span>
+                        <span className='post-top-date-wrapper'> {post.date.split(' ')[0]} </span>
 
                     </div>
-                    
+
                 </div>
 
             </div>
 
-            <span className='post-top-text-wrapper'>{ post.Text }</span>
+            <span className='post-top-text-wrapper'>{post.Text}</span>
 
-            <img className='post-top-image-wrapper' src={ post.Image }></img>
+            <img className='post-top-image-wrapper' src={post.Image}></img>
 
             <div className='post-like-board-wrapper'>
 
@@ -177,10 +179,10 @@ function Post({ index, post }) {
                 <div className='post-like-board-trio-wrapper' onClick={openCommentBox}>
                     <span className='post-like'> <FaRegComment /> </span>
                     <span>Comment</span>
-                    <span> { commentsLength } </span>
+                    <span> {commentsLength} </span>
                 </div>
 
-                <div id={post.ID} className='post-like-board-trio-wrapper' onClick={(e) => {likeButton(e, index)}}>
+                <div id={post.ID} className='post-like-board-trio-wrapper' onClick={(e) => { likeButton(e, index) }}>
                     {!isLike ? (
                         <>
                             <span className='post-like'> <BiLike /> </span>
@@ -193,8 +195,8 @@ function Post({ index, post }) {
                         </>
                     )}
 
-                    <div> { likesLength } </div>
-                 
+                    <div> {likesLength} </div>
+
                 </div>
             </div>
 
@@ -207,27 +209,32 @@ function Post({ index, post }) {
                             {allComments && allComments.map((comment, i) => (
                                 <div key={i} id={post.ID} className='post-all_comments-content'>
 
-                                    <img className='post-userimage-wrapper' src={ comment[4] } onClick={(e) => {navigateToProfile(e, comment[0])}}></img>
+                                    {comment[4] ? (
+                                        <img className='post-userimage-wrapper' src={comment[4]} onClick={(e) => { navigateToProfile(e, comment[0]) }}></img>
+
+                                    ) : (
+                                        <LiaUserCircleSolid className='post-none-userimage-wrapper' onClick={(e) => { navigateToProfile(e, comment[0]) }}/>
+                                    )}
 
                                     <div className='post-all_comments-info'>
-                                        <span className='post-top-username-wrapper' onClick={(e) => {navigateToProfile(e, comment[0])}}> {comment[3]} </span>
+                                        <span className='post-top-username-wrapper' onClick={(e) => { navigateToProfile(e, comment[0]) }}> {comment[3]} </span>
 
                                         <span className='post-all_comments-text'> {comment[1]} </span>
                                     </div>
-                                </div>                   
-                            ))}  
+                                </div>
+                            ))}
                         </div>
 
                         <form onSubmit={(e) => sendComment(e)} className='post-comment_action-wrapper'>
                             <input type='text' id='post-comment-text' className='post-comment-placeholder' onChange={(e) => setComment(e.target.value)} placeholder='...הוספת תגובה'></input>
 
                             <button type='submit' className='post-comment-submit-button'> <IoSend /> </button>
-                        </form>  
+                        </form>
                     </div>
                 </div>
             )}
-        </div>                         
-    )    
+        </div>
+    )
 }
 
 export default Post;
