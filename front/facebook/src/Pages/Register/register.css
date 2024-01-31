@@ -83,7 +83,6 @@
 
 .register-name-input {
     width: 50%;
-    text-align: right;
     padding: 4%;
     border-radius: 5px;
     border: 1px solid #dddfe2;
@@ -91,7 +90,6 @@
 }
 
 .register-input {
-    text-align: right;
     padding: 4%;
     border-radius: 5px;
     border: 1px solid #dddfe2;
@@ -106,13 +104,12 @@
 }
 
 .register-birth-title {
-    text-align: right;
     font-size: 80%;
 }
 
 .register-birth-sub-wrapper {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     gap: 4%;
 }
 
@@ -135,8 +132,7 @@
 .css-qfz70r-MuiFormGroup-root {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-}
+    justify-content: space-around;}
 
 .css-1nrlq1o-MuiFormControl-root {
     width: 100%;

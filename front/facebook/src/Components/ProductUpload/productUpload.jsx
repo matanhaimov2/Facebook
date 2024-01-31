@@ -30,11 +30,15 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
     const [uploadText, setUploadText] = useState('');
     const [uploadImg, setUploadImg] = useState(false);
     const [uploadPrice, setUploadPrice] = useState('');
+
+    // States - City
+    const [isEditCity, setIsEditCity] = useState(false); // Open cities menu
     const [uploadCity, setUploadCity] = useState('');
+    const [filteredData, setFilteredData] = useState(cities_data);
 
     const [showLoading, setShowLoading] = useState(false);
 
-    const [filteredData, setFilteredData] = useState(cities_data);
+
 
 
     const activateUploadImage = () => {
@@ -121,6 +125,7 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
         const { value } = event.target;
         setUploadCity(value);
         filterData(value);
+        setIsEditCity(true)
     };
 
     const filterData = (searchTerm) => { // filtered displayed data(cities) according to searchTerm
@@ -132,6 +137,7 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
 
     const handleCityClick = (city_english_name) => { // when user clickes on a city to filter
         setUploadCity(capitalizeWords(city_english_name));
+        setIsEditCity(false)
     }
 
     const capitalizeWords = (city_english_name) => { // uppercase the selected city(from 'two words' => 'Two Words')
@@ -217,16 +223,21 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                     <span> ש"ח </span>
                 </div>
 
-                <div>
+                <div className='productupload-cities-wrapper'>
                     <input type='text' className='productupload-input-city' value={uploadCity} onChange={handleInputChange} placeholder='עיר איסוף..' required />
 
-                    {uploadCity.length >= 2 && (
-                        filteredData.map((item, i) => (
-                            <div key={i} className='marketplace-filter-cities'>
-                                <button className='marketplace-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
-                            </div>
-                        ))
+                    {isEditCity && (
+                        <div className='productupload-filter-cities-wrapper'>
+                            {uploadCity.length >= 2 && (
+                                filteredData.map((item, i) => (
+                                    <div key={i} className='productupload-filter-cities'>
+                                        <button className='productupload-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     )}
+
                 </div>
 
                 <div className='postupload-post-wrapper'>

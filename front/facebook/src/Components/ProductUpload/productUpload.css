@@ -19,20 +19,44 @@
 
 .productupload-input-text {
     outline: none;
-    /* border: none; */
     width: 97%;
     height: 30px;
 }
 
 .productupload-input-price {
-    /* border: none; */
     width: 12%;
 }
 
+.productupload-cities-wrapper {
+    position: relative;
+}
+
 .productupload-input-city {
-    /* border: none; */
     width: 35%;
 }
+
+.productupload-filter-cities-wrapper {
+    position: absolute;
+    width: 37%;
+    background: white;
+}
+
+.productupload-filter-cities {
+    color: black;
+    gap: 2px;
+    display: flex;
+    padding: 2%;
+    border: 1px solid lightslategrey
+}
+
+.productupload-filter-cities-button {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: black;
+}
+
 
 .productupload-image-wrapper {
     display: flex;

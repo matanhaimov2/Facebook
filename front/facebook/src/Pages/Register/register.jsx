@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from 'react';
+
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+// React mui
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Radio from '@mui/material/Radio';
@@ -15,9 +21,9 @@ import { register } from '../../Services/authService';
 function Register() {
 
     // States
-    const [days, setDays] = useState(Array.from({length: 31}, (_, i) => i + 1));
-    const [months, setMonths] = useState([ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]);
-    const [years, setYears] = useState(Array.from( { length: (new Date().getFullYear()+1 - 1905)  }, (value, index) => 1905 + index ));
+    const [days, setDays] = useState(Array.from({ length: 31 }, (_, i) => i + 1));
+    const [months, setMonths] = useState(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]);
+    const [years, setYears] = useState(Array.from({ length: (new Date().getFullYear() + 1 - 1905) }, (value, index) => 1905 + index));
     const [firstname, setFirstname] = useState();
     const [lastname, setLastname] = useState();
     const [email, setEmail] = useState();
@@ -26,12 +32,13 @@ function Register() {
     const [showPopup, setShowPopup] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
 
-
-
     // --- date to values
     const [dayselected, setDayselector] = useState(1);
     const [monthselected, setMonthselector] = useState(1);
     const [yearselected, setYearselector] = useState(new Date().getFullYear());
+
+    // Translator
+    const { t } = useTranslation();
 
     const dayChange = (event) => {
         setDayselector(event.target.value);
@@ -44,28 +51,28 @@ function Register() {
     const yearChange = (event) => {
         setYearselector(event.target.value);
     };
-    
-    
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         setShowLoading(true); // Show loading animation
 
-        
+
         setShowPopup(false);
 
         let data = {
-            "Firstname" : firstname,
-            "Lastname" : lastname,
-            "Email" : email,
-            "Birthday" : yearselected + '-' + ( new Date(monthselected + ' 1, 2022').getMonth() + 1 ) + '-' + dayselected,
-            "Password" : password,
-            "Sex" : sex
+            "Firstname": firstname,
+            "Lastname": lastname,
+            "Email": email,
+            "Birthday": yearselected + '-' + (new Date(monthselected + ' 1, 2022').getMonth() + 1) + '-' + dayselected,
+            "Password": password,
+            "Sex": sex
         }
-        
+
         const response = await register(data);
 
-        if(response.res===true) { // If the response is true, redirect to login
+        if (response.res === true) { // If the response is true, redirect to login
             window.location.href = '/login';
         }
         else {
@@ -79,56 +86,56 @@ function Register() {
     return (
         <div className='register-page'>
             <div className='register-wrapper'>
-            
+
                 <div className='register-title'>
                     <label className='register-title'>facebook</label>
                 </div>
-                
+
                 <div className='register-content-wrapper'>
 
                     <div className='register-content'>
                         <div className='register-content-title-wrapper'>
-                            <label className='register-content-title'>צור חשבון חדש</label> 
-                            <label className='register-content-sub-title'>.זה מהיר וקל</label>
+                            <label className='register-content-title'>{t('register.register_to_facebook_title')}</label>
+                            <label className='register-content-sub-title'>{t('register.register_to_facebook_description')}</label>
                         </div>
 
-                        <form className='register-form' onSubmit={ handleSubmit }>
+                        <form className='register-form' onSubmit={handleSubmit}>
                             <div className='register-name-wrapper'>
-                                <input className='register-name-input' onChange={(e) => setFirstname(e.target.value)} placeholder='שם פרטי' required/>
-                                <input className='register-name-input' onChange={(e) => setLastname(e.target.value)} placeholder='שם משפחה' required/>
+                                <input className={`register-name-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => setFirstname(e.target.value)} placeholder={t('register.register_firstname_placeholder')} required />
+                                <input className={`register-name-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => setLastname(e.target.value)} placeholder={t('register.register_lastname_placeholder')} required />
                             </div>
 
                             <div className='register-email-wrapper'>
-                                <input type='email' className='register-input' onChange={(e) => setEmail(e.target.value)} placeholder='מספר נייד או דוא"ל' required/>
-                                
+                                <input type='email' className={`register-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => setEmail(e.target.value)} placeholder={t('register.register_email_placeholder')} required />
+
                                 {showPopup && (
                                     <div className='register-error-wrapper'>
-                                        <label  className='register-error-title'> Email is taken. please try another one </label>
+                                        <label className='register-error-title'> {t('register.register_error_title')} </label>
                                     </div>
 
                                 )}
                             </div>
 
-                            <input type='password' className='register-input' onChange={(e) => setPassword(e.target.value)} placeholder='סיסמה חדשה' required/>
+                            <input type='password' className={`register-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => setPassword(e.target.value)} placeholder={t('register.register_password_placeholder')} required />
 
                             <div className='register-birth-wrapper'>
-                                <label className='register-birth-title'>תאריך לידה</label>
-                                
+                                <label className={`register-birth-title ${document.documentElement.getAttribute('dir')==='ltr' ? 'textalign-right' : 'textalign-left'}`}>{t('register.register_date_of_birth_title')}</label>
+
                                 <div className='register-birth-sub-wrapper'>
-                                    <select defaultValue={dayselected} className='register-date-input' onChange={ dayChange }>
+                                    <select defaultValue={dayselected} className='register-date-input' onChange={dayChange}>
                                         {days.map((day, i) => (
                                             <option value={day} key={i}>{day}</option>
                                         ))}
                                     </select>
-                                    
-                                    <select defaultValue={monthselected} className='register-date-input' onChange={ monthChange }>
+
+                                    <select defaultValue={monthselected} className='register-date-input' onChange={monthChange}>
                                         {months.map((month, i) => (
                                             <option value={month} key={i + 1}>{month}</option>
-                                            
+
                                         ))}
                                     </select>
 
-                                    <select defaultValue={yearselected} className='register-date-input' onChange={ yearChange }> 
+                                    <select defaultValue={yearselected} className='register-date-input' onChange={yearChange}>
                                         {years.map((year, i) => (
                                             <option value={year} key={i}>{year}</option>
                                         ))}
@@ -137,28 +144,28 @@ function Register() {
                             </div>
 
                             <div className='register-sex-wrapper'>
-                                <label className='register-birth-title'>מין</label>
-                                
+                                <label className={`register-birth-title ${document.documentElement.getAttribute('dir')==='ltr' ? 'textalign-right' : 'textalign-left'}`}>{t('register.register_sex_title')}</label>
+
                                 <div className='register-sex-sub-wrapper'>
                                     <FormControl>
                                         <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" defaultValue={'male'} name="radio-buttons-group">
-                                            <FormControlLabel className='register-sex-button' onClick={(e) => setSex('M')} value="male" control={<Radio />} label="זכר" />
-                                            <FormControlLabel className='register-sex-button' onClick={(e) => setSex('F')} value="female" control={<Radio />} label="נקבה" />
-                                            <FormControlLabel className='register-sex-button' onClick={(e) => setSex(e.target.value)} value="other" control={<Radio />} label="התאמה אישית" />
+                                            <FormControlLabel className='register-sex-button' onClick={() => setSex('M')} value="male" control={<Radio />} label={t('register.register_male_option')} />
+                                            <FormControlLabel className='register-sex-button' onClick={() => setSex('F')} value="female" control={<Radio />} label={t('register.register_female_option')} />
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setSex(e.target.value)} value="other" control={<Radio />} label={t('register.register_other_option')} />
                                         </RadioGroup>
                                     </FormControl>
                                 </div>
                             </div>
 
                             {!showLoading ? (
-                                <button type='submit' className='login-form-button'>הרשמה</button>
+                                <button type='submit' className='login-form-button'>{t('register.register_sign_up_button')}</button>
                             ) : (
-                                <Box type='submit' className='login-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
+                                <Box type='submit' className='login-form-loading'> <CircularProgress style={{ 'color': 'white' }} /> </Box>
                             )}
                         </form>
 
                         <div className='register-button-wrapper'>
-                            <a href='/login' className='register-button-blue'>כבר יש לך חשבון?</a>
+                            <a href='/login' className='register-button-blue'>{t('register.register_already_has_account')}</a>
                         </div>
                     </div>
                 </div>

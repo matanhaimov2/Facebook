@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+// React Mui
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Radio from '@mui/material/Radio';
@@ -28,9 +33,9 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
     const [address, setAddress] = useState('');
     const [showPopup, setShowPopup] = useState(false); // Raises an error when username is taken
     const [showLoading, setShowLoading] = useState(false);
-    // useEffect(() => {
-        
-    // }, []) its for when you want to start the forbidden setprofile route
+
+    // Translator
+    const { t } = useTranslation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -85,9 +90,6 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
         }
         
     }
-
-
-
     
     return (
         <div className={`setprofile-wrapper ${isUpdateProfile ? 'profile-update-profile-wrapper' : ''}`}>
@@ -100,49 +102,49 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
              
                 <form className='setprofile-form' onSubmit={ handleSubmit }>
                         {!isUpdateProfile ? (
-                            <label className='setprofile-title-button'> פרטים נוספים</label>
+                            <label className='setprofile-title-button'>{t('setprofile.setprofile_more_details')}</label>
                             ) : (
-                            <label className='setprofile-title-button'>עדכון פרטים אישיים</label>
+                            <label className='setprofile-title-button'>{t('setprofile.setprofile_update_personal_details')}</label>
                         )}
                         
                         <div className='setprofile-username-wrapper'>
                             {!isUpdateProfile && (
-                                <input type='text' className='setprofile-input' onChange={(e) => setUsername(e.target.value)} placeholder='שם המשתמש שלך (חובה)' required/>
+                                <input type='text' className={`setprofile-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => setUsername(e.target.value)} placeholder={t('setprofile.setprofile_username_placeholder')} required/>
                             )}
 
                             {showPopup && ( // If true, raise an error
                                 <div className='setprofile-error-wrapper'>
-                                    <label className='setprofile-error-title'> Username is already taken </label>
+                                    <label className='setprofile-error-title'> {t('setprofile.setprofile_error_title')} </label>
                                 </div>
                             )}
                         </div>
-                        <input type='text' className='setprofile-input' onChange={(e) => setBiography(e.target.value)} placeholder='ביוגרפיה (לא חובה)'/>
+                        <input type='text' className={`setprofile-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => setBiography(e.target.value)} placeholder={t('setprofile.setprofile_biography_placeholder')}/>
                         
                         <div className='setprofile-relationship-wrapper'>
-                                <label className='setprofile-relationship-title'>מצב יחסים</label>
+                                <label className={`setprofile-relationship-title ${document.documentElement.getAttribute('dir')==='ltr' ? 'textalign-right' : 'textalign-left'}`}>{t('setprofile.setprofile_relationship_status')}</label>
                                 
                                 <div className='setprofile-relationship-sub-wrapper'>
                                     <FormControl>
                                         <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" defaultValue={'not-in-a-Relationship'} name="radio-buttons-group">
-                                            <FormControlLabel className='register-sex-button' onClick={(e) => setRelationStatus('Married')} value="married" control={<Radio />} label="נשוי" />
-                                            <FormControlLabel className='register-sex-button' onClick={(e) => setRelationStatus('In a Relationship')} value="in-a-relationship" control={<Radio />} label="בזוגיות" />
-                                            <FormControlLabel className='register-sex-button' onClick={(e) => setRelationStatus('Not in a Relationship')} value="not-in-a-Relationship" control={<Radio />} label="רווק/ה" />
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setRelationStatus('Married')} value="married" control={<Radio />} label={t('setprofile.setprofile_married_status')} />
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setRelationStatus('In a Relationship')} value="in-a-relationship" control={<Radio />} label={t('setprofile.setprofile_inrelationship_status')} />
+                                            <FormControlLabel className='register-sex-button' onClick={(e) => setRelationStatus('Not in a Relationship')} value="not-in-a-Relationship" control={<Radio />} label={t('setprofile.setprofile_single_status')} />
                                         </RadioGroup>
                                     </FormControl>
                                 </div>
 
                             </div>
 
-                        <input type='text' className='setprofile-input' onChange={(e) => setOccupation(e.target.value)} placeholder='תעסוקה (לא חובה)'/>
-                        <input type='text' className='setprofile-input' onChange={(e) => setSchool(e.target.value)} placeholder='בית הספר שבו למדת (לא חובה)'/>
-                        <input type='text' className='setprofile-input' onChange={(e) => setAddress(e.target.value)} placeholder='כתובת (לא חובה)'/>
+                        <input type='text' className={`setprofile-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => setOccupation(e.target.value)} placeholder={t('setprofile.setprofile_occupation_placeholder')}/>
+                        <input type='text' className={`setprofile-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => setSchool(e.target.value)} placeholder={t('setprofile.setprofile_school_placeholder')}/>
+                        <input type='text' className={`setprofile-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => setAddress(e.target.value)} placeholder={t('setprofile.setprofile_address_placeholder')}/>
 
                         {!showLoading ? (
                             <div>
                             {!isUpdateProfile ? (
-                                <button type='submit' className='setprofile-form-button'>למעבר לחשבון שלך</button>
+                                <button type='submit' className='setprofile-form-button'>{t('setprofile.setprofile_to_your_account')}</button>
                                 ) : (
-                                <button id='update' type='submit' className='setprofile-form-button'>עדכון פרטים</button>
+                                <button id='update' type='submit' className='setprofile-form-button'>{t('setprofile.setprofile_update_details')}</button>
                             )}
                             </div>
                             ) : (

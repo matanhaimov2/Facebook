@@ -179,18 +179,13 @@
 }
 
 .marketplace-filter-cities-wrapper {
+    position: absolute;
     display: flex;
     flex-direction: column;
-    width: 90%;
-    overflow-y: auto;
-    position: absolute;
+    width: 100%;
     top: 125%;
-    left: 5%;
     z-index: 100;
     background: #2f2f35;
-    border-radius: 5px;
-    height: 35vh;
-    overflow-x: hidden;
 }
 
 .marketplace-filter-cities {

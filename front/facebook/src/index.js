@@ -7,8 +7,8 @@ import i18n from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 
 // Languages source files
-import en from './Assets/languages/en.json';
 import he from './Assets/languages/he.json';
+import en from './Assets/languages/en.json';
 
 // Components
 import App from './App';
@@ -20,8 +20,8 @@ import './index.css';
 // Language Configuration 
 i18n.use(initReactI18next).init({
   resources: {
-    en: { translation: en },
     he: { translation: he },
+    en: { translation: en },
     // Add more languages as needed
   },
   lng: 'he', // Default language

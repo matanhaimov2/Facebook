@@ -163,7 +163,7 @@ if __name__ == "__main__":
     # 1. figure out a way to chunk 6 products in one chunk => make a map ----------- VVV
     # 2. format date problem ------------------------------------------------------- VVV
     # 3. figure out a way to import every product to a single page ----------------- VVV
-    # 4. cities api ----------------------------------------------------------------
+    # 4. cities api ---------------------------------------------------------------- VVV
     # 5. buying option - starting chat with product creator ------------------------ wating for chat...
 
 
@@ -201,12 +201,12 @@ if __name__ == "__main__":
 
     # Complex Tasks :
     # 1. Add light mode option to the entire website ------------------------------- Wating........
-    # 2. Add an option to switch between languages (eng, heb) ---------------------- Wating........
+    # 2. Add an option to switch between languages (eng, heb) ---------------------- Pending...
 
 
     # Can't Tell Tasks:
     # 1. make session id last for 5 minutes of inactivity. ------------------------- Problem - ask shlomi!
-    # 2. add the number of notifications in the circle ----------------------------- wating........
+    # 2. add the number of notifications in the circle ----------------------------- VVV
 
 
     # Easy Tasks:

@@ -1,11 +1,51 @@
 {
     "login" : {
-        "log_to_facebook" : "התחבר\\י לפייסבוק"
+        "log_to_facebook_title" : "התחבר\\י לפייסבוק",
+        "login_email_placeholder" : "דוא\"ל",
+        "login_password_placeholder" : "סיסמא",
+        "login_error_title" : "אימייל או סיסמא לא נכונים",
+        "login_sign_in_button" : "התחברות",
+        "login_forgot_your_password?" : "?שכחת את הסיסמא",
+        "login_or_seperator" : "או",
+        "login_create_new_account" : "צור חשבון חדש"
+
+
     },
     "register" : {
+        "register_to_facebook_title" : "צור חשבון חדש",
+        "register_to_facebook_description" : ".זה מהיר וקל",
+        "register_firstname_placeholder" : "שם פרטי",
+        "register_lastname_placeholder" : "שם משפחה",
+        "register_email_placeholder" : "דוא\"ל",
+        "register_password_placeholder" : "סיסמא",
+        "register_error_title" : "האימייל תפוס, נסה אחד אחר",
+        "register_date_of_birth_title" : ":תאריך לידה",
+        "register_sex_title" : ":מין",
+        "register_male_option" : "זכר",
+        "register_female_option" : "נקבה",
+        "register_other_option" : "אחר",
+        "register_sign_up_button" : "הרשמה",
+        "register_already_has_account" : "?כבר יש לך חשבון"
         
     },
-    "feed" : {
+    "setprofile" : {
+        "setprofile_more_details": "פרטים נוספים",
+        "setprofile_update_personal_details" : "עדכון פרטים אישיים",
+        "setprofile_username_placeholder" : "שם המשתמש שלך (חובה)",
+        "setprofile_error_title" : "שם המשתמש תפוס",
+        "setprofile_biography_placeholder" : "ביוגרפיה (לא חובה)",
+        "setprofile_relationship_status" : "מצב יחסים",
+        "setprofile_married_status" : "נשוי",
+        "setprofile_inrelationship_status" : "בזוגיות",
+        "setprofile_single_status" : "רווק\\ה",
+        "setprofile_occupation_placeholder" : "תעסוקה (לא חובה)",
+        "setprofile_school_placeholder" : "בית הספר שבו למדת (לא חובה)",
+        "setprofile_address_placeholder" : "כתובת (לא חובה)",
+        "setprofile_to_your_account" : "למעבר לחשבון שלך",
+        "setprofile_update_details" : "עדכון פרטים"
+
+    },
+    "home" : {
         
     }
 }

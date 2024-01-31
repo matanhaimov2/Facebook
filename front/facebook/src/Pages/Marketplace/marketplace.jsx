@@ -54,9 +54,9 @@ const Marketplace = () => {
     const [reGetData, setReGetData] = useState(false);
     // States - City
     const [isEditCity, setIsEditCity] = useState(false); // Open cities menu
-    const [searchTerm, setSearchTerm] = useState(''); //
+    const [searchTerm, setSearchTerm] = useState('');
     const [filteredData, setFilteredData] = useState(cities_data);
-    const [cityFilter, setCityFilter] = useState('הכל');
+    const [cityFilter, setCityFilter] = useState('הכל'); // for filtering product according to selected city
 
 
 
@@ -185,10 +185,10 @@ const Marketplace = () => {
                             <span className='marketplace-filter-title'> {cityFilter} </span>
                             <button className='marketplace-filter-button' onClick={() => setIsEditCity(!isEditCity)}> ערוך </button>
                             {isEditCity && (
-                                <div className='marketplace-filter-cities-wrapper' style={searchTerm.length >=  1 ? {} : {height : 'fit-content'}}>
+                                <div className='marketplace-filter-cities-wrapper'>
                                     <input className='marketplace-filter-cities-search' type="text" placeholder="חפש..." value={searchTerm} onChange={handleInputChange} />
 
-                                    {isEditCity && searchTerm.length >=  1 && (
+                                    {isEditCity && searchTerm.length >=  2 && (
                                         filteredData.map((item, i) => (
                                             <div key={i} className='marketplace-filter-cities'>
                                                 <button className='marketplace-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>

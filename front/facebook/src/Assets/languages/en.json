@@ -1,11 +1,52 @@
 {
     "login" : {
-        "log_to_facebook" : "Log into facebook"
+        "log_to_facebook_title" : "Login to facebook",
+        "login_email_placeholder" : "Email",
+        "login_password_placeholder" : "Password",
+        "login_error_title" : "Email or Password are Incorrect",
+        "login_sign_in_button" : "Sign In",
+        "login_forgot_your_password?" : "?Forgot Your Password",
+        "login_or_seperator" : "or",
+        "login_create_new_account" : "Create New Account"
+        
+
     },
     "register" : {
+        "register_to_facebook_title" : "Create New Account",
+        "register_to_facebook_description" : ".Fast And Easy",
+        "register_firstname_placeholder" : "First Name",
+        "register_lastname_placeholder" : "Last Name",
+        "register_email_placeholder" : "Email",
+        "register_password_placeholder" : "New Password",
+        "register_error_title" : "Email is taken, try another one",
+        "register_date_of_birth_title" : ":Date Of Birth",
+        "register_sex_title" : ":Sex",
+        "register_male_option" : "Male",
+        "register_female_option" : "Female",
+        "register_other_option" : "Other",
+        "register_sign_up_button" : "Sign Up",
+        "register_already_has_account" : "?Already Have An Account"
+
+
         
     },
-    "feed" : {
+    "setprofile" : {
+        "setprofile_more_details": "More Details",
+        "setprofile_update_personal_details" : "Update Personal Details",
+        "setprofile_username_placeholder" : "Username (Required)",
+        "setprofile_error_title" : "Username Is Taken",
+        "setprofile_biography_placeholder" : "Biography (optional)",
+        "setprofile_relationship_status" : "Relationship Status",
+        "setprofile_married_status" : "Married",
+        "setprofile_inrelationship_status" : "In A Relationship",
+        "setprofile_single_status" : "Single",
+        "setprofile_occupation_placeholder" : "Occupation (optional)",
+        "setprofile_school_placeholder" : "School You Attended (optional)",
+        "setprofile_address_placeholder" : "Address (optional)",
+        "setprofile_to_your_account" : "To Your Account",
+        "setprofile_update_details" : "Update Details"
+    },
+    "home" : {
         
     }
 }
