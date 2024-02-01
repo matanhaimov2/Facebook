@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from 'react';
+
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+
+// React Mui
 import { BiSolidLock } from 'react-icons/bi'
 import { FaUserFriends } from 'react-icons/fa'
 import { MdPublic } from 'react-icons/md'
@@ -39,6 +46,8 @@ function Post({ index, post }) {
     const [allComments, setAllComments] = useState(post.Comments ? post.Comments : []);
     const [commentsLength, setCommentsLength] = useState(post.Comments ? post.Comments.length : 0);
 
+    // Translator
+    const { t } = useTranslation();
 
 
     // Like Handler
@@ -129,7 +138,7 @@ function Post({ index, post }) {
 
 
     return (
-        <div key={index} id={post.ID ? post.ID : 'null'} className='post-wrapper'>
+        <div key={index} id={post.ID ? post.ID : 'null'} className={`post-wrapper ${document.documentElement.getAttribute('dir') === 'ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
             <div className='post-top-info-wrapper'>
                 {post.Username && (
                     <img className='post-userimage-wrapper' src={post.UserImage} onClick={(e) => { navigateToProfile(e, post.Email) }}></img>
@@ -171,39 +180,41 @@ function Post({ index, post }) {
 
             <div className='post-like-board-wrapper'>
 
-                <div className='post-like-board-trio-wrapper' onClick={shareButton}>
-                    <span className='post-like'> <PiShareFatLight /> </span>
-                    <span>Share</span>
-                </div>
-
-                <div className='post-like-board-trio-wrapper' onClick={openCommentBox}>
-                    <span className='post-like'> <FaRegComment /> </span>
-                    <span>Comment</span>
-                    <span> {commentsLength} </span>
-                </div>
-
                 <div id={post.ID} className='post-like-board-trio-wrapper' onClick={(e) => { likeButton(e, index) }}>
                     {!isLike ? (
                         <>
                             <span className='post-like'> <BiLike /> </span>
-                            <span>Like</span>
+                            <span>{t('home.post.post_like')}</span>
                         </>
                     ) : (
                         <>
                             <span className='post-dislike'> <BiSolidDislike /> </span>
-                            <span>Dislike</span>
+                            <span>{t('home.post.post_dislike')}</span>
                         </>
                     )}
 
                     <div> {likesLength} </div>
 
                 </div>
+
+                <div className='post-like-board-trio-wrapper' onClick={openCommentBox}>
+                    <span className='post-like'> <FaRegComment /> </span>
+                    <span>{t('home.post.post_comment')}</span>
+                    <span> {commentsLength} </span>
+                </div>
+
+
+
+                <div className='post-like-board-trio-wrapper' onClick={shareButton}>
+                    <span className='post-like'> <PiShareFatLight /> </span>
+                    <span>{t('home.post.post_share')}</span>
+                </div>
             </div>
 
             {isCommentClicked && (
                 <div className='post-comment-background'>
                     <div className='post-comment-wrapper'>
-                        <button className='post-comment-exit-icon' onClick={openCommentBox}> <img src={exitIcon} /> </button>
+                        <button className={`post-comment-exit-icon ${document.documentElement.getAttribute('dir')==='ltr' ? 'position-right' : 'position-left'}`} onClick={openCommentBox}> <img src={exitIcon} /> </button>
 
                         <div className='post-all_comments-wrapper'>
                             {allComments && allComments.map((comment, i) => (
@@ -213,7 +224,7 @@ function Post({ index, post }) {
                                         <img className='post-userimage-wrapper' src={comment[4]} onClick={(e) => { navigateToProfile(e, comment[0]) }}></img>
 
                                     ) : (
-                                        <LiaUserCircleSolid className='post-none-userimage-wrapper' onClick={(e) => { navigateToProfile(e, comment[0]) }}/>
+                                        <LiaUserCircleSolid className='post-none-userimage-wrapper' onClick={(e) => { navigateToProfile(e, comment[0]) }} />
                                     )}
 
                                     <div className='post-all_comments-info'>
@@ -226,7 +237,7 @@ function Post({ index, post }) {
                         </div>
 
                         <form onSubmit={(e) => sendComment(e)} className='post-comment_action-wrapper'>
-                            <input type='text' id='post-comment-text' className='post-comment-placeholder' onChange={(e) => setComment(e.target.value)} placeholder='...הוספת תגובה'></input>
+                            <input type='text' id='post-comment-text' className='post-comment-placeholder' onChange={(e) => setComment(e.target.value)} placeholder={t('home.post.post_add_comment_placeholder')}></input>
 
                             <button type='submit' className='post-comment-submit-button'> <IoSend /> </button>
                         </form>

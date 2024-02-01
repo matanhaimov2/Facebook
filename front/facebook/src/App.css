@@ -88,3 +88,11 @@ body {
 .textalign-right {
     text-align: right;
 }
+
+.position-left {
+    left: 0;
+}
+
+.position-right {
+    right: 0;
+}

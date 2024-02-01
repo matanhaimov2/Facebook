@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+// React Mui
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
 
 // Icons
 import logo from '../../Assets/Images/facebook-icon.png';
@@ -37,6 +42,10 @@ const TopNav = () => {
   const [notficationAlert, setNotificationAlert] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
+
+  // Translator
+  const { t } = useTranslation();
+
 
   // Refs
   const searchRef = useRef(null);
@@ -245,7 +254,7 @@ const TopNav = () => {
           </div>
 
           <div className='topnav-sub-left-wrapper'>
-            <button className='topnav-button-circle topnav-pointer topnav-account-button' onClick={handleSignout}> התנתק </button> {/*meanwhile its here untill asking shlomi if Account pop is component */}
+            <button className='topnav-button-circle topnav-pointer topnav-account-button' onClick={handleSignout}> {t('topnav.topnav_disconnect_title')} </button> {/*meanwhile its here untill asking shlomi if Account pop is component */}
           </div>
 
           {openNotifications && (
@@ -267,12 +276,12 @@ const TopNav = () => {
                       <div className='topnav-sub-notification-menu-orgnize'>
                         <span className='topnav-sub-notification-box-title'> {notifications.Username}</span>
 
-                        <span> בקשת החברות אושרה</span>
+                        <span>{t('topnav.topnav_notifications_friend_request_accepted')}</span>
 
                       </div>
                     </div>
                   ) : (
-                    <div key={index} id={`notif-${index}`} className='topnav-sub-notification-menu' >
+                    <div key={index} id={`notif-${index}`} className={`topnav-sub-notification-menu ${document.documentElement.getAttribute('dir') === 'ltr' ? 'direction-rtl' : 'direction-ltr'}`} >
 
                       <div className='topnav-search-box-img-wrapper'>
 
@@ -286,14 +295,14 @@ const TopNav = () => {
                       <div className='topnav-sub-notification-menu-orgnize'>
                         <span className='topnav-sub-notification-box-title'> {notifications.Username}</span>
 
-                        <span> רוצה להוסיף אותך לחברים</span>
+                        <span>{t('topnav.topnav_notifications_friend_request')}</span>
 
                       </div>
 
                       <div className='topnav-notification-sub-wrapper'>
-                        <button className='topnav-notification-yes-button' onClick={(e) => { acceptFriendship(e, notifications, index) }}> כן </button>
+                        <button className='topnav-notification-yes-button' onClick={(e) => { acceptFriendship(e, notifications, index) }}> {t('topnav.topnav_notifications_yes')} </button>
 
-                        <button className='topnav-notification-no-button' onClick={(e) => { ignoreFriendship(e, index, notifications) }}> לא </button>
+                        <button className='topnav-notification-no-button' onClick={(e) => { ignoreFriendship(e, index, notifications) }}> {t('topnav.topnav_notifications_no')} </button>
                       </div>
                     </div>
                   )}
@@ -302,7 +311,7 @@ const TopNav = () => {
 
               {notifications.length === 0 && (
                 <div className='topnav-sub-notification-menu topnav-no-notifications-title'>
-                  <span>אין הודעות חדשות</span>
+                  <span>{t('topnav.topnav_notifications_none_alert')}</span>
                 </div>
               )}
             </div>
@@ -334,8 +343,8 @@ const TopNav = () => {
       </div>
 
 
-      <div className={`topnav-right-side ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
-        
+      <div className={`topnav-right-side ${document.documentElement.getAttribute('dir') === 'ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
+
         <div className='topnav-facebook-icon-wrapper'>
           <a href='/home' className='topnav-pointer'> <img className='topnav-facebook-icon' src={logo} /> </a>
         </div>
@@ -345,7 +354,7 @@ const TopNav = () => {
           {/* Search Other Profiles */}
           <div className='topnav-search-sub-wrapper'>
 
-            <input id='search-profiles-input' className='topnav-sub-search' onChange={(e) => searchGet(e.target.value)} placeholder="חפש בפייסבוק" />
+            <input id='search-profiles-input' className='topnav-sub-search' onChange={(e) => searchGet(e.target.value)} placeholder={t('topnav.topnav_search_placeholder')} />
 
             {/* Displayed Options */}
             {isSearchBox && (
@@ -370,7 +379,7 @@ const TopNav = () => {
 
                 {searchedProfiles.length === 0 && (
                   <div className='topnav-search-no-result-wrapper'>
-                    <span className='topnav-search-no-result-title'>אין תוצאות חיפוש</span>
+                    <span className='topnav-search-no-result-title'>{t('topnav.topnav_search_no_result_alert')}</span>
                   </div>
                 )}
 

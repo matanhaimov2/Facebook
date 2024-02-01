@@ -16,7 +16,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    direction: ltr;
     border-radius: 10px;
     gap: 5px;
     overflow-y: auto;

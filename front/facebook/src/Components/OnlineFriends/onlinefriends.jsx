@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
 // React Icons 
 import { LiaUserCircleSolid } from 'react-icons/lia'
 import { GoDotFill } from "react-icons/go";
@@ -25,6 +29,9 @@ function Onlinefriends() {
     const [openChat, setOpenChat] = useState(false); // Opens chat box
     const [userData, setUserData] = useState(); // Contains clicked user's data
     const [prevUserData, setPrevUserData] = useState();
+
+    // Translator
+    const { t } = useTranslation();
 
 
     useEffect(() => {
@@ -69,8 +76,8 @@ function Onlinefriends() {
 
     return (
         <div className='onlinefriends-wrapper'>
-            <div className='onlinefriends-top-wrapper'>
-                <span>אנשי קשר</span>
+            <div className={`onlinefriends-top-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'textalign-right' : 'textalign-left'}`}>
+                <span>{t('home.onlinefriends.onlinefriends_contacts_title')}</span>
             </div>
 
 
@@ -106,13 +113,13 @@ function Onlinefriends() {
      
             {friendsInfo && friendsInfo.length===0 && (
                 <div className='onlinefriends-no-contacts-wrapper'>
-                    <span>אין אנשי קשר</span>
+                    <span>{t('home.onlinefriends.onlinefriends_no_contacts_alert')}</span>
                 </div>
             )}  
 
             {!friendsInfo && (
                 <div className='onlinefriends-no-contacts-wrapper'>
-                    <span>...Loading</span>
+                    <span>{t('home.onlinefriends.onlinefriends_loading_contacts_alert')}</span>
                 </div>
             )}   
 

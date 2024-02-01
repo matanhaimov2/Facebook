@@ -18,7 +18,6 @@
 .post-top-info-wrapper {
     display: flex;
     flex-direction: row;
-    direction: rtl;
     gap: 7px;
 }
 
@@ -59,8 +58,6 @@
     display: flex;
     flex-direction: row;
     gap: 5px;
-    direction: ltr;
-    justify-content: right;
     align-items: center;
 }
 
@@ -142,7 +139,6 @@
     border: none;
     position: absolute;
     top: 0;
-    right: 0;
     cursor: pointer;
     padding: 1%;
 }
@@ -158,7 +154,6 @@
 .post-all_comments-content {
     display: flex;
     flex-direction: row;
-    direction: rtl;
     padding: 1%;
     gap: 7px;
 }
@@ -175,7 +170,7 @@
 
 .post-comment_action-wrapper {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     height: 20%;
     padding: 1%;
     justify-content: flex-end;
@@ -187,7 +182,6 @@
     width: 100%;
     height: 35%;
     display: flex;
-    text-align: end;
     color: white;
     border: 1px solid white;
     background: none;

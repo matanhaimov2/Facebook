@@ -46,7 +46,31 @@
         "setprofile_to_your_account" : "To Your Account",
         "setprofile_update_details" : "Update Details"
     },
+
+    "topnav" : {
+        "topnav_disconnect_title" : "Disconnect",
+        "topnav_search_placeholder" : "Search Facebook",
+        "topnav_search_no_result_alert" : "No Search Result",
+        "topnav_notifications_friend_request" : "Sent You A Friend Request",
+        "topnav_notifications_friend_request_accepted" : "Friend Request Approved",
+        "topnav_notifications_none_alert" : "No New Messages",
+        "topnav_notifications_yes" : "Yes",
+        "topnav_notifications_no" : "No"
+    },
+
     "home" : {
+        "onlinefriends" : {
+            "onlinefriends_contacts_title" : "Contacts",
+            "onlinefriends_no_contacts_alert" : "No Contacts",
+            "onlinefriends_loading_contacts_alert" : "...Loading"
+        },
+        "post" : {
+            "post_like" : "Like",
+            "post_dislike" : "Dislike",
+            "post_comment" : "Comment",
+            "post_add_comment_placeholder" : "...Add Comment",
+            "post_share" : "Share"
+        }
         
     }
 }

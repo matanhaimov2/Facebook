@@ -11,6 +11,7 @@
 
 
     },
+
     "register" : {
         "register_to_facebook_title" : "צור חשבון חדש",
         "register_to_facebook_description" : ".זה מהיר וקל",
@@ -28,6 +29,7 @@
         "register_already_has_account" : "?כבר יש לך חשבון"
         
     },
+
     "setprofile" : {
         "setprofile_more_details": "פרטים נוספים",
         "setprofile_update_personal_details" : "עדכון פרטים אישיים",
@@ -45,7 +47,31 @@
         "setprofile_update_details" : "עדכון פרטים"
 
     },
+
+    "topnav" : {
+        "topnav_disconnect_title" : "התנתק",
+        "topnav_search_placeholder" : "חפש בפייסבוק",
+        "topnav_search_no_result_alert" : "אין תוצאות חיפוש",
+        "topnav_notifications_friend_request" : "רוצה להוסיף אותך לחברים",
+        "topnav_notifications_friend_request_accepted" : "בקשת החברות אושרה",
+        "topnav_notifications_none_alert" : "אין הודעות חדשות",
+        "topnav_notifications_yes" : "כן",
+        "topnav_notifications_no" : "לא"
+    },
+
     "home" : {
-        
+        "onlinefriends" : {
+            "onlinefriends_contacts_title" : "אנשי קשר",
+            "onlinefriends_no_contacts_alert" : "אין אנשי קשר",
+            "onlinefriends_loading_contacts_alert" : "...טוען"
+        },
+        "post" : {
+            "post_like" : "לייק",
+            "post_dislike" : "הורד לייק",
+            "post_comment" : "תגובה",
+            "post_add_comment_placeholder" : "...הוסף תגובה",
+            "post_share" : "שתף"
+        }
+
     }
 }
