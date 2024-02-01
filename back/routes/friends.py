@@ -277,7 +277,7 @@ def hasFriendsAtAll(): # Displays the number of friends user have
 
         friends_length = 0 
 
-        if friends:
+        if friends[0]:
             friends = friends[0]
 
             friends_list = json.loads(friends)
