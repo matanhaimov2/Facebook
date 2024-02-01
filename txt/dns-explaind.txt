@@ -1,0 +1,14 @@
+1. A Record (Address Record):
+
+    Purpose: Associates a domain name with its corresponding IPv4 address.
+    Example: example.com points to 192.168.1.1.
+
+2. AAAA Record (IPv6 Address Record):
+
+    Purpose: Similar to A record but for IPv6 addresses.
+    Example: example.com points to 2001:0db8:85a3:0000:0000:8a2e:0370:7334.
+
+3. CNAME Record (Canonical Name):
+
+    Purpose: Alias for one domain to another, useful for creating subdomains or pointing to a different domain.
+    Example: www is a CNAME of example.com.

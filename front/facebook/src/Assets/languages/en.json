@@ -48,7 +48,7 @@
     },
 
     "topnav" : {
-        "topnav_disconnect_title" : "Disconnect",
+        "topnav_disconnect_title" : "Logout",
         "topnav_search_placeholder" : "Search Facebook",
         "topnav_search_no_result_alert" : "No Search Result",
         "topnav_notifications_friend_request" : "Sent You A Friend Request",
