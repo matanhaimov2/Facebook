@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
 
 // CSS
 import '../displayfriendslist.css';
@@ -16,6 +21,10 @@ function FriendListItem({ index, data, isUserList}) {
 
     // States
     const [friendPending, setFriendPending] = useState(false); // Pending problem !!! - after refreshing page, pending gets delete.
+
+    
+    // Translator
+    const { t } = useTranslation();
 
 
     const friendRequest = async (e, friendEmail) => {
@@ -58,10 +67,10 @@ function FriendListItem({ index, data, isUserList}) {
                 {isUserList && (
                     <>
                         {!friendPending ? (
-                            <button onClick={(e) => {friendRequest(e, data.email)}} className='marketplace-create-button' >הוספה לחברים</button>
+                            <button onClick={(e) => {friendRequest(e, data.email)}} className='marketplace-create-button' >{t('friends.friends_add_friend_button')}</button>
 
                         ) : (
-                            <button className='marketplace-create-button'>ממתין לאישור...</button>
+                            <button className='marketplace-create-button'>{t('friends.friends_pending_alert')}</button>
                         )}
                     </>
 

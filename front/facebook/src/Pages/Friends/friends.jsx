@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 
+// Languages
+import { useTranslation } from 'react-i18next';
+
+
 // React Icons
 import { FaUserFriends } from "react-icons/fa";
 import { MdPersonAddAlt1 } from "react-icons/md";
@@ -18,13 +22,14 @@ import DisplayFriendsList from './subComponent/displayFriendsList/displayfriends
 
 const Friends = () => {
 
-    // Params
-    const { friendsTitle } = useParams();
-
-    
     // States
     const [isButtonMarker, setIsButtonMarker] = useState(true); 
 
+    // Translator
+    const { t } = useTranslation();
+
+    // Params
+    const { friendsTitle } = useParams();
 
     // Navigateor
     const navigate = useNavigate();
@@ -49,12 +54,12 @@ const Friends = () => {
     return (
         <div className='friends-wrapper'>
 
-            <div className='friends-center-wrapper'>
+            <div className={`friends-center-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
                 <DisplayFriendsList friendsTitle={friendsTitle} />
             </div>
 
-            <div className='friends-right-wrapper'>
-                <span className='friends-right-text'> חברים </span>
+            <div className={`friends-right-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl position-right' : 'direction-ltr position-left'}`}>
+                <span className='friends-right-text'> {t('friends.friends_title')} </span>
 
                 <div className='friends-right-sub-wrapper'>
 
@@ -62,14 +67,14 @@ const Friends = () => {
                         <div className={`marketplace-category-round-wrapper ${isButtonMarker ? 'is-icon-style' : ''}`}>
                             <button className='marketplace-button-circle'> <FaUserFriends className='topnav-menu-icon' /> </button>
                         </div>
-                        <span className='marketplace-sub-category-title'> רשימת חברים</span>
+                        <span className='marketplace-sub-category-title'>{t('friends.friends_list_title')}</span>
                     </div>
 
                     <div className={`marketplace-category ${isButtonMarker ? '' : 'is-background-style'}`} onClick={(e) => {navigateToCategory(e, 'addFriends')}}>
                         <div className={`marketplace-category-round-wrapper ${isButtonMarker ? '' : 'is-icon-style'}`}>
                             <button className='marketplace-button-circle'> <MdPersonAddAlt1 className='topnav-menu-icon' /> </button>
                         </div>
-                        <span className='marketplace-sub-category-title'> הוסף חבר חדש</span>
+                        <span className='marketplace-sub-category-title'>{t('friends.friends_add_friends_title')}</span>
                     </div>
 
                 </div>

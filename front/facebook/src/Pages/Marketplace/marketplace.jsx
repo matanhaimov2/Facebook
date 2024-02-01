@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+
 // Json Files
 import cities_data from '../../Assets/israel_cities.json'
 
@@ -58,6 +63,9 @@ const Marketplace = () => {
     const [filteredData, setFilteredData] = useState(cities_data);
     const [cityFilter, setCityFilter] = useState('הכל'); // for filtering product according to selected city
 
+
+    // Translator
+    const { t } = useTranslation();
 
 
     // Navigateor
@@ -160,18 +168,18 @@ const Marketplace = () => {
     const ILdate = { day: 'numeric', month: 'numeric', year: 'numeric' };
 
     return (
-        <div className='marketplace-wrapper'>
+        <div className={`marketplace-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
 
             <div className='marketplace-right-wrapper'>
                 <div className='marketplace-right-sub-wrapper'>
                     <span className='marketplace-title'> <b> Marketplace </b> </span>
 
                     <div className='marketplace-search-wrapper'>
-                        <input id='search-marketplace-input' className='marketplace-sub-search' placeholder="חיפוש ב-Marketplace" />
+                        <input id='search-marketplace-input' className='marketplace-sub-search' placeholder={t('marketplace.marketplace_search_placeholder')} />
                     </div>
 
                     <div className='marketplace-create-button-wrapper'>
-                        <button className='marketplace-create-button' onClick={() => setExtendUploadPoduct(!extendUploadProduct)}>+ יצירת מודעה חדשה </button>
+                        <button className='marketplace-create-button' onClick={() => setExtendUploadPoduct(!extendUploadProduct)}>{t('marketplace.marketplace_create_new_product')}</button>
                     </div>
 
                     <div className='marketplace-border-wrapper'>
@@ -179,14 +187,14 @@ const Marketplace = () => {
                     </div>
 
                     <div className='marketplace-filter-wrapper'>
-                        <span className='marketplace-filter-title'> <b> מסננים</b> </span>
+                        <span className='marketplace-filter-title'> <b>{t('marketplace.marketplace_filter_title')}</b> </span>
 
                         <div className='marketplace-filter-button-wrapper'>
                             <span className='marketplace-filter-title'> {cityFilter} </span>
-                            <button className='marketplace-filter-button' onClick={() => setIsEditCity(!isEditCity)}> ערוך </button>
+                            <button className='marketplace-filter-button' onClick={() => setIsEditCity(!isEditCity)}>{t('marketplace.marketplace_edit_button')}</button>
                             {isEditCity && (
                                 <div className='marketplace-filter-cities-wrapper'>
-                                    <input className='marketplace-filter-cities-search' type="text" placeholder="חפש..." value={searchTerm} onChange={handleInputChange} />
+                                    <input className='marketplace-filter-cities-search' type="text" placeholder={t('marketplace.marketplace_city_search_placeholder')} value={searchTerm} onChange={handleInputChange} />
 
                                     {isEditCity && searchTerm.length >=  2 && (
                                         filteredData.map((item, i) => (
@@ -207,46 +215,46 @@ const Marketplace = () => {
                     </div>
 
                     <div className='marketplace-category-wrapper'>
-                        <span className='marketplace-category-title'> <b> קטגוריות </b> </span>
+                        <span className='marketplace-category-title'> <b> {t('marketplace.marketplace_categories_title')} </b> </span>
 
                         <div className='marketplace-category-sub-wrapper'>
                             <div className='marketplace-category' onClick={(e) => { navigateToEverythingCategory(e) }}>
                                 <div className='marketplace-category-round-wrapper'>
                                     <button className='marketplace-button-circle'> <AiOutlineShop className='topnav-menu-icon' /> </button>
                                 </div>
-                                <span className='marketplace-sub-category-title'> הכל</span>
+                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_everything_title')}</span>
                             </div>
 
                             <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'vehicles') }}>
                                 <div className='marketplace-category-round-wrapper'>
                                     <button className='marketplace-button-circle'> <FaCar className='topnav-menu-icon' /> </button>
                                 </div>
-                                <span className='marketplace-sub-category-title'> כלי רכב</span>
+                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_vehicles_title')}</span>
                             </div>
 
                             <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'electronics') }}>
                                 <div className='marketplace-category-round-wrapper'>
                                     <button className='marketplace-button-circle'> <MdOutlinePhoneAndroid className='topnav-menu-icon' /> </button>
                                 </div>
-                                <span className='marketplace-sub-category-title'> אלקטרוניקה</span>
+                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_electronics_title')}</span>
                             </div>
 
                             <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'instruments') }}>
                                 <div className='marketplace-category-round-wrapper'>
                                     <button className='marketplace-button-circle'> <LiaGuitarSolid className='topnav-menu-icon' /> </button>
                                 </div>
-                                <span className='marketplace-sub-category-title'> כלי נגינה</span>
+                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_instruments_title')}</span>
                             </div>
 
                             <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'games') }}>
                                 <div className='marketplace-category-round-wrapper'>
                                     <button className='marketplace-button-circle'> <SlGameController className='topnav-menu-icon' /> </button>
                                 </div>
-                                <span className='marketplace-sub-category-title'> צעצועים ומשחקים</span>
+                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_games_and_toys_title')}</span>
                             </div>
 
                             <div className='marketplace-create-button-wrapper'>
-                                <button className='marketplace-create-button' onClick={(e) => { navigateToCategory(e, 'myproducts') }}>המודעות שלי</button>
+                                <button className='marketplace-create-button' onClick={(e) => { navigateToCategory(e, 'myproducts') }}>{t('marketplace.marketplace_my_products_title')}</button>
                             </div>
                         </div>
                     </div>

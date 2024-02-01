@@ -9,12 +9,10 @@
 }
 
 .friends-right-wrapper {
-    width: 16%;
-    direction: rtl;
+    width: 17%;
     padding: 1%;
     background: #222223;
     position: fixed;
-    right: 0;
     height: 100vh;
     z-index: 1;
 }
@@ -26,7 +24,7 @@
 }
 
 .friends-center-wrapper {
-    width: 84%;
+    width: 82%;
     overflow-y: auto;
 }
 

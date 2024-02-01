@@ -68,9 +68,35 @@
             "post_like" : "Like",
             "post_dislike" : "Dislike",
             "post_comment" : "Comment",
-            "post_add_comment_placeholder" : "...Add Comment",
+            "post_add_comment_placeholder" : "Add Comment...",
             "post_share" : "Share"
         }
         
+    },
+
+    "friends" : {
+        "friends_title" : "Friends",
+        "friends_list_title" : "Friends List",
+        "friends_add_friends_title" : "Add New Friend",
+        "friends_no_friends_to_display_alert" : "No Friends To Display",
+        "friends_add_friend_button" : "Add Friend",
+        "friends_pending_alert" : "Pending..."
+
+    },
+
+    "marketplace" : {
+        "marketplace_search_placeholder" : "Search Marketplace",
+        "marketplace_create_new_product" : "Create New Listing +",
+        "marketplace_filter_title" : "Filters",
+        "marketplace_edit_button" : "edit",
+        "marketplace_city_search_placeholder" : "Search...",
+        "marketplace_categories_title" : "Categories",
+        "marketplace_everything_title" : "Everything",
+        "marketplace_vehicles_title" : "Vehicles",
+        "marketplace_electronics_title" : "Electronics",
+        "marketplace_instruments_title" : "Instruments",
+        "marketplace_games_and_toys_title" : "Games And Toys",
+        "marketplace_my_products_title" : "My Products"
+
     }
 }

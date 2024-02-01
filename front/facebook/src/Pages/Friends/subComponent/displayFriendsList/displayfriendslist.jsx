@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+
 // CSS
 import './displayfriendslist.css';
 
@@ -15,6 +20,10 @@ function DisplayFriendsList({ friendsTitle }) {
     // States
     const[friendsList, setFriendsList] = useState()
     const[usersList, setUsersList] = useState()
+
+
+    // Translator
+    const { t } = useTranslation();
 
 
     useEffect(() => {
@@ -62,7 +71,7 @@ function DisplayFriendsList({ friendsTitle }) {
                     </>
                 ) : (
                     <div className='displayfriends-no-result-wrapper'>
-                        <span>אין חברים להצגה</span>
+                        <span>{t('friends.friends_no_friends_to_display_alert')}</span>
                     </div>
                 )} 
                 </>
@@ -78,7 +87,7 @@ function DisplayFriendsList({ friendsTitle }) {
                     </>
                 ) : (
                     <div className='displayfriends-no-result-wrapper'>
-                        <span>אין חברים להצגה</span>
+                        <span>{t('friends.friends_no_friends_to_display_alert')}</span>
                     </div>
                 )} 
                 </>

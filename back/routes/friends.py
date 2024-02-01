@@ -296,7 +296,7 @@ def hasFriendsAtAll(): # Displays the number of friends user have
         allFetchedUsers = []
 
         
-        if friends:
+        if friends[0]:
             friends = friends[0]
 
             friends_list = json.loads(friends)
@@ -341,7 +341,7 @@ def getAllUsersFromFriendsDB():
 
     allFetchedUsers = []
 
-    if unwantedFriends: # if user have friends
+    if unwantedFriends[0]: # if user have friends
         unwantedFriends = unwantedFriends[0]
 
         unwantedFriends = json.loads(unwantedFriends)
