@@ -170,98 +170,99 @@ const Marketplace = () => {
     return (
         <div className={`marketplace-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
 
-            <div className='marketplace-right-wrapper'>
-                <div className='marketplace-right-sub-wrapper'>
-                    <span className='marketplace-title'> <b> Marketplace </b> </span>
+            <div style={{width: '20%'}}>
+                <div className='marketplace-right-wrapper'>
+                    <div className='marketplace-right-sub-wrapper'>
+                        <span className='marketplace-title'> <b> Marketplace </b> </span>
 
-                    <div className='marketplace-search-wrapper'>
-                        <input id='search-marketplace-input' className='marketplace-sub-search' placeholder={t('marketplace.marketplace_search_placeholder')} />
-                    </div>
-
-                    <div className='marketplace-create-button-wrapper'>
-                        <button className='marketplace-create-button' onClick={() => setExtendUploadPoduct(!extendUploadProduct)}>{t('marketplace.marketplace_create_new_product')}</button>
-                    </div>
-
-                    <div className='marketplace-border-wrapper'>
-                        <div className='marketplace-border'></div>
-                    </div>
-
-                    <div className='marketplace-filter-wrapper'>
-                        <span className='marketplace-filter-title'> <b>{t('marketplace.marketplace_filter_title')}</b> </span>
-
-                        <div className='marketplace-filter-button-wrapper'>
-                            <span className='marketplace-filter-title'> {cityFilter} </span>
-                            <button className='marketplace-filter-button' onClick={() => setIsEditCity(!isEditCity)}>{t('marketplace.marketplace_edit_button')}</button>
-                            {isEditCity && (
-                                <div className='marketplace-filter-cities-wrapper'>
-                                    <input className='marketplace-filter-cities-search' type="text" placeholder={t('marketplace.marketplace_city_search_placeholder')} value={searchTerm} onChange={handleInputChange} />
-
-                                    {isEditCity && searchTerm.length >=  2 && (
-                                        filteredData.map((item, i) => (
-                                            <div key={i} className='marketplace-filter-cities'>
-                                                <button className='marketplace-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
-                                            </div>
-                                        ))
-                                    )}
-
-                                </div>
-                            )}
-
+                        <div className='marketplace-search-wrapper'>
+                            <input id='search-marketplace-input' className='marketplace-sub-search' placeholder={t('marketplace.marketplace_search_placeholder')} />
                         </div>
-                    </div>
 
-                    <div className='marketplace-border-wrapper'>
-                        <div className='marketplace-border'></div>
-                    </div>
+                        <div className='marketplace-create-button-wrapper'>
+                            <button className='marketplace-create-button' onClick={() => setExtendUploadPoduct(!extendUploadProduct)}>{t('marketplace.marketplace_create_new_product')}</button>
+                        </div>
 
-                    <div className='marketplace-category-wrapper'>
-                        <span className='marketplace-category-title'> <b> {t('marketplace.marketplace_categories_title')} </b> </span>
+                        <div className='marketplace-border-wrapper'>
+                            <div className='marketplace-border'></div>
+                        </div>
 
-                        <div className='marketplace-category-sub-wrapper'>
-                            <div className='marketplace-category' onClick={(e) => { navigateToEverythingCategory(e) }}>
-                                <div className='marketplace-category-round-wrapper'>
-                                    <button className='marketplace-button-circle'> <AiOutlineShop className='topnav-menu-icon' /> </button>
-                                </div>
-                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_everything_title')}</span>
-                            </div>
+                        <div className='marketplace-filter-wrapper'>
+                            <span className='marketplace-filter-title'> <b>{t('marketplace.marketplace_filter_title')}</b> </span>
 
-                            <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'vehicles') }}>
-                                <div className='marketplace-category-round-wrapper'>
-                                    <button className='marketplace-button-circle'> <FaCar className='topnav-menu-icon' /> </button>
-                                </div>
-                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_vehicles_title')}</span>
-                            </div>
+                            <div className='marketplace-filter-button-wrapper'>
+                                <span className='marketplace-filter-title'> {cityFilter} </span>
+                                <button className='marketplace-filter-button' onClick={() => setIsEditCity(!isEditCity)}>{t('marketplace.marketplace_edit_button')}</button>
+                                {isEditCity && (
+                                    <div className='marketplace-filter-cities-wrapper'>
+                                        <input className='marketplace-filter-cities-search' type="text" placeholder={t('marketplace.marketplace_city_search_placeholder')} value={searchTerm} onChange={handleInputChange} />
 
-                            <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'electronics') }}>
-                                <div className='marketplace-category-round-wrapper'>
-                                    <button className='marketplace-button-circle'> <MdOutlinePhoneAndroid className='topnav-menu-icon' /> </button>
-                                </div>
-                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_electronics_title')}</span>
-                            </div>
+                                        {isEditCity && searchTerm.length >=  2 && (
+                                            filteredData.map((item, i) => (
+                                                <div key={i} className='marketplace-filter-cities'>
+                                                    <button className='marketplace-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
+                                                </div>
+                                            ))
+                                        )}
 
-                            <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'instruments') }}>
-                                <div className='marketplace-category-round-wrapper'>
-                                    <button className='marketplace-button-circle'> <LiaGuitarSolid className='topnav-menu-icon' /> </button>
-                                </div>
-                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_instruments_title')}</span>
-                            </div>
+                                    </div>
+                                )}
 
-                            <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'games') }}>
-                                <div className='marketplace-category-round-wrapper'>
-                                    <button className='marketplace-button-circle'> <SlGameController className='topnav-menu-icon' /> </button>
-                                </div>
-                                <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_games_and_toys_title')}</span>
-                            </div>
-
-                            <div className='marketplace-create-button-wrapper'>
-                                <button className='marketplace-create-button' onClick={(e) => { navigateToCategory(e, 'myproducts') }}>{t('marketplace.marketplace_my_products_title')}</button>
                             </div>
                         </div>
-                    </div>
 
+                        <div className='marketplace-border-wrapper'>
+                            <div className='marketplace-border'></div>
+                        </div>
+
+                        <div className='marketplace-category-wrapper'>
+                            <span className='marketplace-category-title'> <b> {t('marketplace.marketplace_categories_title')} </b> </span>
+
+                            <div className='marketplace-category-sub-wrapper'>
+                                <div className='marketplace-category' onClick={(e) => { navigateToEverythingCategory(e) }}>
+                                    <div className='marketplace-category-round-wrapper'>
+                                        <button className='marketplace-button-circle'> <AiOutlineShop className='topnav-menu-icon' /> </button>
+                                    </div>
+                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_everything_title')}</span>
+                                </div>
+
+                                <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'vehicles') }}>
+                                    <div className='marketplace-category-round-wrapper'>
+                                        <button className='marketplace-button-circle'> <FaCar className='topnav-menu-icon' /> </button>
+                                    </div>
+                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_vehicles_title')}</span>
+                                </div>
+
+                                <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'electronics') }}>
+                                    <div className='marketplace-category-round-wrapper'>
+                                        <button className='marketplace-button-circle'> <MdOutlinePhoneAndroid className='topnav-menu-icon' /> </button>
+                                    </div>
+                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_electronics_title')}</span>
+                                </div>
+
+                                <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'instruments') }}>
+                                    <div className='marketplace-category-round-wrapper'>
+                                        <button className='marketplace-button-circle'> <LiaGuitarSolid className='topnav-menu-icon' /> </button>
+                                    </div>
+                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_instruments_title')}</span>
+                                </div>
+
+                                <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'games') }}>
+                                    <div className='marketplace-category-round-wrapper'>
+                                        <button className='marketplace-button-circle'> <SlGameController className='topnav-menu-icon' /> </button>
+                                    </div>
+                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_games_and_toys_title')}</span>
+                                </div>
+
+                                <div className='marketplace-create-button-wrapper'>
+                                    <button className='marketplace-create-button' onClick={(e) => { navigateToCategory(e, 'myproducts') }}>{t('marketplace.marketplace_my_products_title')}</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-
 
             <div className='marketplace-left-wrapper'>
 

@@ -254,7 +254,7 @@ const TopNav = () => {
           </div>
 
           <div className='topnav-sub-left-wrapper'>
-            <button className='topnav-button-circle topnav-pointer topnav-account-button' onClick={handleSignout}> {t('topnav.topnav_disconnect_title')} </button> {/*meanwhile its here untill asking shlomi if Account pop is component */}
+            <button className='topnav-button-circle topnav-pointer topnav-account-button' onClick={handleSignout}> {t('topnav.topnav_disconnect_title')} </button>
           </div>
 
           {openNotifications && (

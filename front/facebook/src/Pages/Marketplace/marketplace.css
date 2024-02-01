@@ -53,18 +53,19 @@
     min-height: 100%;
     display: flex;
     flex-direction: row;
+    gap: 1vw;
 }
 
 
 /* style for the right column of the page */
 
 .marketplace-right-wrapper {
-    position: fixed;
-    z-index: 1;
     background-color: #222223;
     width: 15%;
     height: 100%;
     display: flex;
+    min-width: fit-content;
+    position: fixed;
 }
 
 .marketplace-right-sub-wrapper {
@@ -220,7 +221,7 @@
 .marketplace-category-sub-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1vh;
 }
 
 .marketplace-category {
@@ -228,7 +229,7 @@
     flex-direction: row;
     gap: 5%;
     cursor: pointer;
-    padding: 3%;
+    padding: 3px;
 }
 
 .marketplace-category:hover {
@@ -277,12 +278,12 @@
 .marketplace-left-wrapper {
     position: relative;
     width: 100%;
+    height: -moz-fit-content;
     height: fit-content;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     color: white;
-    margin-right: 15%;
 }
 
 .productupload-exit-icon {
