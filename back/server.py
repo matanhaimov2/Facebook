@@ -201,7 +201,7 @@ if __name__ == "__main__":
 
     # Complex Tasks :
     # 1. Add light mode option to the entire website ------------------------------- Wating........
-    # 2. Add an option to switch between languages (eng, heb) ---------------------- Pending...
+    # 2. Add an option to switch between languages (eng, heb) ---------------------- VVV
 
 
     # Can't Tell Tasks:
@@ -219,6 +219,7 @@ if __name__ == "__main__":
     # 2. db json columns cant get hebrew words ------------------------------------- !!!
     # 3. can't press notification to close it -------------------------------------- !!!
     # 4. when loading facebook on home route, errors raises up --------------------- !!!
+    # 5. when unwantedfriends(347) fetched as [] => error raises up in friends page- !!!
 
     # Video tasks:
     # 1. learn react classes in udemy.

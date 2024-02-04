@@ -73,6 +73,7 @@ def acceptFriend(): # Friend acception => both added in db to each other
 
     friendsTwos = friendsTwos[0]
 
+
     if (friendsTwos == None): # If email-db-friends has nothing
 
         query = f'''UPDATE handlefriends
@@ -230,21 +231,22 @@ def checkFriend(): # Checks if user got any friends
     friends = handleOneResult(query)
 
     if friends:
-        friends = friends[0]
+        if friends[0]:
+            friends = friends[0]
 
-        friends_list = json.loads(friends)
+            friends_list = json.loads(friends)
 
-        # Check if the friend_email_to_check is in the list with quotes
-        if f'"{friend_email_to_check}"' in friends_list:
-            pass # Success! Friend found
+            # Check if the friend_email_to_check is in the list with quotes
+            if f'"{friend_email_to_check}"' in friends_list:
+                pass # Success! Friend found
+
+            else:
+                # Friend not found in the list
+                
+                return jsonify({'res': False, 'Note': 'Users Arent Friends'})
 
         else:
-            # Friend not found in the list
-            
-            return jsonify({'res': False, 'Note': 'Users Arent Friends'})
-
-    else:
-        return jsonify({'res': False, 'Note': 'No Friends For The User'})
+            return jsonify({'res': False, 'Note': 'No Friends For The User'})
 
 
     return jsonify({'res': True})
@@ -277,16 +279,17 @@ def hasFriendsAtAll(): # Displays the number of friends user have
 
         friends_length = 0 
 
-        if friends[0]:
-            friends = friends[0]
+        if friends:
+            if friends[0]:
+                friends = friends[0]
 
-            friends_list = json.loads(friends)
-            friends_length = len(friends_list)
-            return jsonify({'res': True, 'friendsLengthNumber': friends_length})
+                friends_list = json.loads(friends)
+                friends_length = len(friends_list)
+                return jsonify({'res': True, 'friendsLengthNumber': friends_length})
 
-        else:
-            friends_length = 0
-            return jsonify({'res': True, 'friendsLengthNumber': friends_length, 'Note': 'No Friends For The User'})
+            else:
+                friends_length = 0
+                return jsonify({'res': True, 'friendsLengthNumber': friends_length, 'Note': 'No Friends For The User'})
                     
 
     # Displaying for profile(displayfriends) friends data
@@ -295,31 +298,31 @@ def hasFriendsAtAll(): # Displays the number of friends user have
         friends = handleOneResult(query)
         allFetchedUsers = []
 
-        
-        if friends[0]:
-            friends = friends[0]
+        if friends:
+            if friends[0]:
+                friends = friends[0]
 
-            friends_list = json.loads(friends)
+                friends_list = json.loads(friends)
 
-            # Takes every email from friends_list and gets from db username and userimages to the speceific email.
-            for emailAddress in friends_list:
-                clean_email_address = emailAddress.strip('"') # from "example@gmail.com" => example@gmail.com
-                fetch_data_query = f"SELECT username, userimages FROM profiles WHERE email = '{clean_email_address}' " 
-                fetched_users = handleMultipleResults(fetch_data_query)
+                # Takes every email from friends_list and gets from db username and userimages to the speceific email.
+                for emailAddress in friends_list:
+                    clean_email_address = emailAddress.strip('"') # from "example@gmail.com" => example@gmail.com
+                    fetch_data_query = f"SELECT username, userimages FROM profiles WHERE email = '{clean_email_address}' " 
+                    fetched_users = handleMultipleResults(fetch_data_query)
 
-                username = fetched_users[0][0]
-                user_image = fetched_users[0][1]
-                
-                # Structure 
-                allFetched = {
-                    'email': clean_email_address,
-                    'username': username,
-                    'userimages': user_image
-                } 
+                    username = fetched_users[0][0]
+                    user_image = fetched_users[0][1]
+                    
+                    # Structure 
+                    allFetched = {
+                        'email': clean_email_address,
+                        'username': username,
+                        'userimages': user_image
+                    } 
 
-                allFetchedUsers.append(allFetched)
+                    allFetchedUsers.append(allFetched)
 
-            return jsonify({'res': True, 'friendsData' : allFetchedUsers})
+                return jsonify({'res': True, 'friendsData' : allFetchedUsers})
 
     return jsonify({'res': False, 'data' : 'no friends for the user'})
 

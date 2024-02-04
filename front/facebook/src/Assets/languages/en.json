@@ -96,7 +96,60 @@
         "marketplace_electronics_title" : "Electronics",
         "marketplace_instruments_title" : "Instruments",
         "marketplace_games_and_toys_title" : "Games And Toys",
-        "marketplace_my_products_title" : "My Products"
+        "marketplace_my_products_title" : "My Products",
+        "marketplace_no_products_alert" : "There Are No Products Fit Your Search",
 
+        "productupload" : {
+            "productupload_select_category_title" : "Select A Category",
+            "productupload_vehicles_category_title" : "Vehicles",
+            "productupload_electronics_category_title" : "Electronics",
+            "productupload_instruments_category_title" : "Instruments",
+            "productupload_games_category_title" : "Games and Toys",
+            "productupload_description_placeholder" : "describe the product...",
+            "productupload_add_image_title" : "Add an Image:",
+            "productupload_edit_image_title" : "Edit Image:",
+            "productupload_price_placeholder" : "Price",
+            "productupload_price_currency" : "ILS",
+            "productupload_city_placeholder" : "City",
+            "productupload_save_changes_title" : "Save Changes",
+            "productupload_publish_title" : "Publish"
+        },
+
+        "deletecheck" : {
+            "deletecheck_are_u_sure_title" : "Are You Sure?",
+            "deletecheck_yes_title" : "Yes",
+            "deletecheck_no_title" : "No"
+        }
+        
+    },
+
+    "profile" : {
+        "profile_friends_title" : "Friends",
+        "profile_edit_prodile_title" : "Edit Profile",
+        "profile_add_friend_title" : "Add Friend",
+        "profile_friend_pending_title" : "Waiting For Approval",
+        "profile_intro_details" : "Intro",
+        "profile_works_at_title" : "Works at",
+        "profile_studied_at_title" : "Studied at",
+        "profile_lives_in_title" : "From",
+        "profile_borned_at_title" : "Borned In",
+
+        "postupload" : {
+            "postupload_upload_what_placeholder" : "?What do you want to share",
+            "postupload_public_radio" : "Public",
+            "postupload_friends_radio": "Friends",
+            "postupload_only_me_radio" : "Private",
+            "postupload_publish_title" : "Publish",
+            "postupload_uploadpost_trigger_title" : "Upload Post"
+        },
+
+        "displayfriends" : {
+            "displayfriends_no_friends_title" : "No Friends"
+        }
+
+    },
+
+    "chats" : {
+        "chats_send_message_placeholder" : "send message..."
     }
 }

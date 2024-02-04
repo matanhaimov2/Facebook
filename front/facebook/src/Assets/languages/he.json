@@ -98,7 +98,60 @@
         "marketplace_electronics_title" : "אלקטרוניקה",
         "marketplace_instruments_title" : "כלי נגינה",
         "marketplace_games_and_toys_title" : "משחקים וצעצועים",
-        "marketplace_my_products_title" : "המודעות שלי"
+        "marketplace_my_products_title" : "המודעות שלי",
+        "marketplace_no_products_alert" : "לא נמצאו מוצרים המתאימים לחיפוש שלך",
 
+        "productupload" : {
+            "productupload_select_category_title" : "בחר קטגוריה מתאימה",
+            "productupload_vehicles_category_title" : "כלי רכב",
+            "productupload_electronics_category_title" : "אלקטרוניקה",
+            "productupload_instruments_category_title" : "כלי נגינה",
+            "productupload_games_category_title" : "צעצועים ומשחקים",
+            "productupload_description_placeholder" : "כמה מילים על המוצר...",
+            "productupload_add_image_title" : "הוסף תמונה להמחשה:",
+            "productupload_edit_image_title" : "ערוך תמונה:",
+            "productupload_price_placeholder" : "מחיר",
+            "productupload_price_currency" : "ש\"ח",
+            "productupload_city_placeholder" : "עיר איסוף",
+            "productupload_save_changes_title" : "שמור שינויים",
+            "productupload_publish_title" : "פרסם"
+        },
+
+        "deletecheck" : {
+            "deletecheck_are_u_sure_title" : "?האם אתה בטוח",
+            "deletecheck_yes_title" : "כן",
+            "deletecheck_no_title" : "לא"
+        }
+        
+    },
+
+    "profile" : {
+        "profile_friends_title" : "חברים",
+        "profile_edit_prodile_title" : "ערוך פרופיל",
+        "profile_add_friend_title" : "הוספת חבר",
+        "profile_friend_pending_title" : "ממתין לאישור...",
+        "profile_intro_details" : "בקצרה",
+        "profile_works_at_title" : "עובד/ת ב-",
+        "profile_studied_at_title" : "למד/ה ב-",
+        "profile_lives_in_title" : "גר/ה ב-",
+        "profile_borned_at_title" : "נולד/ה ב-",
+
+        "postupload" : {
+            "postupload_upload_what_placeholder" : "?מה בא לך לשתף",
+            "postupload_public_radio" : "ציבורי",
+            "postupload_friends_radio": "חברים",
+            "postupload_only_me_radio" : "רק אני",
+            "postupload_publish_title" : "פרסם",
+            "postupload_uploadpost_trigger_title" : "העלה פוסט"
+        },
+
+        "displayfriends" : {
+            "displayfriends_no_friends_title" : "אין חברים"
+        }
+
+    },
+
+    "chats" : {
+        "chats_send_message_placeholder" : "שלח הודעה..."
     }
 }

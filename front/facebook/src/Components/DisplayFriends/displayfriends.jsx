@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams  } from 'react-router-dom';
 
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+
 // Icons
 import exitIcon from '../../Assets/Images/exit-icon.png'; 
 
@@ -26,6 +31,10 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
 
     // States
     const [friendsInfo, setFriendsInfo] = useState(); 
+
+
+    // Translator
+    const { t } = useTranslation();
 
 
     useEffect(() => {
@@ -97,7 +106,7 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
                 </div>
             ) :(
                 <div className='displayfriends-no-result-wrapper'>
-                    <span>אין חברים</span>
+                    <span>{t('profile.displayfriends.displayfriends_no_friends_title')}</span>
                 </div>
             )} 
 

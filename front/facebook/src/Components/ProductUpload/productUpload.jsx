@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
 
 // Mui
 import Select from '@mui/joy/Select';
@@ -30,15 +35,17 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
     const [uploadText, setUploadText] = useState('');
     const [uploadImg, setUploadImg] = useState(false);
     const [uploadPrice, setUploadPrice] = useState('');
+    const [showLoading, setShowLoading] = useState(false);
 
     // States - City
     const [isEditCity, setIsEditCity] = useState(false); // Open cities menu
     const [uploadCity, setUploadCity] = useState('');
     const [filteredData, setFilteredData] = useState(cities_data);
 
-    const [showLoading, setShowLoading] = useState(false);
 
 
+    // Translator
+    const { t } = useTranslation();
 
 
     const activateUploadImage = () => {
@@ -129,9 +136,18 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
     };
 
     const filterData = (searchTerm) => { // filtered displayed data(cities) according to searchTerm
-        const filteredData = cities_data.filter((item) =>
-            item.name.includes(searchTerm)
-        );
+
+        if (document.documentElement.getAttribute('dir') === 'ltr') { // language of site set to hebrew
+            var filteredData = cities_data.filter((item) =>
+                item.name.includes(searchTerm)
+            );
+        }
+        else { // language of site set to english
+            var filteredData = cities_data.filter((item) =>
+                item.english_name.includes(searchTerm)
+            );
+        }
+
         setFilteredData(filteredData);
     };
 
@@ -162,25 +178,25 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                     <Select
                         color="primary"
                         disabled={false}
-                        placeholder="בחר קטגורייה מתאימה"
+                        placeholder={t('marketplace.productupload.productupload_select_category_title')}
                         variant="outlined"
                     >
-                        <Option value="vehicles" onClick={(e) => SetUploadCategory('vehicles')}>כלי רכב</Option>
-                        <Option value="electronics" onClick={(e) => SetUploadCategory('electronics')}>אלקטרוניקה</Option>
-                        <Option value="instruments" onClick={(e) => SetUploadCategory('instruments')}>כלי נגינה</Option>
-                        <Option value="games" onClick={(e) => SetUploadCategory('games')}>צעצועים ומשחקים</Option>
+                        <Option value="vehicles" onClick={() => SetUploadCategory('vehicles')}>{t('marketplace.productupload.productupload_vehicles_category_title')}</Option>
+                        <Option value="electronics" onClick={() => SetUploadCategory('electronics')}>{t('marketplace.productupload.productupload_electronics_category_title')}</Option>
+                        <Option value="instruments" onClick={() => SetUploadCategory('instruments')}>{t('marketplace.productupload.productupload_instruments_category_title')}</Option>
+                        <Option value="games" onClick={() => SetUploadCategory('games')}>{t('marketplace.productupload.productupload_games_category_title')}</Option>
 
                     </Select>
                 </div>
 
                 <div>
-                    <input type='text' className='productupload-input-text' onChange={(e) => setUploadText(e.target.value)} placeholder='כמה מילים על המוצר...' required />
+                    <input type='text' className='productupload-input-text' onChange={(e) => setUploadText(e.target.value)} placeholder={t('marketplace.productupload.productupload_description_placeholder')} required />
                 </div>
 
                 <div className='productupload-image-wrapper'>
                     {isUpdateProduct ? (
                         <>
-                            <span>שנה תמונה :</span>
+                            <span>{t('marketplace.productupload.productupload_edit_image_title')}</span>
 
                             <div className='productupload-image-sub-wrapper'>
                                 <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required />
@@ -196,7 +212,7 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                         </>
                     ) : (
                         <>
-                            <span>הוסף תמונה להמחשה:</span>
+                            <span>{t('marketplace.productupload.productupload_add_image_title')}</span>
 
                             <div className='productupload-image-sub-wrapper'>
                                 <input type="file" id="imgProductUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' required />
@@ -219,19 +235,23 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                 </div>
 
                 <div>
-                    <input type='text' className='productupload-input-price' onChange={(e) => setUploadPrice(e.target.value)} placeholder='מחיר:' required />
-                    <span> ש"ח </span>
+                    <input type='text' className='productupload-input-price' onChange={(e) => setUploadPrice(e.target.value)} placeholder={t('marketplace.productupload.productupload_price_placeholder')} required />
+                    <span className='productupload-price-currency'> {t('marketplace.productupload.productupload_price_currency')}</span>
                 </div>
 
                 <div className='productupload-cities-wrapper'>
-                    <input type='text' className='productupload-input-city' value={uploadCity} onChange={handleInputChange} placeholder='עיר איסוף..' required />
+                    <input type='text' className='productupload-input-city' value={uploadCity} onChange={handleInputChange} placeholder={t('marketplace.productupload.productupload_city_placeholder')} required />
 
                     {isEditCity && (
                         <div className='productupload-filter-cities-wrapper'>
                             {uploadCity.length >= 2 && (
                                 filteredData.map((item, i) => (
                                     <div key={i} className='productupload-filter-cities'>
-                                        <button className='productupload-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
+                                        {document.documentElement.getAttribute('dir') === 'ltr' ? (
+                                            <button className='productupload-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
+                                        ) : (
+                                            <button className='productupload-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.english_name}</button>
+                                        )}
                                     </div>
                                 ))
                             )}
@@ -244,10 +264,10 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
                     {!showLoading ? (
                         <>
                             {isUpdateProduct ? (
-                                <button type='submit' className='login-form-button postupload-post-button'>שמור שינויים</button>
+                                <button type='submit' className='login-form-button postupload-post-button'>{t('marketplace.productupload.productupload_save_changes_title')}</button>
 
                             ) : (
-                                <button type='submit' className='login-form-button postupload-post-button'>פרסם</button>
+                                <button type='submit' className='login-form-button postupload-post-button'>{t('marketplace.productupload.productupload_publish_title')}</button>
                             )}
                         </>
                     ) : (

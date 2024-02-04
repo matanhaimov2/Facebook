@@ -62,6 +62,9 @@ VALUES (NEW.id, NEW.firstname, NEW.lastname, NEW.email, NEW.birthday, NEW.sex);
 INSERT INTO `marketplace` (user_email)
 VALUES (NEW.email);
 
+INSERT INTO `handlefriends` (user_email)
+VALUES (NEW.email);
+
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -78,4 +81,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-05 11:05:58
+-- Dump completed on 2024-02-04 11:40:21

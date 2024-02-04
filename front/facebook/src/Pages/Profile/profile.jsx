@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useParams  } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
 
 // Images & Icoms
-import workIcon from '../../Assets/Images/work-mini-icon.png'; 
-import schoolIcon from '../../Assets/Images/school-mini-icon.png'; 
-import birthIcon from '../../Assets/Images/birth-mini-icon.png'; 
-import locationIcon from '../../Assets/Images/location-mini-icon.png'; 
-import heartIcon from '../../Assets/Images/heart-mini-icon.png'; 
-import plusIcon from '../../Assets/Images/plus-icon.png'; 
+import workIcon from '../../Assets/Images/work-mini-icon.png';
+import schoolIcon from '../../Assets/Images/school-mini-icon.png';
+import birthIcon from '../../Assets/Images/birth-mini-icon.png';
+import locationIcon from '../../Assets/Images/location-mini-icon.png';
+import heartIcon from '../../Assets/Images/heart-mini-icon.png';
+import plusIcon from '../../Assets/Images/plus-icon.png';
 
 // React Icons
 import { LiaUserCircleSolid } from 'react-icons/lia'
@@ -18,7 +23,7 @@ import { MdDeleteForever } from 'react-icons/md'
 import './profile.css';
 
 // Services
-import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage} from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage } from '../../Services/profileService';
 import { checkFriend, hasFriendsAtAll, startFriendRequest, deleteFriendRequest, getPendingFriend, oneFriendRequestCheck } from '../../Services/friendsService'
 import { getAuthenticatedUser } from '../../Services/authService'
 
@@ -31,12 +36,12 @@ import DisplayFriends from '../../Components/DisplayFriends/displayfriends';
 function Profile() {
 
     const { profileEmail } = useParams();
-    
+
     // States
     const [profileInfo, setProfileinfo] = useState({});
     const [friendsNumber, setIsFriendsNumber] = useState();
 
-    
+
     const [showSkeleton, setShowSkeleton] = useState(false);
     const [formattedDate, setFormattedDate] = useState(''); // Define formattedDate
     const [formattedRelation, setFormattedRelation] = useState(''); // Define formattedRelationship
@@ -47,33 +52,31 @@ function Profile() {
     const [friendPending, setFriendPending] = useState(false);
     const [isDisplayFriends, setIsDisplayFriends] = useState(false); // Raises friends display
 
-    
-   
 
-    
+    // Translator
+    const { t } = useTranslation();
+
+
     const formatDate = (inputDateStr) => { // Date formatting to a normal structure (dd/mm/yyyy)
         const inputDate = new Date(inputDateStr);
         const day = inputDate.getDate().toString().padStart(2, '0');
         const month = (inputDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-based
         const year = inputDate.getFullYear();
-      
+
         setFormattedDate(`${day}/${month}/${year}`);
     }
 
     const formatRelationship = (inputRelationStatusEnglish) => { // Realtionship status formatting to hebrew
-        if (inputRelationStatusEnglish === 'Not in a Relationship')
-        {
+        if (inputRelationStatusEnglish === 'Not in a Relationship') {
             setFormattedRelation('רווק/ה')
         }
-        else if (inputRelationStatusEnglish === 'In a Relationship')
-        {
+        else if (inputRelationStatusEnglish === 'In a Relationship') {
             setFormattedRelation('בזוגיות')
         }
-        else if (inputRelationStatusEnglish === 'Married')
-        {
+        else if (inputRelationStatusEnglish === 'Married') {
             setFormattedRelation('נשוי')
         }
-      
+
         return formattedRelation;
     }
 
@@ -81,13 +84,13 @@ function Profile() {
         const profilePage = async () => {
 
             setShowSkeleton(true); // Show skeleton animation - didnt do it yet
-    
+
             let data;
 
             // Checks if user visiting other profile
-            if(profileEmail) {
+            if (profileEmail) {
                 data = {
-                    "Email" : profileEmail,
+                    "Email": profileEmail,
                     "UserEmail": getAuthenticatedUser()
                 }
 
@@ -95,37 +98,37 @@ function Profile() {
                 const isFriendCheck = await checkFriend(data);
                 if (isFriendCheck && isFriendCheck.res) {
                     setIsFriends(true)
-                    
+
                 }
                 else {
                     setIsFriends(false)
                     // users arent friends
 
                     const friendChecksOneRequest = await oneFriendRequestCheck(data);
-                    if (friendChecksOneRequest && friendChecksOneRequest.res===true) {
+                    if (friendChecksOneRequest && friendChecksOneRequest.res === true) {
                         setFriendPending(true)
                     }
 
                 }
-                
+
             }
             else {
                 data = {
-                    "Email" : getAuthenticatedUser()
+                    "Email": getAuthenticatedUser()
                 }
             }
 
-            if(getAuthenticatedUser()) {
+            if (getAuthenticatedUser()) {
 
                 // gets the number of friends a user have
                 let friendsData = {
-                    "Email" : getAuthenticatedUser(),
-                    "FriendsEmail" : profileEmail,
+                    "Email": getAuthenticatedUser(),
+                    "FriendsEmail": profileEmail,
                     "Program": '0'
                 }
 
                 const numberOfFriendsResponse = await hasFriendsAtAll(friendsData)
-                if (numberOfFriendsResponse && numberOfFriendsResponse.res===true) {
+                if (numberOfFriendsResponse && numberOfFriendsResponse.res === true) {
                     setIsFriendsNumber(numberOfFriendsResponse.friendsLengthNumber)
                 }
                 else {
@@ -134,15 +137,15 @@ function Profile() {
 
                 // Profile info
                 const response = await profile(data)
-                if(response && response.res===true) { 
+                if (response && response.res === true) {
                     setProfileinfo(response.data);
-                       
+
                     formatDate(profileInfo.birthday); // Set the formatted date
 
                     formatRelationship(profileInfo.relationshipstatus); // Set the formatted relationship
-                    
+
                     setShowSkeleton(false);
-                    
+
                 }
                 else {
                     console.log('Something went wrong')
@@ -150,33 +153,33 @@ function Profile() {
             }
 
         }
-    
+
         profilePage();
-    
+
     }, [profileInfo.birthday, profileInfo.relationshipstatus])
 
 
     useEffect(() => {
-        
+
         const imgReceiver = async () => {
 
             let data;
 
-            if(profileEmail) {
+            if (profileEmail) {
                 data = {
-                    "Email" : profileEmail
+                    "Email": profileEmail
                 }
             }
             else {
                 data = {
-                    "Email" : getAuthenticatedUser()
+                    "Email": getAuthenticatedUser()
                 }
             }
-            
+
 
             const response = await getProfileImage(data)
-          
-            if(response && response.res===true) { // If the response is true, update user image
+
+            if (response && response.res === true) { // If the response is true, update user image
                 setImgProfile(response.data.userimage)
             }
             else {
@@ -185,31 +188,31 @@ function Profile() {
 
         }
 
-        if(localStorage.getItem('UserInfo')) {
+        if (localStorage.getItem('UserInfo')) {
             imgReceiver();
         }
     }, [imgProfileTrigger])
 
 
     useEffect(() => {
-        
+
         const getIsPendingFriend = async () => {
 
             const data = {
-                "Email" : getAuthenticatedUser(),
-                "friendEmail" : profileEmail
+                "Email": getAuthenticatedUser(),
+                "friendEmail": profileEmail
             }
-        
+
             const response = await getPendingFriend(data);
-          
-            if(response && response.res===true && response.pending===true) { // If the response is true, update user image
+
+            if (response && response.res === true && response.pending === true) { // If the response is true, update user image
                 setFriendPending(true)
             }
-        
+
         }
 
         // something here raises f12 errors ----- ask shlomi
-        if(localStorage.getItem('UserInfo') && profileEmail) {
+        if (localStorage.getItem('UserInfo') && profileEmail) {
             getIsPendingFriend();
         }
 
@@ -218,7 +221,7 @@ function Profile() {
     const activateUploadImage = () => {
         const imageUploader = document.getElementById('imgUpload');
 
-        if(imageUploader) {
+        if (imageUploader) {
             imageUploader.click()
         }
     }
@@ -226,7 +229,7 @@ function Profile() {
     const activateDeleteImage = async () => {
 
         let data = {
-            "Email" : getAuthenticatedUser(), 
+            "Email": getAuthenticatedUser(),
         }
 
         const response = await deleteProfileImage(data); // sends to back request to delete profile image from db
@@ -244,15 +247,15 @@ function Profile() {
 
         let form = new FormData();
         form.append('image', imageFile)
-        
+
         const response = await profileImgbb(form); // sends image to img bb
 
         let data = {
-            "Email" : getAuthenticatedUser(), 
-            "UploadedImage" : response.data.display_url
+            "Email": getAuthenticatedUser(),
+            "UploadedImage": response.data.display_url
         }
 
-       await uploadImage(data);
+        await uploadImage(data);
 
         // Set trigger
         setImgProfileTrigger(true)
@@ -261,12 +264,12 @@ function Profile() {
 
     const friendRequest = async () => {
         let data = {
-            "Email" : getAuthenticatedUser(), 
+            "Email": getAuthenticatedUser(),
             "FriendEmail": profileEmail
         }
 
         const response = await startFriendRequest(data);
-        if (response && response.res===true) {
+        if (response && response.res === true) {
             setFriendPending(true)
             // Sends a friend request
         }
@@ -290,43 +293,43 @@ function Profile() {
 
     return (
         <div className='profile-wrapper'>
-            
-            <div className='profile-wrapper-basics'>
 
-                    <div className='sub-profile-image-wrapper'>
-                        {imgProfile ? (
-                            <div className='profile-sub-sub-image-wrapper'>
-                                <img src={imgProfile} className='profile-user-image'></img>
-                                <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
-                                
+            <div className={`profile-wrapper-basics ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
+
+                <div className='sub-profile-image-wrapper'>
+                    {imgProfile ? (
+                        <div className='profile-sub-sub-image-wrapper'>
+                            <img src={imgProfile} className='profile-user-image'></img>
+                            <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' />
+
+                            {!profileEmail && (
+                                <button className='profile-user-edit-image' onClick={activateUploadImage}> <MdOutlineModeEditOutline /> </button>
+                            )}
+
+                            {!profileEmail && (
+                                <button className='profile-user-delete-image' onClick={activateDeleteImage}> <MdDeleteForever /> </button>
+                            )}
+                        </div>
+
+                    ) : (
+                        <div>
+                            <div className='profile-img-wrapper'>
+                                <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update' />
+
                                 {!profileEmail && (
-                                    <button className='profile-user-edit-image' onClick={activateUploadImage}> <MdOutlineModeEditOutline /> </button>
+                                    <button className='profile-upload-img-wrapper' onClick={activateUploadImage}> <img src={plusIcon} className="profile-upload-img" /> </button>
                                 )}
 
-                                {!profileEmail && (
-                                    <button className='profile-user-delete-image' onClick={activateDeleteImage}> <MdDeleteForever /> </button>
-                                )}
+                                <LiaUserCircleSolid className='profile-user-no-image' />
                             </div>
+                        </div>
+                    )}
 
-                        ) : (
-                            <div>
-                                <div className='profile-img-wrapper'>
-                                    <input type="file" id="imgUpload" accept="image/jpeg, image/png, image/jpg" onChange={imgUploader} className='profile-file-update'/> 
-                                    
-                                    {!profileEmail && (
-                                        <button className='profile-upload-img-wrapper' onClick={activateUploadImage}> <img src={plusIcon} className="profile-upload-img" /> </button>
-                                    )}
+                </div>
 
-                                    <LiaUserCircleSolid className='profile-user-no-image'/>
-                                </div>
-                            </div>
-                        )}
+                <div className='sub-profile-basics-wrapper'>
+                    <div className='sub-sub-profile-basics'>
 
-                    </div>
-
-                    <div className='sub-profile-basics-wrapper'>
-                        <div className='sub-sub-profile-basics'>
-                        
                         {profileInfo.firstname && (
                             <div className='profile-fullname-wrapper'>
                                 {profileInfo.firstname.length > 0 && (
@@ -341,49 +344,49 @@ function Profile() {
                                 )}
                             </div>
                         )}
-                        </div>
-
-                        <div className='sub-sub-profile-basics'>
-                            <span>חברים </span>  {/* number of friends */}
-                            <button className='profile-friendsnumber-button' onClick={toDisplayFriends}> {friendsNumber} </button>
-                        </div>
                     </div>
-                    
-                    {!profileEmail ? (
-                        <div className='sub-profile-basics'>
-                            <button onClick={() => {setIsEditProfile(true)}} className='sub-profile-edit-button'> עריכת פרופיל </button>
-                        </div>
-                    ) : (
-                        <>
-                        { !isFriends ? (
+
+                    <div className='sub-sub-profile-basics'>
+                        <span>{t('profile.profile_friends_title')}</span>  {/* number of friends */}
+                        <button className='profile-friendsnumber-button' onClick={toDisplayFriends}> {friendsNumber} </button>
+                    </div>
+                </div>
+
+                {!profileEmail ? (
+                    <div className='sub-profile-basics'>
+                        <button onClick={() => { setIsEditProfile(true) }} className='sub-profile-edit-button'>{t('profile.profile_edit_prodile_title')}</button>
+                    </div>
+                ) : (
+                    <>
+                        {!isFriends ? (
                             <div className='sub-profile-basics'>
                                 {!friendPending ? (
-                                    <button onClick={friendRequest} className='sub-profile-friends-button'>הוספת חבר</button>
+                                    <button onClick={friendRequest} className='sub-profile-friends-button'>{t('profile.profile_add_friend_title')}</button>
 
                                 ) : (
-                                    <button className='sub-profile-friends-button'>ממתין לאישור...</button>
+                                    <button className='sub-profile-friends-button'>{t('profile.profile_friend_pending_title')}</button>
                                 )}
-                            </div> 
+                            </div>
                         ) : (
                             <div className='sub-profile-basics sub-profile-friends-wrapper'>
-                                <button className='sub-profile-already-friends-button'>חברים</button>
-                                <button onClick={deleteFriend} className='sub-profile-already-friends-button sub-profile-delete-friend-wrapper'><MdDeleteForever className='sub-profile-delete-friend-button'/></button>
+                                <button className='sub-profile-already-friends-button'>{t('profile.profile_friends_title')}</button>
+                                <button onClick={deleteFriend} className='sub-profile-already-friends-button sub-profile-delete-friend-wrapper'><MdDeleteForever className='sub-profile-delete-friend-button' /></button>
                             </div>
                         )}
 
-                        </>
-                    )}
+                    </>
+                )}
             </div>
 
             <div className='profile-center-wrapper'>
-                
+
                 <div className='profile-center-left-wrapper'>
                     <PostUpload profileEmail={profileEmail} />
                 </div>
 
-                <div className='profile-center-right-wrapper'>
+                <div className={`profile-center-right-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'textalign-right' : 'textalign-left'}`}>
                     <div className='profile-center-right-sub-wrapper'>
-                        <span className='profile-center-right-inshortcut'> בקצרה </span>
+                        <span className='profile-center-right-inshortcut'> {t('profile.profile_intro_details')} </span>
 
                         {profileInfo.biography && (
                             <div className='profile-biography-wrapper'>
@@ -395,8 +398,8 @@ function Profile() {
                             </div>
                         )}
 
-                        <div className='profile-details-wrapper'>
-                                
+                        <div className={`profile-details-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
+
                             {profileInfo.username && (
                                 <div className='profile-inner-details-wrapper'>
 
@@ -404,17 +407,17 @@ function Profile() {
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={workIcon} />
                                             <div className='profile-details-text'>
-                                                <span>עובד/ת ב- </span> {profileInfo.occupation}
+                                                <span>{t('profile.profile_works_at_title')} </span> {profileInfo.occupation}
                                             </div>
                                         </div>
-                                        
+
                                     )}
 
                                     {profileInfo.school && profileInfo.school.length > 0 && (
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={schoolIcon} />
                                             <div className='profile-details-text'>
-                                            <span>למד/ה ב-</span> {profileInfo.school}
+                                                <span>{t('profile.profile_studied_at_title')} </span> {profileInfo.school}
                                             </div>
                                         </div>
                                     )}
@@ -423,7 +426,7 @@ function Profile() {
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={locationIcon} />
                                             <div className='profile-details-text'>
-                                                <span>גר/ה ב- </span>{profileInfo.address}
+                                                <span>{t('profile.profile_lives_in_title')} </span>{profileInfo.address}
                                             </div>
                                         </div>
                                     )}
@@ -432,8 +435,8 @@ function Profile() {
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={heartIcon} />
                                             <div className='profile-details-text'>
-                                                {formattedRelation}      
-                                            </div>                              
+                                                {formattedRelation}
+                                            </div>
                                         </div>
                                     )}
 
@@ -441,12 +444,12 @@ function Profile() {
                                         <div className='profile-details'>
                                             <img className='profile-details-icons' src={birthIcon} />
                                             <div className='profile-details-text'>
-                                                <span>נולד/ה בתאריך </span>{formattedDate} 
+                                                <span>{t('profile.profile_borned_at_title')} </span>{formattedDate}
                                             </div>
                                         </div>
                                     )}
                                 </div>
-                            )} 
+                            )}
 
                         </div>
                     </div>
@@ -457,15 +460,15 @@ function Profile() {
             {/* Update Profile Form */}
             {isEditProfile && (
                 <div className='profile-update-profile-wrapper-wrapper'>
-                    <SetProfile isUpdateProfile={isEditProfile} setIsEditProfile={setIsEditProfile}/>
+                    <SetProfile isUpdateProfile={isEditProfile} setIsEditProfile={setIsEditProfile} />
                 </div>
             )}
 
             {isDisplayFriends && (
-                    <div className='marketplace-left-productupload-wrapper'>
-                        <DisplayFriends setIsDisplayFriends={setIsDisplayFriends} />
-                    </div>
-                )}
+                <div className='marketplace-left-productupload-wrapper'>
+                    <DisplayFriends setIsDisplayFriends={setIsDisplayFriends} />
+                </div>
+            )}
 
         </div>
     );

@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io from "socket.io-client";
 
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+
 // React Icons 
 import { IoSend } from "react-icons/io5";
 
@@ -28,6 +33,10 @@ function Chats({ data, setOpenChat }) {
     const [message, setMessage] = useState(); // content of the comment
     const [allMessages, setAllMessages] = useState([]);
     const [chat, setChat] = useState([]);
+
+    
+    // Translator
+    const { t } = useTranslation();
 
     // Refs
     const chatRef = useRef(null);
@@ -199,8 +208,8 @@ function Chats({ data, setOpenChat }) {
 
                 </div>
 
-                <form onSubmit={(e) => sendMessage(e)} className='chats-message-wrapper'>
-                    <input id='chats-text-box' type='text' className='chats-message-text' onChange={(e) => setMessage(e.target.value)} placeholder='...שלח הודעה'></input>
+                <form onSubmit={(e) => sendMessage(e)} className={`chats-message-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
+                    <input id='chats-text-box' type='text' className={`chats-message-text ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}  onChange={(e) => setMessage(e.target.value)} placeholder={t('chats.chats_send_message_placeholder')}></input>
 
                     <button type='submit' className='chats-message-send-button'> <IoSend /> </button>
                 </form>

@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+// Languages
+import { useTranslation } from 'react-i18next';
+
+// React Mui
 import plusIcon from '../../Assets/Images/plus-icon.png'; 
 import editIcon from '../../Assets/Images/edit-icon.png'; 
 import Radio from '@mui/material/Radio';
@@ -31,7 +36,8 @@ function PostUpload({ profileEmail }) {
     const [uploadPrivacy, setUploadPrivacy] = useState('');
     const [showLoading, setShowLoading] = useState(false);
 
-
+    // Translator
+    const { t } = useTranslation();
 
 
     const activateUploadImage = () => {
@@ -101,7 +107,7 @@ function PostUpload({ profileEmail }) {
             {extendUploadPost ? (
                 <form className='postupload-wrapper'>
                     <div className='postupload-input-wrapper'>
-                        <input className='postupload-input' onChange={(e) => setUploadText(e.target.value)} placeholder=' ?מה באלך לשתף'></input>
+                        <input className={`postupload-input ${document.documentElement.getAttribute('dir')==='ltr' ? 'textalign-right' : 'textalign-left'}`} onChange={(e) => setUploadText(e.target.value)} placeholder={t('profile.postupload.postupload_upload_what_placeholder')}></input>
                     </div>
 
                     <div className='postupload-image-wrapper'>
@@ -123,16 +129,16 @@ function PostUpload({ profileEmail }) {
                     <div className='postupload-privacy-wrapper'>
                         <FormControl>
                             <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" defaultValue="ציבורי" name="radio-buttons-group">
-                                <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="public" control={<Radio />} label="ציבורי" />
-                                <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="friends" control={<Radio />} label="חברים" />
-                                <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="only me" control={<Radio />} label="רק אני" />
+                                <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="public" control={<Radio />} label={t('profile.postupload.postupload_public_radio')} />
+                                <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="friends" control={<Radio />} label={t('profile.postupload.postupload_friends_radio')} />
+                                <FormControlLabel className='postupload-privacy-button' onChange={(e) => setUploadPrivacy(e.target.value)} value="only me" control={<Radio />} label={t('profile.postupload.postupload_only_me_radio')} />
                             </RadioGroup>
                         </FormControl>
                     </div>
 
                     <div className='postupload-post-wrapper'>
                         {!showLoading ? (
-                            <button type='submit' onClick={uploadPostToFacebook} className='login-form-button postupload-post-button'>פרסם</button>
+                            <button type='submit' onClick={uploadPostToFacebook} className='login-form-button postupload-post-button'>{t('profile.postupload.postupload_publish_title')}</button>
                         ) : (
                             <Box type='submit' className='postupload-form-loading'> <CircularProgress style={{'color': 'white'}}/> </Box>
                         )}
@@ -143,7 +149,7 @@ function PostUpload({ profileEmail }) {
             ) : (
                 <div className='postupload-upload-button-wrapper'>
                     {!profileEmail && (
-                        <button type='button' onClick={extendUploader} className='postupload-upload-button'>העלה פוסט</button>
+                        <button type='button' onClick={extendUploader} className='postupload-upload-button'>{t('profile.postupload.postupload_uploadpost_trigger_title')}</button>
                     )}
                     
                     <DisplayPosts profileEmail={profileEmail} />

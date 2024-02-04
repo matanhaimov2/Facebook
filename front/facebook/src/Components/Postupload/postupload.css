@@ -45,7 +45,6 @@
     border: none;
     outline: none;
     color: white;
-    text-align: right;
 }
 
 .postupload-image-wrapper {
@@ -81,7 +80,6 @@
 
 .postupload-privacy-wrapper {
     height: 10%;
-    margin: auto;
     color: white;
 }
 
@@ -145,4 +143,9 @@
     border-radius: 5px;
     border: none;
     background: #1877f2;
+}
+
+
+.css-j204z7-MuiFormControlLabel-root {
+    margin: 0% 2% 0% 2% !important;
 }

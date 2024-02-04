@@ -144,9 +144,17 @@ const Marketplace = () => {
     };
 
     const filterData = (searchTerm) => { // filtered displayed data(cities) according to searchTerm
-        const filteredData = cities_data.filter((item) =>
-            item.name.includes(searchTerm)
-        );
+        
+        if (document.documentElement.getAttribute('dir') === 'ltr') { // language of site set to hebrew
+            var filteredData = cities_data.filter((item) =>
+                item.name.includes(searchTerm)
+            );
+        }
+        else { // language of site set to english
+            var filteredData = cities_data.filter((item) =>
+                item.english_name.includes(searchTerm)
+            );
+        }
         setFilteredData(filteredData);
     };
 
@@ -168,9 +176,9 @@ const Marketplace = () => {
     const ILdate = { day: 'numeric', month: 'numeric', year: 'numeric' };
 
     return (
-        <div className={`marketplace-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
+        <div className={`marketplace-wrapper ${document.documentElement.getAttribute('dir') === 'ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
 
-            <div style={{width: '20%'}}>
+            <div style={{ width: '20%' }}>
                 <div className='marketplace-right-wrapper'>
                     <div className='marketplace-right-sub-wrapper'>
                         <span className='marketplace-title'> <b> Marketplace </b> </span>
@@ -197,10 +205,14 @@ const Marketplace = () => {
                                     <div className='marketplace-filter-cities-wrapper'>
                                         <input className='marketplace-filter-cities-search' type="text" placeholder={t('marketplace.marketplace_city_search_placeholder')} value={searchTerm} onChange={handleInputChange} />
 
-                                        {isEditCity && searchTerm.length >=  2 && (
+                                        {isEditCity && searchTerm.length >= 2 && (
                                             filteredData.map((item, i) => (
                                                 <div key={i} className='marketplace-filter-cities'>
-                                                    <button className='marketplace-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
+                                                    {document.documentElement.getAttribute('dir') === 'ltr' ? (
+                                                        <button className='marketplace-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.name}</button>
+                                                    ) : (
+                                                        <button className='marketplace-filter-cities-button' onClick={() => handleCityClick(item.english_name)}>{item.english_name}</button>
+                                                    )}
                                                 </div>
                                             ))
                                         )}
@@ -371,16 +383,18 @@ const Marketplace = () => {
                                                 <button className='marketplace-left-options-button' onClick={openOptions}> <RxExit className='marketplace-left-options-button-exit' /></button>
 
                                                 <ButtonGroup className='marketplace-left-options-buttons' aria-label="outlined primary button group">
-                                                    <Button>
+                                                    <Button onClick={() => setExtendDeleteCheck(!extendDeleteCheck)}>
                                                         <Tooltip title="Delete">
                                                             <IconButton>
-                                                                <DeleteIcon onClick={() => setExtendDeleteCheck(!extendDeleteCheck)} />
+                                                                <DeleteIcon />
                                                             </IconButton>
                                                         </Tooltip>
                                                     </Button>
                                                     <Button onClick={() => setIsEditProduct(true)}>
                                                         <Tooltip title="Edit">
-                                                            <Button><AiOutlineEdit /></Button>
+                                                            <Button>
+                                                                <AiOutlineEdit />
+                                                            </Button>
                                                         </Tooltip>
                                                     </Button>
                                                 </ButtonGroup>
@@ -413,7 +427,7 @@ const Marketplace = () => {
                         </div>
                     ))}
 
-                
+
                 {/* Display no products availble - when there are no products */}
                 {marketProducts && marketProducts.flat()
                     .filter((item) => {
@@ -422,10 +436,10 @@ const Marketplace = () => {
                         // Check if cityFilter is 'anything' or if product.City matches the cityFilter
                         return cityFilter === 'הכל' || product.City === cityFilter;
                     }).length === 0 && (
-                    <div>
-                        No Products That Fits Your Search
-                    </div>
-                )}
+                        <div>
+                            {t('marketplace.marketplace_no_products_alert')}
+                        </div>
+                    )}
 
                 {extendUploadProduct && (
                     <div className='marketplace-left-productupload-wrapper'>

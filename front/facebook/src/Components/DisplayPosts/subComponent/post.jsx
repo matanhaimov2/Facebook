@@ -230,7 +230,7 @@ function Post({ index, post }) {
                                     <div className='post-all_comments-info'>
                                         <span className='post-top-username-wrapper' onClick={(e) => { navigateToProfile(e, comment[0]) }}> {comment[3]} </span>
 
-                                        <span className='post-all_comments-text'> {comment[1]} </span>
+                                        <span className={`post-all_comments-text ${document.documentElement.getAttribute('dir')==='ltr' ? 'textalign-right' : 'textalign-left'}`}> {comment[1]} </span>
                                     </div>
                                 </div>
                             ))}

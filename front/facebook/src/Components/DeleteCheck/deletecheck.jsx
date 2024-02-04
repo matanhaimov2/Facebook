@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-// Icons
 
-// React Icons 
+// Languages
+import { useTranslation } from 'react-i18next';
 
 
 // CSS
@@ -14,6 +14,11 @@ import { getAuthenticatedUser } from '../../Services/authService';
 
 
 const DeleteCheck = ({ setExtendDeleteCheck, selectedOption }) => {
+
+    
+    // Translator
+    const { t } = useTranslation();
+
 
     const deleteProduct = async () => {
         let data;
@@ -39,13 +44,13 @@ const DeleteCheck = ({ setExtendDeleteCheck, selectedOption }) => {
     return (
         <div className='deletecheck-wrapper'>
             <div className='deletecheck-sub-wrapper'>
-                <span> Are You Sure?</span>
+                <span>{t('marketplace.deletecheck.deletecheck_are_u_sure_title')}</span>
             </div>
 
-            <div className='deletecheck-sub-wrapperr'>
-                <button className='deletecheck-yes-button' onClick={deleteProduct}> YES </button>
+            <div className={`deletecheck-sub-wrapperr ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-ltr' : 'direction-rtl'}`}>
+                <button className='deletecheck-yes-button' onClick={deleteProduct}> {t('marketplace.deletecheck.deletecheck_yes_title')} </button>
 
-                <button className='deletecheck-no-button' onClick={dontDeleteProduct}> NO </button>
+                <button className='deletecheck-no-button' onClick={dontDeleteProduct}> {t('marketplace.deletecheck.deletecheck_no_title')} </button>
             </div>
             
 

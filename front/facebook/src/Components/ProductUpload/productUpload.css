@@ -27,6 +27,12 @@
     width: 12%;
 }
 
+.productupload-price-currency {
+    color: black;
+    font-size: 80%;
+    font-weight: 400;
+}
+
 .productupload-cities-wrapper {
     position: relative;
 }
