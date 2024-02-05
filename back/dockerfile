@@ -1,0 +1,28 @@
+# syntax=docker/dockerfile:1
+FROM python:3.8-slim-buster
+
+WORKDIR /python-docker
+
+# Upgrade pip and setuptools
+RUN pip3 install --upgrade pip setuptools
+
+# Install build dependencies for mysqlclient
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        default-libmysqlclient-dev \
+        pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt requirements.txt
+
+# Add debugging information
+RUN pip3 install --no-cache-dir -r requirements.txt || \
+    { echo "Error: Pip install failed"; cat /var/log/pip.log; exit 1; }
+
+COPY . .
+
+# Open port
+EXPOSE 5000
+
+CMD [ "python", "server.py", "--host=0.0.0.0"]

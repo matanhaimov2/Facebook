@@ -4,7 +4,7 @@ docker commands:
 docker build -t <name_of_image> . // from the docker file create the image (recepie)
 
 docker images // show all existing images
-docker images rm -f  <id_of_image> // delete image
+docker image rm -f  <id_of_image> // delete image
 
 
 docker run -dit -p 80:3000 <image_name> // Creates the container

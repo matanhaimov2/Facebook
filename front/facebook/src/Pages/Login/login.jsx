@@ -66,7 +66,7 @@ function Login() {
             <div className='login-title'>
                 <label className='login-title'>facebook</label>
             </div>
-            
+
             <div className='login-content-wrapper'>
 
                 <div className='login-content'>

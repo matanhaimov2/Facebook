@@ -156,3 +156,17 @@
       clip-path: inset(0 0 0 0);
     }
 }
+
+/* Responsive */
+
+.damn{
+    width: 30%;
+}
+
+.damn1{
+    width: 40%;
+}
+
+.damn2{
+    width: 55%;
+}
