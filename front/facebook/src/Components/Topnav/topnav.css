@@ -338,7 +338,6 @@
 .topnav-user-image-wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .topnav-user-image {
@@ -348,10 +347,6 @@
 
 .topnav-user-image:hover {
     filter: brightness(120%);
-}
-
-.topnav-user-image-wrapper {
-    margin: auto;
 }
 
 .info-box {
@@ -381,3 +376,103 @@
 span.MuiBadge-root.css-1c32n2y-MuiBadge-root {
     display: flex;
 }
+
+
+
+
+/* Responsive - Style */
+
+/* For Tablets: */
+@media only screen and (max-width: 780px) {
+
+    /* Topnav - Left side  */
+    .topnav-left-side {
+        width: 5%;
+        padding: 0;
+    }
+
+    .topnav-sub-left-orgenaize {
+        display: none;
+
+    }
+
+    .topnav-user-image-wrapper {
+        background: #2b2c2d;
+        border-radius: 5%;
+        padding: 2%;
+    }
+    
+    .topnav-sub-left-wrapper {
+        margin: 0;
+        background: #2b2c2d;
+        border-radius: 5%;
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;    
+    }
+
+    .topnav-sub-left-text-phone {
+        justify-content: center;
+        display: flex;
+        width: 100%;
+    }
+
+    .topnav-button-circle {
+        display: flex;
+        justify-content: center;
+        padding: 2%;
+    }
+
+    /* Topnav - Middle side  */
+    .topnav-middle-side {
+        width: 55%;
+    }
+
+
+    /* Topnav - Right side  */
+    .topnav-right-side {
+        width: 40%;
+    }
+
+    .topnav-search-sub-wrapper {
+        width: 88%;
+    }
+}
+
+/* For Mobile Phones: */
+@media only screen and (max-width: 500px) {
+
+    /* Topnav - Middle side  */
+    .topnav-middle-side {
+        width: 95%;
+    }
+
+    /* Topnav - Right side  */
+    .topnav-right-side {
+        display: none;
+    }
+}
+
+
+.topnav-sub-left-screen-phone {
+    display: flex;
+    position: absolute;
+    top: 120%;
+    flex-direction: column;
+    gap: 7px;
+    width: 150px;
+    background-color: #222223;
+    border-radius: 4%;
+    padding: 10% 15% 30% 10%;
+}
+
+.topnav-left-hamburger-wrapper {
+    background: none;
+    outline: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: large;
+}
+

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-
+import { useMediaQuery } from 'react-responsive'
 
 // Languages
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,8 @@ import logo5 from '../../Assets/Images/groups-icon.png';
 import { LiaUserCircleSolid } from 'react-icons/lia'
 import { CgMenuGridO } from 'react-icons/cg'
 import { IoNotificationsOutline } from 'react-icons/io5'
+import { IoMenuSharp } from "react-icons/io5";
+
 
 //CSS
 import './topnav.css';
@@ -35,6 +37,8 @@ import { newNotifications } from '../../Services/notificationsService';
 
 const TopNav = () => {
 
+  const isTabletOrMobile = useMediaQuery({ query: '(min-width: 780px)' })
+
   // States
   const [imgProfile, setImgProfile] = useState(null); // Raises edit profile option
   const [isSearchBox, setIsSearchBox] = useState(false);
@@ -42,6 +46,9 @@ const TopNav = () => {
   const [notficationAlert, setNotificationAlert] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
+
+  const [isHamburger, setIsHamburger] = useState(false); // Raises menu for phones/tablets
+
 
   // Translator
   const { t } = useTranslation();
@@ -224,10 +231,17 @@ const TopNav = () => {
     setOpenNotifications(!openNotifications);
   }
 
+  
+  // Handle Hamburger - for screen adjustment
+  useEffect(() => {
+    setIsHamburger(false)
+
+  }, [isTabletOrMobile])
+
   return (
     <div className='topnav-wrapper'>
       <div className='topnav-left-side'>
-        <div className='topnav-sub-left-orgenaize'>
+        <div className={`topnav-sub-left-orgenaize ${isHamburger ? 'topnav-sub-left-screen-phone' : ''}`}>
           {imgProfile ? (
             <a href='/profile' className='topnav-user-image-wrapper' >
               <img src={imgProfile} className='topnav-user-image'></img>
@@ -253,8 +267,8 @@ const TopNav = () => {
             <button className='topnav-button-circle topnav-pointer' > <CgMenuGridO className='topnav-menu-icon' /> </button>
           </div>
 
-          <div className='topnav-sub-left-wrapper'>
-            <button className='topnav-button-circle topnav-pointer topnav-account-button' onClick={handleSignout}> {t('topnav.topnav_disconnect_title')} </button>
+          <div className='topnav-sub-left-wrapper topnav-sub-left-text-phone' onClick={handleSignout}>
+            <button className='topnav-button-circle topnav-pointer topnav-account-button'> {t('topnav.topnav_disconnect_title')} </button>
           </div>
 
           {openNotifications && (
@@ -317,6 +331,11 @@ const TopNav = () => {
             </div>
           )}
         </div>
+
+        {!isTabletOrMobile && (
+          <button className='topnav-left-hamburger-wrapper' onClick={() => setIsHamburger(!isHamburger)}> <IoMenuSharp /></button>
+
+        )}
       </div>
 
 

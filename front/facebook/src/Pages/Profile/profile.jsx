@@ -465,7 +465,7 @@ function Profile() {
             )}
 
             {isDisplayFriends && (
-                <div className='marketplace-left-productupload-wrapper'>
+                <div className='displayfriends-background'>
                     <DisplayFriends setIsDisplayFriends={setIsDisplayFriends} />
                 </div>
             )}

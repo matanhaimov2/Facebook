@@ -12,3 +12,31 @@
     display: flex;
     justify-content: center;
 }
+
+
+
+/* Responsive - Style */
+
+@media only screen and (max-width: 1150px) {
+
+    .feed-wrapper {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 780px) {
+
+    .feed-wrapper {
+        width: 65%;
+        font-size: smaller;
+    }
+}
+
+/* For Mobile Phones: */
+@media only screen and (max-width: 450px) {
+
+    .feed-wrapper {
+        width: 90%;
+        font-size: smaller;
+    }
+}

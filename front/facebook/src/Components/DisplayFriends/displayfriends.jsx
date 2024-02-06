@@ -110,7 +110,6 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
                 </div>
             )} 
 
-
         </div>
     );
 }

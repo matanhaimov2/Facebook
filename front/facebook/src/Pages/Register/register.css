@@ -19,7 +19,7 @@
     justify-content: center;
     align-items: center;
     margin: auto;
-    margin-top: 2%;
+    margin-top: 4%;
 }
 
 .register-content-title-wrapper {
@@ -132,7 +132,8 @@
 .css-qfz70r-MuiFormGroup-root {
     width: 100%;
     display: flex;
-    justify-content: space-around;}
+    justify-content: space-around;
+}
 
 .css-1nrlq1o-MuiFormControl-root {
     width: 100%;
@@ -174,9 +175,11 @@
     font-size: 120%;
     text-decoration: none;
 }
+
 .register-form-button:hover {
     background-color: #3ec623;
-    transition: all 500ms ease;}
+    transition: all 500ms ease;
+}
 
 .register-button-wrapper {
     padding: 5%;
@@ -235,16 +238,39 @@
     padding: 0 3% 0 3%;
     animation: wipe-in-out 10s cubic-bezier(.25, 1, .30, 1) forwards;
 }
+
 .register-error-title {
     position: relative;
     top: 30%;
 }
 
 @keyframes wipe-in-out {
-    0%, 100% {
-      clip-path: inset(0 100% 0 0);
+
+    0%,
+    100% {
+        clip-path: inset(0 100% 0 0);
     }
+
     50% {
-      clip-path: inset(0 0 0 0);
+        clip-path: inset(0 0 0 0);
     }
-  }
+}
+
+
+/* Responsive - Style */
+
+@media only screen and (max-width: 900px) {
+
+    /* For Tablets: */
+    .register-wrapper {
+        width: 40%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    /* For mobile phones: */
+    .register-wrapper {
+        width: 70%;
+    }
+}

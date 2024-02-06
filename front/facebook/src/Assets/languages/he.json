@@ -68,7 +68,7 @@
         },
         "post" : {
             "post_like" : "לייק",
-            "post_dislike" : "הורד לייק",
+            "post_dislike" : "לייק",
             "post_comment" : "תגובה",
             "post_add_comment_placeholder" : "הוסף תגובה...",
             "post_share" : "שתף"

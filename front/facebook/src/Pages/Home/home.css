@@ -18,3 +18,24 @@
 .home-right-wrapper {
     width: 22%;
 }
+
+
+
+
+/* Responsive - Style */
+
+/* For Mobile Phones: */
+@media only screen and (max-width: 780px) {
+
+    .home-left-wrapper {
+        display: none;
+    }
+
+    .home-right-wrapper {
+        display: none;
+    }
+
+    .home-center-wrapper {
+        width: 100%;
+    }
+}

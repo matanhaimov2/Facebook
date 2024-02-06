@@ -71,3 +71,14 @@
     padding: 5%;
     color: white;
 }
+
+
+
+/* Responsive - Style */
+
+@media only screen and (max-width: 1150px) {
+
+    .onlinefriends-wrapper {
+        width: 22%;
+    }
+}

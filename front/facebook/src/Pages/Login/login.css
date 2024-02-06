@@ -95,6 +95,7 @@
     font-size: 110%;
     text-decoration: none;
 }
+
 .login-button-green:hover {
     background-color: #3ec623;
     transition: all 500ms ease;
@@ -149,24 +150,32 @@
 }
 
 @keyframes wipe-in-out {
-    0%, 100% {
-      clip-path: inset(0 100% 0 0);
+
+    0%,
+    100% {
+        clip-path: inset(0 100% 0 0);
     }
+
     50% {
-      clip-path: inset(0 0 0 0);
+        clip-path: inset(0 0 0 0);
     }
 }
 
-/* Responsive */
 
-.damn{
-    width: 30%;
+/* Responsive - Style */
+
+/* For Tablets */
+@media only screen and (max-width: 900px) {
+
+    .login-content-wrapper {
+        width: 40%;
+    }
 }
 
-.damn1{
-    width: 40%;
-}
+/* For Mobile Phones: */
+@media only screen and (max-width: 600px) {
 
-.damn2{
-    width: 55%;
+    .login-content-wrapper {
+        width: 60%;
+    }
 }
