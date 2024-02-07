@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive'
 
 
 // Languages
@@ -44,6 +45,9 @@ import DeleteCheck from '../../Components/DeleteCheck/deletecheck'
 
 const Marketplace = () => {
 
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 780px)' })
+    console.log(isTabletOrMobile)
+    
     // Params
     const { categoryTitle } = useParams();
 
@@ -178,7 +182,7 @@ const Marketplace = () => {
     return (
         <div className={`marketplace-wrapper ${document.documentElement.getAttribute('dir') === 'ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
 
-            <div style={{ width: '20%' }}>
+            <div className='marketplace-right-background-wrapper'>
                 <div className='marketplace-right-wrapper'>
                     <div className='marketplace-right-sub-wrapper'>
                         <span className='marketplace-title'> <b> Marketplace </b> </span>

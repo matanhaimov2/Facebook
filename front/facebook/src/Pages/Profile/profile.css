@@ -312,6 +312,7 @@
 
     .profile-wrapper {
         height: fit-content;
+        min-height: 100%;
     }
 
     .profile-wrapper-basics {

@@ -37,7 +37,7 @@ import { newNotifications } from '../../Services/notificationsService';
 
 const TopNav = () => {
 
-  const isTabletOrMobile = useMediaQuery({ query: '(min-width: 780px)' })
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 780px)' })
 
   // States
   const [imgProfile, setImgProfile] = useState(null); // Raises edit profile option
@@ -332,7 +332,7 @@ const TopNav = () => {
           )}
         </div>
 
-        {!isTabletOrMobile && (
+        {isTabletOrMobile && (
           <button className='topnav-left-hamburger-wrapper' onClick={() => setIsHamburger(!isHamburger)}> <IoMenuSharp /></button>
 
         )}

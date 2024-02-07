@@ -59,6 +59,10 @@
 
 /* style for the right column of the page */
 
+.marketplace-right-background-wrapper {
+    width: 20%;
+}
+
 .marketplace-right-wrapper {
     background-color: #222223;
     width: 15%;
@@ -389,4 +393,44 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+
+
+/* Responsive - Style */
+
+/* For Laptops and Tablets: */
+@media only screen and (max-width: 1200px) {
+
+    .marketplace-right-background-wrapper {
+        width: 30%;
+    }
+
+    .marketplace-right-wrapper {
+       width: 30%; 
+    }
+
+    .marketplace-left-wrapper {
+        width: 70%; 
+    }
+
+    .marketplace-left-products-wrapper {
+        padding: 2%;
+    }
+}
+
+/* For Mobile Phones */
+@media only screen and (max-width: 780px) {
+
+    .marketplace-wrapper {
+        flex-direction: column;
+    }
+
+    .marketplace-right-background-wrapper {
+        width: 100%;
+    }
+
+    .marketplace-right-wrapper {
+        width: 100%; 
+    }
 }

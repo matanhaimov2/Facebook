@@ -45,3 +45,46 @@
     border-radius: 50%;
     background: #1877f2;
 }
+
+
+
+/* Responsive - Style */
+
+/* For Smaller Tablets Phones: */
+@media only screen and (max-width: 780px) {
+    .friends-wrapper {
+        height: 100%;
+        align-items: center;
+        flex-direction: column-reverse;
+    }
+
+    .friends-right-wrapper {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .friends-center-wrapper {
+        width: 95%;
+        height: 100%;
+    }
+
+    .friendslist-box {
+        gap: 10px !important;
+        padding: 4% 1% 4% 1%;
+    }
+
+}
+
+@media only screen and (max-width: 400px) {
+
+    .friendslist-wrapper {
+        justify-content: center;
+    }
+
+    .friendslist-box {
+        flex-basis: 200px !important;
+    }
+
+
+}
