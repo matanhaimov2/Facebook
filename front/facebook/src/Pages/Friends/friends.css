@@ -50,7 +50,7 @@
 
 /* Responsive - Style */
 
-/* For Smaller Tablets Phones: */
+/* For Smaller Tablets: */
 @media only screen and (max-width: 780px) {
     .friends-wrapper {
         height: 100%;
@@ -76,11 +76,16 @@
 
 }
 
-@media only screen and (max-width: 400px) {
+/* For Friends Boxes Adjustments */
+@media only screen and (max-width: 615px) {
 
     .friendslist-wrapper {
-        justify-content: center;
+        justify-content: space-around;
     }
+
+}
+
+@media only screen and (max-width: 400px) {
 
     .friendslist-box {
         flex-basis: 200px !important;

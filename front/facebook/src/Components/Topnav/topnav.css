@@ -462,6 +462,7 @@ span.MuiBadge-root.css-1c32n2y-MuiBadge-root {
     flex-direction: column;
     gap: 7px;
     width: 150px;
+    height: 100vh;
     background-color: #222223;
     border-radius: 4%;
     padding: 10% 15% 30% 10%;

@@ -419,11 +419,12 @@
     }
 }
 
-/* For Mobile Phones */
+/* For Mobile Phones: */
 @media only screen and (max-width: 780px) {
 
     .marketplace-wrapper {
         flex-direction: column;
+        align-items: center;
     }
 
     .marketplace-right-background-wrapper {
@@ -431,6 +432,62 @@
     }
 
     .marketplace-right-wrapper {
+        position: relative;
         width: 100%; 
+        height: fit-content;
+        justify-content: center;
+        padding-bottom: 3%;
     }
+    
+    .marketplace-left-wrapper {
+        width: 95%; 
+        justify-content: space-around;
+    }
+
+    .marketplace-create-button-wrapper {
+        width: 25%;
+        padding-top: 3%;
+    }
+
+    .marketplace-search-wrapper {
+        width: 60%;
+        padding-top: 1%;
+    }
+
+    .marketplace-sub-search {
+        padding: 2%;
+    }
+
+    .marketplace-title {
+        font-size: 120%;
+    }
+
+    .marketplace-filter-wrapper {
+        padding: 0%;
+    }
+    
+    .marketplace-border-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.marketplace-right-sub-phone-wrapper {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
+
+.marketplace-right-sub-phone-one {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 2%;
+    gap: 4%;
+}
+
+.marketplace-right-sub-phone-two {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
