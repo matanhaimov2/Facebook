@@ -1,6 +1,6 @@
 .productupload-wrapper {
     width: 25%;
-    margin: auto;
+    height: fit-content;
     background: white !important;
     border-radius: 10px;
     margin-top: 2%;
@@ -82,4 +82,29 @@
     justify-content: center;
     align-items: center;
     position: relative;
+}
+
+
+
+/* Responsive - Style */
+
+/* For Tablets: */
+@media only screen and (max-width: 1100px) {
+    .productupload-wrapper {
+        width: 35%;
+    }
+}
+
+/* For Tablets: */
+@media only screen and (max-width: 780px) {
+    .productupload-wrapper {
+        width: 50%;
+    }
+}
+
+/* For Tablets: */
+@media only screen and (max-width: 550px) {
+    .productupload-wrapper {
+        width: 60%;
+    }
 }

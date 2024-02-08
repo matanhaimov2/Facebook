@@ -46,8 +46,7 @@ import DeleteCheck from '../../Components/DeleteCheck/deletecheck'
 const Marketplace = () => {
 
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 780px)' })
-    console.log(isTabletOrMobile)
-
+    
     // Params
     const { categoryTitle } = useParams();
 
@@ -61,6 +60,7 @@ const Marketplace = () => {
     const [currentOption, setCurrentOption] = useState();
     const [isEditProduct, setIsEditProduct] = useState(false); // Raises edit profile option
     const [reGetData, setReGetData] = useState(false);
+    const [isCategoriesPhone, setIsCategoriesPhone] = useState(false);
     // States - City
     const [isEditCity, setIsEditCity] = useState(false); // Open cities menu
     const [searchTerm, setSearchTerm] = useState('');
@@ -281,10 +281,12 @@ const Marketplace = () => {
                     ) : (
                         <div className='marketplace-right-sub-phone-wrapper'>
                             <div className='marketplace-right-sub-phone-one'>
-                                <span className='marketplace-title'> <b> Marketplace </b> </span>
+                                <div className='marketplace-titleandsearch-phone-wrapper'>
+                                    <span className='marketplace-title'> <b> Marketplace </b> </span>
 
-                                <div className='marketplace-search-wrapper'>
-                                    <input id='search-marketplace-input' className='marketplace-sub-search' placeholder={t('marketplace.marketplace_search_placeholder')} />
+                                    <div className='marketplace-search-wrapper'>
+                                        <input id='search-marketplace-input' className='marketplace-sub-search' placeholder={t('marketplace.marketplace_search_placeholder')} />
+                                    </div>
                                 </div>
 
                                 <div className='marketplace-filter-wrapper'>
@@ -323,22 +325,64 @@ const Marketplace = () => {
                             <div className='marketplace-right-sub-phone-two'>
 
                                 <div className='marketplace-create-button-wrapper'>
-                                    <button className='marketplace-create-button'>קטגוריות</button>
+                                    <button className='marketplace-create-button' onClick={() => setIsCategoriesPhone(!isCategoriesPhone)}>קטגוריות</button>
+
+                                    {isCategoriesPhone && (
+                                        <div className='marketplace-category-phone-wrapper'>
+
+                                            <div className='marketplace-category-sub-wrapper' onClick={() => setIsCategoriesPhone(!isCategoriesPhone)}>
+
+                                                <div className='marketplace-category' onClick={(e) => { navigateToEverythingCategory(e) }}>
+                                                    <div className='marketplace-category-round-wrapper'>
+                                                        <button className='marketplace-button-circle'> <AiOutlineShop className='topnav-menu-icon' /> </button>
+                                                    </div>
+                                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_everything_title')}</span>
+                                                </div>
+
+                                                <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'vehicles') }}>
+                                                    <div className='marketplace-category-round-wrapper'>
+                                                        <button className='marketplace-button-circle'> <FaCar className='topnav-menu-icon' /> </button>
+                                                    </div>
+                                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_vehicles_title')}</span>
+                                                </div>
+
+                                                <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'electronics') }}>
+                                                    <div className='marketplace-category-round-wrapper'>
+                                                        <button className='marketplace-button-circle'> <MdOutlinePhoneAndroid className='topnav-menu-icon' /> </button>
+                                                    </div>
+                                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_electronics_title')}</span>
+                                                </div>
+
+                                                <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'instruments') }}>
+                                                    <div className='marketplace-category-round-wrapper'>
+                                                        <button className='marketplace-button-circle'> <LiaGuitarSolid className='topnav-menu-icon' /> </button>
+                                                    </div>
+                                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_instruments_title')}</span>
+                                                </div>
+
+                                                <div className='marketplace-category' onClick={(e) => { navigateToCategory(e, 'games') }}>
+                                                    <div className='marketplace-category-round-wrapper'>
+                                                        <button className='marketplace-button-circle'> <SlGameController className='topnav-menu-icon' /> </button>
+                                                    </div>
+                                                    <span className='marketplace-sub-category-title'>{t('marketplace.marketplace_games_and_toys_title')}</span>
+                                                </div>
+
+                                                <div className='marketplace-myproducts-phone-wrapper'>
+                                                    <button className='marketplace-create-button' onClick={(e) => { navigateToCategory(e, 'myproducts') }}>{t('marketplace.marketplace_my_products_title')}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
                                 </div>
 
                                 <div className='marketplace-create-button-wrapper'>
                                     <button className='marketplace-create-button' onClick={() => setExtendUploadPoduct(!extendUploadProduct)}>{t('marketplace.marketplace_create_new_product')}</button>
                                 </div>
 
-                                <div className='marketplace-create-button-wrapper'>
-                                    <button className='marketplace-create-button' onClick={(e) => { navigateToCategory(e, 'myproducts') }}>{t('marketplace.marketplace_my_products_title')}</button>
-                                </div>
-
                             </div>
                         </div>
                     )}
-
-
 
                 </div>
             </div>
@@ -439,7 +483,7 @@ const Marketplace = () => {
                     .map((product, index) => (
                         <div key={index} className='marketplace-left-products-wrapper'>
 
-                            <div className='marketplace-left-options-wrapper'>
+                            <div className={`marketplace-left-options-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'position-left' : 'position-right'}`}>
                                 {!isOptionExit && currentOption !== index ? (
                                     <button className='marketplace-left-options-button' onClick={() => { openOptions(index) }}> <SlOptionsVertical /> </button>
                                 ) : (

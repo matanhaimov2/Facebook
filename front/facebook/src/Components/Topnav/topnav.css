@@ -438,6 +438,12 @@ span.MuiBadge-root.css-1c32n2y-MuiBadge-root {
     .topnav-search-sub-wrapper {
         width: 88%;
     }
+
+    .topnav-notification-menu {
+        top: 14%;
+        width: 88%;
+        right: 0;
+    }
 }
 
 /* For Mobile Phones: */
@@ -452,6 +458,16 @@ span.MuiBadge-root.css-1c32n2y-MuiBadge-root {
     .topnav-right-side {
         display: none;
     }
+
+    .topnav-search-sub-wrapper {
+        width: 93%;
+        padding-top: 4%;
+    }
+
+    .topnav-sub-search {
+        border-radius: 10px;
+    }
+
 }
 
 

@@ -266,10 +266,12 @@
 }
 
 .marketplace-left-productupload-wrapper {
+    display: flex;
+    justify-content: center;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100%; /* fix it */
     z-index: 1;
     background: #19191a5e !important;
@@ -357,7 +359,6 @@
 .marketplace-left-options-wrapper {
     position: absolute;
     top: 10px;
-    left: 0;
     direction: ltr;
 }
 
@@ -417,6 +418,10 @@
     .marketplace-left-products-wrapper {
         padding: 2%;
     }
+ 
+    .marketplace-left-img-product-wrapper {
+        margin-top: 13%;
+    }
 }
 
 /* For Mobile Phones: */
@@ -445,17 +450,18 @@
     }
 
     .marketplace-create-button-wrapper {
-        width: 25%;
+        width: 47%;
         padding-top: 3%;
+        position: relative;
     }
 
     .marketplace-search-wrapper {
-        width: 60%;
-        padding-top: 1%;
+        width: 100%;
     }
 
     .marketplace-sub-search {
-        padding: 2%;
+        padding: 3%;
+        width: 90%;
     }
 
     .marketplace-title {
@@ -470,6 +476,26 @@
         display: flex;
         justify-content: center;
     }
+
+}
+
+/* For Extremely Small Mobile Phones: */
+@media only screen and (max-width: 330px) {
+
+    /* Category Handling */
+    .marketplace-category-phone-wrapper {
+        width: auto !important;
+    }
+}
+
+
+.marketplace-category-phone-wrapper {
+    width: -webkit-fill-available;
+    position: absolute;
+    z-index: 1;
+    background: #222223;
+    border-radius: 10px;
+    padding: 3%;
 }
 
 .marketplace-right-sub-phone-wrapper {
@@ -483,11 +509,20 @@
     flex-direction: row;
     justify-content: space-between;
     padding-top: 2%;
-    gap: 4%;
+}
+
+.marketplace-titleandsearch-phone-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
 }
 
 .marketplace-right-sub-phone-two {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+}
+
+.marketplace-myproducts-phone-wrapper {
+    width: 100%;
 }

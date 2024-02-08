@@ -38,6 +38,8 @@ import { newNotifications } from '../../Services/notificationsService';
 const TopNav = () => {
 
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 780px)' })
+  const isMobile = useMediaQuery({ query: '(max-width: 500px)' })
+
 
   // States
   const [imgProfile, setImgProfile] = useState(null); // Raises edit profile option
@@ -104,6 +106,7 @@ const TopNav = () => {
 
       // Open search results
       setIsSearchBox(true)
+      console.log(isSearchBox,'damn')
 
       // Get profile results from user  
       const response = await search(data)
@@ -124,7 +127,7 @@ const TopNav = () => {
 
   const navigateToProfile = (e, email) => {
     e.preventDefault();
-
+    console.log('here')
     window.location.href = '/profile/' + email;
   }
 
@@ -231,7 +234,7 @@ const TopNav = () => {
     setOpenNotifications(!openNotifications);
   }
 
-  
+
   // Handle Hamburger - for screen adjustment
   useEffect(() => {
     setIsHamburger(false)
@@ -263,13 +266,61 @@ const TopNav = () => {
             )}
           </div>
 
-          <div className='topnav-sub-left-wrapper topnav-round-wrapper'>
-            <button className='topnav-button-circle topnav-pointer' > <CgMenuGridO className='topnav-menu-icon' /> </button>
-          </div>
-
           <div className='topnav-sub-left-wrapper topnav-sub-left-text-phone' onClick={handleSignout}>
             <button className='topnav-button-circle topnav-pointer topnav-account-button'> {t('topnav.topnav_disconnect_title')} </button>
           </div>
+            
+          {/* Search For Mobile */}
+          {isMobile && (
+            <>
+              {/* Search Other Profiles */}
+              <div className='topnav-search-sub-wrapper'>
+
+                <input id='search-profiles-input' className={`topnav-sub-search ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => searchGet(e.target.value)} placeholder={t('topnav.topnav_search_placeholder')} />
+
+                {/* Displayed Options */}
+                {isSearchBox && (
+                  <div className='topnav-search-box-wrapper' >
+
+                    {searchedProfiles && searchedProfiles.map((profileLink, i) => (
+                      <div key={i} className='topnav-search-box' onClick={(e) => { navigateToProfile(e, profileLink.email) }} >
+
+                        <span className='topnav-search-box-title'> {profileLink.username}</span>
+
+                        <div className='topnav-search-box-img-wrapper'>
+
+                          {profileLink.userimages ? (
+                            <img className='topnav-search-box-img' src={profileLink.userimages}></img>
+
+                          ) : (
+                            <LiaUserCircleSolid className='topnav-search-box-none-img' />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+
+                    {searchedProfiles.length === 0 && (
+                      <div className='topnav-search-no-result-wrapper'>
+                        <span className='topnav-search-no-result-title'>{t('topnav.topnav_search_no_result_alert')}</span>
+                      </div>
+                    )}
+
+                    {!searchedProfiles && (
+                      <Stack className='topnav-search-skeleton' spacing={1}>
+                        {/* For other variants, adjust the size with `width` and `height` */}
+
+                        <Skeleton variant="circular" width={40} height={40} />
+                        {/* For variant="text", adjust the height via font-size */}
+                        <Skeleton className='topnav-search-skeleton-text' variant="text" sx={{ fontSize: '1rem' }} />
+
+                      </Stack>
+                    )}
+
+                  </div>
+                )}
+              </div>
+            </>
+          )}
 
           {openNotifications && (
             <div tabIndex={0} className='topnav-notification-menu' ref={searchRef}>
