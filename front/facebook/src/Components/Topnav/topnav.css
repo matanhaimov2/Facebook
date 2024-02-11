@@ -15,6 +15,7 @@
     flex-direction: row;
     padding-left: 1%;
     position: relative;
+    transition: all .5s ease;
 
 }
 .topnav-sub-left-orgenaize {
@@ -473,15 +474,15 @@ span.MuiBadge-root.css-1c32n2y-MuiBadge-root {
 
 .topnav-sub-left-screen-phone {
     display: flex;
-    position: absolute;
-    top: 120%;
+    position: fixed;
     flex-direction: column;
     gap: 7px;
     width: 150px;
     height: 100vh;
     background-color: #222223;
     border-radius: 4%;
-    padding: 10% 15% 30% 10%;
+    padding: 2%;
+
 }
 
 .topnav-left-hamburger-wrapper {
@@ -493,3 +494,29 @@ span.MuiBadge-root.css-1c32n2y-MuiBadge-root {
     font-size: large;
 }
 
+.topnav-menu-top-phone-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: end;
+}
+
+.topnav-menu-text-phone-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+.topnav-exit-menu-phone {
+    width: 20%;
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: large;
+    display: flex;
+}
+
+.rotate-180-english {
+    transform: rotate(180deg);
+}

@@ -55,7 +55,8 @@
         "topnav_notifications_friend_request_accepted" : "Friend Request Approved",
         "topnav_notifications_none_alert" : "No New Messages",
         "topnav_notifications_yes" : "Yes",
-        "topnav_notifications_no" : "No"
+        "topnav_notifications_no" : "No",
+        "topnav_menu_title" : "Menu"
     },
 
     "home" : {

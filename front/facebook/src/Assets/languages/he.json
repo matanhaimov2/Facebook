@@ -56,7 +56,9 @@
         "topnav_notifications_friend_request_accepted" : "בקשת החברות אושרה",
         "topnav_notifications_none_alert" : "אין הודעות חדשות",
         "topnav_notifications_yes" : "כן",
-        "topnav_notifications_no" : "לא"
+        "topnav_notifications_no" : "לא",
+        "topnav_menu_title" : "תפריט"
+
         
     },
 

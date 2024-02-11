@@ -20,6 +20,8 @@ import logo4 from '../../Assets/Images/shop-icon.png';
 import { LiaUserCircleSolid } from 'react-icons/lia'
 import { IoNotificationsOutline } from 'react-icons/io5'
 import { IoMenuSharp } from "react-icons/io5";
+import { IoExitOutline } from "react-icons/io5";
+
 
 
 //CSS
@@ -255,6 +257,18 @@ const TopNav = () => {
     <div className='topnav-wrapper'>
       <div className='topnav-left-side'>
         <div className={`topnav-sub-left-orgenaize ${isHamburger ? 'topnav-sub-left-screen-phone' : ''}`}>
+
+          {isTabletOrMobile && (
+            <>
+            {isHamburger && (
+              <div className='topnav-menu-top-phone-wrapper'>
+                <span className='topnav-menu-text-phone-wrapper'>{t('topnav.topnav_menu_title')}</span>
+                <button className={`topnav-exit-menu-phone ${document.documentElement.getAttribute('dir') === 'ltr' ? '' : 'rotate-180-english'}`} onClick={() => setIsHamburger(false)}><IoExitOutline /></button>
+              </div>
+            )}
+            </>
+          )}
+
           {imgProfile ? (
             <a href='/profile' className='topnav-user-image-wrapper' >
               <img src={imgProfile} className='topnav-user-image'></img>
