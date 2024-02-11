@@ -58,3 +58,32 @@
     background-color: #c6cfd3;
     transition: all 500ms ease;
 }
+
+
+/* Responsive - Style */
+
+/* For Laptops */
+@media only screen and (max-width: 1000px) {
+
+    .deletecheck-wrapper {
+        width: 35%;
+    }
+}
+
+
+/* For Tablets */
+@media only screen and (max-width: 780px) {
+
+    .deletecheck-wrapper {
+        width: 45%;
+    }
+}
+
+/* For Mobile Phones */
+@media only screen and (max-width: 500px) {
+
+    .deletecheck-wrapper {
+        width: 55%;
+    }
+}
+

@@ -60,12 +60,11 @@
 }
 
 .topnav-notification-menu {
-    width: 60%;
+    width: max-content;
     position: absolute;
     height: fit-content;
     background-color: #222223;
     top: 123%;
-    right: 18%;
     display: flex;
     flex-direction: column;
     padding: 4%;
@@ -441,7 +440,8 @@ span.MuiBadge-root.css-1c32n2y-MuiBadge-root {
 
     .topnav-notification-menu {
         top: 14%;
-        width: 88%;
+        width: max-content;
+        left: 0;
         right: 0;
     }
 }

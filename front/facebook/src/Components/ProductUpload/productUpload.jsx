@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 
 // Languages
@@ -43,9 +43,32 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
     const [filteredData, setFilteredData] = useState(cities_data);
 
 
-
     // Translator
     const { t } = useTranslation();
+
+
+    // Refs
+    const productUploadRef = useRef(null);
+
+    // Close chat box when clicking outside of the box
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (productUploadRef.current && !productUploadRef.current.contains(event.target)) {
+                if(isUpdateProduct) { // upload new product form
+                    setIsEditProduct(false)
+                }
+                else { // edit product form
+                    setExtendUploadPoduct(false)
+                }
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside, true);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, []);
 
 
     const activateUploadImage = () => {
@@ -121,11 +144,6 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
 
     }
 
-    const closeEdit = () => {
-        setIsEditProduct(false)
-    }
-
-
     // Search products for a specific city from cities api
 
     const handleInputChange = (event) => { // when user changes input
@@ -165,10 +183,10 @@ const ProductUpload = ({ setExtendUploadPoduct, setIsEditProduct, isUpdateProduc
 
 
     return (
-        <div className='productupload-wrapper'>
+        <div className='productupload-wrapper' ref={productUploadRef}>
 
             {isUpdateProduct ? (
-                <button className='productupload-exit-icon' onClick={closeEdit}> <img src={exitIcon} /> </button>
+                <button className='productupload-exit-icon' onClick={() => { setIsEditProduct(false) }}> <img src={exitIcon} /> </button>
             ) : (
                 <button className='productupload-exit-icon' onClick={() => { setExtendUploadPoduct(false) }}> <img src={exitIcon} /> </button>
             )}

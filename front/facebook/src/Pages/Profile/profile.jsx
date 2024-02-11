@@ -23,7 +23,7 @@ import { MdDeleteForever } from 'react-icons/md'
 import './profile.css';
 
 // Services
-import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage } from '../../Services/profileService';
+import { profile, profileImgbb, uploadImage, getProfileImage, deleteProfileImage, sendMessageToUser } from '../../Services/profileService';
 import { checkFriend, hasFriendsAtAll, startFriendRequest, deleteFriendRequest, getPendingFriend, oneFriendRequestCheck } from '../../Services/friendsService'
 import { getAuthenticatedUser } from '../../Services/authService'
 
@@ -31,6 +31,7 @@ import { getAuthenticatedUser } from '../../Services/authService'
 import SetProfile from '../SetProfile/setprofile';
 import PostUpload from '../../Components/Postupload/postupload';
 import DisplayFriends from '../../Components/DisplayFriends/displayfriends';
+import Chats from '../../Components/Chats/chats';
 
 
 function Profile() {
@@ -51,6 +52,11 @@ function Profile() {
     const [isFriends, setIsFriends] = useState(false);
     const [friendPending, setFriendPending] = useState(false);
     const [isDisplayFriends, setIsDisplayFriends] = useState(false); // Raises friends display
+
+    const [openChat, setOpenChat] = useState(false); // Opens chat box
+    const [chatData, setChatData] = useState(); // Opens chat box
+
+
 
 
     // Translator
@@ -286,9 +292,26 @@ function Profile() {
             "FriendEmail": profileEmail
         }
 
-        const deleteFriendResponse = await deleteFriendRequest(data)
+        await deleteFriendRequest(data)
         setIsFriends(false)
 
+    }
+
+    const sendMessage = async () => {
+
+        let data = {
+            "FriendEmail": profileEmail
+        }
+
+        const response = await sendMessageToUser(data)
+        if(response && response.res===true) {
+            setChatData(response.Data)
+        }
+        else {
+            setChatData([])
+        }
+
+        setOpenChat(true)
     }
 
     return (
@@ -369,8 +392,12 @@ function Profile() {
                             </div>
                         ) : (
                             <div className='sub-profile-basics sub-profile-friends-wrapper'>
-                                <button className='sub-profile-already-friends-button'>{t('profile.profile_friends_title')}</button>
-                                <button onClick={deleteFriend} className='sub-profile-already-friends-button sub-profile-delete-friend-wrapper'><MdDeleteForever className='sub-profile-delete-friend-button' /></button>
+                                <button className='sub-profile-send-message-button' onClick={() => sendMessage()}>{t('profile.profile_send-message-title')}</button>
+
+                                <div className='sub-profile-alreadydelete-wrapper'>
+                                    <button className='sub-profile-already-friends-button'>{t('profile.profile_friends_title')}</button>
+                                    <button onClick={deleteFriend} className='sub-profile-already-friends-button sub-profile-delete-friend-wrapper'><MdDeleteForever className='sub-profile-delete-friend-button' /></button>
+                                </div>
                             </div>
                         )}
 
@@ -468,6 +495,10 @@ function Profile() {
                 <div className='displayfriends-background'>
                     <DisplayFriends setIsDisplayFriends={setIsDisplayFriends} />
                 </div>
+            )}
+
+            {openChat && (
+                <Chats data={chatData} setOpenChat={setOpenChat} />
             )}
 
         </div>

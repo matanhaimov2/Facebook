@@ -11,6 +11,7 @@ import { IoSend } from "react-icons/io5";
 
 // Icons
 import exitIcon from '../../Assets/Images/exit-icon.png'
+import noneImg from '../../Assets/Images/noneimg.jpg'
 
 
 // Global Veribales
@@ -173,13 +174,17 @@ function Chats({ data, setOpenChat }) {
 
     return (
         <div className='chats-background' ref={chatRef}>
-            <div className='chats-wrapper'>
-                <button className='chats-exit-icon' onClick={(e) => { chatOpener(false) }}> <img src={exitIcon} /> </button>
+            <div className={`chats-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'chats-position-hebrew' : 'chats-position-english'}`}>
+                <button className={`chats-exit-icon ${document.documentElement.getAttribute('dir')==='ltr' ? 'chats-exit-icon-hebrew' : 'chats-exit-icon-english'}`} onClick={(e) => { chatOpener(false) }}> <img src={exitIcon} /> </button>
 
                 <div className='chats-user-info'>
 
                     <div className='chats-user-info-img-wrapper'>
-                        <img className='post-userimage-wrapper' src={data.userimages}></img>
+                        {data.userimages ? (
+                            <img className='post-userimage-wrapper' src={data.userimages}></img>
+                        ) : (
+                            <img className='post-userimage-wrapper' src={noneImg}></img>
+                        )}
                     </div>
 
                     <div className='chats-user-info-text-wrapper'>
@@ -196,7 +201,11 @@ function Chats({ data, setOpenChat }) {
 
                             <div className='chats-conversation-message-sender'>
                                 <div className='chats-user-info-img-wrapper'>
-                                    <img className='post-userimage-wrapper' src={data.userimages}></img>
+                                    {data.userimages ? (
+                                        <img className='post-userimage-wrapper' src={data.userimages}></img>
+                                    ) : (
+                                        <img className='post-userimage-wrapper' src={noneImg}></img>
+                                    )}
                                 </div>
                             </div>
 

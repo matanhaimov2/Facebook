@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Languages
 import { useTranslation } from 'react-i18next';
@@ -36,6 +36,24 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
 
     // Translator
     const { t } = useTranslation();
+
+    // Refs
+    const setprofileRef = useRef(null);
+
+    // Close chat box when clicking outside of the box
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (setprofileRef.current && !setprofileRef.current.contains(event.target)) {
+                setIsEditProfile(false)
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside, true);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -94,7 +112,7 @@ function SetProfile({ isUpdateProfile, setIsEditProfile }) {
     return (
         <div className={`setprofile-wrapper ${isUpdateProfile ? 'profile-update-profile-wrapper' : ''}`}>
    
-            <div className='setprofile-content-wrapper'>
+            <div className='setprofile-content-wrapper' ref={setprofileRef}>
 
                 {isUpdateProfile && ( // If true, add an exit icon
                     <button className='profile-exit-icon' onClick={() => {setIsEditProfile(false)}}> <img src={exitIcon} /> </button>

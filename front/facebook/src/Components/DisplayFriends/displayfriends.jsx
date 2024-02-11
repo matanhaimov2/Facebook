@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams  } from 'react-router-dom';
 
 
@@ -35,6 +35,25 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
 
     // Translator
     const { t } = useTranslation();
+
+
+    // Refs
+    const displayfriendsRef = useRef(null);
+
+    // Close chat box when clicking outside of the box
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (displayfriendsRef.current && !displayfriendsRef.current.contains(event.target)) {
+                setIsDisplayFriends(false)
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside, true);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, []);
 
 
     useEffect(() => {
@@ -80,7 +99,7 @@ const DisplayFriends = ({ setIsDisplayFriends }) => {
 
 
     return (
-        <div className='displayfriends-wrapper'>
+        <div className='displayfriends-wrapper' ref={displayfriendsRef}>
             <button className='productupload-exit-icon' onClick={closeDisplayFriends}> <img src={exitIcon} /> </button>
 
             {friendsInfo ? (

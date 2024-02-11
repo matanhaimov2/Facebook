@@ -127,6 +127,7 @@
 
     "profile" : {
         "profile_friends_title" : "חברים",
+        "profile_send-message-title" : "שליחת הודעה",
         "profile_edit_prodile_title" : "ערוך פרופיל",
         "profile_add_friend_title" : "הוספת חבר",
         "profile_friend_pending_title" : "ממתין לאישור...",

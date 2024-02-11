@@ -15,11 +15,9 @@ import logo1 from '../../Assets/Images/home-icon.png';
 import logo2 from '../../Assets/Images/friends-icon.png';
 import logo3 from '../../Assets/Images/videos-icon.png';
 import logo4 from '../../Assets/Images/shop-icon.png';
-import logo5 from '../../Assets/Images/groups-icon.png';
 
 // React Icons 
 import { LiaUserCircleSolid } from 'react-icons/lia'
-import { CgMenuGridO } from 'react-icons/cg'
 import { IoNotificationsOutline } from 'react-icons/io5'
 import { IoMenuSharp } from "react-icons/io5";
 
@@ -44,6 +42,8 @@ const TopNav = () => {
   // States
   const [imgProfile, setImgProfile] = useState(null); // Raises edit profile option
   const [isSearchBox, setIsSearchBox] = useState(false);
+  const [isPhoneSearchBox, setIsPhoneSearchBox] = useState(false);
+
   const [searchedProfiles, setSearchedProfiles] = useState([]);
   const [notficationAlert, setNotificationAlert] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
@@ -62,7 +62,13 @@ const TopNav = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setIsSearchBox(false);
+        if(!isMobile) {
+          setIsSearchBox(false);
+        }
+        else {
+          setIsPhoneSearchBox(false)
+        }
+        
         setOpenNotifications(false);
       }
     };
@@ -105,8 +111,12 @@ const TopNav = () => {
       }
 
       // Open search results
-      setIsSearchBox(true)
-      console.log(isSearchBox,'damn')
+      if(!isMobile) {
+        setIsSearchBox(true)
+      }
+      else {
+        setIsPhoneSearchBox(true)
+      }
 
       // Get profile results from user  
       const response = await search(data)
@@ -279,8 +289,8 @@ const TopNav = () => {
                 <input id='search-profiles-input' className={`topnav-sub-search ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`} onChange={(e) => searchGet(e.target.value)} placeholder={t('topnav.topnav_search_placeholder')} />
 
                 {/* Displayed Options */}
-                {isSearchBox && (
-                  <div className='topnav-search-box-wrapper' >
+                {isPhoneSearchBox && (
+                  <div className='topnav-search-box-wrapper' ref={searchRef}>
 
                     {searchedProfiles && searchedProfiles.map((profileLink, i) => (
                       <div key={i} className='topnav-search-box' onClick={(e) => { navigateToProfile(e, profileLink.email) }} >
@@ -391,9 +401,6 @@ const TopNav = () => {
 
 
       <div className='topnav-middle-side'>
-        <div className='topnav-sub-middle-wrapper'>
-          <a href='/groups' className='topnav-middle-buttons'> <img className='topnav-middle-icons' src={logo5} /></a>
-        </div>
 
         <div className='topnav-sub-middle-wrapper'>
           <a href='/marketplace' className='topnav-middle-buttons'> <img className='topnav-middle-icons' src={logo4} /></a>
@@ -428,7 +435,7 @@ const TopNav = () => {
 
             {/* Displayed Options */}
             {isSearchBox && (
-              <div tabIndex={0} className='topnav-search-box-wrapper' ref={searchRef} >
+              <div tabIndex={0} className='topnav-search-box-wrapper' ref={searchRef}>
 
                 {searchedProfiles && searchedProfiles.map((profileLink, i) => (
                   <div key={i} className='topnav-search-box' onClick={(e) => { navigateToProfile(e, profileLink.email) }} >

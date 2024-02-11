@@ -63,7 +63,7 @@ function FriendListItem({ index, data, isUserList}) {
 
             <span className='friendslist-username'> { data.username }</span>
             
-            <div className='marketplace-create-button-wrapper'>
+            <div className='friendlist-create-button-wrapper'>
                 {isUserList && (
                     <>
                         {!friendPending ? (

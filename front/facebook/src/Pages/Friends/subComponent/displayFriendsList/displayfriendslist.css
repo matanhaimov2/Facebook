@@ -39,3 +39,7 @@
     font-weight: 600;
 }
 
+.friendlist-create-button-wrapper {
+    width: 95%;
+    padding-top: 5%;
+}

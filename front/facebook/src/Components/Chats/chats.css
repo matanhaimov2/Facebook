@@ -11,7 +11,6 @@
     flex-direction: column;
     position: fixed;
     bottom: 0;
-    left: 4.5%;
     width: 20%;
     height: 50%;
     background: #242526;
@@ -87,7 +86,62 @@
     border: none;
     position: absolute;
     top: -33px;
-    right: -33px;
     cursor: pointer;
     padding: 1%;
+}
+
+.chats-position-hebrew {
+    left: 4.5%;
+    right: 0;
+}
+
+.chats-position-english {
+    right: 4.5%;
+    left: 0;
+}
+
+.chats-exit-icon-hebrew {
+    right: -33px;
+}
+
+.chats-exit-icon-english {
+    left: -33px;
+}
+
+
+
+
+/* Responsive - Style */
+
+/* For Tablets: */
+@media only screen and (max-width: 1150px) {
+
+    .chats-wrapper {
+        width: 30%;
+        left: 6.5%;
+    }
+
+}
+
+/* For Tablets: */
+@media only screen and (max-width: 780px) {
+
+    .chats-wrapper {
+        width: 40%;
+        left: 6.5%;
+    }
+
+    .chats-exit-icon {
+        display: none;
+    }
+}
+
+/* For Mobile Phones: */
+@media only screen and (max-width: 500px) {
+
+    .chats-wrapper {
+        width: 80%;
+        left: 6.5%;
+    }
+
 }

@@ -76,6 +76,10 @@
         height: fit-content;
         width: 40%;
     }
+
+    .productupload-exit-icon {
+        display: none;
+    }
 }
 
 /* For Mobile Phones: */

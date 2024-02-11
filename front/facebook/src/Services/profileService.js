@@ -116,6 +116,18 @@ const getPostsToFeed = async (data) => {
     }
 }
 
+const sendMessageToUser = async (data) => {
+    try {
+        // Get post from back from db
+        const response = await axios.post(SERVER_URL + "/sendMessageToUser", data)
+        
+        return response.data
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     setprofile,
     profile,
@@ -125,5 +137,6 @@ export {
     deleteProfileImage,
     uploadPost,
     getProfilePost,
-    getPostsToFeed
+    getPostsToFeed,
+    sendMessageToUser
 }

@@ -534,3 +534,48 @@ def commentPost(): # Gets userposts from db and adds or removes like
     print(allposts_str)
 
     return jsonify({'res': True})
+
+# Messaging
+@profiles_bp.route("/sendMessageToUser", methods=['GET', 'POST'])
+def sendMessageToUser():
+    from server import handleUsers, handleOneResult, handleMultipleResults
+    
+    data = request.data
+
+    str_data = data.decode('utf-8') # From binary to string
+    json_str = json.loads(str_data) # From string to json
+
+    email = json_str["FriendEmail"]
+
+    query = f"SELECT userimages, username FROM profiles WHERE email = '{email}';"
+    fetched_user = handleMultipleResults(query)
+
+    user_image = fetched_user[0][0]
+    username = fetched_user[0][1]
+
+    session_query = f"SELECT username FROM session WHERE username = '{username}' " 
+    isStatus = handleUsers(session_query)
+
+    if isStatus:
+
+        # Structure 
+        allFetched = {
+            'username': username,
+            'userimages': user_image,
+            'status': 'Online'
+        } 
+
+        # print(allFetched, 'User Is Online')
+
+    else:
+
+        # Structure 
+        allFetched = {
+            'username': username,
+            'userimages': user_image,
+            'status': 'Offline'
+        } 
+
+        # print(allFetched, 'User Is Offilne')
+
+    return jsonify({'res': True, 'Data': allFetched})

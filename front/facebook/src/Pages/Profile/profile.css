@@ -21,7 +21,7 @@
 .sub-profile-basics-wrapper {
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 50%;
     margin-top: auto;
     padding: 0% 0% 2% 1%;
 }
@@ -51,14 +51,22 @@
     border-radius: 10%;
 }
 
-.sub-profile-friends-wrapper {
+
+.sub-profile-alreadydelete-wrapper {
     display: flex;
     flex-direction: row;
+}
+
+.sub-profile-friends-wrapper {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
     gap: 2%;
 }
 
 .sub-profile-delete-friend-button {
-    width: 100%;
+    width: auto;
 }
 
 .sub-profile-friends-button {
@@ -78,15 +86,27 @@
     border: none;
     color: white;
     cursor: pointer;
-    padding: 6% 12% 6% 12%;
-    border-radius: 10%;
+    border-radius: 2%;
 }
 .sub-profile-already-friends-button:hover {
     filter: brightness(120%);
 }
 
-.sub-profile-delete-friend-wrapper {
+.sub-profile-send-message-button {
+    background-color: #0866ff;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    color: white;
+    cursor: pointer;
     padding: 6%;
+    border-radius: 4%;
+}
+.sub-profile-send-message-button:hover {
+    filter: brightness(120%);
+}
+
+.sub-profile-delete-friend-wrapper {
     font-size: 100%;
 }
 
@@ -348,16 +368,44 @@
 @media only screen and (max-width: 500px) {
 
     .profile-wrapper-basics {
+        align-items: center;
+        flex-direction: column;
         padding: 2%;
         width: 90%;
     }
 
     .sub-profile-basics-wrapper {
-        padding: 0% 5% 2% 0%;
+        width: 100%;
+        align-items: center;
     }
 
     .sub-profile-image-wrapper {
-        padding: 0% 4% 0% 2%;
+        width: 100%;
+        justify-content: center;
+        padding: 0%;
+    }
+
+    .sub-profile-basics {
+        width: 100%;
+        justify-content: center;
+        display: flex;
+    }
+
+    .profile-fullname-text {
+        gap: 4%;
+    }
+
+    .sub-profile-friends-wrapper {
+        width: 100%;
+        justify-content: space-evenly;
+    }
+
+    .sub-profile-send-message-button {
+        padding: 3%;
+    }
+
+    .sub-profile-edit-button {
+        padding: 4%;
     }
 
     .profile-center-wrapper {
@@ -375,14 +423,9 @@
         width: 100%;
         padding: 2%;
     }
-}
 
-/* For Extremely Small Mobile Phones: */
-@media only screen and (max-width: 350px) {
-
-    .sub-profile-image-wrapper {
-        padding: 0% 7% 0% 2%;
+    .sub-profile-friends-button {
+        padding: 4%;
     }
 
 }
-

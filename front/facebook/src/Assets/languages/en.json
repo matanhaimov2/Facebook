@@ -125,6 +125,7 @@
 
     "profile" : {
         "profile_friends_title" : "Friends",
+        "profile_send-message-title" : "Send Message",
         "profile_edit_prodile_title" : "Edit Profile",
         "profile_add_friend_title" : "Add Friend",
         "profile_friend_pending_title" : "Waiting For Approval",
