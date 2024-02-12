@@ -104,7 +104,7 @@ function Post({ index, post }) {
         // setAllComments(prevComments => [...prevComments, data]);
         // console.log(allComments)
 
-        // window.location.href = '/home' // meanwhile => problem! - comments dont update when submiting a comment
+        window.location.href = '/home' // meanwhile => problem! - comments dont update when submiting a comment
 
     }
 

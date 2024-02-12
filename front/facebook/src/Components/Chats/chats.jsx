@@ -177,7 +177,7 @@ function Chats({ data, setOpenChat }) {
             <div className={`chats-wrapper ${document.documentElement.getAttribute('dir')==='ltr' ? 'chats-position-hebrew' : 'chats-position-english'}`}>
                 <button className={`chats-exit-icon ${document.documentElement.getAttribute('dir')==='ltr' ? 'chats-exit-icon-hebrew' : 'chats-exit-icon-english'}`} onClick={(e) => { chatOpener(false) }}> <img src={exitIcon} /> </button>
 
-                <div className='chats-user-info'>
+                <div className={`chats-user-info ${document.documentElement.getAttribute('dir')==='ltr' ? 'direction-rtl' : 'direction-ltr'}`}>
 
                     <div className='chats-user-info-img-wrapper'>
                         {data.userimages ? (

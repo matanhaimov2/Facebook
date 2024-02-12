@@ -12,6 +12,11 @@ docker run -dit -p 80:3000 <image_name> // Creates the container
 docker ps -a // all the containers that are running currently (container - runs the recepie - like a mini computer)
 docker rm -f  <name_of_container> // Delete container by its name 
 
+docker exec -it <container name> /bin/bash // enter to a running container
 
+push:
+
+docker tag front-facebook-image matanhaimov2/facebook-front:latest // tag and change the name of the image to the one needed
+docker push matanhaimov2/facebook-front:latest
 
 dockerfile command: (image - recepie)

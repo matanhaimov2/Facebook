@@ -204,7 +204,7 @@
 
 /* Responsive - Style */
 
-/* For Tablets: */
+/* For Laptops: */
 @media only screen and (max-width: 1150px) {
 
     .post-comment-wrapper {
@@ -212,7 +212,7 @@
     }
 }
 
-/* For Smaller Tablets Phones: */
+/* For Tablets : */
 @media only screen and (max-width: 780px) {
 
     .post-comment-wrapper {
