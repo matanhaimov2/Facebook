@@ -3,8 +3,8 @@
 
 Facebook Demo
 
-
 ## Demo link:
+
 ## Table of Content:
 - About The App
 - Screenshots
@@ -14,6 +14,22 @@ Facebook Demo
 - Status
 - Credits
 - License
+
+## About The App
+
+The Facebook Demo is a full-stack web application that replicates some of the core functionalities of the popular social media platform Facebook. It is designed to provide users with a familiar social networking experience while demonstrating proficiency in various web development technologies.
+
+### Key Features
+
+- **User Authentication:** Secure user authentication system allows users to sign up, log in, and manage their accounts.
+- **News Feed:** Dynamic news feed displays posts from users and allows interaction such as likes and comment.
+- **Profile Management:** Users can customize their profiles, update profile information, and upload profile pictures.
+- **Friend System:** Users can send and accept friend requests, view their friends list, and navigate friend routes to see connections between users.
+- **User Search:** Users can search for other users by name or username to find and connect with them more easily.
+- **Messaging System:** Real-time messaging feature enables users to communicate with each other through private messages.
+- **Marketplace:** Facilitates buying and selling of goods among users through a dedicated marketplace section.
+- **Responsive Design:** The application is built with a responsive design, ensuring optimal user experience across various devices and screen sizes.
+
 ## Screenshots
 ![Login Screenshot](https://private-user-images.githubusercontent.com/118093488/313453615-6d7a6c08-98a2-4547-b761-80f7ba0d1d3d.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTA2NjEzOTIsIm5iZiI6MTcxMDY2MTA5MiwicGF0aCI6Ii8xMTgwOTM0ODgvMzEzNDUzNjE1LTZkN2E2YzA4LTk4YTItNDU0Ny1iNzYxLTgwZjdiYTBkMWQzZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwMzE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDMxN1QwNzM4MTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hZjRjMjY5NmFjMjY5MGNkMWI4ZmU2ZmE2YzgxZDUwOWU5YTRmMmNmN2QxMjgxMmUxZWU4OTM0MDI0NTY5NGU5JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.zxfZ6YmpaJFP-BwORB1HhgZrQhueMreWW9kw-wMDOoM)
 
